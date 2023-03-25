@@ -50,8 +50,7 @@ namespace GameSelector.Views
                 if (nfcReader.Connect())
                 {
                     //Writing   
-                    DateTime now = DateTime.Now;
-                    nfcReader.WriteBlock(now.ToString(), "4"); //public bool WriteBlock(String Text, String Block)
+                    nfcReader.WriteBlock(data, "4"); //public bool WriteBlock(String Text, String Block)
 
 
                 }
