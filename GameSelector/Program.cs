@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using GameSelector.Views;
+using System.Threading;
 
 namespace GameSelector
 {
     internal static class Program
     {
+        private static ManualResetEvent stopEvent = new ManualResetEvent(false);
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
         static void Main()
         {
+            var testView = new TestView();
+            testView.Start(Quit);
 
+            stopEvent.WaitOne();
+        }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+        private static void Quit()
+        {
+            stopEvent.Set();
         }
 
        
