@@ -1,17 +1,16 @@
-﻿using GameSelector.Views;
-using System;
-using System.Text;
+﻿using System;
 using System.Windows.Forms;
 
 namespace GameSelector
 {
-    public partial class Form1 : Form
+    public partial class TestView : Form
     {
-        UserInputView ui = new UserInputView();
+        private Action<string, object> SendMessage;
 
-        public Form1()
+        public TestView(Action<string, object> sendMessage)
         {
             InitializeComponent();
+            SendMessage = sendMessage;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -20,16 +19,17 @@ namespace GameSelector
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var text = ui.GetData();
-            if (text != null)
-            {
-                MessageBox.Show(text);
-            }
+            SendMessage("RequestData", null);
         }
         private void btnSchrijf_Click(object sender, EventArgs e)
         {
             var str = DateTime.Now.ToString();
-            ui.SetData(str);
+            SendMessage("SendData", str);
+        }
+
+        public void ShowData(string data)
+        {
+            MessageBox.Show(data);
         }
     }
 }

@@ -52,22 +52,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AbstractController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="External\Card.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Views\AbstractView.cs" />
+    <Compile Include="Views\TestView\TestView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Views\TestView\TestView.Designer.cs">
+      <DependentUpon>TestView.cs</DependentUpon>
     </Compile>
     <Compile Include="External\Helper.cs" />
     <Compile Include="External\NFCReader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\TestView.cs" />
-    <Compile Include="Views\UserInputView.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Views\TestView\TestViewAdapter.cs" />
+    <Compile Include="Views\UserInput\UserInputView.cs" />
+    <EmbeddedResource Include="Views\TestView\TestView.resx">
+      <DependentUpon>TestView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

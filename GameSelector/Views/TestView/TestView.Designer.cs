@@ -1,6 +1,6 @@
 ﻿namespace GameSelector
 {
-    partial class Form1
+    partial class TestView
     {
         /// <summary>
         /// Required designer variable.
