@@ -23,8 +23,7 @@ namespace GameSelector
         }
         private void btnSchrijf_Click(object sender, EventArgs e)
         {
-            var str = DateTime.Now.ToString();
-            SendMessage("SendData", str);
+            SendMessage("SendData", DateTime.Now);
         }
 
         public void ShowData(string data)

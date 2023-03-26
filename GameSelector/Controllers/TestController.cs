@@ -1,4 +1,5 @@
-﻿using GameSelector.Views;
+﻿using GameSelector.Model;
+using GameSelector.Views;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,12 +11,19 @@ namespace GameSelector.Controllers
     {
         private TestViewAdapter _testView;
         private UserInputView _userInputView;
+        private NfcDataBridge _nfcDataBridge;
 
-        public TestController(BlockingCollection<Tuple<string, object>> messages, TestViewAdapter testView, UserInputView userInputView)
+        public TestController(
+            BlockingCollection<Tuple<string, object>> messages,
+            TestViewAdapter testView,
+            UserInputView userInputView,
+            NfcDataBridge nfcDataBride
+        )
             : base(messages)
         {
             _testView = testView;
             _userInputView = userInputView;
+            _nfcDataBridge = nfcDataBride;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
@@ -33,14 +41,18 @@ namespace GameSelector.Controllers
 
         private void OnRequestData(object value)
         {
-            var data = _userInputView.GetData();
-            _testView.ShowData(data);
+            var cardData = _nfcDataBridge.CardData;
+            _testView.ShowData(cardData.ToString());
         }
 
         private void OnSendData(object value)
         {
-            Debug.Assert(value is string);
-            _userInputView.SetData((string)value);
+            Debug.Assert(value is DateTime);
+
+            var cardData = _nfcDataBridge.CardData;
+            cardData.StartTime = (DateTime)value;
+
+            _nfcDataBridge.CardData = cardData;
         }
     }
 }

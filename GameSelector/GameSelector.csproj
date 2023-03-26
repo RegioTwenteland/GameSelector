@@ -55,6 +55,8 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="External\Card.cs" />
+    <Compile Include="Model\CardData.cs" />
+    <Compile Include="Model\NfcDataBridge.cs" />
     <Compile Include="Views\AbstractView.cs" />
     <Compile Include="Views\TestView\TestView.cs">
       <SubType>Form</SubType>

@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using GameSelector.Controllers;
+using GameSelector.Model;
 
 namespace GameSelector
 {
@@ -16,9 +17,10 @@ namespace GameSelector
         /// </summary>
         static void Main()
         {
+            var nfcDataBridge = new NfcDataBridge();
             var uiView = new UserInputView();
             var testView = new TestViewAdapter(_testMessages);
-            TestController testController = new TestController(_testMessages, testView, uiView);
+            TestController testController = new TestController(_testMessages, testView, uiView, nfcDataBridge);
             testController.Run();
         }       
     }

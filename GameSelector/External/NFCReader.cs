@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,26 @@ namespace External
         private Card.SCARD_READERSTATE RdrState;
         private string readername;
         private Card.SCARD_READERSTATE[] states;
+        
+        private NFCReader()
+        {
+        }
+
+        private static NFCReader _instance;
+
+        public static NFCReader Instance {
+            get
+            {
+                if (_instance is null)
+                {
+                    _instance = new NFCReader();
+                    _instance.Watch();
+                }
+
+                return _instance;
+            }
+        }
+
         private void WaitChangeStatus(object sender, DoWorkEventArgs e)
         {
             while (!e.Cancel)
@@ -293,31 +314,35 @@ namespace External
             return true;
         }
         */
-        public bool WriteBlock(String Text, String Block)
+        public bool WriteBlock(byte[] bytes, String Block)
         {
             //00:00:03:19:D1:01:15:54:02:65:6E toevoegen voor tekstlabel
             //https://learn.adafruit.com/adafruit-pn532-rfid-nfc/ndef
             //https://www.oreilly.com/library/view/beginning-nfc/9781449324094/ch04.html
             // iets met NDEF
 
-            char[] tmpStr = Text.ToArray();
+            Debug.Assert(bytes.Length <= 16);
 
-
-
-            int indx;
             if (AuthBlock(Block))
             {
                 ClearBuffers();
-                SendBuff[0] = 0xFF;                             // CLA
-                SendBuff[1] = 0xD6;                             // INS
-                SendBuff[2] = 0x00;                             // P1
-                SendBuff[3] = (byte)int.Parse(Block);           // P2 : Starting Block No.
-                SendBuff[4] = (byte)int.Parse("16");            // P3 : Data length
+                SendBuff[0] = 0xFF;                       // CLA
+                SendBuff[1] = 0xD6;                       // INS
+                SendBuff[2] = 0x00;                       // P1
+                SendBuff[3] = (byte)int.Parse(Block);     // P2 : Starting Block No.
+                SendBuff[4] = 16;                         // P3 : Data length
 
-                for (indx = 0; indx <= (tmpStr).Length - 1; indx++)
+                int i;
+                for (i = 0; i < bytes.Length; i++)
                 {
-                    SendBuff[indx + 5] = (byte)tmpStr[indx];
+                    SendBuff[i + 5] = bytes[i];
                 }
+
+                for(; i < 16; ++i)
+                {
+                    SendBuff[i + 5] = 0x00;
+                }
+
                 SendLen = SendBuff[4] + 5;
                 RecvLen = 0x02;
 
@@ -453,7 +478,7 @@ namespace External
 
             return tmpStr;
         }
-        public void Watch()
+        private void Watch()
         {
             this.RdrState = new Card.SCARD_READERSTATE();
             readername = GetReadersList()[0];
@@ -471,9 +496,6 @@ namespace External
             this._worker.WorkerSupportsCancellation = true;
             this._worker.DoWork += WaitChangeStatus;
             this._worker.RunWorkerAsync();
-        }
-        public NFCReader()
-        {
         }
     }
 }
