@@ -30,6 +30,7 @@
         {
             this.btnLees = new System.Windows.Forms.Button();
             this.btnSchrijf = new System.Windows.Forms.Button();
+            this.dataView = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // btnLees
@@ -52,14 +53,24 @@
             this.btnSchrijf.UseVisualStyleBackColor = true;
             this.btnSchrijf.Click += new System.EventHandler(this.btnSchrijf_Click);
             // 
-            // Form1
+            // dataView
+            // 
+            this.dataView.Enabled = false;
+            this.dataView.Location = new System.Drawing.Point(49, 56);
+            this.dataView.Name = "dataView";
+            this.dataView.Size = new System.Drawing.Size(284, 223);
+            this.dataView.TabIndex = 2;
+            this.dataView.Text = "";
+            // 
+            // TestView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataView);
             this.Controls.Add(this.btnSchrijf);
             this.Controls.Add(this.btnLees);
-            this.Name = "Form1";
+            this.Name = "TestView";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -70,6 +81,7 @@
 
         private System.Windows.Forms.Button btnLees;
         private System.Windows.Forms.Button btnSchrijf;
+        private System.Windows.Forms.RichTextBox dataView;
     }
 }
 

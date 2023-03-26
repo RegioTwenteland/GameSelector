@@ -85,15 +85,12 @@ namespace External
                         {
                             case SmartcardState.Inserted:
                                 {
-
-                                    MessageBox.Show("Card inserted" + GetCardUID());
-                                    //CardInserted();
+                                    CardInserted?.Invoke();
                                     break;
                                 }
                             case SmartcardState.Ejected:
                                 {
-                                    MessageBox.Show("Card ejected");
-                                    //CardEjected();
+                                    CardEjected?.Invoke();
                                     break;
                                 }
                             default:

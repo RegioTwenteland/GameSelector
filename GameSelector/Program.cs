@@ -18,9 +18,7 @@ namespace GameSelector
         static void Main()
         {
             var nfcDataBridge = new NfcDataBridge();
-            var uiView = new UserInputView();
-            var testView = new TestViewAdapter(_testMessages);
-            TestController testController = new TestController(_testMessages, testView, uiView, nfcDataBridge);
+            TestController testController = new TestController(_testMessages, nfcDataBridge);
             testController.Run();
         }       
     }

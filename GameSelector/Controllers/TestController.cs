@@ -15,20 +15,20 @@ namespace GameSelector.Controllers
 
         public TestController(
             BlockingCollection<Tuple<string, object>> messages,
-            TestViewAdapter testView,
-            UserInputView userInputView,
             NfcDataBridge nfcDataBride
         )
             : base(messages)
         {
-            _testView = testView;
-            _userInputView = userInputView;
+            _testView = new TestViewAdapter(messages);
+            _userInputView = new UserInputView(messages);
             _nfcDataBridge = nfcDataBride;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
                 { "RequestData", OnRequestData },
-                { "SendData", OnSendData }
+                { "SendData", OnSendData },
+                { "CardInserted", OnCardInserted },
+                { "CardEjected", OnCardEjected },
             });
         }
 
@@ -42,7 +42,7 @@ namespace GameSelector.Controllers
         private void OnRequestData(object value)
         {
             var cardData = _nfcDataBridge.CardData;
-            _testView.ShowData(cardData.ToString());
+            _testView.ShowData(cardData?.ToString());
         }
 
         private void OnSendData(object value)
@@ -53,6 +53,17 @@ namespace GameSelector.Controllers
             cardData.StartTime = (DateTime)value;
 
             _nfcDataBridge.CardData = cardData;
+        }
+
+        private void OnCardInserted(object value)
+        {
+            var cardData = _nfcDataBridge.CardData;
+            _testView.ShowData(cardData?.ToString());
+        }
+
+        private void OnCardEjected(object value)
+        {
+            _testView.ShowData(null);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace GameSelector
 
         public void ShowData(string data)
         {
-            MessageBox.Show(data);
+            dataView.Text = data;
         }
     }
 }

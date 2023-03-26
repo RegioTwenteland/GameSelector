@@ -1,16 +1,31 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Text;
 using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    internal class UserInputView
+    internal class UserInputView : AbstractView
     {
-        private readonly External.NFCReader nfcReader;
+        private readonly External.NFCReader _nfcReader;
 
-        public UserInputView()
+        public UserInputView(BlockingCollection<Tuple<string, object>> messages)
+            : base(messages)
         {
-            nfcReader = External.NFCReader.Instance;
+            _nfcReader = External.NFCReader.Instance;
+
+            _nfcReader.CardInserted += OnCardInserted;
+            _nfcReader.CardEjected += OnCardEjected;
+        }
+
+        private void OnCardInserted()
+        {
+            SendMessage("CardInserted");
+        }
+
+        private void OnCardEjected()
+        {
+            SendMessage("CardEjected");
         }
     }
 }

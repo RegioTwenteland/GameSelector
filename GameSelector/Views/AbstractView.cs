@@ -12,7 +12,7 @@ namespace GameSelector.Views
             this.messages = messages;
         }
 
-        protected void SendMessage(string key, object value)
+        protected void SendMessage(string key, object value = null)
         {
             messages.Add(new Tuple<string, object>($"{key}", value));
         }
