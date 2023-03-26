@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameSelector.Model;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,10 +36,10 @@ namespace GameSelector.Views
             Debug.Assert(form.InvokeRequired);
         }
 
-        public void ShowData(string data)
+        public void ShowData(CardData data)
         {
             AssertRightThread();
-            form.Invoke(new MethodInvoker(() => form.ShowData(data)));
+            form.Invoke(new MethodInvoker(() => form.ShowCardData(data)));
         }
     }
 }

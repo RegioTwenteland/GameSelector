@@ -26,7 +26,7 @@ namespace GameSelector.Controllers
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
                 { "RequestData", OnRequestData },
-                { "SendData", OnSendData },
+                { "WriteCardData", OnWriteCardData },
                 { "CardInserted", OnCardInserted },
                 { "CardEjected", OnCardEjected },
             });
@@ -42,23 +42,20 @@ namespace GameSelector.Controllers
         private void OnRequestData(object value)
         {
             var cardData = _nfcDataBridge.CardData;
-            _testView.ShowData(cardData?.ToString());
+            _testView.ShowData(cardData);
         }
 
-        private void OnSendData(object value)
+        private void OnWriteCardData(object value)
         {
-            Debug.Assert(value is DateTime);
+            Debug.Assert(value is CardData);
 
-            var cardData = _nfcDataBridge.CardData;
-            cardData.StartTime = (DateTime)value;
-
-            _nfcDataBridge.CardData = cardData;
+            _nfcDataBridge.CardData = (CardData)value;
         }
 
         private void OnCardInserted(object value)
         {
             var cardData = _nfcDataBridge.CardData;
-            _testView.ShowData(cardData?.ToString());
+            _testView.ShowData(cardData);
         }
 
         private void OnCardEjected(object value)
