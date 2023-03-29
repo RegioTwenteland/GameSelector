@@ -9,7 +9,7 @@ namespace GameSelector.Views
     {
         private readonly External.NFCReader _nfcReader;
 
-        public UserInputView(BlockingCollection<Tuple<string, object>> messages)
+        public UserInputView(BlockingCollection<Message> messages)
             : base(messages)
         {
             _nfcReader = External.NFCReader.Instance;

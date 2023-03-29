@@ -1,4 +1,5 @@
-﻿using GameSelector.Model;
+﻿using External;
+using GameSelector.Model;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,15 +10,15 @@ using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    internal class TestViewAdapter : AbstractView
+    internal class UserViewAdapter : AbstractView
     {
-        private readonly TestView form;
+        private readonly UserView form;
 
 
-        public TestViewAdapter(BlockingCollection<Tuple<string, object>> messages)
+        public UserViewAdapter(BlockingCollection<Message> messages)
             : base(messages)
         {
-            form = new TestView(SendMessage);
+            form = new UserView(SendMessage);
         }
 
         public void Start(Action onClose)
@@ -36,10 +37,10 @@ namespace GameSelector.Views
             Debug.Assert(form.InvokeRequired);
         }
 
-        public void ShowData(CardData data)
+        public void ShowGame(GameData game)
         {
             AssertRightThread();
-            form.Invoke(new MethodInvoker(() => form.ShowCardData(data)));
+            form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
         }
     }
 }

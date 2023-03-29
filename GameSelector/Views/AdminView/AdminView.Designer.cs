@@ -1,6 +1,6 @@
 ﻿namespace GameSelector
 {
-    partial class TestView
+    partial class AdminView
     {
         /// <summary>
         /// Required designer variable.
@@ -38,25 +38,25 @@
             this.label4 = new System.Windows.Forms.Label();
             this.startTimePicker = new System.Windows.Forms.DateTimePicker();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.gamesListBox = new System.Windows.Forms.ListBox();
+            this.addGameButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gameColorComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.addGameButton = new System.Windows.Forms.Button();
             this.deleteGameButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.gameDescriptionTextbox = new System.Windows.Forms.TextBox();
+            this.gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSchrijf
@@ -146,25 +146,6 @@
             this.tabControl1.Size = new System.Drawing.Size(908, 589);
             this.tabControl1.TabIndex = 11;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.startTimePicker);
-            this.tabPage1.Controls.Add(this.groupNameText);
-            this.tabPage1.Controls.Add(this.btnSchrijf);
-            this.tabPage1.Controls.Add(this.groupIdText);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.currentGameText);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(900, 563);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "NFC-kaart";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.tableLayoutPanel2);
@@ -177,18 +158,54 @@
             this.tabPage2.Text = "Spellen";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.gamesListBox, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.addGameButton, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(165, 557);
+            this.tableLayoutPanel2.TabIndex = 6;
+            // 
+            // gamesListBox
+            // 
+            this.gamesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gamesListBox.FormattingEnabled = true;
+            this.gamesListBox.Location = new System.Drawing.Point(3, 3);
+            this.gamesListBox.Name = "gamesListBox";
+            this.gamesListBox.Size = new System.Drawing.Size(159, 522);
+            this.gamesListBox.TabIndex = 1;
+            this.gamesListBox.SelectedIndexChanged += new System.EventHandler(this.gamesListBox_SelectedIndexChanged);
+            // 
+            // addGameButton
+            // 
+            this.addGameButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addGameButton.Enabled = false;
+            this.addGameButton.Location = new System.Drawing.Point(3, 531);
+            this.addGameButton.Name = "addGameButton";
+            this.addGameButton.Size = new System.Drawing.Size(159, 23);
+            this.addGameButton.TabIndex = 2;
+            this.addGameButton.Text = "Spel toevoegen";
+            this.addGameButton.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.56863F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.43137F));
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.gameColorComboBox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.deleteGameButton, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.richTextBox1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.gameDescriptionTextbox, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.gameExplanationTextbox, 1, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(176, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -198,6 +215,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(408, 281);
             this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // gameColorComboBox
+            // 
+            this.gameColorComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.gameColorComboBox.FormattingEnabled = true;
+            this.gameColorComboBox.Items.AddRange(new object[] {
+            "Blauw",
+            "Rood",
+            "Groen"});
+            this.gameColorComboBox.Location = new System.Drawing.Point(193, 164);
+            this.gameColorComboBox.Name = "gameColorComboBox";
+            this.gameColorComboBox.Size = new System.Drawing.Size(212, 21);
+            this.gameColorComboBox.TabIndex = 7;
             // 
             // label5
             // 
@@ -229,17 +259,54 @@
             this.label6.TabIndex = 3;
             this.label6.Text = "Uitleg";
             // 
-            // listBox1
+            // deleteGameButton
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Spel 1",
-            "Spel 2"});
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(159, 522);
-            this.listBox1.TabIndex = 1;
+            this.deleteGameButton.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.SetColumnSpan(this.deleteGameButton, 2);
+            this.deleteGameButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deleteGameButton.Enabled = false;
+            this.deleteGameButton.Location = new System.Drawing.Point(3, 213);
+            this.deleteGameButton.Name = "deleteGameButton";
+            this.deleteGameButton.Size = new System.Drawing.Size(402, 65);
+            this.deleteGameButton.TabIndex = 5;
+            this.deleteGameButton.Text = "Spel verwijderen";
+            this.deleteGameButton.UseVisualStyleBackColor = false;
+            // 
+            // gameDescriptionTextbox
+            // 
+            this.gameDescriptionTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.gameDescriptionTextbox.Location = new System.Drawing.Point(193, 25);
+            this.gameDescriptionTextbox.Name = "gameDescriptionTextbox";
+            this.gameDescriptionTextbox.Size = new System.Drawing.Size(212, 20);
+            this.gameDescriptionTextbox.TabIndex = 6;
+            // 
+            // gameExplanationTextbox
+            // 
+            this.gameExplanationTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameExplanationTextbox.Location = new System.Drawing.Point(193, 73);
+            this.gameExplanationTextbox.Name = "gameExplanationTextbox";
+            this.gameExplanationTextbox.Size = new System.Drawing.Size(212, 64);
+            this.gameExplanationTextbox.TabIndex = 7;
+            this.gameExplanationTextbox.Text = "";
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.startTimePicker);
+            this.tabPage1.Controls.Add(this.groupNameText);
+            this.tabPage1.Controls.Add(this.btnSchrijf);
+            this.tabPage1.Controls.Add(this.groupIdText);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.currentGameText);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(900, 563);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "NFC-kaart";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
@@ -251,88 +318,22 @@
             this.tabPage3.Text = "Groepen";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.listBox1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.addGameButton, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(165, 557);
-            this.tableLayoutPanel2.TabIndex = 6;
-            // 
-            // addGameButton
-            // 
-            this.addGameButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addGameButton.Location = new System.Drawing.Point(3, 531);
-            this.addGameButton.Name = "addGameButton";
-            this.addGameButton.Size = new System.Drawing.Size(159, 23);
-            this.addGameButton.TabIndex = 2;
-            this.addGameButton.Text = "Spel toevoegen";
-            this.addGameButton.UseVisualStyleBackColor = true;
-            // 
-            // deleteGameButton
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.deleteGameButton, 2);
-            this.deleteGameButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.deleteGameButton.Location = new System.Drawing.Point(3, 213);
-            this.deleteGameButton.Name = "deleteGameButton";
-            this.deleteGameButton.Size = new System.Drawing.Size(402, 65);
-            this.deleteGameButton.TabIndex = 5;
-            this.deleteGameButton.Text = "Spel verwijderen";
-            this.deleteGameButton.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(193, 25);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(212, 20);
-            this.textBox1.TabIndex = 6;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(193, 73);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(212, 64);
-            this.richTextBox1.TabIndex = 7;
-            this.richTextBox1.Text = "";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Blauw",
-            "Rood",
-            "Groen"});
-            this.comboBox1.Location = new System.Drawing.Point(193, 164);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(212, 21);
-            this.comboBox1.TabIndex = 7;
-            // 
-            // TestView
+            // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 589);
             this.Controls.Add(this.tabControl1);
-            this.Name = "TestView";
+            this.Name = "AdminView";
             this.Text = "Admin";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -350,7 +351,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox gamesListBox;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label5;
@@ -358,10 +359,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button addGameButton;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox gameColorComboBox;
         private System.Windows.Forms.Button deleteGameButton;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox gameDescriptionTextbox;
+        private System.Windows.Forms.RichTextBox gameExplanationTextbox;
     }
 }
 
