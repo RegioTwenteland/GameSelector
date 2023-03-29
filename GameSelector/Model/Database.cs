@@ -83,5 +83,12 @@ namespace GameSelector.Model
 
             return output.Count == 0 ? null : output[0];
         }
+
+        public void InsertCard(CardData card)
+        {
+            var sql = $"INSERT INTO `cards` (card_id, group_id, scouting_name) VALUES (\"{card.CardUID}\", \"{card.GroupId}\", \"{card.GroupName}\")";
+            var command = new SQLiteCommand(sql, _connection);
+            command.ExecuteNonQuery();
+        }
     }
 }

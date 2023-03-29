@@ -48,6 +48,7 @@ namespace GameSelector
         {
             var card = new CardData
             {
+                CardUID = cardIdText.Text,
                 GroupId = int.Parse(groupIdText.Text),
                 GroupName = groupNameText.Text,
                 CurrentGame = currentGameText.Text,

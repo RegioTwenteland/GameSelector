@@ -46,6 +46,7 @@ namespace GameSelector.Controllers
             Debug.Assert(value is CardData);
 
             _nfcDataBridge.CardData = (CardData)value;
+            _database.InsertCard((CardData)value);
         }
 
         private void OnCardInserted(object value)
