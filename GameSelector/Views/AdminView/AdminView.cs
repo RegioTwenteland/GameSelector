@@ -73,6 +73,7 @@ namespace GameSelector
         {
             if (card == null)
             {
+                cardIdText.Text = string.Empty;
                 groupIdText.Text = string.Empty;
                 groupNameText.Text = string.Empty;
                 currentGameText.Text = string.Empty;
@@ -81,6 +82,7 @@ namespace GameSelector
             }
             startTimePicker.Enabled = true;
 
+            cardIdText.Text = card.CardUID;
             groupIdText.Text = card.GroupId.ToString();
             groupNameText.Text = card.GroupName;
             currentGameText.Text = card.CurrentGame;

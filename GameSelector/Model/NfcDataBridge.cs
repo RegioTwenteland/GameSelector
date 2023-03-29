@@ -32,6 +32,7 @@ namespace GameSelector.Model
 
         private CardData ReadCardData()
         {
+            var uid = _nfcReader.GetCardUID();
             var groupIdBytes = _nfcReader.ReadBlock(_blockNames[0]);
             var groupNameBytes = _nfcReader.ReadBlock(_blockNames[1]);
             var currentGameBytes = _nfcReader.ReadBlock(_blockNames[2]);
@@ -47,6 +48,7 @@ namespace GameSelector.Model
 
                 output = new CardData
                 {
+                    CardUID = uid,
                     GroupId = int.Parse(DecodeBytes(groupIdBytes)),
                     GroupName = DecodeBytes(groupNameBytes),
                     CurrentGame = DecodeBytes(currentGameBytes),

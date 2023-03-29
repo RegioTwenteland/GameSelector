@@ -52,6 +52,8 @@
             this.gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cardIdText = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -61,7 +63,7 @@
             // 
             // btnSchrijf
             // 
-            this.btnSchrijf.Location = new System.Drawing.Point(9, 119);
+            this.btnSchrijf.Location = new System.Drawing.Point(8, 151);
             this.btnSchrijf.Name = "btnSchrijf";
             this.btnSchrijf.Size = new System.Drawing.Size(286, 23);
             this.btnSchrijf.TabIndex = 1;
@@ -71,7 +73,7 @@
             // 
             // groupIdText
             // 
-            this.groupIdText.Location = new System.Drawing.Point(95, 0);
+            this.groupIdText.Location = new System.Drawing.Point(94, 32);
             this.groupIdText.Name = "groupIdText";
             this.groupIdText.Size = new System.Drawing.Size(200, 20);
             this.groupIdText.TabIndex = 2;
@@ -80,7 +82,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 3);
+            this.label1.Location = new System.Drawing.Point(5, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 3;
@@ -89,7 +91,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 29);
+            this.label2.Location = new System.Drawing.Point(5, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 5;
@@ -97,7 +99,7 @@
             // 
             // groupNameText
             // 
-            this.groupNameText.Location = new System.Drawing.Point(95, 26);
+            this.groupNameText.Location = new System.Drawing.Point(94, 58);
             this.groupNameText.Name = "groupNameText";
             this.groupNameText.Size = new System.Drawing.Size(200, 20);
             this.groupNameText.TabIndex = 4;
@@ -105,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 55);
+            this.label3.Location = new System.Drawing.Point(5, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
             this.label3.TabIndex = 7;
@@ -113,7 +115,7 @@
             // 
             // currentGameText
             // 
-            this.currentGameText.Location = new System.Drawing.Point(95, 52);
+            this.currentGameText.Location = new System.Drawing.Point(94, 84);
             this.currentGameText.Name = "currentGameText";
             this.currentGameText.Size = new System.Drawing.Size(200, 20);
             this.currentGameText.TabIndex = 6;
@@ -121,7 +123,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 85);
+            this.label4.Location = new System.Drawing.Point(5, 117);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 9;
@@ -129,7 +131,7 @@
             // 
             // startTimePicker
             // 
-            this.startTimePicker.Location = new System.Drawing.Point(95, 79);
+            this.startTimePicker.Location = new System.Drawing.Point(94, 111);
             this.startTimePicker.Name = "startTimePicker";
             this.startTimePicker.Size = new System.Drawing.Size(200, 20);
             this.startTimePicker.TabIndex = 10;
@@ -291,6 +293,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.cardIdText);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.startTimePicker);
@@ -317,6 +321,23 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Groepen";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "Kaart ID";
+            // 
+            // cardIdText
+            // 
+            this.cardIdText.Enabled = false;
+            this.cardIdText.Location = new System.Drawing.Point(94, 6);
+            this.cardIdText.Name = "cardIdText";
+            this.cardIdText.Size = new System.Drawing.Size(200, 20);
+            this.cardIdText.TabIndex = 11;
             // 
             // AdminView
             // 
@@ -363,6 +384,8 @@
         private System.Windows.Forms.Button deleteGameButton;
         private System.Windows.Forms.TextBox gameDescriptionTextbox;
         private System.Windows.Forms.RichTextBox gameExplanationTextbox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox cardIdText;
     }
 }
 

@@ -11,6 +11,7 @@ namespace GameSelector.Model
             {
                 return new CardData
                 {
+                    CardUID = string.Empty,
                     GroupId = 0,
                     GroupName = string.Empty,
                     CurrentGame = string.Empty,
@@ -18,6 +19,8 @@ namespace GameSelector.Model
                 };
             }
         }
+
+        public string CardUID { get; set; }
 
         public int GroupId { get; set; }
 
