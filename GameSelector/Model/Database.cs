@@ -188,7 +188,14 @@ namespace GameSelector.Model
             var command = new SQLiteCommand(sql, _connection);
             command.Parameters.AddWithValue("@groupId", card.GroupId);
             command.Parameters.AddWithValue("@scoutingName", card.GroupName);
-            command.Parameters.AddWithValue("@lastInserted", card.LastInserted);
+            if (card.LastInserted == null)
+            {
+                command.Parameters.AddWithValue("@lastInserted", null);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@lastInserted", card.LastInserted.Value.Ticks);
+            }
             command.Parameters.AddWithValue("@UID", card.CardUID);
             command.ExecuteNonQuery();
         }

@@ -86,8 +86,12 @@ namespace GameSelector.Controllers
             {
                 // list is already sorted by priority by data source
                 selectedGame = possibleGames[0];
+
+                card.LastInserted = DateTime.Now;
+
                 selectedGame.OccupiedBy = card;
                 _database.UpdateGame(selectedGame);
+                _database.UpdateCard(card);
             }
 
             _userView.ShowGame(selectedGame);
