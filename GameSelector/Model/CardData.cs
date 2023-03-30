@@ -9,26 +9,19 @@ namespace GameSelector.Model
         {
             get
             {
-                return new CardData
-                {
-                    CardUID = string.Empty,
-                    GroupId = 0,
-                    GroupName = string.Empty,
-                    CurrentGame = string.Empty,
-                    StartTime = new DateTime(1970, 1, 1, 0, 0, 0, 0), // unix timestamp 0
-                };
+                return new CardData();
             }
         }
 
-        public string CardUID { get; set; }
+        public string CardUID { get; set; } = string.Empty;
 
-        public int GroupId { get; set; }
+        public uint GroupId { get; set; }
 
-        public string GroupName { get; set; }
+        public string GroupName { get; set; } = string.Empty;
 
-        public string CurrentGame { get; set; }
+        public GameData CurrentGame { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; } = new DateTime(1970, 1, 1, 0, 0, 0, 0); // unix timestamp 0
 
         public override string ToString()
         {

@@ -45,14 +45,20 @@ namespace GameSelector.Controllers
         {
             Debug.Assert(value is CardData);
 
-            _nfcDataBridge.CardData = (CardData)value;
+            //_nfcDataBridge.CardData = (CardData)value;
             _database.InsertCard((CardData)value);
         }
 
         private void OnCardInserted(object value)
         {
-            var cardData = _nfcDataBridge.CardData;
-            _adminView.ShowCard(cardData);
+            //var cardData = _nfcDataBridge.CardData;
+            var card = new CardData
+            {
+                CardUID = _nfcDataBridge.GetCardUID()
+            };
+
+            _database.GetCard(card);
+            _adminView.ShowCard(card);
         }
 
         private void OnCardEjected(object value)

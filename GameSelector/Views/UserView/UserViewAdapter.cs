@@ -37,10 +37,10 @@ namespace GameSelector.Views
             Debug.Assert(form.InvokeRequired);
         }
 
-        public void ShowGame(GameData game)
+        public void ShowCard(CardData card)
         {
             AssertRightThread();
-            form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
+            form.Invoke(new MethodInvoker(() => form.ShowCard(card)));
         }
     }
 }

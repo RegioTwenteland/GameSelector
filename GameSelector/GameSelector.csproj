@@ -80,6 +80,7 @@
     <Compile Include="Model\CardData.cs" />
     <Compile Include="Model\GameData.cs" />
     <Compile Include="Model\NfcDataBridge.cs" />
+    <Compile Include="Model\PlayedGame.cs" />
     <Compile Include="Views\AbstractView.cs" />
     <Compile Include="Views\AdminView\AdminView.cs">
       <SubType>Form</SubType>

@@ -1,4 +1,5 @@
-﻿using GameSelector.Model;
+﻿using External;
+using GameSelector.Model;
 using GameSelector.Views;
 using System;
 using System.Collections.Concurrent;
@@ -41,12 +42,53 @@ namespace GameSelector.Controllers
             _userView.Start(stop);
         }
 
-        private void OnCardInserted(object value)
+        private List<GameData> GetPossibleGames(CardData card)
         {
             var games = _database.GetGameData();
-            var selectedGame = games[_random.Next(games.Count)];
+            var playedGames = _database.GetGamesPlayed(card);
 
-            _userView.ShowGame(selectedGame);
+            var playedGameIds = new HashSet<uint>();
+            foreach (var game in playedGames)
+            {
+                playedGameIds.Add(game.Id);
+            }
+
+            var possibleGames = new List<GameData>(games.Count);
+            foreach (var game in games)
+            {
+                if (!playedGameIds.Contains(game.Id))
+                {
+                    possibleGames.Add(game);
+                }
+            }
+
+            return possibleGames;
+        }
+
+        private void OnCardInserted(object value)
+        {
+            var card = new CardData
+            {
+                CardUID = _nfcDataBridge.GetCardUID()
+            };
+
+            var cardIsKnown = _database.GetCard(card);
+
+            if (!cardIsKnown)
+            {
+                return;
+            }
+
+            var possibleGames = GetPossibleGames(card);
+
+            if (possibleGames.Count > 0)
+            {
+                // list is already sorted by priority by data source
+                card.CurrentGame = possibleGames[0];
+                _database.UpdateCard(card);
+            }
+
+            _userView.ShowCard(card);
         }
     }
 }

@@ -7,6 +7,9 @@ namespace GameSelector.Views
 {
     internal partial class UserView : Form
     {
+        private const string PROMPT_MESSAGE = "Houd je kaart tegen de lezer";
+        private const string SELECTED_MESSAGE = "Speciaal geselecteerd voor ";
+
         private Action<string, object> SendMessage;
 
         public UserView(Action<string, object> sendMessage)
@@ -30,11 +33,19 @@ namespace GameSelector.Views
                     Y = screen.WorkingArea.Top
                 };
             }
+
+            gameAnnouncerLabel.Text = PROMPT_MESSAGE;
+            gameCodeLabel.Text = string.Empty;
+            gameDescriptionLabel.Text = string.Empty;
+            gameExplanationLabel.Text = string.Empty;
         }
 
-        public void ShowGame(GameData game)
+        public void ShowCard(CardData card)
         {
-            gameAnnouncerLabel.Text = game.Description;
+            gameAnnouncerLabel.Text = SELECTED_MESSAGE + card.GroupName + ":";
+            gameCodeLabel.Text = card.CurrentGame.Code;
+            gameDescriptionLabel.Text = card.CurrentGame.Description;
+            gameExplanationLabel.Text = card.CurrentGame.Explanation;
         }
     }
 }

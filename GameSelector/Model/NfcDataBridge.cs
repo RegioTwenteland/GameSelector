@@ -30,92 +30,76 @@ namespace GameSelector.Model
             return Encoding.UTF8.GetBytes(str);
         }
 
-        private CardData ReadCardData()
+        public string GetCardUID()
         {
-            var uid = _nfcReader.GetCardUID();
-            var groupIdBytes = _nfcReader.ReadBlock(_blockNames[0]);
-            var groupNameBytes = _nfcReader.ReadBlock(_blockNames[1]);
-            var currentGameBytes = _nfcReader.ReadBlock(_blockNames[2]);
-            var startTimeBytes = _nfcReader.ReadBlock(_blockNames[3]);
-
-            CardData output;
             try
             {
-                var unixOffset = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                var unixTimeStampStr = DecodeBytes(startTimeBytes);
-                var unixTimeStamp = long.Parse(unixTimeStampStr);
-                var dateTime = unixOffset.AddSeconds(unixTimeStamp).ToLocalTime();
-
-                output = new CardData
+                if (_nfcReader.Connect())
                 {
-                    CardUID = uid,
-                    GroupId = int.Parse(DecodeBytes(groupIdBytes)),
-                    GroupName = DecodeBytes(groupNameBytes),
-                    CurrentGame = DecodeBytes(currentGameBytes),
-                    StartTime = dateTime,
-                };
+                    return _nfcReader.GetCardUID();
+                }
+                else
+                {
+                    throw new Exception("Could not connect to NFC reader");
+                }
             }
-            catch(Exception)
+            finally
             {
-                // Card was not formatted correctly. Format the card.
-                output = CardData.Empty;
-                CardData = output;
+                _nfcReader.Disconnect();
             }
-
-            return output;
         }
 
-        public CardData CardData
-        {
-            get
-            {
-                try
-                {
-                    if (!_nfcReader.Connect())
-                    {
-                        Logger.LogError(this, "Could not connect to NFC card");
-                        return null;
-                    }
+        //public CardData CardData
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            if (!_nfcReader.Connect())
+        //            {
+        //                Logger.LogError(this, "Could not connect to NFC card");
+        //                return null;
+        //            }
 
-                    return ReadCardData();
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(this, ex.ToString());
-                    return null;
-                }
-                finally
-                {
-                    _nfcReader.Disconnect();
-                }
-            }
+        //            return ReadCardData();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Logger.LogError(this, ex.ToString());
+        //            return null;
+        //        }
+        //        finally
+        //        {
+        //            _nfcReader.Disconnect();
+        //        }
+        //    }
 
-            set
-            {
-                try
-                {
-                    if (!_nfcReader.Connect())
-                    {
-                        Logger.LogError(this, "Could not connect to NFC card");
-                        return;
-                    }
+        //    set
+        //    {
+        //        try
+        //        {
+        //            if (!_nfcReader.Connect())
+        //            {
+        //                Logger.LogError(this, "Could not connect to NFC card");
+        //                return;
+        //            }
 
-                    var unixTimeStamp = new DateTimeOffset(value.StartTime.ToUniversalTime()).ToUnixTimeSeconds();
+        //            var unixTimeStamp = new DateTimeOffset(value.StartTime.ToUniversalTime()).ToUnixTimeSeconds();
 
-                    _nfcReader.WriteBlock(EncodeBytes(value.GroupId.ToString()), _blockNames[0]);
-                    _nfcReader.WriteBlock(EncodeBytes(value.GroupName), _blockNames[1]);
-                    _nfcReader.WriteBlock(EncodeBytes(value.CurrentGame), _blockNames[2]);
-                    _nfcReader.WriteBlock(EncodeBytes(unixTimeStamp.ToString()), _blockNames[3]);
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(this, ex.ToString());
-                }
-                finally
-                {
-                    _nfcReader.Disconnect();
-                }
-            }
-        }
+        //            _nfcReader.WriteBlock(EncodeBytes(value.GroupId.ToString()), _blockNames[0]);
+        //            _nfcReader.WriteBlock(EncodeBytes(value.GroupName), _blockNames[1]);
+        //            _nfcReader.WriteBlock(EncodeBytes(value.CurrentGame), _blockNames[2]);
+        //            _nfcReader.WriteBlock(EncodeBytes(unixTimeStamp.ToString()), _blockNames[3]);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Logger.LogError(this, ex.ToString());
+        //        }
+        //        finally
+        //        {
+        //            _nfcReader.Disconnect();
+        //        }
+        //    }
+        //}
     }
 }

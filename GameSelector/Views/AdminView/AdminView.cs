@@ -49,9 +49,9 @@ namespace GameSelector
             var card = new CardData
             {
                 CardUID = cardIdText.Text,
-                GroupId = int.Parse(groupIdText.Text),
+                GroupId = uint.Parse(groupIdText.Text),
                 GroupName = groupNameText.Text,
-                CurrentGame = currentGameText.Text,
+                CurrentGame = null,
                 StartTime = DateTime.Parse(startTimePicker.Text),
             };
 
@@ -86,7 +86,7 @@ namespace GameSelector
             cardIdText.Text = card.CardUID;
             groupIdText.Text = card.GroupId.ToString();
             groupNameText.Text = card.GroupName;
-            currentGameText.Text = card.CurrentGame;
+            currentGameText.Text = card.CurrentGame?.ToString();
             startTimePicker.Text = card.StartTime.ToString();
         }
 
