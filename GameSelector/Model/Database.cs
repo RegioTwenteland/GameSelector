@@ -55,8 +55,9 @@ namespace GameSelector.Model
 
         public GameData GetGameData(string gameCode)
         {
-            var sql = $"SELECT * FROM `games` WHERE `code` = \"{gameCode}\";";
+            var sql = $"SELECT * FROM `games` WHERE `code` = @gameCode;";
             var command = new SQLiteCommand(sql, _connection);
+            command.Parameters.AddWithValue("@gameCode", gameCode);
             var reader = command.ExecuteReader();
 
             var output = new List<GameData>();
@@ -86,8 +87,11 @@ namespace GameSelector.Model
 
         public void InsertCard(CardData card)
         {
-            var sql = $"INSERT INTO `cards` (card_id, group_id, scouting_name) VALUES (\"{card.CardUID}\", \"{card.GroupId}\", \"{card.GroupName}\")";
+            var sql = @"INSERT INTO `cards` (card_id, group_id, scouting_name) VALUES (@UID, @groupId, @groupName)";
             var command = new SQLiteCommand(sql, _connection);
+            command.Parameters.AddWithValue("@UID", card.CardUID);
+            command.Parameters.AddWithValue("@groupId", card.GroupId);
+            command.Parameters.AddWithValue("@groupName", card.GroupName);
             command.ExecuteNonQuery();
         }
     }
