@@ -40,12 +40,12 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = string.Empty;
         }
 
-        public void ShowCard(CardData card)
+        public void ShowGame(GameData game)
         {
-            gameAnnouncerLabel.Text = SELECTED_MESSAGE + card.GroupName + ":";
-            gameCodeLabel.Text = card.CurrentGame.Code;
-            gameDescriptionLabel.Text = card.CurrentGame.Description;
-            gameExplanationLabel.Text = card.CurrentGame.Explanation;
+            gameAnnouncerLabel.Text = SELECTED_MESSAGE + game.OccupiedBy.GroupName + ":";
+            gameCodeLabel.Text = game.Code;
+            gameDescriptionLabel.Text = game.Description;
+            gameExplanationLabel.Text = game.Explanation;
         }
     }
 }

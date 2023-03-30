@@ -51,9 +51,9 @@
             this.gameDescriptionTextbox = new System.Windows.Forms.TextBox();
             this.gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.cardIdText = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -115,6 +115,7 @@
             // 
             // currentGameText
             // 
+            this.currentGameText.Enabled = false;
             this.currentGameText.Location = new System.Drawing.Point(94, 84);
             this.currentGameText.Name = "currentGameText";
             this.currentGameText.Size = new System.Drawing.Size(200, 20);
@@ -312,16 +313,6 @@
             this.tabPage1.Text = "NFC-kaart";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(900, 563);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Groepen";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -338,6 +329,16 @@
             this.cardIdText.Name = "cardIdText";
             this.cardIdText.Size = new System.Drawing.Size(200, 20);
             this.cardIdText.TabIndex = 11;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(900, 563);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Groepen";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // AdminView
             // 

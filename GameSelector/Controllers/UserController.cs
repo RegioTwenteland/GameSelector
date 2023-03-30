@@ -81,14 +81,16 @@ namespace GameSelector.Controllers
 
             var possibleGames = GetPossibleGames(card);
 
+            GameData selectedGame = null;
             if (possibleGames.Count > 0)
             {
                 // list is already sorted by priority by data source
-                card.CurrentGame = possibleGames[0];
-                _database.UpdateCard(card);
+                selectedGame = possibleGames[0];
+                selectedGame.OccupiedBy = card;
+                _database.UpdateGame(selectedGame);
             }
 
-            _userView.ShowCard(card);
+            _userView.ShowGame(selectedGame);
         }
     }
 }

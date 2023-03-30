@@ -19,9 +19,7 @@ namespace GameSelector.Model
 
         public string GroupName { get; set; } = string.Empty;
 
-        public GameData CurrentGame { get; set; }
-
-        public DateTime StartTime { get; set; } = new DateTime(1970, 1, 1, 0, 0, 0, 0); // unix timestamp 0
+        public DateTime? LastInserted { get; set; }
 
         public override string ToString()
         {
@@ -30,8 +28,7 @@ namespace GameSelector.Model
             output.AppendLine("CardData {");
             output.AppendLine($"\tGroupId = {GroupId}");
             output.AppendLine($"\tGroupName = {GroupName}");
-            output.AppendLine($"\tCurrentGame = {CurrentGame}");
-            output.AppendLine($"\tStartTime = {StartTime}");
+            output.AppendLine($"\tLastInserted = {LastInserted}");
             output.AppendLine("}");
 
             return output.ToString();

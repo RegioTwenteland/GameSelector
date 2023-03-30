@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace GameSelector.Model
 {
@@ -18,6 +14,10 @@ namespace GameSelector.Model
 
         public string Color { get; set; }
 
+        public uint Priority { get; set; }
+
+        public CardData OccupiedBy { get; set; }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -27,6 +27,7 @@ namespace GameSelector.Model
             sb.AppendLine($"\tDescription: {Description}");
             sb.AppendLine($"\tExplanation: {Explanation}");
             sb.AppendLine($"\tColor: {Color}");
+            sb.AppendLine($"\tOccupiedBy: {OccupiedBy.CardUID}");
             sb.AppendLine("}");
             return sb.ToString();
         }

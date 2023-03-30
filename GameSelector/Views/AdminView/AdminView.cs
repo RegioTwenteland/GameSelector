@@ -51,8 +51,7 @@ namespace GameSelector
                 CardUID = cardIdText.Text,
                 GroupId = uint.Parse(groupIdText.Text),
                 GroupName = groupNameText.Text,
-                CurrentGame = null,
-                StartTime = DateTime.Parse(startTimePicker.Text),
+                LastInserted = DateTime.Parse(startTimePicker.Text),
             };
 
             SendMessage("WriteCardData", card);
@@ -78,16 +77,14 @@ namespace GameSelector
                 groupIdText.Text = string.Empty;
                 groupNameText.Text = string.Empty;
                 currentGameText.Text = string.Empty;
-                startTimePicker.Enabled = false;
                 return;
             }
-            startTimePicker.Enabled = true;
 
             cardIdText.Text = card.CardUID;
             groupIdText.Text = card.GroupId.ToString();
             groupNameText.Text = card.GroupName;
-            currentGameText.Text = card.CurrentGame?.ToString();
-            startTimePicker.Text = card.StartTime.ToString();
+            currentGameText.Text = string.Empty; // TODO: fill in something meaningful here
+            startTimePicker.Text = card.LastInserted.ToString();
         }
 
         public void SetGamesList(List<GameData> games)
