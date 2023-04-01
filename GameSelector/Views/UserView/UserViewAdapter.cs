@@ -37,7 +37,7 @@ namespace GameSelector.Views
             Debug.Assert(form.InvokeRequired);
         }
 
-        public void ShowGame(GameData game)
+        public void ShowGame(GameDataView game)
         {
             AssertRightThread();
             form.Invoke(new MethodInvoker(() => form.ShowGame(game)));

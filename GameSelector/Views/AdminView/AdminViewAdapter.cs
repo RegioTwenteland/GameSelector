@@ -36,22 +36,22 @@ namespace GameSelector.Views
             Debug.Assert(form.InvokeRequired);
         }
 
-        public void ShowCard(CardData card)
+        public void ShowCard(CardDataView card)
         {
             AssertRightThread();
             form.Invoke(new MethodInvoker(() => form.ShowCard(card)));
         }
 
-        public void ShowGame(GameData game)
+        public void ShowGame(GameDataView game)
         {
             AssertRightThread();
             form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
         }
 
-        public void SetGamesList(List<GameData> games)
+        public void SetGamesList(IEnumerable<GameDataView> gameNames)
         {
             AssertRightThread();
-            form.Invoke(new MethodInvoker(() => form.SetGamesList(games)));
+            form.Invoke(new MethodInvoker(() => form.SetGamesList(gameNames)));
         }
     }
 }

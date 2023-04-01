@@ -15,6 +15,22 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\David\Documents\programming\scouting NFC\temp\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +54,21 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1619F2FF31C304DD05900928FF2237A509409BF9</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>GameSelector_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -51,6 +82,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SQLite, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
@@ -74,13 +106,21 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Database\DbCard.cs" />
+    <Compile Include="Database\DbGame.cs" />
+    <Compile Include="Database\IDatabase.cs" />
+    <Compile Include="Database\DbPlayedGame.cs" />
+    <Compile Include="Database\SQLiteDatabase.cs" />
     <Compile Include="Message.cs" />
-    <Compile Include="Model\Database.cs" />
+    <Compile Include="Model\CardDataBridge.cs" />
+    <Compile Include="Model\GameDataBridge.cs" />
     <Compile Include="External\Card.cs" />
-    <Compile Include="Model\CardData.cs" />
-    <Compile Include="Model\GameData.cs" />
+    <Compile Include="Model\Card.cs" />
+    <Compile Include="Model\Game.cs" />
     <Compile Include="Model\NfcDataBridge.cs" />
     <Compile Include="Model\PlayedGame.cs" />
+    <Compile Include="Model\PlayedGameDataBridge.cs" />
+    <Compile Include="Model\SetOnce.cs" />
     <Compile Include="Views\AbstractView.cs" />
     <Compile Include="Views\AdminView\AdminView.cs">
       <SubType>Form</SubType>
@@ -94,6 +134,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\AdminView\AdminViewAdapter.cs" />
+    <Compile Include="Views\CardDataView.cs" />
+    <Compile Include="Views\GameDataView.cs" />
     <Compile Include="Views\UserInput\UserInputView.cs" />
     <Compile Include="Views\UserView\UserView.cs">
       <SubType>Form</SubType>
@@ -134,7 +176,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

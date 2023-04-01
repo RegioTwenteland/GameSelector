@@ -1,4 +1,4 @@
-﻿namespace GameSelector
+﻿namespace GameSelector.Views
 {
     partial class AdminView
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSchrijf = new System.Windows.Forms.Button();
+            this.writeCardButton = new System.Windows.Forms.Button();
             this.groupIdText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -61,15 +61,15 @@
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnSchrijf
+            // writeCardButton
             // 
-            this.btnSchrijf.Location = new System.Drawing.Point(8, 151);
-            this.btnSchrijf.Name = "btnSchrijf";
-            this.btnSchrijf.Size = new System.Drawing.Size(286, 23);
-            this.btnSchrijf.TabIndex = 1;
-            this.btnSchrijf.Text = "Schrijf";
-            this.btnSchrijf.UseVisualStyleBackColor = true;
-            this.btnSchrijf.Click += new System.EventHandler(this.btnSchrijf_Click);
+            this.writeCardButton.Location = new System.Drawing.Point(8, 151);
+            this.writeCardButton.Name = "writeCardButton";
+            this.writeCardButton.Size = new System.Drawing.Size(286, 23);
+            this.writeCardButton.TabIndex = 1;
+            this.writeCardButton.Text = "Schrijf";
+            this.writeCardButton.UseVisualStyleBackColor = true;
+            this.writeCardButton.Click += new System.EventHandler(this.writeCardButton_Click);
             // 
             // groupIdText
             // 
@@ -139,8 +139,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -300,7 +300,7 @@
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.startTimePicker);
             this.tabPage1.Controls.Add(this.groupNameText);
-            this.tabPage1.Controls.Add(this.btnSchrijf);
+            this.tabPage1.Controls.Add(this.writeCardButton);
             this.tabPage1.Controls.Add(this.groupIdText);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.currentGameText);
@@ -361,7 +361,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnSchrijf;
+        private System.Windows.Forms.Button writeCardButton;
         private System.Windows.Forms.TextBox groupIdText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

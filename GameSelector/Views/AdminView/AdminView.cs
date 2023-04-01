@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Forms.TextBox;
 
-namespace GameSelector
+namespace GameSelector.Views
 {
     internal partial class AdminView : Form
     {
@@ -44,14 +44,23 @@ namespace GameSelector
             SendMessage("RequestGames", null);
         }
 
-        private void btnSchrijf_Click(object sender, EventArgs e)
+        private void writeCardButton_Click(object sender, EventArgs e)
         {
-            var card = new CardData
+            //var card = new CardData
+            //{
+            //    CardUID = cardIdText.Text,
+            //    GroupId = uint.Parse(groupIdText.Text),
+            //    GroupName = groupNameText.Text,
+            //    LastInserted = DateTime.Parse(startTimePicker.Text),
+            //};
+
+            var card = new CardDataView
             {
-                CardUID = cardIdText.Text,
+                Id = cardIdText.Text,
                 GroupId = uint.Parse(groupIdText.Text),
-                GroupName = groupNameText.Text,
-                LastInserted = DateTime.Parse(startTimePicker.Text),
+                ScoutingName = groupNameText.Text,
+                StartTime = DateTime.Parse(startTimePicker.Text),
+                CurrentGame = currentGameText.Text,
             };
 
             SendMessage("WriteCardData", card);
@@ -59,8 +68,8 @@ namespace GameSelector
 
         private void gamesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var code = (string)gamesListBox.Items[gamesListBox.SelectedIndex];
-            SendMessage("RequestGame", code);
+            var game = (GameDataView)gamesListBox.Items[gamesListBox.SelectedIndex];
+            SendMessage("RequestGame", game.Id);
         }
 
         private void ForceTextboxToInt(object sender, EventArgs e)
@@ -69,7 +78,7 @@ namespace GameSelector
             textbox.Text = _intRgx.Replace(textbox.Text, "");
         }
 
-        public void ShowCard(CardData card)
+        public void ShowCard(CardDataView card)
         {
             if (card == null)
             {
@@ -80,23 +89,26 @@ namespace GameSelector
                 return;
             }
 
-            cardIdText.Text = card.CardUID;
+            cardIdText.Text = card.Id;
             groupIdText.Text = card.GroupId.ToString();
-            groupNameText.Text = card.GroupName;
-            currentGameText.Text = string.Empty; // TODO: fill in something meaningful here
-            startTimePicker.Text = card.LastInserted.ToString();
+            groupNameText.Text = card.ScoutingName;
+            currentGameText.Text = card.CurrentGame;
+            startTimePicker.Text =
+                (card.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
+                card.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
+                card.StartTime).ToString();
         }
 
-        public void SetGamesList(List<GameData> games)
+        public void SetGamesList(IEnumerable<GameDataView> games)
         {
             gamesListBox.Items.Clear();
             foreach (var game in games)
             {
-                gamesListBox.Items.Add(game.Code);
+                gamesListBox.Items.Add(game);
             }
         }
 
-        public void ShowGame(GameData game)
+        public void ShowGame(GameDataView game)
         {
             if (game == null)
             {

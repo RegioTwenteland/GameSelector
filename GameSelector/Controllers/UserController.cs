@@ -1,5 +1,4 @@
-﻿using External;
-using GameSelector.Model;
+﻿using GameSelector.Model;
 using GameSelector.Views;
 using System;
 using System.Collections.Concurrent;
@@ -13,9 +12,8 @@ namespace GameSelector.Controllers
         private UserViewAdapter _userView;
         private UserInputView _userInputView;
         private NfcDataBridge _nfcDataBridge;
-        private Database _database;
-
-        private bool _gameStarted = false;
+        private CardDataBridge _cardDataBridge;
+        private GameDataBridge _gameDataBridge;
 
         private Random _random = new Random();
 
@@ -23,13 +21,15 @@ namespace GameSelector.Controllers
             NfcDataBridge nfcDataBride,
             UserInputView userInputView,
             UserViewAdapter userView,
-            Database database
+            CardDataBridge cardDataBridge,
+            GameDataBridge gameDataBridge
         )
         {
             _nfcDataBridge = nfcDataBride;
             _userInputView = userInputView;
             _userView = userView;
-            _database = database;
+            _cardDataBridge = cardDataBridge;
+            _gameDataBridge = gameDataBridge;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
@@ -42,18 +42,18 @@ namespace GameSelector.Controllers
             _userView.Start(stop);
         }
 
-        private List<GameData> GetPossibleGames(CardData card)
+        private List<Game> GetPossibleGames(Card card)
         {
-            var games = _database.GetGameData();
-            var playedGames = _database.GetGamesPlayed(card);
+            var games = _gameDataBridge.GetAllGames();
+            var playedGames = _gameDataBridge.GetGamesPlayedBy(card);
 
-            var playedGameIds = new HashSet<uint>();
+            var playedGameIds = new HashSet<long>();
             foreach (var game in playedGames)
             {
                 playedGameIds.Add(game.Id);
             }
 
-            var possibleGames = new List<GameData>(games.Count);
+            var possibleGames = new List<Game>(games.Count);
             foreach (var game in games)
             {
                 if (!playedGameIds.Contains(game.Id))
@@ -67,34 +67,32 @@ namespace GameSelector.Controllers
 
         private void OnCardInserted(object value)
         {
-            var card = new CardData
-            {
-                CardUID = _nfcDataBridge.GetCardUID()
-            };
+            var cardId = _nfcDataBridge.GetCardUID();
 
-            var cardIsKnown = _database.GetCard(card);
+            var card = _cardDataBridge.GetCard(cardId);
 
-            if (!cardIsKnown)
+            if (card == null)
             {
                 return;
             }
 
             var possibleGames = GetPossibleGames(card);
 
-            GameData selectedGame = null;
+            Game selectedGame = null;
             if (possibleGames.Count > 0)
             {
-                // list is already sorted by priority by data source
+                // list is already sorted by priority by data bridge
                 selectedGame = possibleGames[0];
 
-                card.LastInserted = DateTime.Now;
-
+                selectedGame.StartTime = DateTime.Now;
                 selectedGame.OccupiedBy = card;
-                _database.UpdateGame(selectedGame);
-                _database.UpdateCard(card);
+
+                card.CurrentGame = selectedGame;
+
+                _cardDataBridge.UpdateCard(card);
             }
 
-            _userView.ShowGame(selectedGame);
+            _userView.ShowGame(GameDataView.FromGame(selectedGame));
         }
     }
 }

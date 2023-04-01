@@ -40,9 +40,9 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = string.Empty;
         }
 
-        public void ShowGame(GameData game)
+        public void ShowGame(GameDataView game)
         {
-            gameAnnouncerLabel.Text = SELECTED_MESSAGE + game.OccupiedBy.GroupName + ":";
+            gameAnnouncerLabel.Text = SELECTED_MESSAGE + game.OccupiedBy.ScoutingName + ":";
             gameCodeLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;
             gameExplanationLabel.Text = game.Explanation;

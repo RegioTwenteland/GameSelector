@@ -1,0 +1,51 @@
+﻿using GameSelector.Model;
+using System;
+using System.Collections.Generic;
+namespace GameSelector.Views
+{
+    internal class GameDataView
+    {
+        public long Id { get; set; }
+
+        public string Code { get; set; }
+
+        public string Description { get; set; }
+
+        public string Explanation { get; set; }
+
+        public string Color { get; set; }
+
+        public long Priority { get; set; }
+
+        public CardDataView OccupiedBy { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Code}: {Description}";
+        }
+
+        public static GameDataView FromGame(Game game)
+        {
+            var startTime = DateTime.MinValue;
+
+            if (game.StartTime != null && game.StartTime.HasValue)
+            {
+                startTime = game.StartTime.Value;
+            }
+
+            return new GameDataView
+            {
+                Id = game.Id,
+                Code = game.Code,
+                Description = game.Description,
+                Explanation = game.Explanation,
+                Color = game.Color,
+                Priority = game.Priority,
+                OccupiedBy = CardDataView.FromCard(game.OccupiedBy),
+                StartTime = startTime,
+            };
+        }
+    }
+}
