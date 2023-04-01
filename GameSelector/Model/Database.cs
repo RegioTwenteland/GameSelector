@@ -66,7 +66,10 @@ namespace GameSelector.Model
 
         public List<GameData> GetGameData()
         {
-            var sql = @"SELECT * FROM `games` ORDER BY `priority` ASC;";
+            var sql = @"SELECT * FROM `games`
+                        LEFT JOIN `cards`
+                        ON `cards`.`card_id` = `games`.`occupied_by`
+                        ORDER BY `games`.`priority` ASC;";
             var command = new SQLiteCommand(sql, _connection);
             var reader = command.ExecuteReader();
 
