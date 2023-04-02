@@ -10,30 +10,27 @@ namespace GameSelector.Controllers
     internal class UserController : AbstractController
     {
         private UserViewAdapter _userView;
-        private UserInputView _userInputView;
-        private NfcDataBridge _nfcDataBridge;
+        private UserIdentificationView _userIdentificationView;
         private CardDataBridge _cardDataBridge;
         private GameDataBridge _gameDataBridge;
 
         private Random _random = new Random();
 
         public UserController(
-            NfcDataBridge nfcDataBride,
-            UserInputView userInputView,
+            UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
             CardDataBridge cardDataBridge,
             GameDataBridge gameDataBridge
         )
         {
-            _nfcDataBridge = nfcDataBride;
-            _userInputView = userInputView;
+            _userIdentificationView = userIdentificationView;
             _userView = userView;
             _cardDataBridge = cardDataBridge;
             _gameDataBridge = gameDataBridge;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "CardInserted", OnCardInserted }
+                { "UserLogin", OnUserLogin }
             });
         }
 
@@ -65,9 +62,11 @@ namespace GameSelector.Controllers
             return possibleGames;
         }
 
-        private void OnCardInserted(object value)
+        private void OnUserLogin(object value)
         {
-            var cardId = _nfcDataBridge.GetCardUID();
+            Debug.Assert(value is string);
+
+            var cardId = (string)value;
 
             var card = _cardDataBridge.GetCard(cardId);
 

@@ -11,30 +11,26 @@ namespace GameSelector.Controllers
     internal class AdminController : AbstractController
     {
         private AdminViewAdapter _adminView;
-        private UserInputView _userInputView;
-        private NfcDataBridge _nfcDataBridge;
+        private UserIdentificationView _userIdentificationView;
         private CardDataBridge _cardDataSource;
         private GameDataBridge _gameDataBridge;
 
         public AdminController(
-            NfcDataBridge nfcDataBride,
             AdminViewAdapter adminView,
-            UserInputView userInputView,
+            UserIdentificationView userIdentificationView,
             CardDataBridge cardDataSource,
             GameDataBridge gameDataBridge
         )
         {
             _adminView = adminView;
-            _userInputView = userInputView;
-            _nfcDataBridge = nfcDataBride;
+            _userIdentificationView = userIdentificationView;
             _cardDataSource = cardDataSource;
             _gameDataBridge = gameDataBridge;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
                 { "WriteCardData", OnWriteCardData },
-                { "CardInserted", OnCardInserted },
-                { "CardEjected", OnCardEjected },
+                { "UserLogin", OnUserLogin },
                 { "RequestGames", OnRequestGames },
                 { "RequestGame", OnRequestGame }
             });
@@ -75,11 +71,12 @@ namespace GameSelector.Controllers
             }
         }
 
-        private void OnCardInserted(object value)
+        private void OnUserLogin(object value)
         {
-            //var cardData = _nfcDataBridge.CardData;
-            var cardUid = _nfcDataBridge.GetCardUID();
-            var card = _cardDataSource.GetCard(cardUid);
+            Debug.Assert(value is string);
+
+            var userId = (string)value;
+            var card = _cardDataSource.GetCard(userId);
 
 
             CardDataView cardView;
@@ -88,8 +85,7 @@ namespace GameSelector.Controllers
             {
                 cardView = new CardDataView
                 {
-                    Id = cardUid,
-                    StartTime = DateTime.Now,
+                    Id = userId,
                 };
             }
             else
@@ -98,11 +94,6 @@ namespace GameSelector.Controllers
             }
 
             _adminView.ShowCard(cardView);
-        }
-
-        private void OnCardEjected(object value)
-        {
-            _adminView.ShowCard(null);
         }
 
         private void OnRequestGames(object value)

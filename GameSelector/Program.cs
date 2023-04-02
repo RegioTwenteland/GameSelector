@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using GameSelector.Controllers;
 using GameSelector.Model;
 using GameSelector.Database;
+using NFC;
 
 namespace GameSelector
 {
@@ -26,12 +27,13 @@ namespace GameSelector
             var cardDataBridge = new CardDataBridge(database);
             var gameDataBride = new GameDataBridge(database, cardDataBridge);
 
-            var nfcDataBridge = new NfcDataBridge();
+            var nfcReader = new NfcReader();
+
             var adminView = new AdminViewAdapter(_messages);
-            var userInputView = new UserInputView(_messages);
+            var userIdentificationView = new UserIdentificationView(_messages, nfcReader);
             var userView = new UserViewAdapter(_messages);
-            _controllers.Add(new AdminController(nfcDataBridge, adminView, userInputView, cardDataBridge, gameDataBride));
-            _controllers.Add(new UserController(nfcDataBridge, userInputView, userView, cardDataBridge, gameDataBride));
+            _controllers.Add(new AdminController(adminView, userIdentificationView, cardDataBridge, gameDataBride));
+            _controllers.Add(new UserController(userIdentificationView, userView, cardDataBridge, gameDataBride));
 
             foreach (var controller in _controllers)
             {

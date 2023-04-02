@@ -114,10 +114,10 @@
     <Compile Include="Message.cs" />
     <Compile Include="Model\CardDataBridge.cs" />
     <Compile Include="Model\GameDataBridge.cs" />
-    <Compile Include="External\Card.cs" />
+    <Compile Include="NFC\WinSCardWrapper.cs" />
     <Compile Include="Model\Card.cs" />
     <Compile Include="Model\Game.cs" />
-    <Compile Include="Model\NfcDataBridge.cs" />
+    <Compile Include="NFC\NfcReader.cs" />
     <Compile Include="Model\PlayedGame.cs" />
     <Compile Include="Model\PlayedGameDataBridge.cs" />
     <Compile Include="Model\SetOnce.cs" />
@@ -128,15 +128,15 @@
     <Compile Include="Views\AdminView\AdminView.Designer.cs">
       <DependentUpon>AdminView.cs</DependentUpon>
     </Compile>
-    <Compile Include="External\Helper.cs" />
-    <Compile Include="External\NFCReader.cs" />
+    <Compile Include="NFC\Helper.cs" />
+    <Compile Include="NFC\InternalNfcReader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\AdminView\AdminViewAdapter.cs" />
     <Compile Include="Views\CardDataView.cs" />
     <Compile Include="Views\GameDataView.cs" />
-    <Compile Include="Views\UserInput\UserInputView.cs" />
+    <Compile Include="Views\UserIdentificationView\UserIdentificationView.cs" />
     <Compile Include="Views\UserView\UserView.cs">
       <SubType>Form</SubType>
     </Compile>

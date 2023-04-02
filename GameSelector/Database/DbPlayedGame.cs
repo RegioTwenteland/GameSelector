@@ -6,7 +6,10 @@ namespace GameSelector.Database
     [Table(Name = "played_games")]
     internal class DbPlayedGame
     {
+#pragma warning disable CS0649 // Field 'DbGame._id' is never assigned to, and will always have its default value 0
+        // Reason: this field is written to by the ORM
         private long _id;
+#pragma warning restore CS0649 // Field 'DbGame._id' is never assigned to, and will always have its default value 0
 
         private EntityRef<DbCard> _player = new EntityRef<DbCard>();
         private EntityRef<DbGame> _game = new EntityRef<DbGame>();

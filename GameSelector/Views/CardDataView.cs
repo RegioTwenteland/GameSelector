@@ -15,7 +15,7 @@ namespace GameSelector.Views
 
         public string ScoutingName { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         public string CurrentGame { get; set; }
 

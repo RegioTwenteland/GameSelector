@@ -94,9 +94,11 @@ namespace GameSelector.Views
             groupNameText.Text = card.ScoutingName;
             currentGameText.Text = card.CurrentGame;
             startTimePicker.Text =
-                (card.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
-                card.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
-                card.StartTime).ToString();
+                card.StartTime.HasValue ?
+                    (card.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
+                    card.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
+                    card.StartTime).ToString()
+                : null;
         }
 
         public void SetGamesList(IEnumerable<GameDataView> games)
