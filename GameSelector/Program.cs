@@ -37,7 +37,7 @@ namespace GameSelector
 
             foreach (var controller in _controllers)
             {
-                controller.Run(Stop);
+                controller.Start(Stop);
             }
 
             _messageCancellationToken = _messageCancellationTokenSource.Token;

@@ -57,7 +57,7 @@ namespace NFC
 
                 if (nErrCode == WinSCardWrapper.SCARD_E_SERVICE_STOPPED)
                 {
-                    DeviceDisconnected();
+                    DeviceDisconnected?.Invoke();
                     e.Cancel = true;
                 }
 

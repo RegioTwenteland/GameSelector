@@ -1,8 +1,10 @@
-﻿using GameSelector.Model;
+﻿using CustomControls;
+using GameSelector.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Forms.TextBox;
@@ -42,6 +44,20 @@ namespace GameSelector.Views
             }
 
             SendMessage("RequestGames", null);
+        }
+
+        private void AddNewError(string errorText)
+        {
+            var newError = new ErrorBoxControl();
+            newError.ErrorText = errorText;
+            newError.CloseRequested += OnErrorCloseRequested;
+
+            errorFlowLayout.Controls.Add(newError);
+        }
+
+        private void OnErrorCloseRequested(object sender, ErrorBoxControl.CloseRequestedEventArgs e)
+        {
+            errorFlowLayout.Controls.Remove(e.Which);
         }
 
         private void writeCardButton_Click(object sender, EventArgs e)
@@ -123,6 +139,11 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = game.Description;
             gameExplanationTextbox.Text = game.Explanation;
             gameColorComboBox.Text = game.Color;
+        }
+
+        public void ShowError(string errorText)
+        {
+            AddNewError(errorText);
         }
     }
 }

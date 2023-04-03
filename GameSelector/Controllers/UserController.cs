@@ -34,7 +34,7 @@ namespace GameSelector.Controllers
             });
         }
 
-        public override void Run(Action stop)
+        public override void Start(Action stop)
         {
             _userView.Start(stop);
         }

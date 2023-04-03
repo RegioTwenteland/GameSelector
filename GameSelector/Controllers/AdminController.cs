@@ -32,13 +32,19 @@ namespace GameSelector.Controllers
                 { "WriteCardData", OnWriteCardData },
                 { "UserLogin", OnUserLogin },
                 { "RequestGames", OnRequestGames },
-                { "RequestGame", OnRequestGame }
+                { "RequestGame", OnRequestGame },
+                { "ShowAdminError", ShowAdminError },
             });
         }
 
-        public override void Run(Action stop)
+        public override void Start(Action stop)
         {
             _adminView.Start(stop);
+        }
+
+        public void ShowAdminError(string message)
+        {
+            _adminView.ShowError(message);
         }
 
         private void OnWriteCardData(object value)
@@ -110,6 +116,12 @@ namespace GameSelector.Controllers
             var game = GameDataView.FromGame(_gameDataBridge.GetGame(id));
 
             _adminView.ShowGame(game);
+        }
+
+        private void ShowAdminError(object value)
+        {
+            Debug.Assert(value is string);
+            ShowAdminError((string)value);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace GameSelector.Controllers
@@ -8,7 +7,7 @@ namespace GameSelector.Controllers
     {
         private Dictionary<string, Action<object>> _messageHandlers;
 
-        public abstract void Run(Action stop);
+        public abstract void Start(Action stop);
 
         protected void SetMessageHandlers(Dictionary<string, Action<object>> messageHandlers)
         {

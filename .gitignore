@@ -1,4 +1,4 @@
 .vs
 packages
-GameSelector/bin
-GameSelector/obj
+bin
+obj

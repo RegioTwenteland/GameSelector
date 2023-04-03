@@ -27,16 +27,12 @@ namespace GameSelector.Views
                 Application.Run(form);
                 onClose?.Invoke();
             });
-        }
 
-        private void AssertRightThread()
-        {
-            Debug.Assert(form.InvokeRequired);
+            WaitOnFormLoad(form);
         }
 
         public void ShowGame(GameDataView game)
         {
-            AssertRightThread();
             form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
         }
     }
