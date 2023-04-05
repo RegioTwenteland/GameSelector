@@ -4,7 +4,7 @@ namespace GameSelector.Database
 {
     internal interface IDatabase
     {
-        Table<DbCard> CardTable { get; }
+        Table<DbGroup> CardTable { get; }
 
         Table<DbGame> GameTable { get; }
 

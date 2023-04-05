@@ -29,7 +29,7 @@ namespace GameSelector.Model
 
         public long Priority { get; set; }
 
-        public Card OccupiedBy { get; set; }
+        public Group OccupiedBy { get; set; }
 
         public DateTime? StartTime { get; set; }
     }

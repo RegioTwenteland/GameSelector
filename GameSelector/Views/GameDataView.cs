@@ -17,7 +17,7 @@ namespace GameSelector.Views
 
         public long Priority { get; set; }
 
-        public CardDataView OccupiedBy { get; set; }
+        public GroupDataView OccupiedBy { get; set; }
 
         public DateTime StartTime { get; set; }
 
@@ -43,7 +43,7 @@ namespace GameSelector.Views
                 Explanation = game.Explanation,
                 Color = game.Color,
                 Priority = game.Priority,
-                OccupiedBy = CardDataView.FromCard(game.OccupiedBy),
+                OccupiedBy = GroupDataView.FromGroup(game.OccupiedBy),
                 StartTime = startTime,
             };
         }

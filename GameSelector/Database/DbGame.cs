@@ -11,7 +11,7 @@ namespace GameSelector.Database
         private long _id;
 #pragma warning restore CS0649 // Field 'DbGame._id' is never assigned to, and will always have its default value 0
 
-        private EntityRef<DbCard> _card = new EntityRef<DbCard>();
+        private EntityRef<DbGroup> _group = new EntityRef<DbGroup>();
 
         [Column(Storage = "_id", Name = "id", IsPrimaryKey = true, IsDbGenerated = true)]
         public long Id { get => _id; }
@@ -32,13 +32,13 @@ namespace GameSelector.Database
         public long Priority { get; set; }
 
         [Column(Name = "occupied_by")]
-        public string OccupiedById { get; set; }
+        public long? OccupiedById { get; set; }
 
-        [Association(Storage = "_card", ThisKey = "OccupiedById", IsForeignKey = true)]
-        public DbCard OccupiedBy
+        [Association(Storage = "_group", ThisKey = "OccupiedById", IsForeignKey = true)]
+        public DbGroup OccupiedBy
         {
-            get => _card.Entity;
-            set => _card.Entity = value;
+            get => _group.Entity;
+            set => _group.Entity = value;
         }
 
         [Column(Name = "start_time")]

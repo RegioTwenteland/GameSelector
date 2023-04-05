@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.writeCardButton = new System.Windows.Forms.Button();
-            this.groupIdText = new System.Windows.Forms.TextBox();
+            this.groupNameText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.groupNameText = new System.Windows.Forms.TextBox();
+            this.scoutingNameText = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -72,38 +72,38 @@
             this.writeCardButton.UseVisualStyleBackColor = true;
             this.writeCardButton.Click += new System.EventHandler(this.writeCardButton_Click);
             // 
-            // groupIdText
+            // groupNameText
             // 
-            this.groupIdText.Location = new System.Drawing.Point(94, 32);
-            this.groupIdText.Name = "groupIdText";
-            this.groupIdText.Size = new System.Drawing.Size(200, 20);
-            this.groupIdText.TabIndex = 2;
-            this.groupIdText.TextChanged += new System.EventHandler(this.ForceTextboxToInt);
+            this.groupNameText.Location = new System.Drawing.Point(94, 32);
+            this.groupNameText.Name = "groupNameText";
+            this.groupNameText.Size = new System.Drawing.Size(200, 20);
+            this.groupNameText.TabIndex = 2;
+            this.groupNameText.TextChanged += new System.EventHandler(this.ForceTextboxToInt);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Groep ID";
+            this.label1.Text = "Groep naam";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(5, 61);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.Size = new System.Drawing.Size(78, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Groep naam";
+            this.label2.Text = "Scouting naam";
             // 
-            // groupNameText
+            // scoutingNameText
             // 
-            this.groupNameText.Location = new System.Drawing.Point(94, 58);
-            this.groupNameText.Name = "groupNameText";
-            this.groupNameText.Size = new System.Drawing.Size(200, 20);
-            this.groupNameText.TabIndex = 4;
+            this.scoutingNameText.Location = new System.Drawing.Point(94, 58);
+            this.scoutingNameText.Name = "scoutingNameText";
+            this.scoutingNameText.Size = new System.Drawing.Size(200, 20);
+            this.scoutingNameText.TabIndex = 4;
             // 
             // label3
             // 
@@ -157,9 +157,9 @@
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.startTimePicker);
-            this.tabPage1.Controls.Add(this.groupNameText);
+            this.tabPage1.Controls.Add(this.scoutingNameText);
             this.tabPage1.Controls.Add(this.writeCardButton);
-            this.tabPage1.Controls.Add(this.groupIdText);
+            this.tabPage1.Controls.Add(this.groupNameText);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.currentGameText);
             this.tabPage1.Controls.Add(this.label4);
@@ -168,7 +168,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(699, 553);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "NFC-kaart";
+            this.tabPage1.Text = "Groepen";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // label8
@@ -376,10 +376,10 @@
 
         #endregion
         private System.Windows.Forms.Button writeCardButton;
-        private System.Windows.Forms.TextBox groupIdText;
+        private System.Windows.Forms.TextBox groupNameText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox groupNameText;
+        private System.Windows.Forms.TextBox scoutingNameText;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox currentGameText;
         private System.Windows.Forms.Label label4;

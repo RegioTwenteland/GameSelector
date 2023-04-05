@@ -11,7 +11,7 @@ namespace GameSelector.Controllers
     {
         private UserViewAdapter _userView;
         private UserIdentificationView _userIdentificationView;
-        private CardDataBridge _cardDataBridge;
+        private GroupDataBridge _groupDataBridge;
         private GameDataBridge _gameDataBridge;
 
         private Random _random = new Random();
@@ -19,13 +19,13 @@ namespace GameSelector.Controllers
         public UserController(
             UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
-            CardDataBridge cardDataBridge,
+            GroupDataBridge groupDataBridge,
             GameDataBridge gameDataBridge
         )
         {
             _userIdentificationView = userIdentificationView;
             _userView = userView;
-            _cardDataBridge = cardDataBridge;
+            _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
@@ -39,10 +39,10 @@ namespace GameSelector.Controllers
             _userView.Start(stop);
         }
 
-        private List<Game> GetPossibleGames(Card card)
+        private List<Game> GetPossibleGames(Group group)
         {
             var games = _gameDataBridge.GetAllGames();
-            var playedGames = _gameDataBridge.GetGamesPlayedBy(card);
+            var playedGames = _gameDataBridge.GetGamesPlayedBy(group);
 
             var playedGameIds = new HashSet<long>();
             foreach (var game in playedGames)
@@ -68,14 +68,14 @@ namespace GameSelector.Controllers
 
             var cardId = (string)value;
 
-            var card = _cardDataBridge.GetCard(cardId);
+            var group = _groupDataBridge.GetGroup(cardId);
 
-            if (card == null)
+            if (group == null)
             {
                 return;
             }
 
-            var possibleGames = GetPossibleGames(card);
+            var possibleGames = GetPossibleGames(group);
 
             Game selectedGame = null;
             if (possibleGames.Count > 0)
@@ -84,11 +84,11 @@ namespace GameSelector.Controllers
                 selectedGame = possibleGames[0];
 
                 selectedGame.StartTime = DateTime.Now;
-                selectedGame.OccupiedBy = card;
+                selectedGame.OccupiedBy = group;
 
-                card.CurrentGame = selectedGame;
+                group.CurrentGame = selectedGame;
 
-                _cardDataBridge.UpdateCard(card);
+                _groupDataBridge.UpdateGroup(group);
             }
 
             _userView.ShowGame(GameDataView.FromGame(selectedGame));

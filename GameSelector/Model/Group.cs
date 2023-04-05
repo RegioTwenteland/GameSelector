@@ -4,29 +4,31 @@ using System.Collections.ObjectModel;
 
 namespace GameSelector.Model
 {
-    internal class Card
+    internal class Group
     {
         private List<PlayedGame> _playedGames;
 
-        public Card()
+        public Group()
             : this(new List<PlayedGame>())
         {
         }
 
-        public Card(List<PlayedGame> playedGames)
+        public Group(List<PlayedGame> playedGames)
         {
             _playedGames = playedGames;
         }
 
-        private SetOnce<string> _id = new SetOnce<string>();
+        private SetOnce<long> _id = new SetOnce<long>();
 
-        public string Id
+        public long Id
         {
             get => _id.Value;
             set => _id.Value = value;
         }
 
-        public long GroupId { get; set; }
+        public string CardId { get; set; }
+
+        public string GroupName { get; set; }
 
         public string ScoutingName { get; set; }
 

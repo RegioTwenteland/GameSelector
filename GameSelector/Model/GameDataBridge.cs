@@ -9,19 +9,19 @@ namespace GameSelector.Model
 {
     internal class GameDataBridge
     {
-        private Table<DbCard> _cardTable;
+        private Table<DbGroup> _groupTable;
         private Table<DbGame> _gameTable;
         private Table<DbPlayedGame> _playedGamesTable;
         private DataContext _dataContext;
-        private CardDataBridge _cardDataBridge;
+        private GroupDataBridge _groupDataBridge;
 
-        public GameDataBridge(IDatabase database, CardDataBridge cardDataBridge)
+        public GameDataBridge(IDatabase database, GroupDataBridge groupDataBridge)
         {
-            _cardTable = database.CardTable;
+            _groupTable = database.CardTable;
             _gameTable = database.GameTable;
             _playedGamesTable = database.PlayedGameTable;
             _dataContext = database.DataContext;
-            _cardDataBridge = cardDataBridge;
+            _groupDataBridge = groupDataBridge;
         }
 
         private Game DbGameToGame(DbGame dbGame)
@@ -37,7 +37,7 @@ namespace GameSelector.Model
                 Explanation = dbGame.Explanation,
                 Color = dbGame.Color,
                 Priority = dbGame.Priority,
-                OccupiedBy = _cardDataBridge.GetCard(dbGame.OccupiedById),
+                OccupiedBy = dbGame.OccupiedById.HasValue ? _groupDataBridge.GetGroup(dbGame.OccupiedById.Value) : null,
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
             };
         }
@@ -54,9 +54,9 @@ namespace GameSelector.Model
             return output;
         }
 
-        public List<Game> GetGamesPlayedBy(Card card)
+        public List<Game> GetGamesPlayedBy(Group group)
         {
-            return _gameTable.Where(g => g.OccupiedById == card.Id)
+            return _gameTable.Where(g => g.OccupiedById == group.Id)
                 .Select(g => DbGameToGame(g))
                 .ToList();
         }
@@ -89,15 +89,16 @@ namespace GameSelector.Model
             }
             else if (game.OccupiedBy != null)
             {
-                // add the link to a card, update the same card, or link to a new card
-                var newDbCard = _cardTable.Where(c => c.Id == game.OccupiedBy.Id).Single();
+                // add the link to a group, update the same group, or link to a new group
+                var newDbGroup = _groupTable.Where(c => c.Id == game.OccupiedBy.Id).Single();
 
                 // in case we update the same card
-                newDbCard.GroupId = game.OccupiedBy.GroupId;
-                newDbCard.ScoutingName = game.OccupiedBy.ScoutingName;
+                newDbGroup.CardId = game.OccupiedBy.CardId;
+                newDbGroup.GroupName = game.OccupiedBy.GroupName;
+                newDbGroup.ScoutingName = game.OccupiedBy.ScoutingName;
 
                 // in case we create a new link
-                dbGame.OccupiedBy = newDbCard;
+                dbGame.OccupiedBy = newDbGroup;
                 dbGame.StartTime = game.StartTime?.Ticks;
             }
 

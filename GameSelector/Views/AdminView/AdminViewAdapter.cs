@@ -33,9 +33,9 @@ namespace GameSelector.Views
             WaitOnFormLoad(form);
         }
 
-        public void ShowCard(CardDataView card)
+        public void ShowGroup(GroupDataView group)
         {
-            form.Invoke(new MethodInvoker(() => form.ShowCard(card)));
+            form.Invoke(new MethodInvoker(() => form.ShowGroup(group)));
         }
 
         public void ShowGame(GameDataView game)

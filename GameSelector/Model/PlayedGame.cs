@@ -20,7 +20,7 @@ namespace GameSelector.Model
 
         public long Id { get; }
         
-        public Card Player { get; set; }
+        public Group Player { get; set; }
 
         public Game Game { get; set; }
 

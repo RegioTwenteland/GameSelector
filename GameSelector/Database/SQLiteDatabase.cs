@@ -6,7 +6,7 @@ namespace GameSelector.Database
 {
     internal class SQLiteDatabase : IDatabase
     {
-        private Table<DbCard> _cardTable;
+        private Table<DbGroup> _cardTable;
         private Table<DbGame> _gameTable;
         private Table<DbPlayedGame> _playedGameTable;
 
@@ -16,12 +16,12 @@ namespace GameSelector.Database
         {
             _dataContext = new DataContext(new SQLiteConnection(connectionString));
 
-            _cardTable = _dataContext.GetTable<DbCard>();
+            _cardTable = _dataContext.GetTable<DbGroup>();
             _gameTable = _dataContext.GetTable<DbGame>();
             _playedGameTable = _dataContext.GetTable<DbPlayedGame>();
         }
 
-        public Table<DbCard> CardTable => _cardTable;
+        public Table<DbGroup> CardTable => _cardTable;
 
         public Table<DbGame> GameTable => _gameTable;
 

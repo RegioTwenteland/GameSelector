@@ -12,19 +12,19 @@ namespace GameSelector.Controllers
     {
         private AdminViewAdapter _adminView;
         private UserIdentificationView _userIdentificationView;
-        private CardDataBridge _cardDataSource;
+        private GroupDataBridge _groupDataBridge;
         private GameDataBridge _gameDataBridge;
 
         public AdminController(
             AdminViewAdapter adminView,
             UserIdentificationView userIdentificationView,
-            CardDataBridge cardDataSource,
+            GroupDataBridge groupDataBridge,
             GameDataBridge gameDataBridge
         )
         {
             _adminView = adminView;
             _userIdentificationView = userIdentificationView;
-            _cardDataSource = cardDataSource;
+            _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
@@ -49,31 +49,33 @@ namespace GameSelector.Controllers
 
         private void OnWriteCardData(object value)
         {
-            Debug.Assert(value is CardDataView);
+            Debug.Assert(value is GroupDataView);
 
-            var cardView = (CardDataView)value;
+            var cardView = (GroupDataView)value;
 
-            var card = _cardDataSource.GetCard(cardView.Id);
+            var group = _groupDataBridge.GetGroup(cardView.Id);
 
-            if (card == null)
+            if (group == null)
             {
                 // new card
-                card = new Card
+                group = new Group
                 {
                     Id = cardView.Id,
-                    GroupId = cardView.GroupId,
+                    CardId = cardView.CardId,
+                    GroupName = cardView.GroupName,
                     ScoutingName = cardView.ScoutingName,
                 };
 
-                _cardDataSource.InsertCard(card);
+                _groupDataBridge.InsertGroup(group);
             }
             else
             {
                 // existing card
-                card.GroupId = cardView.GroupId;
-                card.ScoutingName = cardView.ScoutingName;
+                group.CardId = cardView.CardId;
+                group.GroupName = cardView.GroupName;
+                group.ScoutingName = cardView.ScoutingName;
 
-                _cardDataSource.UpdateCard(card);
+                _groupDataBridge.UpdateGroup(group);
             }
         }
 
@@ -81,25 +83,18 @@ namespace GameSelector.Controllers
         {
             Debug.Assert(value is string);
 
-            var userId = (string)value;
-            var card = _cardDataSource.GetCard(userId);
+            var cardId = (string)value;
+            var group = _groupDataBridge.GetGroup(cardId);
 
 
-            CardDataView cardView;
+            GroupDataView groupView = null;
 
-            if (card == null)
+            if (group != null)
             {
-                cardView = new CardDataView
-                {
-                    Id = userId,
-                };
-            }
-            else
-            {
-                cardView = CardDataView.FromCard(card);
+                groupView = GroupDataView.FromGroup(group);
             }
 
-            _adminView.ShowCard(cardView);
+            _adminView.ShowGroup(groupView);
         }
 
         private void OnRequestGames(object value)

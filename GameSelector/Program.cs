@@ -24,16 +24,16 @@ namespace GameSelector
         static void Main()
         {
             var database = CreateDatabase();
-            var cardDataBridge = new CardDataBridge(database);
-            var gameDataBride = new GameDataBridge(database, cardDataBridge);
+            var groupDataBridge = new GroupDataBridge(database);
+            var gameDataBride = new GameDataBridge(database, groupDataBridge);
 
             var nfcReader = new NfcReader();
 
             var adminView = new AdminViewAdapter(_messages);
             var userIdentificationView = new UserIdentificationView(_messages, nfcReader);
             var userView = new UserViewAdapter(_messages);
-            _controllers.Add(new AdminController(adminView, userIdentificationView, cardDataBridge, gameDataBride));
-            _controllers.Add(new UserController(userIdentificationView, userView, cardDataBridge, gameDataBride));
+            _controllers.Add(new AdminController(adminView, userIdentificationView, groupDataBridge, gameDataBride));
+            _controllers.Add(new UserController(userIdentificationView, userView, groupDataBridge, gameDataBride));
 
             foreach (var controller in _controllers)
             {

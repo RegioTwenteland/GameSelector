@@ -4,14 +4,17 @@ using System.Linq;
 
 namespace GameSelector.Database
 {
-    [Table(Name = "cards")]
-    internal class DbCard
+    [Table(Name = "groups")]
+    internal class DbGroup
     {
-        [Column(Name = "card_id", IsPrimaryKey = true)]
-        public string Id { get; set; }
+        [Column(Name = "id", IsPrimaryKey = true, IsDbGenerated = true)]
+        public long Id { get; set; }
 
-        [Column(Name = "group_id")]
-        public long GroupId { get; set; }
+        [Column(Name = "card_id")]
+        public string CardId { get; set; }
+
+        [Column(Name = "group_name")]
+        public string GroupName { get; set; }
 
         [Column(Name = "scouting_name")]
         public string ScoutingName { get; set; }
@@ -26,11 +29,6 @@ namespace GameSelector.Database
         {
             get => _playedGames ?? new EntitySet<DbPlayedGame>();
             set => _playedGames.Assign(value);
-        }
-
-        public override string ToString()
-        {
-            return $"(Card: Id = {Id}, GroupId = {GroupId}, ScoutingName = {ScoutingName})";
         }
     }
 }

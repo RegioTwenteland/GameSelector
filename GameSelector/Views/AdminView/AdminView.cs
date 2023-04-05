@@ -70,11 +70,11 @@ namespace GameSelector.Views
             //    LastInserted = DateTime.Parse(startTimePicker.Text),
             //};
 
-            var card = new CardDataView
+            var card = new GroupDataView
             {
-                Id = cardIdText.Text,
-                GroupId = uint.Parse(groupIdText.Text),
-                ScoutingName = groupNameText.Text,
+                CardId = cardIdText.Text,
+                GroupName = groupNameText.Text,
+                ScoutingName = scoutingNameText.Text,
                 StartTime = DateTime.Parse(startTimePicker.Text),
                 CurrentGame = currentGameText.Text,
             };
@@ -94,26 +94,26 @@ namespace GameSelector.Views
             textbox.Text = _intRgx.Replace(textbox.Text, "");
         }
 
-        public void ShowCard(CardDataView card)
+        public void ShowGroup(GroupDataView group)
         {
-            if (card == null)
+            if (group == null)
             {
                 cardIdText.Text = string.Empty;
-                groupIdText.Text = string.Empty;
                 groupNameText.Text = string.Empty;
+                scoutingNameText.Text = string.Empty;
                 currentGameText.Text = string.Empty;
                 return;
             }
 
-            cardIdText.Text = card.Id;
-            groupIdText.Text = card.GroupId.ToString();
-            groupNameText.Text = card.ScoutingName;
-            currentGameText.Text = card.CurrentGame;
+            cardIdText.Text = group.CardId;
+            groupNameText.Text = group.GroupName.ToString();
+            scoutingNameText.Text = group.ScoutingName;
+            currentGameText.Text = group.CurrentGame;
             startTimePicker.Text =
-                card.StartTime.HasValue ?
-                    (card.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
-                    card.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
-                    card.StartTime).ToString()
+                group.StartTime.HasValue ?
+                    (group.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
+                    group.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
+                    group.StartTime).ToString()
                 : null;
         }
 

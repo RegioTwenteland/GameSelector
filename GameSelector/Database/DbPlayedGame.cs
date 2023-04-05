@@ -11,17 +11,17 @@ namespace GameSelector.Database
         private long _id;
 #pragma warning restore CS0649 // Field 'DbGame._id' is never assigned to, and will always have its default value 0
 
-        private EntityRef<DbCard> _player = new EntityRef<DbCard>();
+        private EntityRef<DbGroup> _player = new EntityRef<DbGroup>();
         private EntityRef<DbGame> _game = new EntityRef<DbGame>();
 
         [Column(Storage = "_id", Name = "id", IsPrimaryKey = true, IsDbGenerated = true)]
         public long Id { get => _id; }
 
         [Column(Name = "player")]
-        public string PlayerId { get; set; }
+        public long PlayerId { get; set; }
 
         [Association(Storage = "_player", ThisKey = "PlayerId", IsForeignKey = true)]
-        public DbCard Player
+        public DbGroup Player
         {
             get => _player.Entity;
             set => _player.Entity = value;
