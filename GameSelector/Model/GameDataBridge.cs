@@ -1,35 +1,24 @@
-﻿using NFC;
-using GameSelector.Database;
+﻿using GameSelector.Database.SQLite;
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 
 namespace GameSelector.Model
 {
     internal class GameDataBridge
     {
-        private Table<DbGroup> _groupTable;
-        private Table<DbGame> _gameTable;
-        private Table<DbPlayedGame> _playedGamesTable;
-        private DataContext _dataContext;
-        private GroupDataBridge _groupDataBridge;
+        private GamesTable _gamesTable;
 
-        public GameDataBridge(IDatabase database, GroupDataBridge groupDataBridge)
+        public GameDataBridge(GamesTable gamesTable)
         {
-            _groupTable = database.CardTable;
-            _gameTable = database.GameTable;
-            _playedGamesTable = database.PlayedGameTable;
-            _dataContext = database.DataContext;
-            _groupDataBridge = groupDataBridge;
+            _gamesTable = gamesTable;
         }
 
-        private Game DbGameToGame(DbGame dbGame)
+        public static Game DbGameToGame(DbGame dbGame, Group group = null)
         {
-            if (dbGame == null)
-                return null;
+            if (dbGame == null) return null;
 
-            return new Game
+            var output = new Game
             {
                 Id = dbGame.Id,
                 Code = dbGame.Code,
@@ -37,72 +26,60 @@ namespace GameSelector.Model
                 Explanation = dbGame.Explanation,
                 Color = dbGame.Color,
                 Priority = dbGame.Priority,
-                OccupiedBy = dbGame.OccupiedById.HasValue ? _groupDataBridge.GetGroup(dbGame.OccupiedById.Value) : null,
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
+            };
+
+            output.OccupiedBy = group ?? GroupDataBridge.DbGroupToGroup(dbGame.OccupiedBy, output);
+
+            return output;
+        }
+
+        public static DbGame GameToDbGame(Game game)
+        {
+            if (game == null) return null;
+
+            return new DbGame
+            {
+                Id = game.Id,
+                Code = game.Code,
+                Description = game.Description,
+                Explanation = game.Explanation,
+                Color = game.Color,
+                Priority = game.Priority,
+                OccupiedById = game.OccupiedBy?.Id,
+                StartTime = game.StartTime.HasValue ? (long?)game.StartTime.Value.Ticks : null
             };
         }
 
         public List<Game> GetAllGames()
         {
-            var output = new List<Game>();
-
-            foreach (var dbGame in _gameTable)
-            {
-                output.Add(DbGameToGame(dbGame));
-            }
-
-            return output;
+            return
+                _gamesTable.GetAllGames()
+                .Select(dbG => DbGameToGame(dbG))
+                .ToList();
         }
 
-        public List<Game> GetGamesPlayedBy(Group group)
+        public List<Game> GetAllGamesNotOccupied()
         {
-            return _gameTable.Where(g => g.OccupiedById == group.Id)
-                .Select(g => DbGameToGame(g))
+            return
+                _gamesTable.GetAllGamesNotOccupied()
+                .Select(dbG => DbGameToGame(dbG))
                 .ToList();
         }
 
         public Game GetGame(long id)
         {
-            return DbGameToGame(_gameTable.Where(g => g.Id == id).SingleOrDefault());
+            return DbGameToGame(_gamesTable.GetGameById(id));
+        }
+
+        public Game GetGameOccupiedBy(Group group)
+        {
+            return DbGameToGame(_gamesTable.GetGameOccupiedBy(group.Id));
         }
 
         public void UpdateGame(Game game)
         {
-            var dbGame = _gameTable.Where(g => g.Id == game.Id).SingleOrDefault();
-
-            if (dbGame == null)
-            {
-                throw new InvalidOperationException("Can't update a game that does not exist");
-            }
-
-            dbGame.Code = game.Code;
-            dbGame.Description = game.Description;
-            dbGame.Explanation = game.Explanation;
-            dbGame.Color = game.Color;
-            dbGame.Priority = game.Priority;
-
-            if (game.OccupiedBy == null && dbGame.OccupiedBy != null)
-            {
-                // remove the link to a card
-                dbGame.OccupiedBy = null;
-                dbGame.StartTime = null;
-            }
-            else if (game.OccupiedBy != null)
-            {
-                // add the link to a group, update the same group, or link to a new group
-                var newDbGroup = _groupTable.Where(c => c.Id == game.OccupiedBy.Id).Single();
-
-                // in case we update the same card
-                newDbGroup.CardId = game.OccupiedBy.CardId;
-                newDbGroup.GroupName = game.OccupiedBy.GroupName;
-                newDbGroup.ScoutingName = game.OccupiedBy.ScoutingName;
-
-                // in case we create a new link
-                dbGame.OccupiedBy = newDbGroup;
-                dbGame.StartTime = game.StartTime?.Ticks;
-            }
-
-            _dataContext.SubmitChanges();
+            _gamesTable.UpdateGame(GameToDbGame(game));
         }
     }
 }

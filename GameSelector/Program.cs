@@ -5,7 +5,7 @@ using System.Threading;
 using System.Collections.Generic;
 using GameSelector.Controllers;
 using GameSelector.Model;
-using GameSelector.Database;
+using GameSelector.Database.SQLite;
 using NFC;
 
 namespace GameSelector
@@ -23,9 +23,15 @@ namespace GameSelector
         /// </summary>
         static void Main()
         {
-            var database = CreateDatabase();
-            var groupDataBridge = new GroupDataBridge(database);
-            var gameDataBride = new GameDataBridge(database, groupDataBridge);
+            // TODO: make interfaces for these
+            var database = new SQLiteDatabase($"Data Source={DB_FILE_NAME}");
+            var gamesTable = new GamesTable(database.Connection);
+            var groupsTable = new GroupsTable(database.Connection);
+            var playedGamesTable = new PlayedGamesTable(database.Connection);
+
+            var groupDataBridge = new GroupDataBridge(groupsTable);
+            var gameDataBride = new GameDataBridge(gamesTable);
+            var playedGameDataBridge = new PlayedGameDataBridge(playedGamesTable);
 
             var nfcReader = new NfcReader();
 
@@ -33,7 +39,7 @@ namespace GameSelector
             var userIdentificationView = new UserIdentificationView(_messages, nfcReader);
             var userView = new UserViewAdapter(_messages);
             _controllers.Add(new AdminController(adminView, userIdentificationView, groupDataBridge, gameDataBride));
-            _controllers.Add(new UserController(userIdentificationView, userView, groupDataBridge, gameDataBride));
+            _controllers.Add(new UserController(userIdentificationView, userView, groupDataBridge, gameDataBride, playedGameDataBridge));
 
             foreach (var controller in _controllers)
             {
@@ -68,10 +74,10 @@ namespace GameSelector
 
         private const string DB_FILE_NAME = "..\\..\\data.sqlite";
 
-        static IDatabase CreateDatabase()
-        {
-            return new SQLiteDatabase($"Data Source={DB_FILE_NAME}");
-        }
+        //static IDatabase CreateDatabase()
+        //{
+        //    return new SQLiteDatabase($"Data Source={DB_FILE_NAME}");
+        //}
     }
 
     

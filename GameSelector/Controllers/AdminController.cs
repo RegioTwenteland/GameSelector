@@ -62,7 +62,7 @@ namespace GameSelector.Controllers
                 {
                     Id = cardView.Id,
                     CardId = cardView.CardId,
-                    GroupName = cardView.GroupName,
+                    Name = cardView.GroupName,
                     ScoutingName = cardView.ScoutingName,
                 };
 
@@ -72,7 +72,7 @@ namespace GameSelector.Controllers
             {
                 // existing card
                 group.CardId = cardView.CardId;
-                group.GroupName = cardView.GroupName;
+                group.Name = cardView.GroupName;
                 group.ScoutingName = cardView.ScoutingName;
 
                 _groupDataBridge.UpdateGroup(group);

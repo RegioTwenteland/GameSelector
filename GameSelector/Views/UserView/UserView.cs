@@ -42,6 +42,15 @@ namespace GameSelector.Views
 
         public void ShowGame(GameDataView game)
         {
+            if (game == null)
+            {
+                gameAnnouncerLabel.Text = "Er is geen spel gevonden";
+                gameCodeLabel.Text = "";
+                gameDescriptionLabel.Text = "";
+                gameExplanationLabel.Text = "";
+                return;
+            }
+
             gameAnnouncerLabel.Text = SELECTED_MESSAGE + game.OccupiedBy.ScoutingName + ":";
             gameCodeLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;

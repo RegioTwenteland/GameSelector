@@ -30,19 +30,19 @@ namespace GameSelector.Views
 
             var startTime = DateTime.MinValue;
 
-            if (group.CurrentGame != null && group.CurrentGame.StartTime.HasValue)
+            if (group.CurrentlyPlaying != null && group.CurrentlyPlaying.StartTime.HasValue)
             {
-                startTime = group.CurrentGame.StartTime.Value;
+                startTime = group.CurrentlyPlaying.StartTime.Value;
             }
 
             return new GroupDataView
             {
                 Id = group.Id,
                 CardId = group.CardId,
-                GroupName = group.GroupName,
+                GroupName = group.Name,
                 ScoutingName = group.ScoutingName,
                 StartTime = startTime,
-                CurrentGame = group.CurrentGame?.Description
+                CurrentGame = group.CurrentlyPlaying?.Description
             };
         }
     }

@@ -28,6 +28,8 @@ namespace GameSelector.Views
 
         public static GameDataView FromGame(Game game)
         {
+            if (game == null) return null;
+            
             var startTime = DateTime.MinValue;
 
             if (game.StartTime != null && game.StartTime.HasValue)
