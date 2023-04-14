@@ -24,6 +24,8 @@ namespace GameSelector
         /// </summary>
         static void Main()
         {
+            var gameState = new GameState();
+
             var model = ModelFactory.GetModel();
 
             var groupDataBridge = model.GroupDataBridge;
@@ -35,8 +37,8 @@ namespace GameSelector
             var adminView = new AdminViewAdapter(_messages);
             var userIdentificationView = new UserIdentificationView(_messages, nfcReader);
             var userView = new UserViewAdapter(_messages);
-            _controllers.Add(new AdminController(adminView, userIdentificationView, groupDataBridge, gameDataBride));
-            _controllers.Add(new UserController(userIdentificationView, userView, groupDataBridge, gameDataBride, playedGameDataBridge));
+            _controllers.Add(new AdminController(gameState, adminView, userIdentificationView, groupDataBridge, gameDataBride));
+            _controllers.Add(new UserController(gameState, userIdentificationView, userView, groupDataBridge, gameDataBride, playedGameDataBridge));
 
             foreach (var controller in _controllers)
             {

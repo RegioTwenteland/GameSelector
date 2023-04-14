@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserView));
             this.gameAnnouncerLabel = new System.Windows.Forms.Label();
             this.gameCodeLabel = new System.Windows.Forms.Label();
             this.gameDescriptionLabel = new System.Windows.Forms.Label();
@@ -87,6 +88,7 @@
             this.Controls.Add(this.gameDescriptionLabel);
             this.Controls.Add(this.gameCodeLabel);
             this.Controls.Add(this.gameAnnouncerLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UserView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Welk spel speel jij?";

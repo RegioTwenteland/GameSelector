@@ -52,5 +52,15 @@ namespace GameSelector.Views
         {
             form.Invoke(new MethodInvoker(() => form.ShowError(errorText)));
         }
+
+        public void ShowGamePaused()
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowGamePaused()));
+        }
+
+        public void ShowGameRunning()
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowGameRunning()));
+        }
     }
 }

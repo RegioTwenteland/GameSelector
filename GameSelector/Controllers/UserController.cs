@@ -8,6 +8,7 @@ namespace GameSelector.Controllers
 {
     internal class UserController : AbstractController
     {
+        private GameState _gameState;
         private UserViewAdapter _userView;
         private UserIdentificationView _userIdentificationView;
         private IGroupDataBridge _groupDataBridge;
@@ -15,6 +16,7 @@ namespace GameSelector.Controllers
         private IPlayedGameDataBridge _playedGameDataBridge;
 
         public UserController(
+            GameState gameState,
             UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
             IGroupDataBridge groupDataBridge,
@@ -22,6 +24,7 @@ namespace GameSelector.Controllers
             IPlayedGameDataBridge playedGameDataBridge
         )
         {
+            _gameState = gameState;
             _userIdentificationView = userIdentificationView;
             _userView = userView;
             _groupDataBridge = groupDataBridge;
@@ -116,6 +119,8 @@ namespace GameSelector.Controllers
         private void OnUserLogin(object value)
         {
             Debug.Assert(value is string);
+
+            if (_gameState.CurrentState == GameState.State.Paused) return;
 
             var cardId = (string)value;
             var group = _groupDataBridge.GetGroup(cardId);

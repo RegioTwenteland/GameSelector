@@ -125,6 +125,7 @@
     <Compile Include="Database\IDbPlayedGame.cs" />
     <Compile Include="Database\SQLite\SQLitePlayedGamesTable.cs" />
     <Compile Include="Database\SQLite\SQLiteDatabase.cs" />
+    <Compile Include="GameState.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Model\Database\DbGroupDataBridge.cs" />

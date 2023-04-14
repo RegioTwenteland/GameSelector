@@ -1,7 +1,6 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,22 +9,27 @@ namespace GameSelector.Controllers
 {
     internal class AdminController : AbstractController
     {
+        private GameState _gameState;
         private AdminViewAdapter _adminView;
         private UserIdentificationView _userIdentificationView;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
 
         public AdminController(
+            GameState gameState,
             AdminViewAdapter adminView,
             UserIdentificationView userIdentificationView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge
         )
         {
+            _gameState = gameState;
             _adminView = adminView;
             _userIdentificationView = userIdentificationView;
             _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
+
+            _gameState.StateChanged += OnGameStateChanged;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
@@ -34,17 +38,32 @@ namespace GameSelector.Controllers
                 { "RequestGames", OnRequestGames },
                 { "RequestGame", OnRequestGame },
                 { "ShowAdminError", ShowAdminError },
+                { "RequestStartStopGame", OnRequestStartStopGame }
             });
         }
 
         public override void Start(Action stop)
         {
             _adminView.Start(stop);
+
+            _gameState.CurrentState = GameState.State.Paused;
         }
 
         public void ShowAdminError(string message)
         {
             _adminView.ShowError(message);
+        }
+
+        private void OnGameStateChanged(object sender, EventArgs e)
+        {
+            if (_gameState.CurrentState == GameState.State.Paused)
+            {
+                _adminView.ShowGamePaused();
+            }
+            else
+            {
+                _adminView.ShowGameRunning();
+            }
         }
 
         private void OnWriteCardData(object value)
@@ -117,6 +136,20 @@ namespace GameSelector.Controllers
         {
             Debug.Assert(value is string);
             ShowAdminError((string)value);
+        }
+
+        private void OnRequestStartStopGame(object value)
+        {
+            Debug.Assert(value is null);
+
+            if (_gameState.CurrentState == GameState.State.Paused)
+            {
+                _gameState.CurrentState = GameState.State.Playing;
+            }
+            else
+            {
+                _gameState.CurrentState = GameState.State.Paused;
+            }
         }
     }
 }

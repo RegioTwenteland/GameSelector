@@ -2,6 +2,7 @@
 using GameSelector.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -62,14 +63,6 @@ namespace GameSelector.Views
 
         private void writeCardButton_Click(object sender, EventArgs e)
         {
-            //var card = new CardData
-            //{
-            //    CardUID = cardIdText.Text,
-            //    GroupId = uint.Parse(groupIdText.Text),
-            //    GroupName = groupNameText.Text,
-            //    LastInserted = DateTime.Parse(startTimePicker.Text),
-            //};
-
             var card = new GroupDataView
             {
                 CardId = cardIdText.Text,
@@ -80,6 +73,11 @@ namespace GameSelector.Views
             };
 
             SendMessage("WriteCardData", card);
+        }
+
+        private void startStopGameButton_Click(object sender, EventArgs e)
+        {
+            SendMessage("RequestStartStopGame", null);
         }
 
         private void gamesListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,6 +142,20 @@ namespace GameSelector.Views
         public void ShowError(string errorText)
         {
             AddNewError(errorText);
+        }
+
+        public void ShowGamePaused()
+        {
+            gameStateLabel.Text = "GEPAUZEERD";
+            startStopGameButton.Text = "Start";
+            gameStateLabel.ForeColor = Color.Red;
+        }
+
+        public void ShowGameRunning()
+        {
+            gameStateLabel.Text = "BEZIG";
+            startStopGameButton.Text = "Pauze";
+            gameStateLabel.ForeColor = Color.Green;
         }
     }
 }

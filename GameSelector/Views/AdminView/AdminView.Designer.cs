@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminView));
             this.writeCardButton = new System.Windows.Forms.Button();
             this.groupNameText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,6 +39,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.startTimePicker = new System.Windows.Forms.DateTimePicker();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.adminTab = new System.Windows.Forms.TabPage();
+            this.gameStateLabel = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.startStopGameButton = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.cardIdText = new System.Windows.Forms.TextBox();
@@ -53,9 +58,9 @@
             this.deleteGameButton = new System.Windows.Forms.Button();
             this.gameDescriptionTextbox = new System.Windows.Forms.TextBox();
             this.gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1.SuspendLayout();
+            this.adminTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -140,15 +145,57 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.adminTab);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Left;
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(707, 579);
             this.tabControl1.TabIndex = 11;
+            // 
+            // adminTab
+            // 
+            this.adminTab.Controls.Add(this.gameStateLabel);
+            this.adminTab.Controls.Add(this.label9);
+            this.adminTab.Controls.Add(this.startStopGameButton);
+            this.adminTab.Location = new System.Drawing.Point(4, 22);
+            this.adminTab.Name = "adminTab";
+            this.adminTab.Padding = new System.Windows.Forms.Padding(3);
+            this.adminTab.Size = new System.Drawing.Size(699, 553);
+            this.adminTab.TabIndex = 2;
+            this.adminTab.Text = "Admin";
+            this.adminTab.UseVisualStyleBackColor = true;
+            // 
+            // gameStateLabel
+            // 
+            this.gameStateLabel.AutoSize = true;
+            this.gameStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameStateLabel.Location = new System.Drawing.Point(185, 9);
+            this.gameStateLabel.Name = "gameStateLabel";
+            this.gameStateLabel.Size = new System.Drawing.Size(110, 16);
+            this.gameStateLabel.TabIndex = 2;
+            this.gameStateLabel.Text = "GEPAUZEERD";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(87, 11);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(92, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Spel is momenteel";
+            // 
+            // startStopGameButton
+            // 
+            this.startStopGameButton.Location = new System.Drawing.Point(6, 6);
+            this.startStopGameButton.Name = "startStopGameButton";
+            this.startStopGameButton.Size = new System.Drawing.Size(75, 23);
+            this.startStopGameButton.TabIndex = 0;
+            this.startStopGameButton.Text = "Start spel";
+            this.startStopGameButton.UseVisualStyleBackColor = true;
+            this.startStopGameButton.Click += new System.EventHandler(this.startStopGameButton_Click);
             // 
             // tabPage1
             // 
@@ -331,16 +378,6 @@
             this.gameExplanationTextbox.TabIndex = 7;
             this.gameExplanationTextbox.Text = "";
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(699, 553);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Groepen";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // errorFlowLayout
             // 
             this.errorFlowLayout.AutoScroll = true;
@@ -359,11 +396,14 @@
             this.ClientSize = new System.Drawing.Size(908, 589);
             this.Controls.Add(this.errorFlowLayout);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AdminView";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Admin";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
+            this.adminTab.ResumeLayout(false);
+            this.adminTab.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -388,7 +428,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox gamesListBox;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
@@ -402,6 +441,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox cardIdText;
         private System.Windows.Forms.FlowLayoutPanel errorFlowLayout;
+        private System.Windows.Forms.TabPage adminTab;
+        private System.Windows.Forms.Label gameStateLabel;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button startStopGameButton;
     }
 }
 
