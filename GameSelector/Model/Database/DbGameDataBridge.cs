@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GameSelector.Model
+namespace GameSelector.Model.Database
 {
-    internal class GameDataBridge
+    internal class DbGameDataBridge : IGameDataBridge
     {
         private readonly IGamesTable _gamesTable;
         private readonly IDatabaseObjectTranslator _objectTranslator;
 
-        public GameDataBridge(IDatabase database)
+        public DbGameDataBridge(IDatabase database)
         {
             _gamesTable = database.GamesTable;
             _objectTranslator = database.ObjectTranslator;
@@ -31,7 +31,7 @@ namespace GameSelector.Model
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
             };
 
-            output.OccupiedBy = group ?? GroupDataBridge.DbGroupToGroup(dbGame.OccupiedBy, output);
+            output.OccupiedBy = group ?? DbGroupDataBridge.DbGroupToGroup(dbGame.OccupiedBy, output);
 
             return output;
         }

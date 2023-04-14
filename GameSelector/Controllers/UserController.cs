@@ -3,7 +3,6 @@ using GameSelector.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace GameSelector.Controllers
 {
@@ -11,18 +10,16 @@ namespace GameSelector.Controllers
     {
         private UserViewAdapter _userView;
         private UserIdentificationView _userIdentificationView;
-        private GroupDataBridge _groupDataBridge;
-        private GameDataBridge _gameDataBridge;
-        private PlayedGameDataBridge _playedGameDataBridge;
-
-        private Random _random = new Random();
+        private IGroupDataBridge _groupDataBridge;
+        private IGameDataBridge _gameDataBridge;
+        private IPlayedGameDataBridge _playedGameDataBridge;
 
         public UserController(
             UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
-            GroupDataBridge groupDataBridge,
-            GameDataBridge gameDataBridge,
-            PlayedGameDataBridge playedGameDataBridge
+            IGroupDataBridge groupDataBridge,
+            IGameDataBridge gameDataBridge,
+            IPlayedGameDataBridge playedGameDataBridge
         )
         {
             _userIdentificationView = userIdentificationView;
@@ -104,7 +101,7 @@ namespace GameSelector.Controllers
             {
                 PlayerId = group.Id,
                 GameId = currentGame.Id,
-                StartTime = currentGame.StartTime.HasValue ? currentGame.StartTime.Value : DateTime.MinValue,
+                StartTime = currentGame.StartTime ?? DateTime.MinValue,
                 EndTime = DateTime.Now,
             };
 

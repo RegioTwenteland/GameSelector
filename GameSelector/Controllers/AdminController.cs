@@ -12,14 +12,14 @@ namespace GameSelector.Controllers
     {
         private AdminViewAdapter _adminView;
         private UserIdentificationView _userIdentificationView;
-        private GroupDataBridge _groupDataBridge;
-        private GameDataBridge _gameDataBridge;
+        private IGroupDataBridge _groupDataBridge;
+        private IGameDataBridge _gameDataBridge;
 
         public AdminController(
             AdminViewAdapter adminView,
             UserIdentificationView userIdentificationView,
-            GroupDataBridge groupDataBridge,
-            GameDataBridge gameDataBridge
+            IGroupDataBridge groupDataBridge,
+            IGameDataBridge gameDataBridge
         )
         {
             _adminView = adminView;

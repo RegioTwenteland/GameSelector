@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace GameSelector.Model
+namespace GameSelector.Model.Database
 {
-    internal class PlayedGameDataBridge
+    internal class DbPlayedGameDataBridge : IPlayedGameDataBridge
     {
         private readonly IPlayedGamesTable _playedGamesTable;
         private readonly IDatabaseObjectTranslator _objectTranslator;
 
-        public PlayedGameDataBridge(IDatabase database)
+        public DbPlayedGameDataBridge(IDatabase database)
         {
             _playedGamesTable = database.PlayedGamesTable;
             _objectTranslator = database.ObjectTranslator;

@@ -1,14 +1,14 @@
 ﻿using GameSelector.Database;
 using System.Diagnostics;
 
-namespace GameSelector.Model
+namespace GameSelector.Model.Database
 {
-    internal class GroupDataBridge
+    internal class DbGroupDataBridge : IGroupDataBridge
     {
         private readonly IGroupsTable _groupsTable;
         private readonly IDatabaseObjectTranslator _objectTranslator;
 
-        public GroupDataBridge(IDatabase database)
+        public DbGroupDataBridge(IDatabase database)
         {
             _groupsTable = database.GroupsTable;
         }
@@ -25,7 +25,7 @@ namespace GameSelector.Model
                 ScoutingName = dbGroup.ScoutingName,
             };
 
-            output.CurrentlyPlaying = game ?? GameDataBridge.DbGameToGame(dbGroup.CurrentlyPlaying, output);
+            output.CurrentlyPlaying = game ?? DbGameDataBridge.DbGameToGame(dbGroup.CurrentlyPlaying, output);
 
             return output;
         }

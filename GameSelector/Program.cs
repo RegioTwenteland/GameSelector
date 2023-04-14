@@ -24,12 +24,11 @@ namespace GameSelector
         /// </summary>
         static void Main()
         {
-            var dbFactory = new DatabaseFactory(DatabaseType.SQLite);
-            var database = dbFactory.GetDatabase();
+            var model = ModelFactory.GetModel();
 
-            var groupDataBridge = new GroupDataBridge(database);
-            var gameDataBride = new GameDataBridge(database);
-            var playedGameDataBridge = new PlayedGameDataBridge(database);
+            var groupDataBridge = model.GroupDataBridge;
+            var gameDataBride = model.GameDataBridge;
+            var playedGameDataBridge = model.PlayedGameDataBridge;
 
             var nfcReader = new NfcReader();
 
