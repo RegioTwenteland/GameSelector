@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace GameSelector.Database.SQLite
 {
-    internal class GamesTable
+    internal class SQLiteGamesTable : IGamesTable
     {
         private SQLiteConnection _connection;
 
-        public GamesTable(SQLiteConnection connection)
+        public SQLiteGamesTable(SQLiteConnection connection)
         {
             _connection = connection;
         }
 
-        public List<DbGame> GetAllGames()
+        public List<IDbGame> GetAllGames()
         {
             var sql = @"SELECT
 	                        `games`.`id` AS game_id,
@@ -39,17 +39,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGame>();
+            var outputList = new List<IDbGame>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGame.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGame.FromSqlReader(reader));
             }
 
             return outputList;
         }
 
-        public List<DbGame> GetAllGamesNotOccupied()
+        public List<IDbGame> GetAllGamesNotOccupied()
         {
             var sql = @"SELECT
 	                        `games`.`id` AS game_id,
@@ -74,17 +74,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGame>();
+            var outputList = new List<IDbGame>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGame.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGame.FromSqlReader(reader));
             }
 
             return outputList;
         }
 
-        public DbGame GetGameById(long id)
+        public IDbGame GetGameById(long id)
         {
             var sql = @"SELECT
 	                        `games`.`id` AS game_id,
@@ -110,17 +110,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGame>();
+            var outputList = new List<IDbGame>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGame.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGame.FromSqlReader(reader));
             }
 
             return outputList.SingleOrDefault();
         }
 
-        public DbGame GetGameOccupiedBy(long playerId)
+        public IDbGame GetGameOccupiedBy(long playerId)
         {
             var sql = @"SELECT
 	                        `games`.`id` AS game_id,
@@ -146,17 +146,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGame>();
+            var outputList = new List<IDbGame>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGame.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGame.FromSqlReader(reader));
             }
 
             return outputList.SingleOrDefault();
         }
 
-        public void UpdateGame(DbGame game)
+        public void UpdateGame(IDbGame game)
         {
             var sql = @"UPDATE `games` SET
 	                        `code` = @code,

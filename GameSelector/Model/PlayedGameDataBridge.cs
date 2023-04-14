@@ -1,4 +1,4 @@
-﻿using GameSelector.Database.SQLite;
+﻿using GameSelector.Database;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,14 +8,16 @@ namespace GameSelector.Model
 {
     internal class PlayedGameDataBridge
     {
-        private PlayedGamesTable _playedGamesTable;
+        private readonly IPlayedGamesTable _playedGamesTable;
+        private readonly IDatabaseObjectTranslator _objectTranslator;
 
-        public PlayedGameDataBridge(PlayedGamesTable playedGamesTable)
+        public PlayedGameDataBridge(IDatabase database)
         {
-            _playedGamesTable = playedGamesTable;
+            _playedGamesTable = database.PlayedGamesTable;
+            _objectTranslator = database.ObjectTranslator;
         }
 
-        public static PlayedGame DbPlayedGameToPlayedGame(DbPlayedGame dbPlayedGame)
+        public static PlayedGame DbPlayedGameToPlayedGame(IDbPlayedGame dbPlayedGame)
         {
             return new PlayedGame
             {
@@ -24,18 +26,6 @@ namespace GameSelector.Model
                 GameId = dbPlayedGame.GameId,
                 StartTime = new DateTime(dbPlayedGame.StartTime),
                 EndTime = new DateTime(dbPlayedGame.EndTime)
-            };
-        }
-
-        public static DbPlayedGame PlayedGameToDbPlayedGame(PlayedGame playedGame)
-        {
-            return new DbPlayedGame
-            {
-                Id = playedGame.Id,
-                PlayerId = playedGame.PlayerId,
-                GameId = playedGame.GameId,
-                StartTime = playedGame.StartTime.Ticks,
-                EndTime = playedGame.EndTime.Ticks
             };
         }
 
@@ -50,7 +40,7 @@ namespace GameSelector.Model
         public void InsertPlayedGame(PlayedGame playedGame)
         {
             Debug.Assert(playedGame.Id == 0);
-            _playedGamesTable.InsertPlayedGame(PlayedGameToDbPlayedGame(playedGame));
+            _playedGamesTable.InsertPlayedGame(_objectTranslator.ToDbPlayedGame(playedGame));
         }
     }
 }

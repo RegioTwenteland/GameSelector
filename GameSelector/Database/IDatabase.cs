@@ -1,15 +1,13 @@
-﻿//using System.Data.Linq;
+﻿namespace GameSelector.Database
+{
+    internal interface IDatabase
+    {
+        IGamesTable GamesTable { get; }
 
-//namespace GameSelector.Database
-//{
-//    internal interface IDatabase
-//    {
-//        Table<DbGroup> CardTable { get; }
+        IGroupsTable GroupsTable { get; }
 
-//        Table<DbGame> GameTable { get; }
+        IPlayedGamesTable PlayedGamesTable { get; }
 
-//        Table<DbPlayedGame> PlayedGameTable { get; }
-
-//        DataContext DataContext { get; }
-//    }
-//}
+        IDatabaseObjectTranslator ObjectTranslator { get; }
+    }
+}

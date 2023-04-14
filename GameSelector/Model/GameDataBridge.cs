@@ -1,4 +1,4 @@
-﻿using GameSelector.Database.SQLite;
+﻿using GameSelector.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,16 @@ namespace GameSelector.Model
 {
     internal class GameDataBridge
     {
-        private GamesTable _gamesTable;
+        private readonly IGamesTable _gamesTable;
+        private readonly IDatabaseObjectTranslator _objectTranslator;
 
-        public GameDataBridge(GamesTable gamesTable)
+        public GameDataBridge(IDatabase database)
         {
-            _gamesTable = gamesTable;
+            _gamesTable = database.GamesTable;
+            _objectTranslator = database.ObjectTranslator;
         }
 
-        public static Game DbGameToGame(DbGame dbGame, Group group = null)
+        public static Game DbGameToGame(IDbGame dbGame, Group group = null)
         {
             if (dbGame == null) return null;
 
@@ -32,23 +34,6 @@ namespace GameSelector.Model
             output.OccupiedBy = group ?? GroupDataBridge.DbGroupToGroup(dbGame.OccupiedBy, output);
 
             return output;
-        }
-
-        public static DbGame GameToDbGame(Game game)
-        {
-            if (game == null) return null;
-
-            return new DbGame
-            {
-                Id = game.Id,
-                Code = game.Code,
-                Description = game.Description,
-                Explanation = game.Explanation,
-                Color = game.Color,
-                Priority = game.Priority,
-                OccupiedById = game.OccupiedBy?.Id,
-                StartTime = game.StartTime.HasValue ? (long?)game.StartTime.Value.Ticks : null
-            };
         }
 
         public List<Game> GetAllGames()
@@ -79,7 +64,7 @@ namespace GameSelector.Model
 
         public void UpdateGame(Game game)
         {
-            _gamesTable.UpdateGame(GameToDbGame(game));
+            _gamesTable.UpdateGame(_objectTranslator.ToDbGame(game));
         }
     }
 }

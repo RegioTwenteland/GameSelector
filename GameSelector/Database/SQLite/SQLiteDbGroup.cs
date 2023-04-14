@@ -2,7 +2,7 @@
 
 namespace GameSelector.Database.SQLite
 {
-    internal class DbGroup
+    internal class SQLiteDbGroup : IDbGroup
     {
         public long Id { get; set; }
 
@@ -15,11 +15,11 @@ namespace GameSelector.Database.SQLite
         /// <summary>
         /// Warning: read-only. Dont use for modifying.
         /// </summary>
-        public DbGame CurrentlyPlaying { get; set; }
+        public IDbGame CurrentlyPlaying { get; set; }
 
-        public static DbGroup FromSqlReader(SQLiteDataReader reader, DbGame CurrentlyPlaying = null)
+        public static IDbGroup FromSqlReader(SQLiteDataReader reader, IDbGame CurrentlyPlaying = null)
         {
-            var output = new DbGroup
+            var output = new SQLiteDbGroup
             {
                 Id = (long)reader["group_id"],
                 CardId = (string)reader["group_card_id"],
@@ -29,7 +29,7 @@ namespace GameSelector.Database.SQLite
 
             try
             {
-                output.CurrentlyPlaying = CurrentlyPlaying ?? DbGame.FromSqlReader(reader, output);
+                output.CurrentlyPlaying = CurrentlyPlaying ?? SQLiteDbGame.FromSqlReader(reader, output);
             }
             catch
             {

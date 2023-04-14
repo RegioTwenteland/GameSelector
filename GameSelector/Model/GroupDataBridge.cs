@@ -1,18 +1,19 @@
-﻿using GameSelector.Database.SQLite;
+﻿using GameSelector.Database;
 using System.Diagnostics;
 
 namespace GameSelector.Model
 {
     internal class GroupDataBridge
     {
-        private GroupsTable _groupsTable;
+        private readonly IGroupsTable _groupsTable;
+        private readonly IDatabaseObjectTranslator _objectTranslator;
 
-        public GroupDataBridge(GroupsTable groupsTable)
+        public GroupDataBridge(IDatabase database)
         {
-            _groupsTable = groupsTable;
+            _groupsTable = database.GroupsTable;
         }
 
-        public static Group DbGroupToGroup(DbGroup dbGroup, Game game = null)
+        public static Group DbGroupToGroup(IDbGroup dbGroup, Game game = null)
         {
             if (dbGroup == null) return null;
 
@@ -29,19 +30,6 @@ namespace GameSelector.Model
             return output;
         }
 
-        public static DbGroup GroupToDbGroup(Group group)
-        {
-            if (group == null) return null;
-
-            return new DbGroup
-            {
-                Id = group.Id,
-                CardId = group.CardId,
-                Name = group.Name,
-                ScoutingName = group.ScoutingName
-            };
-        }
-
         public Group GetGroup(string cardId)
         {
             return DbGroupToGroup(_groupsTable.GetGroupByCardId(cardId));
@@ -54,13 +42,13 @@ namespace GameSelector.Model
 
         public void UpdateGroup(Group group)
         {
-            _groupsTable.UpdateGroup(GroupToDbGroup(group));
+            _groupsTable.UpdateGroup(_objectTranslator.ToDbGroup(group));
         }
 
         public void InsertGroup(Group group)
         {
             Debug.Assert(group.Id == 0);
-            _groupsTable.InsertGroup(GroupToDbGroup(group));
+            _groupsTable.InsertGroup(_objectTranslator.ToDbGroup(group));
         }
     }
 }

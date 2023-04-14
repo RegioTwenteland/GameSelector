@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace GameSelector.Database.SQLite
 {
-    internal class GroupsTable
+    internal class SQLiteGroupsTable : IGroupsTable
     {
         private SQLiteConnection _connection;
 
-        public GroupsTable(SQLiteConnection connection)
+        public SQLiteGroupsTable(SQLiteConnection connection)
         {
             _connection = connection;
         }
 
-        public List<DbGroup> GetAllGroups()
+        public List<IDbGroup> GetAllGroups()
         {
             var sql = @"SELECT
 	                        `groups`.`id` AS group_id,
@@ -38,17 +38,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGroup>();
+            var outputList = new List<IDbGroup>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGroup.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGroup.FromSqlReader(reader));
             }
 
             return outputList;
         }
 
-        public DbGroup GetGroupById(long id)
+        public IDbGroup GetGroupById(long id)
         {
             var sql = @"SELECT
 	                        `groups`.`id` AS group_id,
@@ -74,17 +74,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGroup>();
+            var outputList = new List<IDbGroup>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGroup.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGroup.FromSqlReader(reader));
             }
 
             return outputList.SingleOrDefault();
         }
 
-        public DbGroup GetGroupByCardId(string cardId)
+        public IDbGroup GetGroupByCardId(string cardId)
         {
             var sql = @"SELECT
 	                        `groups`.`id` AS group_id,
@@ -110,17 +110,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbGroup>();
+            var outputList = new List<IDbGroup>();
 
             while (reader.Read())
             {
-                outputList.Add(DbGroup.FromSqlReader(reader));
+                outputList.Add(SQLiteDbGroup.FromSqlReader(reader));
             }
 
             return outputList.SingleOrDefault();
         }
 
-        public void UpdateGroup(DbGroup group)
+        public void UpdateGroup(IDbGroup group)
         {
             var sql = @"UPDATE `groups` SET
 	                        `groups`.`card_id` = @card_id,
@@ -139,7 +139,7 @@ namespace GameSelector.Database.SQLite
             Debug.Assert(rowsUpdated == 1);
         }
 
-        public void InsertGroup(DbGroup group)
+        public void InsertGroup(IDbGroup group)
         {
             var sql = @"INSERT INTO `groups`
                         (

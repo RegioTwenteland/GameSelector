@@ -2,7 +2,7 @@
 
 namespace GameSelector.Database.SQLite
 {
-    internal class DbPlayedGame
+    internal class SQLiteDbPlayedGame : IDbPlayedGame
     {
         public long Id { get; set; }
 
@@ -14,9 +14,9 @@ namespace GameSelector.Database.SQLite
 
         public long EndTime { get; set; }
 
-        public static DbPlayedGame FromSqlReader(SQLiteDataReader reader)
+        public static IDbPlayedGame FromSqlReader(SQLiteDataReader reader)
         {
-            return new DbPlayedGame
+            return new SQLiteDbPlayedGame
             {
                 Id = (long)reader["played_game_id"],
                 PlayerId = (long)reader["played_game_player"],

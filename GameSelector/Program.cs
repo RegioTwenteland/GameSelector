@@ -7,6 +7,7 @@ using GameSelector.Controllers;
 using GameSelector.Model;
 using GameSelector.Database.SQLite;
 using NFC;
+using GameSelector.Database;
 
 namespace GameSelector
 {
@@ -23,15 +24,12 @@ namespace GameSelector
         /// </summary>
         static void Main()
         {
-            // TODO: make interfaces for these
-            var database = new SQLiteDatabase($"Data Source={DB_FILE_NAME}");
-            var gamesTable = new GamesTable(database.Connection);
-            var groupsTable = new GroupsTable(database.Connection);
-            var playedGamesTable = new PlayedGamesTable(database.Connection);
+            var dbFactory = new DatabaseFactory(DatabaseType.SQLite);
+            var database = dbFactory.GetDatabase();
 
-            var groupDataBridge = new GroupDataBridge(groupsTable);
-            var gameDataBride = new GameDataBridge(gamesTable);
-            var playedGameDataBridge = new PlayedGameDataBridge(playedGamesTable);
+            var groupDataBridge = new GroupDataBridge(database);
+            var gameDataBride = new GameDataBridge(database);
+            var playedGameDataBridge = new PlayedGameDataBridge(database);
 
             var nfcReader = new NfcReader();
 
@@ -71,15 +69,5 @@ namespace GameSelector
             _messages.CompleteAdding();
             _messageCancellationTokenSource.Cancel();
         }
-
-        private const string DB_FILE_NAME = "..\\..\\data.sqlite";
-
-        //static IDatabase CreateDatabase()
-        //{
-        //    return new SQLiteDatabase($"Data Source={DB_FILE_NAME}");
-        //}
     }
-
-    
-
 }

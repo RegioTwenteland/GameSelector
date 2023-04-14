@@ -4,16 +4,16 @@ using System.Diagnostics;
 
 namespace GameSelector.Database.SQLite
 {
-    internal class PlayedGamesTable
+    internal class SQLitePlayedGamesTable : IPlayedGamesTable
     {
         private SQLiteConnection _connection;
 
-        public PlayedGamesTable(SQLiteConnection connection)
+        public SQLitePlayedGamesTable(SQLiteConnection connection)
         {
             _connection = connection;
         }
 
-        public List<DbPlayedGame> GetPlayedGamesByPlayerId(long playerId)
+        public List<IDbPlayedGame> GetPlayedGamesByPlayerId(long playerId)
         {
             var sql = @"SELECT
                             `played_games`.`id` AS played_game_id,
@@ -29,17 +29,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbPlayedGame>();
+            var outputList = new List<IDbPlayedGame>();
 
             while (reader.Read())
             {
-                outputList.Add(DbPlayedGame.FromSqlReader(reader));
+                outputList.Add(SQLiteDbPlayedGame.FromSqlReader(reader));
             }
 
             return outputList;
         }
 
-        public List<DbPlayedGame> GetPlayedGamesByGameId(long gameId)
+        public List<IDbPlayedGame> GetPlayedGamesByGameId(long gameId)
         {
             var sql = @"SELECT
                             `played_games`.`id` AS played_game_id,
@@ -55,17 +55,17 @@ namespace GameSelector.Database.SQLite
 
             var reader = command.ExecuteReader();
 
-            var outputList = new List<DbPlayedGame>();
+            var outputList = new List<IDbPlayedGame>();
 
             while (reader.Read())
             {
-                outputList.Add(DbPlayedGame.FromSqlReader(reader));
+                outputList.Add(SQLiteDbPlayedGame.FromSqlReader(reader));
             }
 
             return outputList;
         }
 
-        public void InsertPlayedGame(DbPlayedGame game)
+        public void InsertPlayedGame(IDbPlayedGame game)
         {
             var sql = @"INSERT INTO `played_games`
                         (
