@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace GameSelector
 {
@@ -19,5 +20,17 @@ namespace GameSelector
         public string Key { get; }
 
         public object Value { get; }
+
+        private bool _consumed = false;
+
+        public void SetConsumed()
+        {
+            _consumed = true;
+        }
+
+        public void AssertConsumed()
+        {
+           Debug.Assert(_consumed, $"Message \"{Key}\" is not handled");
+        }
     }
 }

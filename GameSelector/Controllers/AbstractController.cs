@@ -18,6 +18,7 @@ namespace GameSelector.Controllers
         {
             if (_messageHandlers.ContainsKey(message.Key))
             {
+                message.SetConsumed();
                 _messageHandlers[message.Key](message.Value);
             }
         }

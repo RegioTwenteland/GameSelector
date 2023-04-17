@@ -57,6 +57,8 @@ namespace GameSelector
                     {
                         controller.HandleMessage(message);
                     }
+
+                    message.AssertConsumed();
                 }
                 catch (OperationCanceledException)
                 {
