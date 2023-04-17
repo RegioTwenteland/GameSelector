@@ -38,7 +38,7 @@ namespace GameSelector.Views
                     .Where(s => s.Primary == true)
                     .FirstOrDefault();
 
-                Location = new System.Drawing.Point
+                Location = new Point
                 {
                     X = screen.WorkingArea.Left,
                     Y = screen.WorkingArea.Top
@@ -46,6 +46,7 @@ namespace GameSelector.Views
             }
 
             SendMessage("RequestGames", null);
+            SendMessage("RequestGroups", null);
         }
 
         private void ForceTextboxToInt(object sender, EventArgs e)
@@ -104,34 +105,127 @@ namespace GameSelector.Views
         // GROUPS
         /////////////////////////////////////////////////////
 
-        private void writeCardButton_Click(object sender, EventArgs e)
-        {
-            var card = new GroupDataView
-            {
-                CardId = cardIdText.Text,
-                GroupName = groupNameText.Text,
-                ScoutingName = scoutingNameText.Text,
-                StartTime = DateTime.Parse(startTimePicker.Text),
-                CurrentGame = currentGameText.Text,
-            };
+        private bool _groupDataUserControl = true;
 
-            SendMessage("WriteCardData", card);
+        private GroupDataView GetCurrentGroupDataView()
+        {
+            if (groupsListBox.SelectedIndex < 0) return null;
+            return (GroupDataView)groupsListBox.Items[groupsListBox.SelectedIndex];
         }
 
-        public void ShowGroup(GroupDataView group)
+        private void SortGroupListBox()
         {
-            if (group == null)
+            object[] itemsCopy = new object[groupsListBox.Items.Count];
+            groupsListBox.Items.CopyTo(itemsCopy, 0);
+            groupsListBox.Items.Clear();
+
+            var newList = itemsCopy
+                .Select(o => (GroupDataView)o)
+                .OrderBy(gdv => gdv.ToString());
+
+            foreach (var newItem in newList)
             {
-                cardIdText.Text = string.Empty;
-                groupNameText.Text = string.Empty;
-                scoutingNameText.Text = string.Empty;
-                currentGameText.Text = string.Empty;
-                return;
+                groupsListBox.Items.Add(newItem);
+            }
+        }
+
+        private int GetGroupListBoxIndex(GroupDataView group)
+        {
+            var idx = -1;
+
+            for (var i = 0; i < groupsListBox.Items.Count; ++i)
+            {
+                var groupItem = (GroupDataView)groupsListBox.Items[i];
+
+                if (groupItem.Id == group.Id)
+                {
+                    idx = i;
+                    break;
+                }
             }
 
-            cardIdText.Text = group.CardId;
-            groupNameText.Text = group.GroupName.ToString();
-            scoutingNameText.Text = group.ScoutingName;
+            return idx;
+        }
+
+        public void SetGroupsList(IEnumerable<GroupDataView> groups)
+        {
+            groupsListBox.Items.Clear();
+            foreach (var group in groups)
+            {
+                groupsListBox.Items.Add(group);
+            }
+
+            SortGroupListBox();
+            ShowGroup(null);
+        }
+
+        private void saveGroupButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGroupDataView();
+
+            if (gdv != null)
+                SendMessage("RequestSaveGroup", gdv);
+        }
+
+        private void addGroupButton_Click(object sender, EventArgs e)
+        {
+            SendMessage("RequestNewGroup", null);
+        }
+
+        private void deleteGroupButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGroupDataView();
+
+            if (gdv != null)
+                SendMessage("RequestDeleteGroup", gdv);
+        }
+
+        private void addCardToGroupButton_Click(object sender, EventArgs e)
+        {
+            var lastScannedId = lastScannedCardTextbox.Text;
+
+            if (lastScannedId == null || lastScannedId == string.Empty) return;
+
+            cardIdTextbox.Text = lastScannedId;
+        }
+
+        private void removeCardFromGroupButton_Click(object sender, EventArgs e)
+        {
+            cardIdTextbox.Text = "";
+        }
+
+        private void GroupDataChanged(object sender, EventArgs e)
+        {
+            if (!_groupDataUserControl) return;
+
+            var gdv = GetCurrentGroupDataView();
+
+            if (gdv == null) return;
+
+            gdv.CardId = cardIdTextbox.Text;
+            gdv.GroupName = groupNameTextbox.Text;
+            gdv.ScoutingName = scoutingNameTextbox.Text;
+        }
+
+        private void groupsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _groupDataUserControl = false;
+            ShowGroup(GetCurrentGroupDataView());
+            _groupDataUserControl = true;
+        }
+
+        private void ShowGroup(GroupDataView group)
+        {
+            cardIdTextbox.Text = string.Empty;
+            groupNameTextbox.Text = string.Empty;
+            scoutingNameTextbox.Text = string.Empty;
+            currentGameText.Text = string.Empty;
+
+            if (group == null) return;
+
+            cardIdTextbox.Text = group.CardId;
+            groupNameTextbox.Text = group.GroupName.ToString();
+            scoutingNameTextbox.Text = group.ScoutingName;
             currentGameText.Text = group.CurrentGame;
             startTimePicker.Text =
                 group.StartTime.HasValue ?
@@ -139,6 +233,31 @@ namespace GameSelector.Views
                     group.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
                     group.StartTime).ToString()
                 : null;
+        }
+
+        public void UpdateGroup(GroupDataView group)
+        {
+            if (group == null) return;
+
+            var idx = GetGroupListBoxIndex(group);
+
+            if (idx < 0)
+            {
+                groupsListBox.Items.Add(group);
+                idx = GetGroupListBoxIndex(group);
+            }
+            else
+            {
+                groupsListBox.Items[idx] = group;
+            }
+
+            SortGroupListBox();
+            groupsListBox.SelectedIndex = idx;
+        }
+
+        public void ShowLastScannedCardId(string cardId)
+        {
+            lastScannedCardTextbox.Text = cardId;
         }
 
         /////////////////////////////////////////////////////
@@ -163,7 +282,7 @@ namespace GameSelector.Views
                 .Select(o => (GameDataView)o)
                 .OrderByDescending(gdv => gdv.Priority);
 
-            foreach(var newItem in newList)
+            foreach (var newItem in newList)
             {
                 gamesListBox.Items.Add(newItem);
             }
@@ -198,7 +317,7 @@ namespace GameSelector.Views
         {
             var gdv = GetCurrentGameDataView();
 
-            if(gdv != null)
+            if (gdv != null)
                 SendMessage("RequestSaveGame", gdv);
         }
 
@@ -234,9 +353,9 @@ namespace GameSelector.Views
         private void GameDataChanged(object sender, EventArgs e)
         {
             if (!_gameDataUserControl) return;
-            
+
             var gdv = GetCurrentGameDataView();
-            
+
             if (gdv == null) return;
 
             gdv.Code = gameCodeTextbox.Text;
@@ -254,9 +373,11 @@ namespace GameSelector.Views
             }
 
             SortGameListBox();
+
+            ShowGame(null);
         }
 
-        public void ShowGame(GameDataView game)
+        private void ShowGame(GameDataView game)
         {
             gameCodeTextbox.Text = string.Empty;
             gameDescriptionTextbox.Text = string.Empty;

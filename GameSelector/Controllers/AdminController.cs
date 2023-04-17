@@ -36,8 +36,11 @@ namespace GameSelector.Controllers
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "WriteCardData", OnWriteCardData },
+                { "RequestSaveGroup", OnRequestSaveGroup },
+                { "RequestNewGroup", OnRequestNewGroup },
+                { "RequestDeleteGroup", OnRequestDeleteGroup },
                 { "UserLogin", OnUserLogin },
+                { "UserLeft", o => { } },
                 { "RequestGames", OnRequestGames },
                 { "ShowAdminError", ShowAdminError },
                 { "RequestStartStopGame", OnRequestStartStopGame },
@@ -45,7 +48,8 @@ namespace GameSelector.Controllers
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestIncreasePrio", OnRequestIncreasePrio },
                 { "RequestDecreasePrio", OnRequestDecreasePrio },
-                { "RequestDeleteGame", OnRequestDeleteGame }
+                { "RequestDeleteGame", OnRequestDeleteGame },
+                { "RequestGroups", OnRequestGroups },
             });
         }
 
@@ -73,36 +77,75 @@ namespace GameSelector.Controllers
             }
         }
 
-        private void OnWriteCardData(object value)
+        private void OnRequestSaveGroup(object value)
         {
             Debug.Assert(value is GroupDataView);
 
-            var cardView = (GroupDataView)value;
+            var groupDataView = (GroupDataView)value;
 
-            var group = _groupDataBridge.GetGroup(cardView.Id);
+            var group = _groupDataBridge.GetGroup(groupDataView.Id);
 
-            if (group == null)
+            if (group.CardId != groupDataView.CardId)
             {
-                // new card
-                group = new Group
+                var groupWithCardId = _groupDataBridge.GetGroup(groupDataView.CardId);
+
+                if (groupWithCardId != null)
                 {
-                    Id = cardView.Id,
-                    CardId = cardView.CardId,
-                    Name = cardView.GroupName,
-                    ScoutingName = cardView.ScoutingName,
-                };
-
-                _groupDataBridge.InsertGroup(group);
+                    _adminView.ShowError("Niet opgeslagen: kaart ID is al toegekend");
+                    return;
+                }
             }
-            else
+
+            group.CardId = groupDataView.CardId;
+            group.Name = groupDataView.GroupName;
+            group.ScoutingName = groupDataView.ScoutingName;
+
+            _groupDataBridge.UpdateGroup(group);
+
+            _adminView.UpdateGroup(GroupDataView.FromGroup(group));
+        }
+
+        private void OnRequestNewGroup(object value)
+        {
+            Debug.Assert(value is null);
+
+            var newGroup = new Group
             {
-                // existing card
-                group.CardId = cardView.CardId;
-                group.Name = cardView.GroupName;
-                group.ScoutingName = cardView.ScoutingName;
+                ScoutingName = "Nieuwe",
+                Name = "Groep",
+            };
 
-                _groupDataBridge.UpdateGroup(group);
+            _groupDataBridge.InsertGroup(newGroup);
+
+            var groups = _groupDataBridge.GetAllGroups().Select(g => GroupDataView.FromGroup(g));
+            _adminView.SetGroupsList(groups);
+        }
+
+        private void OnRequestDeleteGroup(object value)
+        {
+            Debug.Assert(value is GroupDataView);
+
+            var groupDataView = (GroupDataView)value;
+
+            var group = _groupDataBridge.GetGroup(groupDataView.Id);
+
+            // Do some sanity checks:
+            if (group.CurrentlyPlaying != null)
+            {
+                _adminView.ShowError("Verwijderen mislukt: groep is momenteel in een spel");
+                return;
             }
+
+            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
+            if (playedGames.Count > 0)
+            {
+                _adminView.ShowError("Verwijderen mislukt: groep heeft al spellen gespeeld");
+                return;
+            }
+
+            _groupDataBridge.DeleteGroup(group);
+
+            UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }
 
         private void OnUserLogin(object value)
@@ -120,7 +163,8 @@ namespace GameSelector.Controllers
                 groupView = GroupDataView.FromGroup(group);
             }
 
-            _adminView.ShowGroup(groupView);
+            _adminView.UpdateGroup(groupView);
+            _adminView.ShowLastScannedCardId(cardId);
         }
 
         private void UpdateGamesList(List<Game> games)
@@ -131,6 +175,7 @@ namespace GameSelector.Controllers
 
         private void OnRequestGames(object value)
         {
+            Debug.Assert(value is null);
             UpdateGamesList(_gameDataBridge.GetAllGames());
         }
 
@@ -179,8 +224,8 @@ namespace GameSelector.Controllers
 
             var newGame = new Game
             {
-                Code = "New",
-                Description = "Game",
+                Code = "Nieuw",
+                Description = "Spel",
                 Explanation = string.Empty,
                 Color = string.Empty
             };
@@ -266,7 +311,19 @@ namespace GameSelector.Controllers
             _gameDataBridge.DeleteGame(game);
 
             UpdateGamesList(_gameDataBridge.GetAllGames());
-            _adminView.ShowGame(null);
+        }
+
+        private void UpdateGroupsList(List<Group> groups)
+        {
+            var gdv = groups.Select(g => GroupDataView.FromGroup(g));
+            _adminView.SetGroupsList(gdv);
+        }
+
+        private void OnRequestGroups(object value)
+        {
+            Debug.Assert(value is null);
+
+            UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }
     }
 }

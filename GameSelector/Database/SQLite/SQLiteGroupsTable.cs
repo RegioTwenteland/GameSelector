@@ -123,10 +123,10 @@ namespace GameSelector.Database.SQLite
         public void UpdateGroup(IDbGroup group)
         {
             var sql = @"UPDATE `groups` SET
-	                        `groups`.`card_id` = @card_id,
-	                        `groups`.`group_name` = @name,
-	                        `groups`.`scouting_name` = @scouting_name,
-                        WHERE `groups`.`id` = @id;";
+	                        `card_id` = @card_id,
+	                        `group_name` = @name,
+	                        `scouting_name` = @scouting_name
+                        WHERE `id` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
             command.Parameters.AddWithValue("@id", group.Id);
@@ -161,6 +161,19 @@ namespace GameSelector.Database.SQLite
             command.Parameters.AddWithValue("@card_id", group.CardId);
             command.Parameters.AddWithValue("@name", group.Name);
             command.Parameters.AddWithValue("@scouting_name", group.ScoutingName);
+
+            var rowsUpdated = command.ExecuteNonQuery();
+
+            Debug.Assert(rowsUpdated == 1);
+        }
+
+        public void DeleteGroup(IDbGroup group)
+        {
+            var sql = @"DELETE FROM `groups`
+                        WHERE `id` = @id";
+
+            var command = new SQLiteCommand(sql, _connection);
+            command.Parameters.AddWithValue("@id", group.Id);
 
             var rowsUpdated = command.ExecuteNonQuery();
 

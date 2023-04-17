@@ -1,9 +1,5 @@
 ﻿using GameSelector.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameSelector.Views
 {
@@ -44,6 +40,11 @@ namespace GameSelector.Views
                 StartTime = startTime,
                 CurrentGame = group.CurrentlyPlaying?.Description
             };
+        }
+
+        public override string ToString()
+        {
+            return $"{ScoutingName}: {GroupName}";
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using GameSelector.Database;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GameSelector.Model.Database
 {
@@ -11,6 +13,7 @@ namespace GameSelector.Model.Database
         public DbGroupDataBridge(IDatabase database)
         {
             _groupsTable = database.GroupsTable;
+            _objectTranslator = database.ObjectTranslator;
         }
 
         public static Group DbGroupToGroup(IDbGroup dbGroup, Game game = null)
@@ -28,6 +31,14 @@ namespace GameSelector.Model.Database
             output.CurrentlyPlaying = game ?? DbGameDataBridge.DbGameToGame(dbGroup.CurrentlyPlaying, output);
 
             return output;
+        }
+
+        public List<Group> GetAllGroups()
+        {
+            return
+                _groupsTable.GetAllGroups()
+                .Select(dbG => DbGroupToGroup(dbG))
+                .ToList();
         }
 
         public Group GetGroup(string cardId)
@@ -49,6 +60,11 @@ namespace GameSelector.Model.Database
         {
             Debug.Assert(group.Id == 0);
             _groupsTable.InsertGroup(_objectTranslator.ToDbGroup(group));
+        }
+
+        public void DeleteGroup(Group group)
+        {
+            _groupsTable.DeleteGroup(_objectTranslator.ToDbGroup(group));
         }
     }
 }

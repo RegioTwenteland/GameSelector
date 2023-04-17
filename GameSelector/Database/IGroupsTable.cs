@@ -13,5 +13,7 @@ namespace GameSelector.Database
         void UpdateGroup(IDbGroup group);
 
         void InsertGroup(IDbGroup group);
+
+        void DeleteGroup(IDbGroup group);
     }
 }

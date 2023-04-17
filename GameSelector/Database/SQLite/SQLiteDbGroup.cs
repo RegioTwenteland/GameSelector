@@ -19,10 +19,11 @@ namespace GameSelector.Database.SQLite
 
         public static IDbGroup FromSqlReader(SQLiteDataReader reader, IDbGame CurrentlyPlaying = null)
         {
+            
             var output = new SQLiteDbGroup
             {
                 Id = (long)reader["group_id"],
-                CardId = (string)reader["group_card_id"],
+                CardId = SQLiteDatabase.FromDbNull<string>(reader["group_card_id"]),
                 Name = (string)reader["group_name"],
                 ScoutingName = (string)reader["group_scouting_name"],
             };
