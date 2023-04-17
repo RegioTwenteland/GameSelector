@@ -190,5 +190,48 @@ namespace GameSelector.Database.SQLite
 
             Debug.Assert(rowsUpdated == 1);
         }
+
+        public void InsertGame(IDbGame game)
+        {
+            var sql = @"INSERT INTO `games`
+                        (
+	                        `code`,
+	                        `description`,
+	                        `explanation`,
+	                        `color`,
+                            `priority`
+                        )
+                        VALUES
+                        (
+	                        @code,
+	                        @description,
+	                        @explanation,
+	                        @color,
+	                        @priority
+                        );";
+
+            var command = new SQLiteCommand(sql, _connection);
+            command.Parameters.AddWithValue("@code", game.Code);
+            command.Parameters.AddWithValue("@description", game.Description);
+            command.Parameters.AddWithValue("@explanation", game.Explanation);
+            command.Parameters.AddWithValue("@color", game.Color);
+            command.Parameters.AddWithValue("@priority", game.Priority);
+
+            var rowsUpdated = command.ExecuteNonQuery();
+
+            Debug.Assert(rowsUpdated == 1);
+        }
+
+        public void DeleteGame(IDbGame game)
+        {
+            var sql = @"DELETE FROM `games`
+                        WHERE `id` = @id";
+            var command = new SQLiteCommand(sql, _connection);
+            command.Parameters.AddWithValue("@id", game.Id);
+
+            var rowsUpdated = command.ExecuteNonQuery();
+
+            Debug.Assert(rowsUpdated == 1);
+        }
     }
 }

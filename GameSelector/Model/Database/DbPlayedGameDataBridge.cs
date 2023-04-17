@@ -37,6 +37,14 @@ namespace GameSelector.Model.Database
                 .ToList();
         }
 
+        public List<PlayedGame> GetPlayedGamesByGame(Game game)
+        {
+            return
+                _playedGamesTable.GetPlayedGamesByGameId(game.Id)
+                .Select(dbG => DbPlayedGameToPlayedGame(dbG))
+                .ToList();
+        }
+
         public void InsertPlayedGame(PlayedGame playedGame)
         {
             Debug.Assert(playedGame.Id == 0);

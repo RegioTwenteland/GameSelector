@@ -13,5 +13,9 @@ namespace GameSelector.Database
         IDbGame GetGameOccupiedBy(long playerId);
 
         void UpdateGame(IDbGame game);
+
+        void InsertGame(IDbGame game);
+
+        void DeleteGame(IDbGame game);
     }
 }

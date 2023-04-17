@@ -14,5 +14,9 @@ namespace GameSelector.Model
         Game GetGameOccupiedBy(Group group);
 
         void UpdateGame(Game game);
+
+        void InsertGame(Game game);
+
+        void DeleteGame(Game game);
     }
 }

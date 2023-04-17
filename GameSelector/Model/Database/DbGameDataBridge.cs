@@ -66,5 +66,15 @@ namespace GameSelector.Model.Database
         {
             _gamesTable.UpdateGame(_objectTranslator.ToDbGame(game));
         }
+
+        public void InsertGame(Game game)
+        {
+            _gamesTable.InsertGame(_objectTranslator.ToDbGame(game));
+        }
+
+        public void DeleteGame(Game game)
+        {
+            _gamesTable.DeleteGame(_objectTranslator.ToDbGame(game));
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace GameSelector
             var adminView = new AdminViewAdapter(_messages);
             var userIdentificationView = new UserIdentificationView(_messages, nfcReader);
             var userView = new UserViewAdapter(_messages);
-            _controllers.Add(new AdminController(gameState, adminView, userIdentificationView, groupDataBridge, gameDataBride));
+            _controllers.Add(new AdminController(gameState, adminView, userIdentificationView, groupDataBridge, gameDataBride, playedGameDataBridge));
             _controllers.Add(new UserController(gameState, userIdentificationView, userView, groupDataBridge, gameDataBride, playedGameDataBridge));
 
             foreach (var controller in _controllers)

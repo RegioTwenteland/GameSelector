@@ -38,11 +38,6 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.ShowGroup(group)));
         }
 
-        public void ShowGame(GameDataView game)
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
-        }
-
         public void SetGamesList(IEnumerable<GameDataView> gameNames)
         {
             form.Invoke(new MethodInvoker(() => form.SetGamesList(gameNames)));
@@ -61,6 +56,16 @@ namespace GameSelector.Views
         public void ShowGameRunning()
         {
             form.Invoke(new MethodInvoker(() => form.ShowGameRunning()));
+        }
+
+        public void ShowGame(GameDataView game)
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
+        }
+
+        public void UpdateGame(GameDataView game)
+        {
+            form.Invoke(new MethodInvoker(() => form.UpdateGame(game)));
         }
     }
 }

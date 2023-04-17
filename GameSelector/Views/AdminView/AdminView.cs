@@ -1,19 +1,20 @@
 ﻿using CustomControls;
-using GameSelector.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Forms.TextBox;
 
 namespace GameSelector.Views
 {
     internal partial class AdminView : Form
     {
+        /////////////////////////////////////////////////////
+        // GLOBAL
+        /////////////////////////////////////////////////////
         private Action<string, object> SendMessage;
 
         Regex _intRgx = new Regex("[^0-9]");
@@ -47,6 +48,16 @@ namespace GameSelector.Views
             SendMessage("RequestGames", null);
         }
 
+        private void ForceTextboxToInt(object sender, EventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            textbox.Text = _intRgx.Replace(textbox.Text, "");
+        }
+
+        /////////////////////////////////////////////////////
+        // ERRORS
+        /////////////////////////////////////////////////////
+
         private void AddNewError(string errorText)
         {
             var newError = new ErrorBoxControl();
@@ -61,6 +72,38 @@ namespace GameSelector.Views
             errorFlowLayout.Controls.Remove(e.Which);
         }
 
+        public void ShowError(string errorText)
+        {
+            AddNewError(errorText);
+        }
+
+        /////////////////////////////////////////////////////
+        // ADMIN
+        /////////////////////////////////////////////////////
+
+        private void startStopGameButton_Click(object sender, EventArgs e)
+        {
+            SendMessage("RequestStartStopGame", null);
+        }
+
+        public void ShowGamePaused()
+        {
+            gameStateLabel.Text = "GEPAUZEERD";
+            startStopGameButton.Text = "Start";
+            gameStateLabel.ForeColor = Color.Red;
+        }
+
+        public void ShowGameRunning()
+        {
+            gameStateLabel.Text = "BEZIG";
+            startStopGameButton.Text = "Pauze";
+            gameStateLabel.ForeColor = Color.Green;
+        }
+
+        /////////////////////////////////////////////////////
+        // GROUPS
+        /////////////////////////////////////////////////////
+
         private void writeCardButton_Click(object sender, EventArgs e)
         {
             var card = new GroupDataView
@@ -73,23 +116,6 @@ namespace GameSelector.Views
             };
 
             SendMessage("WriteCardData", card);
-        }
-
-        private void startStopGameButton_Click(object sender, EventArgs e)
-        {
-            SendMessage("RequestStartStopGame", null);
-        }
-
-        private void gamesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var game = (GameDataView)gamesListBox.Items[gamesListBox.SelectedIndex];
-            SendMessage("RequestGame", game.Id);
-        }
-
-        private void ForceTextboxToInt(object sender, EventArgs e)
-        {
-            TextBox textbox = (TextBox)sender;
-            textbox.Text = _intRgx.Replace(textbox.Text, "");
         }
 
         public void ShowGroup(GroupDataView group)
@@ -115,6 +141,110 @@ namespace GameSelector.Views
                 : null;
         }
 
+        /////////////////////////////////////////////////////
+        // GAMES
+        /////////////////////////////////////////////////////
+
+        private bool _gameDataUserControl = true;
+
+        private GameDataView GetCurrentGameDataView()
+        {
+            if (gamesListBox.SelectedIndex < 0) return null;
+            return (GameDataView)gamesListBox.Items[gamesListBox.SelectedIndex];
+        }
+
+        private void SortGameListBox()
+        {
+            object[] itemsCopy = new object[gamesListBox.Items.Count];
+            gamesListBox.Items.CopyTo(itemsCopy, 0);
+            gamesListBox.Items.Clear();
+
+            var newList = itemsCopy
+                .Select(o => (GameDataView)o)
+                .OrderByDescending(gdv => gdv.Priority);
+
+            foreach(var newItem in newList)
+            {
+                gamesListBox.Items.Add(newItem);
+            }
+        }
+
+        private int GetGameListBoxIndex(GameDataView game)
+        {
+            var idx = -1;
+
+            for (var i = 0; i < gamesListBox.Items.Count; ++i)
+            {
+                var gameItem = (GameDataView)gamesListBox.Items[i];
+
+                if (gameItem.Id == game.Id)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            return idx;
+        }
+
+        private void gamesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _gameDataUserControl = false;
+            ShowGame(GetCurrentGameDataView());
+            _gameDataUserControl = true;
+        }
+
+        private void saveGameButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGameDataView();
+
+            if(gdv != null)
+                SendMessage("RequestSaveGame", gdv);
+        }
+
+        private void addGameButton_Click(object sender, EventArgs e)
+        {
+            SendMessage("RequestNewGame", null);
+        }
+
+        private void incPrioButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGameDataView();
+
+            if (gdv != null)
+                SendMessage("RequestIncreasePrio", gdv);
+        }
+
+        private void decPrioButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGameDataView();
+
+            if (gdv != null)
+                SendMessage("RequestDecreasePrio", gdv);
+        }
+
+        private void deleteGameButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGameDataView();
+
+            if (gdv != null)
+                SendMessage("RequestDeleteGame", gdv);
+        }
+
+        private void GameDataChanged(object sender, EventArgs e)
+        {
+            if (!_gameDataUserControl) return;
+            
+            var gdv = GetCurrentGameDataView();
+            
+            if (gdv == null) return;
+
+            gdv.Code = gameCodeTextbox.Text;
+            gdv.Description = gameDescriptionTextbox.Text;
+            gdv.Explanation = gameExplanationTextbox.Text;
+            gdv.Color = gameColorComboBox.Text;
+        }
+
         public void SetGamesList(IEnumerable<GameDataView> games)
         {
             gamesListBox.Items.Clear();
@@ -122,40 +252,45 @@ namespace GameSelector.Views
             {
                 gamesListBox.Items.Add(game);
             }
+
+            SortGameListBox();
         }
 
         public void ShowGame(GameDataView game)
         {
-            if (game == null)
-            {
-                gameDescriptionTextbox.Text = string.Empty;
-                gameExplanationTextbox.Text = string.Empty;
-                gameColorComboBox.Text = string.Empty;
-                return;
-            }
+            gameCodeTextbox.Text = string.Empty;
+            gameDescriptionTextbox.Text = string.Empty;
+            gameExplanationTextbox.Text = string.Empty;
+            gameColorComboBox.Text = string.Empty;
+            currentOccupantTextbox.Text = string.Empty;
 
+            if (game == null) return;
+
+            gameCodeTextbox.Text = game.Code;
             gameDescriptionTextbox.Text = game.Description;
             gameExplanationTextbox.Text = game.Explanation;
             gameColorComboBox.Text = game.Color;
+
+            if (game.OccupiedBy != null)
+                currentOccupantTextbox.Text = $"{game.OccupiedBy.ScoutingName} - {game.OccupiedBy.GroupName}";
         }
 
-        public void ShowError(string errorText)
+        public void UpdateGame(GameDataView game)
         {
-            AddNewError(errorText);
-        }
+            var idx = GetGameListBoxIndex(game);
 
-        public void ShowGamePaused()
-        {
-            gameStateLabel.Text = "GEPAUZEERD";
-            startStopGameButton.Text = "Start";
-            gameStateLabel.ForeColor = Color.Red;
-        }
+            if (idx < 0)
+            {
+                gamesListBox.Items.Add(game);
+                idx = GetGameListBoxIndex(game);
+            }
+            else
+            {
+                gamesListBox.Items[idx] = game;
+            }
 
-        public void ShowGameRunning()
-        {
-            gameStateLabel.Text = "BEZIG";
-            startStopGameButton.Text = "Pauze";
-            gameStateLabel.ForeColor = Color.Green;
+            SortGameListBox();
+            gamesListBox.SelectedIndex = idx;
         }
     }
 }
