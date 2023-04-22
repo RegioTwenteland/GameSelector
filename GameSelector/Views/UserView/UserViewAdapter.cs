@@ -11,6 +11,7 @@ namespace GameSelector.Views
     {
         private readonly UserView form;
 
+        public event EventHandler Ready;
 
         public UserViewAdapter(BlockingCollection<Message> messages)
             : base(messages)
@@ -28,12 +29,24 @@ namespace GameSelector.Views
                 onClose?.Invoke();
             });
 
+            form.Load += (s, e) => Ready?.Invoke(this, EventArgs.Empty);
+
             WaitOnFormLoad(form);
         }
 
         public void ShowGame(GameDataView game)
         {
             form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
+        }
+
+        public void ShowPaused()
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowPaused()));
+        }
+
+        public void ShowUnpaused()
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowUnpaused()));
         }
     }
 }

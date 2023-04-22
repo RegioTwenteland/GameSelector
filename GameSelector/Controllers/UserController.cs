@@ -15,6 +15,8 @@ namespace GameSelector.Controllers
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
 
+        private bool _allowNewUserLogin = true;
+
         public UserController(
             GameState gameState,
             UserIdentificationView userIdentificationView,
@@ -31,10 +33,28 @@ namespace GameSelector.Controllers
             _gameDataBridge = gameDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
 
+            userView.Ready += (s, e) => _gameState.StateChanged += OnStateChanged;
+
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "UserLogin", OnUserLogin }
+                { "UserLogin", OnUserLogin },
+                { "AnimationComplete", OnAnimationComplete },
             });
+        }
+
+        private void OnStateChanged(object sender, EventArgs e)
+        {
+            switch (_gameState.CurrentState)
+            {
+                case GameState.State.Paused:
+                    _userView.ShowPaused();
+                    break;
+                case GameState.State.Playing:
+                    _userView.ShowUnpaused();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public override void Start(Action stop)
@@ -70,7 +90,7 @@ namespace GameSelector.Controllers
             var possibleGames = GetPossibleGames(group);
 
             Game selectedGame = null;
-            
+
             if (possibleGames.Count <= 0) return null;
 
             var recordPriority = -1L;
@@ -120,6 +140,7 @@ namespace GameSelector.Controllers
         {
             Debug.Assert(value is string);
 
+            if (!_allowNewUserLogin) return;
             if (_gameState.CurrentState == GameState.State.Paused) return;
 
             var cardId = (string)value;
@@ -129,7 +150,16 @@ namespace GameSelector.Controllers
 
             EndGameFor(group);
             var newGame = SelectNewGameFor(group);
+
+            _allowNewUserLogin = false;
             _userView.ShowGame(GameDataView.FromGame(newGame));
+        }
+
+        private void OnAnimationComplete(object value)
+        {
+            Debug.Assert(value is null);
+
+            _allowNewUserLogin = true;
         }
     }
 }
