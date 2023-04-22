@@ -255,6 +255,15 @@ namespace GameSelector.Views
             groupsListBox.SelectedIndex = idx;
         }
 
+        public void SetGroupSelected(GroupDataView group)
+        {
+            if (group == null) return;
+
+            var idx = GetGroupListBoxIndex(group);
+
+            groupsListBox.SelectedIndex = idx;
+        }
+
         public void ShowLastScannedCardId(string cardId)
         {
             lastScannedCardTextbox.Text = cardId;

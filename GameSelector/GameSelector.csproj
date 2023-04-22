@@ -131,6 +131,7 @@
     <Compile Include="Model\Database\DbGroupDataBridge.cs" />
     <Compile Include="Model\Database\DbGameDataBridge.cs" />
     <Compile Include="Model\Database\DbModel.cs" />
+    <Compile Include="Model\GameUpdatedEventArgs.cs" />
     <Compile Include="Model\IGameDataBridge.cs" />
     <Compile Include="Model\IGroupDataBridge.cs" />
     <Compile Include="Model\IModel.cs" />

@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameSelector.Model
 {
     internal interface IGameDataBridge
     {
+        event EventHandler<GameUpdatedEventArgs> GameUpdated;
+
         List<Game> GetAllGames();
 
         List<Game> GetAllGamesNotOccupied();

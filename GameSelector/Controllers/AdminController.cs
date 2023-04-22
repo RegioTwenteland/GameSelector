@@ -33,6 +33,7 @@ namespace GameSelector.Controllers
             _playedGameDataBridge = playedGameDataBridge;
 
             _gameState.StateChanged += OnGameStateChanged;
+            _gameDataBridge.GameUpdated += OnGameUpdated;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
@@ -51,6 +52,11 @@ namespace GameSelector.Controllers
                 { "RequestDeleteGame", OnRequestDeleteGame },
                 { "RequestGroups", OnRequestGroups },
             });
+        }
+
+        private void OnGameUpdated(object sender, GameUpdatedEventArgs e)
+        {
+            _adminView.UpdateGroup(GroupDataView.FromGroup(e.Game.OccupiedBy));
         }
 
         public override void Start(Action stop)
@@ -163,7 +169,7 @@ namespace GameSelector.Controllers
                 groupView = GroupDataView.FromGroup(group);
             }
 
-            _adminView.UpdateGroup(groupView);
+            _adminView.SetGroupSelected(groupView);
             _adminView.ShowLastScannedCardId(cardId);
         }
 

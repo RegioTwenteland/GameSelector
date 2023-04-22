@@ -38,6 +38,11 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.UpdateGroup(group)));
         }
 
+        public void SetGroupSelected(GroupDataView group)
+        {
+            form.Invoke(new MethodInvoker(() => form.SetGroupSelected(group)));
+        }
+
         public void ShowLastScannedCardId(string cardId)
         {
             form.Invoke(new MethodInvoker(() => form.ShowLastScannedCardId(cardId)));

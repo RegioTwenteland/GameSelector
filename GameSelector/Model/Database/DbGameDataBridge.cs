@@ -10,6 +10,8 @@ namespace GameSelector.Model.Database
         private readonly IGamesTable _gamesTable;
         private readonly IDatabaseObjectTranslator _objectTranslator;
 
+        public event EventHandler<GameUpdatedEventArgs> GameUpdated;
+
         public DbGameDataBridge(IDatabase database)
         {
             _gamesTable = database.GamesTable;
@@ -65,6 +67,14 @@ namespace GameSelector.Model.Database
         public void UpdateGame(Game game)
         {
             _gamesTable.UpdateGame(_objectTranslator.ToDbGame(game));
+
+            if (game.OccupiedBy != null)
+            {
+                // make sure the event passes the correct game to whomever wants to know
+                game.OccupiedBy.CurrentlyPlaying = game;
+            }
+
+            GameUpdated?.Invoke(this, new GameUpdatedEventArgs { Game = game });
         }
 
         public void InsertGame(Game game)
