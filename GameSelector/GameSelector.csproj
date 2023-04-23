@@ -104,6 +104,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Model\IGroupDataBridge.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\IPlayedGameDataBridge.cs" />
-    <Compile Include="Model\ModelFactory.cs" />
+    <Compile Include="ModelFactory.cs" />
     <Compile Include="Model\ModelType.cs" />
     <Compile Include="NFC\WinSCardWrapper.cs" />
     <Compile Include="Model\Group.cs" />

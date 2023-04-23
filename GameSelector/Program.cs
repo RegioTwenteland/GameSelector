@@ -1,50 +1,34 @@
-﻿using GameSelector.Views;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System;
 using System.Threading;
 using System.Collections.Generic;
 using GameSelector.Controllers;
-using GameSelector.Model;
-using GameSelector.Database.SQLite;
-using NFC;
-using GameSelector.Database;
 
 namespace GameSelector
 {
     internal static class Program
     {
-        private static BlockingCollection<Message> _messages = new BlockingCollection<Message>();
+        private static BlockingCollection<Message> _messages;
         private static CancellationTokenSource _messageCancellationTokenSource = new CancellationTokenSource();
         private static CancellationToken _messageCancellationToken;
-
-        private static List<AbstractController> _controllers = new List<AbstractController>();
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
-            var gameState = new GameState();
+            var controllers = new List<AbstractController>
+            {
+                ControllerFactory.UserController,
+                ControllerFactory.AdminController
+            };
 
-            var model = ModelFactory.GetModel();
-
-            var groupDataBridge = model.GroupDataBridge;
-            var gameDataBride = model.GameDataBridge;
-            var playedGameDataBridge = model.PlayedGameDataBridge;
-
-            var nfcReader = new NfcReader();
-
-            var adminView = new AdminViewAdapter(_messages);
-            var userIdentificationView = new UserIdentificationView(_messages, nfcReader);
-            var userView = new UserViewAdapter(_messages);
-            _controllers.Add(new AdminController(gameState, adminView, userIdentificationView, groupDataBridge, gameDataBride, playedGameDataBridge));
-            _controllers.Add(new UserController(gameState, userIdentificationView, userView, groupDataBridge, gameDataBride, playedGameDataBridge));
-
-            foreach (var controller in _controllers)
+            foreach (var controller in controllers)
             {
                 controller.Start(Stop);
             }
 
+            _messages = ControllerFactory.MessageCollection;
             _messageCancellationToken = _messageCancellationTokenSource.Token;
 
             while (!_messages.IsCompleted)
@@ -53,7 +37,7 @@ namespace GameSelector
                 {
                     var message = _messages.Take(_messageCancellationToken);
 
-                    foreach (var controller in _controllers)
+                    foreach (var controller in controllers)
                     {
                         controller.HandleMessage(message);
                     }
