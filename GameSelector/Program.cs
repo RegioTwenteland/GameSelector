@@ -20,7 +20,9 @@ namespace GameSelector
             var controllers = new List<AbstractController>
             {
                 ControllerFactory.UserController,
-                ControllerFactory.AdminController
+                ControllerFactory.AdminController,
+                ControllerFactory.AdminGroupController,
+                ControllerFactory.AdminGameController,
             };
 
             foreach (var controller in controllers)

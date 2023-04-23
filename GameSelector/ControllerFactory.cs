@@ -34,6 +34,19 @@ namespace GameSelector
             return new AdminController(
                 GameState,
                 AdminView,
+                Model.GroupDataBridge,
+                Model.GameDataBridge
+            );
+        }
+
+        private static AdminController _adminController;
+
+        public static AdminController AdminController { get => _adminController ?? (_adminController = CreateAdminController()); }
+
+        private static AdminGroupController CreateAdminGroupController()
+        {
+            return new AdminGroupController(
+                AdminView,
                 UserIdentificationView,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,
@@ -41,9 +54,22 @@ namespace GameSelector
             );
         }
 
-        private static AdminController _adminController;
+        private static AdminGroupController _adminGroupController;
 
-        public static AdminController AdminController { get => _adminController ?? (_adminController = CreateAdminController()); }
+        public static AdminGroupController AdminGroupController { get => _adminGroupController ?? (_adminGroupController = CreateAdminGroupController()); }
+
+        private static AdminGameController CreateAdminGameController()
+        {
+            return new AdminGameController(
+                AdminView,
+                Model.GameDataBridge,
+                Model.PlayedGameDataBridge
+            );
+        }
+
+        private static AdminGameController _adminGameController;
+
+        public static AdminGameController AdminGameController { get => _adminGameController ?? (_adminGameController = CreateAdminGameController()); }
 
         private static UserController CreateUserController()
         {

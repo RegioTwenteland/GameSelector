@@ -1,0 +1,4 @@
+- Card ID is unique, apart from NULL. Currently crashes on multiple NULLs
+- Add refresh button (https://symbl.cc/en/1F5D8/) to groups and games views
+- Set tab order for easier data entry
+- Automatically create database file if it does not exist

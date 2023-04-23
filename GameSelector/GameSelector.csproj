@@ -107,6 +107,8 @@
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminGameController.cs" />
+    <Compile Include="Controllers\AdminGroupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\DatabaseFactory.cs" />
     <Compile Include="Database\DatabaseType.cs" />

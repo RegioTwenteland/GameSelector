@@ -143,21 +143,18 @@ namespace GameSelector.Database.SQLite
         {
             var sql = @"INSERT INTO `groups`
                         (
-	                        `id`,
 	                        `card_id`,
 	                        `group_name`,
 	                        `scouting_name`
                         )
                         VALUES
                         (
-	                        @id,
 	                        @card_id,
 	                        @name,
 	                        @scouting_name
                         );";
 
             var command = new SQLiteCommand(sql, _connection);
-            command.Parameters.AddWithValue("@id", group.Id);
             command.Parameters.AddWithValue("@card_id", group.CardId);
             command.Parameters.AddWithValue("@name", group.Name);
             command.Parameters.AddWithValue("@scouting_name", group.ScoutingName);
