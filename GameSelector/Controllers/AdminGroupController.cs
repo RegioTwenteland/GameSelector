@@ -57,7 +57,8 @@ namespace GameSelector.Controllers
 
             var group = _groupDataBridge.GetGroup(groupDataView.Id);
 
-            if (group.CardId != groupDataView.CardId)
+            // check if another group already uses this card ID. Unless we try to remove the card ID. This is always allowed.
+            if (!string.IsNullOrWhiteSpace(groupDataView.CardId) && (group.CardId != groupDataView.CardId))
             {
                 var groupWithCardId = _groupDataBridge.GetGroup(groupDataView.CardId);
 
