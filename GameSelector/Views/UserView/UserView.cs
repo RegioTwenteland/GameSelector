@@ -71,6 +71,22 @@ namespace GameSelector.Views
             _animationTimer.Start();
         }
 
+        public void ShowNoGamesLeft()
+        {
+            gameAnnouncerLabel.Text = "Je hebt alle spellen al gespeeld!";
+            gameCodeLabel.Text = "";
+            gameDescriptionLabel.Text = "";
+            gameExplanationLabel.Text = "";
+
+            Task.Delay(2000).ContinueWith(t =>
+            {
+                Invoke(new Action(() =>
+                {
+                    ShowUnpaused();
+                }));
+            });
+        }
+
         private void AnimationFrame(object sender, EventArgs args)
         {
             if (_animationFrame++ > ANIMATION_FRAME_AMT)

@@ -141,6 +141,8 @@
     <Compile Include="Model\IPlayedGameDataBridge.cs" />
     <Compile Include="ModelFactory.cs" />
     <Compile Include="Model\ModelType.cs" />
+    <Compile Include="NFC\NdefMessage.cs" />
+    <Compile Include="NFC\NdefRecord.cs" />
     <Compile Include="NFC\WinSCardWrapper.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Game.cs" />

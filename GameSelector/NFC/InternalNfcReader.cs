@@ -308,33 +308,36 @@ namespace NFC
             return true;
         }
         */
-        public bool WriteBlock(byte[] bytes, String Block)
+        public bool WriteBlock(ArraySegment<byte> bytes, string block)
         {
             //00:00:03:19:D1:01:15:54:02:65:6E toevoegen voor tekstlabel
             //https://learn.adafruit.com/adafruit-pn532-rfid-nfc/ndef
             //https://www.oreilly.com/library/view/beginning-nfc/9781449324094/ch04.html
             // iets met NDEF
 
-            Debug.Assert(bytes.Length <= 16);
+            Debug.Assert(bytes.Count <= 16);
 
-            if (AuthBlock(Block))
+            if (AuthBlock(block))
             {
-                ClearBuffers();
-                SendBuff[0] = 0xFF;                       // CLA
-                SendBuff[1] = 0xD6;                       // INS
-                SendBuff[2] = 0x00;                       // P1
-                SendBuff[3] = (byte)int.Parse(Block);     // P2 : Starting Block No.
-                SendBuff[4] = 16;                         // P3 : Data length
+                int i = 0;
 
-                int i;
-                for (i = 0; i < bytes.Length; i++)
+                ClearBuffers();
+                SendBuff[i++] = 0xFF;      // CLA
+                SendBuff[i++] = 0xD6;      // INS
+                SendBuff[i++] = 0x00;      // P1
+                SendBuff[i++] = (byte)int.Parse(block);     // P2 : Starting Block No.
+                SendBuff[i++] = 16;        // P3 : Data length
+
+                // put the bytes in the buffer
+                for (var j = bytes.Offset; j < bytes.Offset + bytes.Count; ++j)
                 {
-                    SendBuff[i + 5] = bytes[i];
+                    SendBuff[i++] = bytes.Array[j];
                 }
 
-                for(; i < 16; ++i)
+                // pad out the payload to 16 bytes
+                for(var j = 0; j < (16 - bytes.Count); ++j)
                 {
-                    SendBuff[i + 5] = 0x00;
+                    SendBuff[i++] = 0x00;
                 }
 
                 SendLen = SendBuff[4] + 5;
@@ -380,19 +383,19 @@ namespace NFC
             return true;
         }
         */
-        public byte[] ReadBlock(String Block)
+        public byte[] ReadBlock(string block)
         {
             byte[] tmpStr;
             int indx;
 
-            if (AuthBlock(Block))
+            if (AuthBlock(block))
             {
                 ClearBuffers();
-                SendBuff[0] = 0xFF; // CLA 
-                SendBuff[1] = 0xB0;// INS
-                SendBuff[2] = 0x00;// P1
-                SendBuff[3] = (byte)int.Parse(Block);// P2 : Block No.
-                SendBuff[4] = (byte)int.Parse("16");// Le
+                SendBuff[0] = 0xFF;  // CLA 
+                SendBuff[1] = 0xB0;  // INS
+                SendBuff[2] = 0x00;  // P1
+                SendBuff[3] = (byte)int.Parse(block); // P2 : Block No.
+                SendBuff[4] = 16;    // Le
 
                 SendLen = 5;
                 RecvLen = SendBuff[4] + 2;

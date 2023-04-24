@@ -77,6 +77,7 @@ namespace GameSelector
                 GameState,
                 UserIdentificationView,
                 UserView,
+                NfcReader,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,
                 Model.PlayedGameDataBridge

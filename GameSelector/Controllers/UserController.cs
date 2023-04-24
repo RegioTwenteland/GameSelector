@@ -1,5 +1,7 @@
 ﻿using GameSelector.Model;
+using GameSelector.NFC;
 using GameSelector.Views;
+using NFC;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +13,7 @@ namespace GameSelector.Controllers
         private GameState _gameState;
         private UserViewAdapter _userView;
         private UserIdentificationView _userIdentificationView;
+        private NfcReader _nfcReader;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
@@ -21,6 +24,7 @@ namespace GameSelector.Controllers
             GameState gameState,
             UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
+            NfcReader nfcReader,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
             IPlayedGameDataBridge playedGameDataBridge
@@ -29,6 +33,7 @@ namespace GameSelector.Controllers
             _gameState = gameState;
             _userIdentificationView = userIdentificationView;
             _userView = userView;
+            _nfcReader = nfcReader;
             _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
@@ -85,13 +90,15 @@ namespace GameSelector.Controllers
             return possibleGames;
         }
 
-        private Game SelectNewGameFor(Group group)
+        private bool SelectNewGameFor(Group group, out Game newGame)
         {
+            newGame = null;
+
             var possibleGames = GetPossibleGames(group);
 
             Game selectedGame = null;
 
-            if (possibleGames.Count <= 0) return null;
+            if (possibleGames.Count <= 0) return true;
 
             var recordPriority = -1L;
             foreach (var game in possibleGames)
@@ -103,14 +110,28 @@ namespace GameSelector.Controllers
                 }
             }
 
-            if (selectedGame == null) return null;
+            if (selectedGame == null)
+            {
+                return true;
+            }
 
             selectedGame.StartTime = DateTime.Now;
             selectedGame.OccupiedBy = group;
 
-            _gameDataBridge.UpdateGame(selectedGame);
+            newGame = selectedGame;
 
-            return selectedGame;
+            var newNdefData = new NdefMessage(
+                group.ScoutingName,
+                group.Name,
+                selectedGame.Code
+            );
+
+            var success = _nfcReader.WriteMessage(newNdefData);
+
+            if (!success) return false;
+
+            _gameDataBridge.UpdateGame(selectedGame);
+            return true;
         }
 
         private void EndGameFor(Group group)
@@ -149,7 +170,15 @@ namespace GameSelector.Controllers
             if (group == null) return;
 
             EndGameFor(group);
-            var newGame = SelectNewGameFor(group);
+            var success = SelectNewGameFor(group, out var newGame);
+
+            if (!success) return;
+
+            if (newGame == null)
+            {
+                _userView.ShowNoGamesLeft();
+                return;
+            }
 
             _allowNewUserLogin = false;
             _userView.ShowGame(GameDataView.FromGame(newGame));

@@ -69,6 +69,18 @@ namespace GameSelector.Controllers
                 }
             }
 
+            if (group.Name.Length > 100)
+            {
+                _adminView.ShowError("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters");
+                return;
+            }
+
+            if (group.ScoutingName.Length > 100)
+            {
+                _adminView.ShowError("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters");
+                return;
+            }
+
             group.CardId = groupDataView.CardId;
             group.Name = groupDataView.GroupName;
             group.ScoutingName = groupDataView.ScoutingName;
