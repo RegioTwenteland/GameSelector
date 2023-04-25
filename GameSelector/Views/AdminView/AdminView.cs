@@ -244,7 +244,6 @@ namespace GameSelector.Views
             if (idx < 0)
             {
                 groupsListBox.Items.Add(group);
-                idx = GetGroupListBoxIndex(group);
             }
             else
             {
@@ -252,6 +251,8 @@ namespace GameSelector.Views
             }
 
             SortGroupListBox();
+            idx = GetGroupListBoxIndex(group);
+
             groupsListBox.SelectedIndex = idx;
         }
 
