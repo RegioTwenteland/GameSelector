@@ -3,8 +3,6 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using GameSelector.Controllers;
-using GameSelector.NFC;
-using NFC;
 
 namespace GameSelector
 {

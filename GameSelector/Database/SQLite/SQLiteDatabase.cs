@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.IO;
+using System.Reflection;
 
 namespace GameSelector.Database.SQLite
 {
@@ -24,6 +26,23 @@ namespace GameSelector.Database.SQLite
             GroupsTable = new SQLiteGroupsTable(_connection);
             PlayedGamesTable = new SQLitePlayedGamesTable(_connection);
             ObjectTranslator = new SQLiteDatabaseObjectTranslator();
+        }
+
+        /// <summary>
+        /// Must only be called if the database file is newly created.
+        /// </summary>
+        public void InitSchema(string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string sql = reader.ReadToEnd();
+
+                var command = new SQLiteCommand(sql, _connection);
+                command.ExecuteNonQuery();
+            }
         }
 
         public static T FromDbNull<T>(object dbValue)
