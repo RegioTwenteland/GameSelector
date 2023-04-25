@@ -17,6 +17,8 @@ namespace GameSelector.Views
 
         public string CurrentGame { get; set; }
 
+        public bool UnsavedChanges { get; set; } = false;
+
         public static GroupDataView FromGroup(Group group)
         {
             if (group == null)

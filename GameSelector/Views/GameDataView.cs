@@ -21,6 +21,8 @@ namespace GameSelector.Views
 
         public DateTime StartTime { get; set; }
 
+        public bool UnsavedChanges { get; set; } = false;
+
         public override string ToString()
         {
             return $"{Code}: {Description}";

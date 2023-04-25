@@ -17,6 +17,9 @@ namespace GameSelector.Views
         /////////////////////////////////////////////////////
         private Action<string, object> SendMessage;
 
+        private const string SaveText = "Opslaan";
+        private const string UnsavedModifier = "*";
+
         Regex _intRgx = new Regex("[^0-9]");
 
         public AdminView(Action<string, object> sendMessage)
@@ -163,6 +166,9 @@ namespace GameSelector.Views
         {
             var gdv = GetCurrentGroupDataView();
 
+            gdv.UnsavedChanges = false;
+            saveGroupButton.Text = SaveText;
+
             if (gdv != null)
                 SendMessage("RequestSaveGroup", gdv);
         }
@@ -205,6 +211,9 @@ namespace GameSelector.Views
             gdv.CardId = cardIdTextbox.Text;
             gdv.GroupName = groupNameTextbox.Text;
             gdv.ScoutingName = scoutingNameTextbox.Text;
+            gdv.UnsavedChanges = true;
+
+            saveGroupButton.Text = SaveText + UnsavedModifier;
         }
 
         private void groupsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -220,6 +229,7 @@ namespace GameSelector.Views
             groupNameTextbox.Text = string.Empty;
             scoutingNameTextbox.Text = string.Empty;
             currentGameText.Text = string.Empty;
+            saveGroupButton.Text = SaveText;
 
             if (group == null) return;
 
@@ -233,6 +243,8 @@ namespace GameSelector.Views
                     group.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
                     group.StartTime).ToString()
                 : null;
+
+            saveGroupButton.Text = SaveText + (group.UnsavedChanges ? UnsavedModifier : string.Empty);
         }
 
         public void UpdateGroup(GroupDataView group)
