@@ -98,40 +98,47 @@ namespace GameSelector.Controllers
 
             Game selectedGame = null;
 
-            if (possibleGames.Count <= 0) return true;
+            NdefMessage newNdefData = null;
 
-            var recordPriority = -1L;
-            foreach (var game in possibleGames)
+            if (possibleGames.Count > 0)
             {
-                if (game.Priority > recordPriority)
+                // find game with highest prio
+                var recordPriority = -1L;
+                foreach (var game in possibleGames)
                 {
-                    recordPriority = game.Priority;
-                    selectedGame = game;
+                    if (game.Priority > recordPriority)
+                    {
+                        recordPriority = game.Priority;
+                        selectedGame = game;
+                    }
                 }
+
+                selectedGame.StartTime = DateTime.Now;
+                selectedGame.OccupiedBy = group;
+
+                newGame = selectedGame;
+
+                newNdefData = new NdefMessage(
+                    group.ScoutingName,
+                    group.Name,
+                    selectedGame.Code,
+                    selectedGame.StartTime.Value.ToString("HH:mm:ss")
+                );
+
+                _gameDataBridge.UpdateGame(selectedGame);
             }
 
-            if (selectedGame == null)
+            if (newNdefData == null)
             {
-                return true;
+                newNdefData = new NdefMessage(
+                    group.ScoutingName,
+                    group.Name
+                );
             }
-
-            selectedGame.StartTime = DateTime.Now;
-            selectedGame.OccupiedBy = group;
-
-            newGame = selectedGame;
-
-            var newNdefData = new NdefMessage(
-                group.ScoutingName,
-                group.Name,
-                selectedGame.Code
-            );
 
             var success = _nfcReader.WriteMessage(newNdefData);
 
-            if (!success) return false;
-
-            _gameDataBridge.UpdateGame(selectedGame);
-            return true;
+            return success;
         }
 
         private void EndGameFor(Group group)
