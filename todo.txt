@@ -1,3 +1,4 @@
+- Send games from database to view
 - Add refresh button (https://symbl.cc/en/1F5D8/) to groups and games views
 - Assign proper priority to newly added groups
 - Automatically create database file if it does not exist

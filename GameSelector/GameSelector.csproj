@@ -145,6 +145,12 @@
     <Compile Include="Views\GroupDataView.cs" />
     <Compile Include="Views\GameDataView.cs" />
     <Compile Include="Views\UserIdentificationView\UserIdentificationView.cs" />
+    <Compile Include="Views\UserView\InsertCardView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UserView\InsertCardView.Designer.cs">
+      <DependentUpon>InsertCardView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserView\UserView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\UserView\InsertCardView.resx">
+      <DependentUpon>InsertCardView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserView\UserView.resx">
       <DependentUpon>UserView.cs</DependentUpon>
     </EmbeddedResource>

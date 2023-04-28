@@ -1,26 +1,39 @@
-﻿using GameSelector.Model;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    internal partial class UserView : Form
+    internal partial class UserView : MaterialForm
     {
         private const int ANIMATION_LENGTH_MS = 4000;
-        private const int ANIMATION_FRAME_AMT = 9;
+        private const int ANIMATION_FRAME_AMT = 99;
 
         private const string PAUSED_MESSAGE = "Spel is gepauzeerd";
         private const string PROMPT_MESSAGE = "Houd je kaart tegen de lezer";
         private const string SELECTED_MESSAGE = "Speciaal geselecteerd voor ";
-        private const string SEARCHING_MESSAGE = "Spel zoeken";
 
         private Action<string, object> SendMessage;
 
+        private InsertCardView _insertCardView = new InsertCardView();
+
+        private string[] GameNames = new string[]
+        {
+            "EXP1",
+            "EXTRA1",
+            "UST3",
+            "BUI5"
+        };
+
         public UserView(Action<string, object> sendMessage)
         {
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+
             InitializeComponent();
             SendMessage = sendMessage;
         }
@@ -51,26 +64,6 @@ namespace GameSelector.Views
         private int _animationFrame;
         private GameDataView _selectedGame;
 
-        public void ShowGame(GameDataView game)
-        {
-            if (game == null)
-            {
-                gameAnnouncerLabel.Text = "Er is geen spel gevonden";
-                gameCodeLabel.Text = "";
-                gameDescriptionLabel.Text = "";
-                gameExplanationLabel.Text = "";
-                return;
-            }
-
-            _selectedGame = game;
-
-            _animationFrame = 0;
-            _animationTimer = new Timer();
-            _animationTimer.Tick += AnimationFrame;
-            _animationTimer.Interval = ANIMATION_LENGTH_MS / ANIMATION_FRAME_AMT;
-            _animationTimer.Start();
-        }
-
         public void ShowNoGamesLeft()
         {
             gameAnnouncerLabel.Text = "Je hebt alle spellen al gespeeld!";
@@ -87,24 +80,47 @@ namespace GameSelector.Views
             });
         }
 
+        public void ShowGame(GameDataView game)
+        {
+            if (game == null)
+            {
+                gameAnnouncerLabel.Text = "Er is geen spel gevonden";
+                gameCodeLabel.Text = "";
+                gameDescriptionLabel.Text = "";
+                gameExplanationLabel.Text = "";
+                return;
+            }
+
+            _insertCardView.Hide();
+            
+            _selectedGame = game;
+
+            _animationFrame = 0;
+            _animationTimer = new Timer();
+            _animationTimer.Tick += AnimationFrame;
+            _animationTimer.Interval = ANIMATION_LENGTH_MS / ANIMATION_FRAME_AMT;
+
+            searchingProgressBar.Maximum = ANIMATION_FRAME_AMT;
+            _animationTimer.Start();
+        }
+
+        Random random = new Random();
+
         private void AnimationFrame(object sender, EventArgs args)
         {
-            if (_animationFrame++ > ANIMATION_FRAME_AMT)
+            if (_animationFrame++ >= ANIMATION_FRAME_AMT)
             {
                 EndAnimation();
                 return;
             }
 
-            int periodAmt = _animationFrame % 4;
-
-            var text = new StringBuilder();
-            text.Append(SEARCHING_MESSAGE);
-            while (periodAmt-- > 0)
+            if (_animationFrame % 10 == 0)
             {
-                text.Append('.');
+                searchingGameNameLabel.Text = GameNames[random.Next(0, GameNames.Length)];
             }
 
-            gameAnnouncerLabel.Text = text.ToString();
+            searchingProgressBar.Value++;
+            //gameAnnouncerLabel.Text = text.ToString();
         }
 
         private void EndAnimation()
@@ -123,6 +139,9 @@ namespace GameSelector.Views
                 {
                     ShowUnpaused();
                     SendMessage("AnimationComplete", null);
+
+                    searchingProgressBar.Value = 0;
+                    _insertCardView.Show();
                 }));
             });
         }
@@ -137,6 +156,8 @@ namespace GameSelector.Views
 
         public void ShowUnpaused()
         {
+            _insertCardView.Show();
+
             gameAnnouncerLabel.Text = PROMPT_MESSAGE;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
