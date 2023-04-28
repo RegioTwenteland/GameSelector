@@ -33,7 +33,6 @@ namespace GameSelector.Controllers
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "RequestGroups", OnRequestGroups },
                 { "RequestSaveGroup", OnRequestSaveGroup },
                 { "RequestNewGroup", OnRequestNewGroup },
                 { "RequestDeleteGroup", OnRequestDeleteGroup },
@@ -47,6 +46,7 @@ namespace GameSelector.Controllers
 
         public override void Start(Action stop)
         {
+            UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }
 
         private void OnRequestSaveGroup(object value)
@@ -137,13 +137,6 @@ namespace GameSelector.Controllers
         {
             var gdv = groups.Select(g => GroupDataView.FromGroup(g));
             _adminView.SetGroupsList(gdv);
-        }
-
-        private void OnRequestGroups(object value)
-        {
-            Debug.Assert(value is null);
-
-            UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }
     }
 }

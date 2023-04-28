@@ -47,9 +47,6 @@ namespace GameSelector.Views
                     Y = screen.WorkingArea.Top
                 };
             }
-
-            SendMessage("RequestGames", null);
-            SendMessage("RequestGroups", null);
         }
 
         private void ForceTextboxToInt(object sender, EventArgs e)

@@ -25,7 +25,6 @@ namespace GameSelector.Controllers
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "RequestGames", OnRequestGames },
                 { "RequestSaveGame", OnRequestSaveGame },
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestIncreasePrio", OnRequestIncreasePrio },
@@ -36,18 +35,13 @@ namespace GameSelector.Controllers
 
         public override void Start(Action stop)
         {
+            UpdateGamesList(_gameDataBridge.GetAllGames());
         }
 
         private void UpdateGamesList(List<Game> games)
         {
             var gdv = games.Select(g => GameDataView.FromGame(g));
             _adminView.SetGamesList(gdv);
-        }
-
-        private void OnRequestGames(object value)
-        {
-            Debug.Assert(value is null);
-            UpdateGamesList(_gameDataBridge.GetAllGames());
         }
 
         private void OnRequestSaveGame(object value)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -52,6 +53,11 @@ namespace GameSelector.Views
         public void ShowUnpaused()
         {
             form.Invoke(new MethodInvoker(() => form.ShowUnpaused()));
+        }
+
+        public void SetGameCodes(string[] names)
+        {
+            form.Invoke(new MethodInvoker(() => form.SetGameCodes(names)));
         }
     }
 }

@@ -4,6 +4,8 @@ using NfcReader;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace GameSelector.Controllers
 {
@@ -64,6 +66,9 @@ namespace GameSelector.Controllers
         public override void Start(Action stop)
         {
             _userView.Start(stop);
+
+            var codes = _gameDataBridge.GetAllGames().Select(g => g.Code);
+            _userView.SetGameCodes(codes.ToArray());
         }
 
         private List<Game> GetPossibleGames(Group group)

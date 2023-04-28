@@ -20,13 +20,7 @@ namespace GameSelector.Views
 
         private InsertCardView _insertCardView = new InsertCardView();
 
-        private string[] GameNames = new string[]
-        {
-            "EXP1",
-            "EXTRA1",
-            "UST3",
-            "BUI5"
-        };
+        private string[] _gameCodes = new[] { string.Empty };
 
         public UserView(Action<string, object> sendMessage)
         {
@@ -58,6 +52,11 @@ namespace GameSelector.Views
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
             gameExplanationLabel.Text = string.Empty;
+        }
+
+        public void SetGameCodes(string[] gameCodes)
+        {
+            _gameCodes = gameCodes;
         }
 
         private Timer _animationTimer;
@@ -116,7 +115,7 @@ namespace GameSelector.Views
 
             if (_animationFrame % 10 == 0)
             {
-                searchingGameNameLabel.Text = GameNames[random.Next(0, GameNames.Length)];
+                searchingGameNameLabel.Text = _gameCodes[random.Next(0, _gameCodes.Length)];
             }
 
             searchingProgressBar.Value++;
