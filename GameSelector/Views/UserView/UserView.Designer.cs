@@ -50,10 +50,9 @@
             this.gameAnnouncerLabel.AutoSize = true;
             this.gameAnnouncerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gameAnnouncerLabel.ForeColor = System.Drawing.Color.White;
-            this.gameAnnouncerLabel.Location = new System.Drawing.Point(13, 486);
-            this.gameAnnouncerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.gameAnnouncerLabel.Location = new System.Drawing.Point(10, 395);
             this.gameAnnouncerLabel.Name = "gameAnnouncerLabel";
-            this.gameAnnouncerLabel.Size = new System.Drawing.Size(129, 52);
+            this.gameAnnouncerLabel.Size = new System.Drawing.Size(102, 39);
             this.gameAnnouncerLabel.TabIndex = 0;
             this.gameAnnouncerLabel.Text = "(Kop)";
             // 
@@ -63,10 +62,9 @@
             this.gameCodeLabel.AutoSize = true;
             this.gameCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gameCodeLabel.ForeColor = System.Drawing.Color.White;
-            this.gameCodeLabel.Location = new System.Drawing.Point(13, 534);
-            this.gameCodeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.gameCodeLabel.Location = new System.Drawing.Point(10, 434);
             this.gameCodeLabel.Name = "gameCodeLabel";
-            this.gameCodeLabel.Size = new System.Drawing.Size(156, 52);
+            this.gameCodeLabel.Size = new System.Drawing.Size(123, 39);
             this.gameCodeLabel.TabIndex = 1;
             this.gameCodeLabel.Text = "(Code)";
             // 
@@ -76,10 +74,9 @@
             this.gameDescriptionLabel.AutoSize = true;
             this.gameDescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gameDescriptionLabel.ForeColor = System.Drawing.Color.White;
-            this.gameDescriptionLabel.Location = new System.Drawing.Point(13, 582);
-            this.gameDescriptionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.gameDescriptionLabel.Location = new System.Drawing.Point(10, 473);
             this.gameDescriptionLabel.Name = "gameDescriptionLabel";
-            this.gameDescriptionLabel.Size = new System.Drawing.Size(306, 52);
+            this.gameDescriptionLabel.Size = new System.Drawing.Size(245, 39);
             this.gameDescriptionLabel.TabIndex = 2;
             this.gameDescriptionLabel.Text = "(Omschrijving)";
             // 
@@ -89,18 +86,18 @@
             this.gameExplanationLabel.AutoSize = true;
             this.gameExplanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gameExplanationLabel.ForeColor = System.Drawing.Color.White;
-            this.gameExplanationLabel.Location = new System.Drawing.Point(13, 630);
-            this.gameExplanationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.gameExplanationLabel.Location = new System.Drawing.Point(10, 512);
             this.gameExplanationLabel.Name = "gameExplanationLabel";
-            this.gameExplanationLabel.Size = new System.Drawing.Size(164, 52);
+            this.gameExplanationLabel.Size = new System.Drawing.Size(130, 39);
             this.gameExplanationLabel.TabIndex = 3;
             this.gameExplanationLabel.Text = "(Uitleg)";
             // 
             // searchingProgressBar
             // 
-            this.searchingProgressBar.Location = new System.Drawing.Point(46, 209);
+            this.searchingProgressBar.Location = new System.Drawing.Point(35, 207);
+            this.searchingProgressBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.searchingProgressBar.Name = "searchingProgressBar";
-            this.searchingProgressBar.Size = new System.Drawing.Size(526, 23);
+            this.searchingProgressBar.Size = new System.Drawing.Size(394, 19);
             this.searchingProgressBar.TabIndex = 4;
             // 
             // searchingLabel
@@ -109,9 +106,10 @@
             this.searchingLabel.BackColor = System.Drawing.Color.Black;
             this.searchingLabel.Font = new System.Drawing.Font("Squares Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
-            this.searchingLabel.Location = new System.Drawing.Point(41, 107);
+            this.searchingLabel.Location = new System.Drawing.Point(31, 119);
+            this.searchingLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.searchingLabel.Name = "searchingLabel";
-            this.searchingLabel.Size = new System.Drawing.Size(352, 29);
+            this.searchingLabel.Size = new System.Drawing.Size(286, 23);
             this.searchingLabel.TabIndex = 5;
             this.searchingLabel.Text = "Zoeken naar spellen";
             // 
@@ -121,9 +119,10 @@
             this.searchingGameNameLabel.BackColor = System.Drawing.Color.Black;
             this.searchingGameNameLabel.Font = new System.Drawing.Font("Squares Bold", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchingGameNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
-            this.searchingGameNameLabel.Location = new System.Drawing.Point(39, 148);
+            this.searchingGameNameLabel.Location = new System.Drawing.Point(29, 156);
+            this.searchingGameNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.searchingGameNameLabel.Name = "searchingGameNameLabel";
-            this.searchingGameNameLabel.Size = new System.Drawing.Size(155, 38);
+            this.searchingGameNameLabel.Size = new System.Drawing.Size(129, 31);
             this.searchingGameNameLabel.TabIndex = 6;
             this.searchingGameNameLabel.Text = "label1";
             // 
@@ -131,9 +130,10 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 75);
+            this.pictureBox1.Location = new System.Drawing.Point(9, 61);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(613, 302);
+            this.pictureBox1.Size = new System.Drawing.Size(460, 245);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -142,9 +142,10 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Black;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(649, 85);
+            this.pictureBox2.Location = new System.Drawing.Point(487, 69);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(339, 282);
+            this.pictureBox2.Size = new System.Drawing.Size(254, 229);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
@@ -154,18 +155,19 @@
             this.pictureBox3.BackColor = System.Drawing.Color.Black;
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.InitialImage = null;
-            this.pictureBox3.Location = new System.Drawing.Point(-3, 66);
+            this.pictureBox3.Location = new System.Drawing.Point(-2, 54);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1800, 1088);
+            this.pictureBox3.Size = new System.Drawing.Size(1350, 884);
             this.pictureBox3.TabIndex = 9;
             this.pictureBox3.TabStop = false;
             // 
             // UserView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1653, 747);
+            this.ClientSize = new System.Drawing.Size(1240, 607);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.searchingGameNameLabel);
             this.Controls.Add(this.searchingLabel);
@@ -177,7 +179,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UserView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Welk spel speel jij?";
