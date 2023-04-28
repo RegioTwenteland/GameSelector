@@ -13,7 +13,6 @@ namespace GameSelector.Views
         private const int ANIMATION_FRAME_AMT = 99;
 
         private const string PAUSED_MESSAGE = "Spel is gepauzeerd";
-        private const string PROMPT_MESSAGE = "Houd je kaart tegen de lezer";
         private const string SELECTED_MESSAGE = "Speciaal geselecteerd voor ";
 
         private Action<string, object> SendMessage;
@@ -119,7 +118,6 @@ namespace GameSelector.Views
             }
 
             searchingProgressBar.Value++;
-            //gameAnnouncerLabel.Text = text.ToString();
         }
 
         private void EndAnimation()
@@ -128,6 +126,7 @@ namespace GameSelector.Views
 
             gameAnnouncerLabel.Text = SELECTED_MESSAGE + _selectedGame.OccupiedBy.ScoutingName + ":";
             gameCodeLabel.Text = _selectedGame.Code;
+            searchingGameNameLabel.Text = _selectedGame.Code;
             gameDescriptionLabel.Text = _selectedGame.Description;
             gameExplanationLabel.Text = _selectedGame.Explanation;
 
@@ -147,6 +146,8 @@ namespace GameSelector.Views
 
         public void ShowPaused()
         {
+            _insertCardView.Hide();
+
             gameAnnouncerLabel.Text = PAUSED_MESSAGE;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
@@ -157,7 +158,7 @@ namespace GameSelector.Views
         {
             _insertCardView.Show();
 
-            gameAnnouncerLabel.Text = PROMPT_MESSAGE;
+            gameAnnouncerLabel.Text = string.Empty;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
             gameExplanationLabel.Text = string.Empty;

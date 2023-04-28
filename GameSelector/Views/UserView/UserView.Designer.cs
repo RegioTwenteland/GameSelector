@@ -48,8 +48,8 @@
             // 
             this.gameAnnouncerLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gameAnnouncerLabel.AutoSize = true;
-            this.gameAnnouncerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameAnnouncerLabel.ForeColor = System.Drawing.Color.White;
+            this.gameAnnouncerLabel.Font = new System.Drawing.Font("Squares Bold", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameAnnouncerLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
             this.gameAnnouncerLabel.Location = new System.Drawing.Point(10, 395);
             this.gameAnnouncerLabel.Name = "gameAnnouncerLabel";
             this.gameAnnouncerLabel.Size = new System.Drawing.Size(102, 39);
@@ -60,8 +60,8 @@
             // 
             this.gameCodeLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gameCodeLabel.AutoSize = true;
-            this.gameCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameCodeLabel.ForeColor = System.Drawing.Color.White;
+            this.gameCodeLabel.Font = new System.Drawing.Font("Squares Bold", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameCodeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
             this.gameCodeLabel.Location = new System.Drawing.Point(10, 434);
             this.gameCodeLabel.Name = "gameCodeLabel";
             this.gameCodeLabel.Size = new System.Drawing.Size(123, 39);
@@ -72,8 +72,8 @@
             // 
             this.gameDescriptionLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gameDescriptionLabel.AutoSize = true;
-            this.gameDescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameDescriptionLabel.ForeColor = System.Drawing.Color.White;
+            this.gameDescriptionLabel.Font = new System.Drawing.Font("Squares Bold", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameDescriptionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
             this.gameDescriptionLabel.Location = new System.Drawing.Point(10, 473);
             this.gameDescriptionLabel.Name = "gameDescriptionLabel";
             this.gameDescriptionLabel.Size = new System.Drawing.Size(245, 39);
@@ -84,8 +84,8 @@
             // 
             this.gameExplanationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gameExplanationLabel.AutoSize = true;
-            this.gameExplanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameExplanationLabel.ForeColor = System.Drawing.Color.White;
+            this.gameExplanationLabel.Font = new System.Drawing.Font("Squares Bold", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameExplanationLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
             this.gameExplanationLabel.Location = new System.Drawing.Point(10, 512);
             this.gameExplanationLabel.Name = "gameExplanationLabel";
             this.gameExplanationLabel.Size = new System.Drawing.Size(130, 39);
