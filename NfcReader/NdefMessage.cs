@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace GameSelector.NFC
+namespace NfcReader
 {
-    internal class NdefMessage
+    public class NdefMessage
     {
         private enum TLV : byte
         {

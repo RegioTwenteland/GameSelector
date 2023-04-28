@@ -1,7 +1,6 @@
 ﻿using GameSelector.Model;
-using GameSelector.NFC;
 using GameSelector.Views;
-using NFC;
+using NfcReader;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +12,7 @@ namespace GameSelector.Controllers
         private GameState _gameState;
         private UserViewAdapter _userView;
         private UserIdentificationView _userIdentificationView;
-        private NfcReader _nfcReader;
+        private INfcReader _nfcReader;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
@@ -24,7 +23,7 @@ namespace GameSelector.Controllers
             GameState gameState,
             UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
-            NfcReader nfcReader,
+            INfcReader nfcReader,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
             IPlayedGameDataBridge playedGameDataBridge

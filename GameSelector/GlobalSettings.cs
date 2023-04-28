@@ -25,5 +25,15 @@ namespace GameSelector
                 return (DatabaseType)Enum.Parse(typeof(DatabaseType), str);
             }
         }
+
+        public static bool SimulateNfc
+        {
+            get
+            {
+                var str = ConfigurationManager.AppSettings.Get("SimulateNfc");
+
+                return bool.Parse(str);
+            }
+        }
     }
 }

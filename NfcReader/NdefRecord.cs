@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace GameSelector.NFC
+namespace NfcReader
 {
-    internal class NdefRecord
+    public class NdefRecord
     {
         private byte _ndefHeader;
         private byte _languageLen;

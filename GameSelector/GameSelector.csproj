@@ -120,12 +120,8 @@
     <Compile Include="Model\IPlayedGameDataBridge.cs" />
     <Compile Include="ModelFactory.cs" />
     <Compile Include="Model\ModelType.cs" />
-    <Compile Include="NFC\NdefMessage.cs" />
-    <Compile Include="NFC\NdefRecord.cs" />
-    <Compile Include="NFC\WinSCardWrapper.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Game.cs" />
-    <Compile Include="NFC\NfcReader.cs" />
     <Compile Include="Model\PlayedGame.cs" />
     <Compile Include="Model\Database\DbPlayedGameDataBridge.cs" />
     <Compile Include="Model\SetOnce.cs" />
@@ -136,8 +132,6 @@
     <Compile Include="Views\AdminView\AdminView.Designer.cs">
       <DependentUpon>AdminView.cs</DependentUpon>
     </Compile>
-    <Compile Include="NFC\Helper.cs" />
-    <Compile Include="NFC\InternalNfcReader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,6 +200,10 @@
     <ProjectReference Include="..\CustomControls\CustomControls.csproj">
       <Project>{7C192097-13E3-4C55-A0E1-5DC6C2588AB4}</Project>
       <Name>CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NfcReader\NfcReader.csproj">
+      <Project>{9b649ad8-067f-4d8f-a8c2-f833f14d99a9}</Project>
+      <Name>NfcReader</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

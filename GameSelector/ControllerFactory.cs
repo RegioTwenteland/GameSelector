@@ -1,7 +1,7 @@
 ﻿using GameSelector.Controllers;
 using GameSelector.Model;
 using GameSelector.Views;
-using NFC;
+using NfcReader;
 using System.Collections.Concurrent;
 
 namespace GameSelector
@@ -14,8 +14,12 @@ namespace GameSelector
         private static IModel _model;
         private static IModel Model { get => _model ?? (_model = ModelFactory.GetModel()); }
 
-        private static NfcReader _nfcReader;
-        private static NfcReader NfcReader { get => _nfcReader ?? (_nfcReader = new NfcReader()); }
+        private static INfcReader _nfcReader;
+        private static INfcReader NfcReader
+        {
+            get => _nfcReader ??
+                (_nfcReader = NfcReaderFactory.CreateNfcReader(GlobalSettings.SimulateNfc, Program.RegisterTerminateAction));
+        }
 
         private static AdminViewAdapter _adminView;
         private static AdminViewAdapter AdminView { get => _adminView ?? (_adminView = new AdminViewAdapter(MessageCollection)); }

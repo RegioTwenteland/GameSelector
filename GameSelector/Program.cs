@@ -6,8 +6,12 @@ using GameSelector.Controllers;
 
 namespace GameSelector
 {
-    internal static class Program
+    public static class Program
     {
+        public static event EventHandler ProgramTerminate;
+
+        private static List<Action> _terminateActions = new List<Action>();
+
         private static BlockingCollection<Message> _messages;
         private static CancellationTokenSource _messageCancellationTokenSource = new CancellationTokenSource();
         private static CancellationToken _messageCancellationToken;
@@ -51,6 +55,16 @@ namespace GameSelector
                     // ignore
                 }
             }
+
+            foreach (var terminateAction in _terminateActions)
+            {
+                terminateAction();
+            }
+        }
+
+        public static void RegisterTerminateAction(Action action)
+        {
+            _terminateActions.Add(action);
         }
 
         static void Stop()

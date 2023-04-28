@@ -1,4 +1,4 @@
-﻿using NFC;
+﻿using NfcReader;
 using System;
 using System.Collections.Concurrent;
 
@@ -6,11 +6,11 @@ namespace GameSelector.Views
 {
     internal class UserIdentificationView : AbstractView
     {
-        private readonly NfcReader _nfcReader;
+        private readonly INfcReader _nfcReader;
 
         //private string _errorMessage = string.Empty;
 
-        public UserIdentificationView(BlockingCollection<Message> messages, NfcReader nfcReader)
+        public UserIdentificationView(BlockingCollection<Message> messages, INfcReader nfcReader)
             : base(messages)
         {
             _nfcReader = nfcReader;
