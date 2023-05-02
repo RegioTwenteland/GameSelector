@@ -21,6 +21,10 @@ namespace GameSelector
                 (_nfcReader = NfcReaderFactory.CreateNfcReader(GlobalSettings.SimulateNfc, Program.RegisterTerminateAction));
         }
 
+        private static AudioPlayer _audioPlayer;
+
+        private static AudioPlayer AudioPlayer { get => _audioPlayer ?? (_audioPlayer = new AudioPlayer()); }
+
         private static AdminViewAdapter _adminView;
         private static AdminViewAdapter AdminView { get => _adminView ?? (_adminView = new AdminViewAdapter(MessageCollection)); }
 
@@ -81,6 +85,7 @@ namespace GameSelector
                 GameState,
                 UserIdentificationView,
                 UserView,
+                AudioPlayer,
                 NfcReader,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,

@@ -130,13 +130,14 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = _selectedGame.Description;
             gameExplanationLabel.Text = _selectedGame.Explanation;
 
+            SendMessage("AnimationComplete", null);
 
             Task.Delay(5000).ContinueWith(t =>
             {
                 Invoke(new Action(() =>
                 {
                     ShowUnpaused();
-                    SendMessage("AnimationComplete", null);
+                    SendMessage("AllowNewCard", null);
 
                     searchingProgressBar.Value = 0;
                     _insertCardView.Show();

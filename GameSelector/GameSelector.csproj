@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioPlayer.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -208,6 +209,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="schema.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="audio\begin_spel.wav" />
+    <EmbeddedResource Include="audio\spel_gevonden.wav" />
+    <EmbeddedResource Include="audio\start_met_zoeken.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

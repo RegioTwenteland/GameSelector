@@ -13,6 +13,7 @@ namespace GameSelector.Controllers
     {
         private GameState _gameState;
         private UserViewAdapter _userView;
+        private AudioPlayer _audioPlayer;
         private UserIdentificationView _userIdentificationView;
         private INfcReader _nfcReader;
         private IGroupDataBridge _groupDataBridge;
@@ -25,6 +26,7 @@ namespace GameSelector.Controllers
             GameState gameState,
             UserIdentificationView userIdentificationView,
             UserViewAdapter userView,
+            AudioPlayer audioPlayer,
             INfcReader nfcReader,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
@@ -34,6 +36,7 @@ namespace GameSelector.Controllers
             _gameState = gameState;
             _userIdentificationView = userIdentificationView;
             _userView = userView;
+            _audioPlayer = audioPlayer;
             _nfcReader = nfcReader;
             _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
@@ -45,6 +48,7 @@ namespace GameSelector.Controllers
             {
                 { "UserLogin", OnUserLogin },
                 { "AnimationComplete", OnAnimationComplete },
+                { "AllowNewCard", OnAllowNewCard },
             });
         }
 
@@ -180,6 +184,8 @@ namespace GameSelector.Controllers
 
             if (group == null) return;
 
+            _audioPlayer.PlaySelectionStart();
+
             EndGameFor(group);
             var success = SelectNewGameFor(group, out var newGame);
 
@@ -199,7 +205,16 @@ namespace GameSelector.Controllers
         {
             Debug.Assert(value is null);
 
+            _audioPlayer.PlaySelectionComplete();
+        }
+
+        private void OnAllowNewCard(object value)
+        {
+            Debug.Assert(value is null);
+
             _allowNewUserLogin = true;
+
+            _audioPlayer.PlayEndSession();
         }
     }
 }
