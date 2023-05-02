@@ -184,6 +184,8 @@ namespace GameSelector.Controllers
 
             if (group == null) return;
 
+            if (group.IsAdmin) return; // admin groups can't play games
+
             _audioPlayer.PlaySelectionStart();
 
             EndGameFor(group);

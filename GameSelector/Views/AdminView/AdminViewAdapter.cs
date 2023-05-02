@@ -77,5 +77,10 @@ namespace GameSelector.Views
         {
             form.Invoke(new MethodInvoker(() => form.UpdateGame(game)));
         }
+
+        public void ShowView()
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowView()));
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace GameSelector.Database.SQLite
 
         public string ScoutingName { get; set; }
 
+        public long IsAdmin { get; set; }
+
         /// <summary>
         /// Warning: read-only. Dont use for modifying.
         /// </summary>
@@ -26,6 +28,7 @@ namespace GameSelector.Database.SQLite
                 CardId = SQLiteDatabase.FromDbNull<string>(reader["group_card_id"]),
                 Name = (string)reader["group_name"],
                 ScoutingName = (string)reader["group_scouting_name"],
+                IsAdmin = (long)reader["group_is_admin"],
             };
 
             try

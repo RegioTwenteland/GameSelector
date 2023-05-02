@@ -12,6 +12,8 @@ namespace GameSelector.Database
 
         string ScoutingName { get; set; }
 
+        long IsAdmin { get; set; }
+
         /// <summary>
         /// Warning: read-only. Dont use for modifying.
         /// </summary>

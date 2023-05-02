@@ -17,6 +17,8 @@ namespace GameSelector.Views
 
         public string CurrentGame { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public bool UnsavedChanges { get; set; } = false;
 
         public static GroupDataView FromGroup(Group group)
@@ -40,7 +42,8 @@ namespace GameSelector.Views
                 GroupName = group.Name,
                 ScoutingName = group.ScoutingName,
                 StartTime = startTime,
-                CurrentGame = group.CurrentlyPlaying?.Description
+                CurrentGame = group.CurrentlyPlaying?.Description,
+                IsAdmin = group.IsAdmin,
             };
         }
 

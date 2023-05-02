@@ -208,6 +208,7 @@ namespace GameSelector.Views
             gdv.CardId = cardIdTextbox.Text;
             gdv.GroupName = groupNameTextbox.Text;
             gdv.ScoutingName = scoutingNameTextbox.Text;
+            gdv.IsAdmin = isAdminCheckbox.Checked;
             gdv.UnsavedChanges = true;
 
             saveGroupButton.Text = SaveText + UnsavedModifier;
@@ -227,6 +228,7 @@ namespace GameSelector.Views
             scoutingNameTextbox.Text = string.Empty;
             currentGameText.Text = string.Empty;
             saveGroupButton.Text = SaveText;
+            isAdminCheckbox.Checked = false;
 
             if (group == null) return;
 
@@ -234,6 +236,7 @@ namespace GameSelector.Views
             groupNameTextbox.Text = group.GroupName.ToString();
             scoutingNameTextbox.Text = group.ScoutingName;
             currentGameText.Text = group.CurrentGame;
+            isAdminCheckbox.Checked = group.IsAdmin;
             startTimePicker.Text =
                 group.StartTime.HasValue ?
                     (group.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
@@ -431,6 +434,16 @@ namespace GameSelector.Views
 
             SortGameListBox();
             gamesListBox.SelectedIndex = idx;
+        }
+
+        public void ShowView()
+        {
+            Show();
+        }
+
+        private void hideButton_Click(object sender, EventArgs e)
+        {
+            Hide();
         }
     }
 }

@@ -16,6 +16,8 @@
 
         public string ScoutingName { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public Game CurrentlyPlaying { get; set; }
     }
 }

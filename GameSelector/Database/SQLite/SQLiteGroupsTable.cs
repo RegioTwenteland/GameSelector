@@ -21,6 +21,7 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
 	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin,
 	
 	                        `games`.`id` AS game_id,
 	                        `games`.`code` AS game_code,
@@ -55,6 +56,7 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
 	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin,
 	
 	                        `games`.`id` AS game_id,
 	                        `games`.`code` AS game_code,
@@ -91,6 +93,7 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
 	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin,
 	
 	                        `games`.`id` AS game_id,
 	                        `games`.`code` AS game_code,
@@ -125,7 +128,8 @@ namespace GameSelector.Database.SQLite
             var sql = @"UPDATE `groups` SET
 	                        `card_id` = @card_id,
 	                        `group_name` = @name,
-	                        `scouting_name` = @scouting_name
+	                        `scouting_name` = @scouting_name,
+                            `is_admin` = @is_admin
                         WHERE `id` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
@@ -133,6 +137,7 @@ namespace GameSelector.Database.SQLite
             command.Parameters.AddWithValue("@card_id", group.CardId);
             command.Parameters.AddWithValue("@name", group.Name);
             command.Parameters.AddWithValue("@scouting_name", group.ScoutingName);
+            command.Parameters.AddWithValue("@is_admin", group.IsAdmin);
 
             var rowsUpdated = command.ExecuteNonQuery();
 

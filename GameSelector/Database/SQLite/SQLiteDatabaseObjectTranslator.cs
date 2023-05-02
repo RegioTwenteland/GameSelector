@@ -28,7 +28,8 @@ namespace GameSelector.Database.SQLite
                 Id = group.Id,
                 CardId = group.CardId,
                 Name = group.Name,
-                ScoutingName = group.ScoutingName
+                ScoutingName = group.ScoutingName,
+                IsAdmin = group.IsAdmin ? 1 : 0,
             };
         }
 

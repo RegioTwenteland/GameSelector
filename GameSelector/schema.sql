@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS "groups" (
 	"card_id"	TEXT,
 	"scouting_name"	TEXT NOT NULL,
 	"group_name"	TEXT NOT NULL,
+	"is_admin"	INTEGER NOT NULL DEFAULT 0,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 COMMIT;

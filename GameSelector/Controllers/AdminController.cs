@@ -79,6 +79,11 @@ namespace GameSelector.Controllers
             if (group != null)
             {
                 groupView = GroupDataView.FromGroup(group);
+
+                if (group.IsAdmin)
+                {
+                    _adminView.ShowView();
+                }
             }
 
             _adminView.SetGroupSelected(groupView);

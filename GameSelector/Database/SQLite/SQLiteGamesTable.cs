@@ -30,7 +30,8 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`id` AS group_id,
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name
+	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin
                         FROM `games`
                         LEFT JOIN `groups`
                         ON `games`.`occupied_by` = `groups`.`id`;";
@@ -64,7 +65,8 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`id` AS group_id,
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name
+	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin
                         FROM `games`
                         LEFT JOIN `groups`
                         ON `games`.`occupied_by` = `groups`.`id`
@@ -99,7 +101,8 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`id` AS group_id,
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name
+	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin
                         FROM `games`
                         LEFT JOIN `groups`
                         ON `games`.`occupied_by` = `groups`.`id`
@@ -135,7 +138,8 @@ namespace GameSelector.Database.SQLite
 	                        `groups`.`id` AS group_id,
 	                        `groups`.`card_id` AS group_card_id,
 	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name
+	                        `groups`.`scouting_name` AS group_scouting_name,
+                            `groups`.`is_admin` AS group_is_admin
                         FROM `games`
                         LEFT JOIN `groups`
                         ON `games`.`occupied_by` = `groups`.`id`
