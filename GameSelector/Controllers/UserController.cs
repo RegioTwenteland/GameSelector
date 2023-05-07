@@ -20,7 +20,8 @@ namespace GameSelector.Controllers
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
 
-        private bool _allowNewUserLogin = true;
+        private string _currentCard = string.Empty;
+        private string _loggedInUser = string.Empty;
 
         public UserController(
             GameState gameState,
@@ -46,9 +47,10 @@ namespace GameSelector.Controllers
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "UserLogin", OnUserLogin },
+                { "CardInserted", OnCardInserted },
+                { "CardEjected", OnCardEjected},
                 { "AnimationComplete", OnAnimationComplete },
-                { "AllowNewCard", OnAllowNewCard },
+                { "UserViewReady", OnUserViewReady },
             });
         }
 
@@ -60,7 +62,7 @@ namespace GameSelector.Controllers
                     _userView.ShowPaused();
                     break;
                 case GameState.State.Playing:
-                    _userView.ShowUnpaused();
+                    _userView.ShowReady();
                     break;
                 default:
                     throw new NotImplementedException();
@@ -172,26 +174,20 @@ namespace GameSelector.Controllers
             _gameDataBridge.UpdateGame(currentGame);
         }
 
-        private void OnUserLogin(object value)
+        private void LogUserIn()
         {
-            Debug.Assert(value is string);
-
-            if (!_allowNewUserLogin) return;
-            if (_gameState.CurrentState == GameState.State.Paused) return;
-
-            var cardId = (string)value;
-            var group = _groupDataBridge.GetGroup(cardId);
+            var group = _groupDataBridge.GetGroup(_currentCard);
 
             if (group == null) return;
 
             if (group.IsAdmin) return; // admin groups can't play games
 
-            _audioPlayer.PlaySelectionStart();
-
             EndGameFor(group);
             var success = SelectNewGameFor(group, out var newGame);
 
             if (!success) return;
+
+            _loggedInUser = _currentCard;
 
             if (newGame == null)
             {
@@ -199,8 +195,34 @@ namespace GameSelector.Controllers
                 return;
             }
 
-            _allowNewUserLogin = false;
+            _audioPlayer.PlaySelectionStart();
+
             _userView.ShowGame(GameDataView.FromGame(newGame));
+        }
+
+        private void OnCardInserted(object value)
+        {
+            Debug.Assert(value is string);
+
+            _currentCard = (string)value;
+
+            if (_loggedInUser == string.Empty && _gameState.CurrentState != GameState.State.Paused)
+                LogUserIn();
+        }
+
+        private bool _readyOnEject = false;
+
+        private void OnCardEjected(object value)
+        {
+            Debug.Assert(value is null);
+
+            _currentCard = string.Empty;
+
+            if (_readyOnEject)
+            {
+                _readyOnEject = false;
+                _userView.ShowReady();
+            }
         }
 
         private void OnAnimationComplete(object value)
@@ -208,13 +230,22 @@ namespace GameSelector.Controllers
             Debug.Assert(value is null);
 
             _audioPlayer.PlaySelectionComplete();
+
+            if (_currentCard == _loggedInUser)
+            {
+                _readyOnEject = true;
+            }
+            else
+            {
+                _userView.ShowReadyAfter(TimeSpan.FromSeconds(5));
+            }
         }
 
-        private void OnAllowNewCard(object value)
+        private void OnUserViewReady(object value)
         {
             Debug.Assert(value is null);
 
-            _allowNewUserLogin = true;
+            _loggedInUser = string.Empty;
 
             _audioPlayer.PlayEndSession();
         }

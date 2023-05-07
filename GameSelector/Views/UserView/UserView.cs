@@ -64,33 +64,32 @@ namespace GameSelector.Views
 
         public void ShowNoGamesLeft()
         {
+            _insertCardView.Hide();
+
             gameAnnouncerLabel.Text = "Je hebt alle spellen al gespeeld!";
             gameCodeLabel.Text = "";
             gameDescriptionLabel.Text = "";
             gameExplanationLabel.Text = "";
 
-            Task.Delay(2000).ContinueWith(t =>
-            {
-                Invoke(new Action(() =>
-                {
-                    ShowUnpaused();
-                }));
-            });
+            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
         }
 
         public void ShowGame(GameDataView game)
         {
+            _insertCardView.Hide();
+
             if (game == null)
             {
                 gameAnnouncerLabel.Text = "Er is geen spel gevonden";
                 gameCodeLabel.Text = "";
                 gameDescriptionLabel.Text = "";
                 gameExplanationLabel.Text = "";
+
+                Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+
                 return;
             }
 
-            _insertCardView.Hide();
-            
             _selectedGame = game;
 
             _animationFrame = 0;
@@ -131,18 +130,6 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = _selectedGame.Explanation;
 
             SendMessage("AnimationComplete", null);
-
-            Task.Delay(5000).ContinueWith(t =>
-            {
-                Invoke(new Action(() =>
-                {
-                    ShowUnpaused();
-                    SendMessage("AllowNewCard", null);
-
-                    searchingProgressBar.Value = 0;
-                    _insertCardView.Show();
-                }));
-            });
         }
 
         public void ShowPaused()
@@ -155,14 +142,25 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = string.Empty;
         }
 
-        public void ShowUnpaused()
+        public void ShowReady()
         {
             _insertCardView.Show();
+
+            searchingProgressBar.Value = 0;
 
             gameAnnouncerLabel.Text = string.Empty;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
             gameExplanationLabel.Text = string.Empty;
+
+            SendMessage("UserViewReady", null);
+        }
+        public void ShowReadyAfter(TimeSpan delay)
+        {
+            Task.Delay(delay).ContinueWith(t =>
+            {
+                Invoke(new Action(ShowReady));
+            });
         }
     }
 }

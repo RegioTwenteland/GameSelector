@@ -28,12 +28,12 @@ namespace GameSelector.Views
 
         private void OnCardInserted(object sender, EventArgs e)
         {
-            SendMessage("UserLogin", _nfcReader.GetCardUID());
+            SendMessage("CardInserted", _nfcReader.GetCardUID());
         }
 
         private void OnCardEjected(object sender, EventArgs e)
         {
-            SendMessage("UserLeft");
+            SendMessage("CardEjected");
         }
 
         private void OnReaderDisconnected(object sender, EventArgs e)

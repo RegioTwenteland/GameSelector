@@ -30,8 +30,8 @@ namespace GameSelector.Controllers
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
-                { "UserLogin", OnUserLogin },
-                { "UserLeft", o => { } },
+                { "CardInserted", OnUserLogin },
+                { "CardEjected", o => { } },
                 { "ShowAdminError", ShowAdminError },
                 { "RequestStartStopGame", OnRequestStartStopGame },
             });

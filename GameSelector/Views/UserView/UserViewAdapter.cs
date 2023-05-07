@@ -50,9 +50,14 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.ShowPaused()));
         }
 
-        public void ShowUnpaused()
+        public void ShowReady()
         {
-            form.Invoke(new MethodInvoker(() => form.ShowUnpaused()));
+            form.Invoke(new MethodInvoker(() => form.ShowReady()));
+        }
+
+        public void ShowReadyAfter(TimeSpan delay)
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowReadyAfter(delay)));
         }
 
         public void SetGameCodes(string[] names)
