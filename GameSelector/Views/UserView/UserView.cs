@@ -44,12 +44,19 @@ namespace GameSelector.Views
 
                 Location = new System.Drawing.Point
                 {
-                    X = screen.WorkingArea.Left,
-                    Y = screen.WorkingArea.Top
+                    X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
+                    Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
+                };
+
+                _insertCardView.Load += (_s, _e) => _insertCardView.Location = new System.Drawing.Point
+                {
+                    X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - _insertCardView.Width / 2,
+                    Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - _insertCardView.Height / 2
                 };
             }
 
             gameAnnouncerLabel.Text = PAUSED_MESSAGE;
+            searchingGameNameLabel.Text = "---";
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
             gameExplanationLabel.Text = string.Empty;
@@ -176,6 +183,7 @@ namespace GameSelector.Views
 
             searchingProgressBar.Value = 0;
 
+            searchingGameNameLabel.Text = "---";
             gameAnnouncerLabel.Text = string.Empty;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;

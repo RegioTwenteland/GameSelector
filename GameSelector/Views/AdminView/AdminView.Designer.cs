@@ -81,6 +81,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.closeButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -540,6 +541,7 @@
             // 
             // adminTab
             // 
+            this.adminTab.Controls.Add(this.closeButton);
             this.adminTab.Controls.Add(this.label14);
             this.adminTab.Controls.Add(this.gameTimeoutTextbox);
             this.adminTab.Controls.Add(this.saveGameTimeout);
@@ -586,7 +588,7 @@
             // 
             this.hideButton.Location = new System.Drawing.Point(6, 35);
             this.hideButton.Name = "hideButton";
-            this.hideButton.Size = new System.Drawing.Size(91, 23);
+            this.hideButton.Size = new System.Drawing.Size(111, 23);
             this.hideButton.TabIndex = 101;
             this.hideButton.Text = "Vergrendelen";
             this.hideButton.UseVisualStyleBackColor = true;
@@ -595,7 +597,7 @@
             // gameStateLabel
             // 
             this.gameStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameStateLabel.Location = new System.Drawing.Point(199, 9);
+            this.gameStateLabel.Location = new System.Drawing.Point(221, 9);
             this.gameStateLabel.Name = "gameStateLabel";
             this.gameStateLabel.Size = new System.Drawing.Size(118, 16);
             this.gameStateLabel.TabIndex = 100;
@@ -604,7 +606,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(101, 11);
+            this.label9.Location = new System.Drawing.Point(123, 11);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(92, 13);
             this.label9.TabIndex = 100;
@@ -614,7 +616,7 @@
             // 
             this.startStopGameButton.Location = new System.Drawing.Point(6, 6);
             this.startStopGameButton.Name = "startStopGameButton";
-            this.startStopGameButton.Size = new System.Drawing.Size(91, 23);
+            this.startStopGameButton.Size = new System.Drawing.Size(111, 23);
             this.startStopGameButton.TabIndex = 100;
             this.startStopGameButton.Text = "Start spel";
             this.startStopGameButton.UseVisualStyleBackColor = true;
@@ -630,6 +632,16 @@
             this.errorFlowLayout.Padding = new System.Windows.Forms.Padding(5);
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
+            // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(6, 64);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(111, 23);
+            this.closeButton.TabIndex = 105;
+            this.closeButton.Text = "Programma sluiten";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // AdminView
             // 
@@ -712,6 +724,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox gameTimeoutTextbox;
         private System.Windows.Forms.Button saveGameTimeout;
+        private System.Windows.Forms.Button closeButton;
     }
 }
 

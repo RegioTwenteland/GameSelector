@@ -24,7 +24,7 @@ namespace GameSelector.Views
         {
             Task.Run(() =>
             {
-                Application.EnableVisualStyles();
+                ////Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(form);
                 onClose?.Invoke();

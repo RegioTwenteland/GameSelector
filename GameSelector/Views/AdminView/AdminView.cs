@@ -43,8 +43,8 @@ namespace GameSelector.Views
 
                 Location = new Point
                 {
-                    X = screen.WorkingArea.Left,
-                    Y = screen.WorkingArea.Top
+                    X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
+                    Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
                 };
             }
         }
@@ -454,6 +454,11 @@ namespace GameSelector.Views
         private void hideButton_Click(object sender, EventArgs e)
         {
             Hide();
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
