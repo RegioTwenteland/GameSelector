@@ -151,9 +151,8 @@ namespace GameSelector.Controllers
             return success;
         }
 
-        private void EndGameFor(Group group)
+        private void EndGameFor(Game currentGame, Group group)
         {
-            var currentGame = _gameDataBridge.GetGameOccupiedBy(group);
             if (currentGame == null) return;
 
             Debug.Assert(currentGame.StartTime.HasValue);
@@ -182,9 +181,17 @@ namespace GameSelector.Controllers
 
             if (group.IsAdmin) return; // admin groups can't play games
 
-            EndGameFor(group);
-            var success = SelectNewGameFor(group, out var newGame);
+            var currentGame = _gameDataBridge.GetGameOccupiedBy(group);
 
+            if (currentGame != null && (DateTime.Now - currentGame.StartTime < TimeSpan.FromMinutes(GlobalSettings.GameTimeoutMinutes)))
+            {
+                _loggedInUser = _currentCard;
+                _userView.ShowAlreadyPlaying(GameDataView.FromGame(currentGame));
+                return;
+            }
+
+            EndGameFor(currentGame, group);
+            var success = SelectNewGameFor(group, out var newGame);
             if (!success) return;
 
             _loggedInUser = _currentCard;

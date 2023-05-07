@@ -40,6 +40,11 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
         }
 
+        public void ShowAlreadyPlaying(GameDataView game)
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowAlreadyPlaying(game)));
+        }
+
         public void ShowNoGamesLeft()
         {
             form.Invoke(new MethodInvoker(() => form.ShowNoGamesLeft()));

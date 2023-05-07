@@ -49,6 +49,16 @@ namespace GameSelector.Views
             }
         }
 
+        public void ShowGameTimeout(int timeout)
+        {
+            gameTimeoutTextbox.Text = timeout.ToString();
+        }
+
+        private void saveGameTimeout_Click(object sender, EventArgs e)
+        {
+            SendMessage("SaveGameTimeout", int.Parse(gameTimeoutTextbox.Text));
+        }
+
         private void ForceTextboxToInt(object sender, EventArgs e)
         {
             TextBox textbox = (TextBox)sender;

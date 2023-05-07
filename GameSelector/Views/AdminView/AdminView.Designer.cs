@@ -73,6 +73,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.adminTab = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.gameTimeoutTextbox = new System.Windows.Forms.TextBox();
+            this.saveGameTimeout = new System.Windows.Forms.Button();
             this.hideButton = new System.Windows.Forms.Button();
             this.gameStateLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -537,6 +540,9 @@
             // 
             // adminTab
             // 
+            this.adminTab.Controls.Add(this.label14);
+            this.adminTab.Controls.Add(this.gameTimeoutTextbox);
+            this.adminTab.Controls.Add(this.saveGameTimeout);
             this.adminTab.Controls.Add(this.hideButton);
             this.adminTab.Controls.Add(this.gameStateLabel);
             this.adminTab.Controls.Add(this.label9);
@@ -548,6 +554,33 @@
             this.adminTab.TabIndex = 100;
             this.adminTab.Text = "Admin";
             this.adminTab.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 164);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(111, 13);
+            this.label14.TabIndex = 104;
+            this.label14.Text = "Spel timeout (minuten)";
+            // 
+            // gameTimeoutTextbox
+            // 
+            this.gameTimeoutTextbox.Location = new System.Drawing.Point(123, 161);
+            this.gameTimeoutTextbox.Name = "gameTimeoutTextbox";
+            this.gameTimeoutTextbox.Size = new System.Drawing.Size(40, 20);
+            this.gameTimeoutTextbox.TabIndex = 103;
+            this.gameTimeoutTextbox.TextChanged += new System.EventHandler(this.ForceTextboxToInt);
+            // 
+            // saveGameTimeout
+            // 
+            this.saveGameTimeout.Location = new System.Drawing.Point(169, 159);
+            this.saveGameTimeout.Name = "saveGameTimeout";
+            this.saveGameTimeout.Size = new System.Drawing.Size(75, 23);
+            this.saveGameTimeout.TabIndex = 102;
+            this.saveGameTimeout.Text = "Opslaan";
+            this.saveGameTimeout.UseVisualStyleBackColor = true;
+            this.saveGameTimeout.Click += new System.EventHandler(this.saveGameTimeout_Click);
             // 
             // hideButton
             // 
@@ -676,6 +709,9 @@
         private System.Windows.Forms.CheckBox isAdminCheckbox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button hideButton;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox gameTimeoutTextbox;
+        private System.Windows.Forms.Button saveGameTimeout;
     }
 }
 

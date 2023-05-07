@@ -132,6 +132,29 @@ namespace GameSelector.Views
             SendMessage("AnimationComplete", null);
         }
 
+        public void ShowAlreadyPlaying(GameDataView game)
+        {
+            _insertCardView.Hide();
+
+            if (game == null)
+            {
+                gameAnnouncerLabel.Text = "Je bent al een spel aan het spelen";
+                gameCodeLabel.Text = "";
+                gameDescriptionLabel.Text = "";
+                gameExplanationLabel.Text = "";
+
+                SendMessage("AnimationComplete", null);
+
+                return;
+            }
+
+            gameAnnouncerLabel.Text = "Momenteel aan het spelen:";
+            gameCodeLabel.Text = game.Code;
+            gameDescriptionLabel.Text = game.Description;
+            gameExplanationLabel.Text = game.Explanation;
+            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+        }
+
         public void ShowPaused()
         {
             _insertCardView.Hide();

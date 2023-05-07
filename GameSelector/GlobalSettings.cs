@@ -35,5 +35,7 @@ namespace GameSelector
                 return bool.Parse(str);
             }
         }
+
+        public static int GameTimeoutMinutes { get; set; } = 5;
     }
 }
