@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Data.Entity.Core;
+﻿using System.Collections.Concurrent;
 using System.Threading;
 using System.Windows.Forms;
 
