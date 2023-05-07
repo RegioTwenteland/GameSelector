@@ -14,10 +14,10 @@ namespace GameSelector.Views
 
         public event EventHandler Ready;
 
-        public UserViewAdapter(BlockingCollection<Message> messages)
+        public UserViewAdapter(BlockingCollection<Message> messages, AudioPlayer audioPlayer)
             : base(messages)
         {
-            form = new UserView(SendMessage);
+            form = new UserView(SendMessage, audioPlayer);
         }
 
         public void Start(Action onClose)

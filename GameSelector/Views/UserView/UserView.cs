@@ -16,12 +16,13 @@ namespace GameSelector.Views
         private const string SELECTED_MESSAGE = "Speciaal geselecteerd voor ";
 
         private Action<string, object> SendMessage;
+        private AudioPlayer _audioPlayer;
 
         private InsertCardView _insertCardView = new InsertCardView();
 
         private string[] _gameCodes = new[] { string.Empty };
 
-        public UserView(Action<string, object> sendMessage)
+        public UserView(Action<string, object> sendMessage, AudioPlayer audioPlayer)
         {
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -29,6 +30,7 @@ namespace GameSelector.Views
 
             InitializeComponent();
             SendMessage = sendMessage;
+            _audioPlayer = audioPlayer;
         }
 
         private void UserView_Load(object sender, EventArgs e)
@@ -90,6 +92,8 @@ namespace GameSelector.Views
                 return;
             }
 
+            _audioPlayer.PlaySelectionStart();
+
             _selectedGame = game;
 
             _animationFrame = 0;
@@ -129,6 +133,7 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = _selectedGame.Description;
             gameExplanationLabel.Text = _selectedGame.Explanation;
 
+            _audioPlayer.PlaySelectionComplete();
             SendMessage("AnimationComplete", null);
         }
 

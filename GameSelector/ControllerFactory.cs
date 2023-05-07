@@ -32,7 +32,7 @@ namespace GameSelector
         private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageCollection, NfcReader)); }
 
         private static UserViewAdapter _userView;
-        private static UserViewAdapter UserView { get => _userView ?? (_userView = new UserViewAdapter(MessageCollection)); }
+        private static UserViewAdapter UserView { get => _userView ?? (_userView = new UserViewAdapter(MessageCollection, AudioPlayer)); }
 
         private static BlockingCollection<Message> _messageCollection;
         public static BlockingCollection<Message> MessageCollection { get => _messageCollection ?? (_messageCollection = new BlockingCollection<Message>()); }
@@ -85,7 +85,6 @@ namespace GameSelector
                 GameState,
                 UserIdentificationView,
                 UserView,
-                AudioPlayer,
                 NfcReader,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,
