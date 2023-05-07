@@ -55,7 +55,7 @@ namespace NfcReader
             {
                 if (!_nfcReader.Connect())
                 {
-                    throw new Exception("Could not connect to NFC reader");
+                    return false;
                 }
 
                 var bytes = message.ToBytes();
