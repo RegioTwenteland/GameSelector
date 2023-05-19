@@ -134,27 +134,21 @@ namespace GameSelector.Controllers
                 selectedGame.StartTime = DateTime.Now;
                 selectedGame.OccupiedBy = group;
 
-                newGame = selectedGame;
-
                 newNdefData = new NdefMessage(
                     group.ScoutingName,
                     group.Name,
                     selectedGame.Code,
                     selectedGame.StartTime.Value.ToString("HH:mm:ss")
                 );
-
-                _gameDataBridge.UpdateGame(selectedGame);
             }
 
-            if (newNdefData == null)
+            var success = _nfcReader.WriteMessage(newNdefData ?? new NdefMessage(group.ScoutingName, group.Name));
+
+            if (success && selectedGame != null)
             {
-                newNdefData = new NdefMessage(
-                    group.ScoutingName,
-                    group.Name
-                );
+                _gameDataBridge.UpdateGame(selectedGame);
+                newGame = selectedGame;
             }
-
-            var success = _nfcReader.WriteMessage(newNdefData);
 
             return success;
         }
