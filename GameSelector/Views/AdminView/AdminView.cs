@@ -312,7 +312,7 @@ namespace GameSelector.Views
 
             var newList = itemsCopy
                 .Select(o => (GameDataView)o)
-                .OrderByDescending(gdv => gdv.Priority);
+                .OrderBy(gdv => gdv.ToString());
 
             foreach (var newItem in newList)
             {
@@ -358,22 +358,6 @@ namespace GameSelector.Views
             SendMessage("RequestNewGame", null);
         }
 
-        private void incPrioButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGameDataView();
-
-            if (gdv != null)
-                SendMessage("RequestIncreasePrio", gdv);
-        }
-
-        private void decPrioButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGameDataView();
-
-            if (gdv != null)
-                SendMessage("RequestDecreasePrio", gdv);
-        }
-
         private void deleteGameButton_Click(object sender, EventArgs e)
         {
             var gdv = GetCurrentGameDataView();
@@ -394,6 +378,7 @@ namespace GameSelector.Views
             gdv.Description = gameDescriptionTextbox.Text;
             gdv.Explanation = gameExplanationTextbox.Text;
             gdv.Color = gameColorComboBox.Text;
+            gdv.HasPriority = gamePriorityCheckbox.Checked;
         }
 
         public void SetGamesList(IEnumerable<GameDataView> games)
@@ -415,6 +400,7 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = string.Empty;
             gameExplanationTextbox.Text = string.Empty;
             gameColorComboBox.Text = string.Empty;
+            gamePriorityCheckbox.Checked = false;
             currentOccupantTextbox.Text = string.Empty;
 
             if (game == null) return;
@@ -423,6 +409,7 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = game.Description;
             gameExplanationTextbox.Text = game.Explanation;
             gameColorComboBox.Text = game.Color;
+            gamePriorityCheckbox.Checked = game.HasPriority;
 
             if (game.OccupiedBy != null)
                 currentOccupantTextbox.Text = $"{game.OccupiedBy.ScoutingName} - {game.OccupiedBy.GroupName}";

@@ -27,7 +27,7 @@ namespace GameSelector.Model
 
         public string Color { get; set; }
 
-        public long Priority { get; set; }
+        public bool HasPriority { get; set; }
 
         public Group OccupiedBy { get; set; }
 

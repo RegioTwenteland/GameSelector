@@ -97,6 +97,20 @@ namespace GameSelector.Controllers
             return possibleGames;
         }
 
+        private static Random rng = new Random();
+
+        private void ShuffleList<T>(IList<T> list)
+        {
+            var n = list.Count;
+
+            while (n > 1)
+            {
+                --n;
+                int k = rng.Next(n + 1);
+                (list[n], list[k]) = (list[k], list[n]);
+            }
+        }
+
         private bool SelectNewGameFor(Group group, out Game newGame)
         {
             newGame = null;
@@ -109,16 +123,13 @@ namespace GameSelector.Controllers
 
             if (possibleGames.Count > 0)
             {
-                // find game with highest prio
-                var recordPriority = -1L;
-                foreach (var game in possibleGames)
-                {
-                    if (game.Priority > recordPriority)
-                    {
-                        recordPriority = game.Priority;
-                        selectedGame = game;
-                    }
-                }
+                var prioGames = possibleGames.Where(g => g.HasPriority).ToList();
+                var normalGames = possibleGames.Where(g => !g.HasPriority).ToList();
+                ShuffleList(prioGames);
+                ShuffleList(normalGames);
+                possibleGames = prioGames.Concat(normalGames).ToList();
+
+                selectedGame = possibleGames[0];
 
                 selectedGame.StartTime = DateTime.Now;
                 selectedGame.OccupiedBy = group;

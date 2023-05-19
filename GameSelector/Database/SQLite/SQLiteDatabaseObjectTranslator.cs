@@ -13,7 +13,7 @@ namespace GameSelector.Database.SQLite
                 Description = game.Description,
                 Explanation = game.Explanation,
                 Color = game.Color,
-                Priority = game.Priority,
+                Priority = game.HasPriority ? 1 : 0,
                 OccupiedById = game.OccupiedBy?.Id,
                 StartTime = game.StartTime.HasValue ? (long?)game.StartTime.Value.Ticks : null
             };

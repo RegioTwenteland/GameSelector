@@ -15,7 +15,7 @@ namespace GameSelector.Views
 
         public string Color { get; set; }
 
-        public long Priority { get; set; }
+        public bool HasPriority { get; set; }
 
         public GroupDataView OccupiedBy { get; set; }
 
@@ -25,7 +25,7 @@ namespace GameSelector.Views
 
         public override string ToString()
         {
-            return $"{Code}: {Description}";
+            return $"{Code}: {Description}{(HasPriority ? " (P)" : string.Empty)}";
         }
 
         public static GameDataView FromGame(Game game)
@@ -46,7 +46,7 @@ namespace GameSelector.Views
                 Description = game.Description,
                 Explanation = game.Explanation,
                 Color = game.Color,
-                Priority = game.Priority,
+                HasPriority = game.HasPriority,
                 OccupiedBy = GroupDataView.FromGroup(game.OccupiedBy),
                 StartTime = startTime,
             };

@@ -54,14 +54,14 @@
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gamesTab = new System.Windows.Forms.TabPage();
+            this.gamePriorityCheckbox = new System.Windows.Forms.CheckBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.currentOccupantTextbox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.saveGameButton = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.addGameButton = new System.Windows.Forms.Button();
-            this.incPrioButton = new System.Windows.Forms.Button();
-            this.decPrioButton = new System.Windows.Forms.Button();
             this.deleteGameButton = new System.Windows.Forms.Button();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.gamesListBox = new System.Windows.Forms.ListBox();
@@ -73,6 +73,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.adminTab = new System.Windows.Forms.TabPage();
+            this.closeButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.gameTimeoutTextbox = new System.Windows.Forms.TextBox();
             this.saveGameTimeout = new System.Windows.Forms.Button();
@@ -81,7 +82,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.closeButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -339,6 +339,8 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.gamePriorityCheckbox);
+            this.gamesTab.Controls.Add(this.label15);
             this.gamesTab.Controls.Add(this.currentOccupantTextbox);
             this.gamesTab.Controls.Add(this.label11);
             this.gamesTab.Controls.Add(this.saveGameButton);
@@ -360,17 +362,36 @@
             this.gamesTab.Text = "Spellen";
             this.gamesTab.UseVisualStyleBackColor = true;
             // 
+            // gamePriorityCheckbox
+            // 
+            this.gamePriorityCheckbox.AutoSize = true;
+            this.gamePriorityCheckbox.Location = new System.Drawing.Point(270, 168);
+            this.gamePriorityCheckbox.Name = "gamePriorityCheckbox";
+            this.gamePriorityCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.gamePriorityCheckbox.TabIndex = 102;
+            this.gamePriorityCheckbox.UseVisualStyleBackColor = true;
+            this.gamePriorityCheckbox.CheckedChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(171, 169);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(44, 13);
+            this.label15.TabIndex = 101;
+            this.label15.Text = "Prioriteit";
+            // 
             // currentOccupantTextbox
             // 
             this.currentOccupantTextbox.Enabled = false;
-            this.currentOccupantTextbox.Location = new System.Drawing.Point(270, 168);
+            this.currentOccupantTextbox.Location = new System.Drawing.Point(270, 191);
             this.currentOccupantTextbox.Name = "currentOccupantTextbox";
             this.currentOccupantTextbox.Size = new System.Drawing.Size(260, 20);
             this.currentOccupantTextbox.TabIndex = 7;
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(171, 171);
+            this.label11.Location = new System.Drawing.Point(171, 194);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 17);
             this.label11.TabIndex = 100;
@@ -378,7 +399,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 194);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 217);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -398,8 +419,6 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.addGameButton);
-            this.flowLayoutPanel1.Controls.Add(this.incPrioButton);
-            this.flowLayoutPanel1.Controls.Add(this.decPrioButton);
             this.flowLayoutPanel1.Controls.Add(this.deleteGameButton);
             this.flowLayoutPanel1.Controls.Add(this.materialLabel1);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 506);
@@ -412,40 +431,18 @@
             this.addGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addGameButton.Location = new System.Drawing.Point(3, 3);
             this.addGameButton.Name = "addGameButton";
-            this.addGameButton.Size = new System.Drawing.Size(33, 23);
+            this.addGameButton.Size = new System.Drawing.Size(73, 23);
             this.addGameButton.TabIndex = 100;
             this.addGameButton.Text = "➕";
             this.addGameButton.UseVisualStyleBackColor = true;
             this.addGameButton.Click += new System.EventHandler(this.addGameButton_Click);
             // 
-            // incPrioButton
-            // 
-            this.incPrioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.incPrioButton.Location = new System.Drawing.Point(42, 3);
-            this.incPrioButton.Name = "incPrioButton";
-            this.incPrioButton.Size = new System.Drawing.Size(33, 23);
-            this.incPrioButton.TabIndex = 100;
-            this.incPrioButton.Text = "↑";
-            this.incPrioButton.UseVisualStyleBackColor = true;
-            this.incPrioButton.Click += new System.EventHandler(this.incPrioButton_Click);
-            // 
-            // decPrioButton
-            // 
-            this.decPrioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decPrioButton.Location = new System.Drawing.Point(81, 3);
-            this.decPrioButton.Name = "decPrioButton";
-            this.decPrioButton.Size = new System.Drawing.Size(33, 23);
-            this.decPrioButton.TabIndex = 100;
-            this.decPrioButton.Text = "↓";
-            this.decPrioButton.UseVisualStyleBackColor = true;
-            this.decPrioButton.Click += new System.EventHandler(this.decPrioButton_Click);
-            // 
             // deleteGameButton
             // 
             this.deleteGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteGameButton.Location = new System.Drawing.Point(120, 3);
+            this.deleteGameButton.Location = new System.Drawing.Point(82, 3);
             this.deleteGameButton.Name = "deleteGameButton";
-            this.deleteGameButton.Size = new System.Drawing.Size(33, 23);
+            this.deleteGameButton.Size = new System.Drawing.Size(73, 23);
             this.deleteGameButton.TabIndex = 100;
             this.deleteGameButton.Text = "✖";
             this.deleteGameButton.UseVisualStyleBackColor = true;
@@ -557,6 +554,16 @@
             this.adminTab.Text = "Admin";
             this.adminTab.UseVisualStyleBackColor = true;
             // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(6, 64);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(111, 23);
+            this.closeButton.TabIndex = 105;
+            this.closeButton.Text = "Programma sluiten";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -633,16 +640,6 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
-            // closeButton
-            // 
-            this.closeButton.Location = new System.Drawing.Point(6, 64);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(111, 23);
-            this.closeButton.TabIndex = 105;
-            this.closeButton.Text = "Programma sluiten";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
             // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -696,8 +693,6 @@
         private System.Windows.Forms.Button startStopGameButton;
         private System.Windows.Forms.TextBox gameCodeTextbox;
         private System.Windows.Forms.Button deleteGameButton;
-        private System.Windows.Forms.Button decPrioButton;
-        private System.Windows.Forms.Button incPrioButton;
         private System.Windows.Forms.Button addGameButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label10;
@@ -725,6 +720,8 @@
         private System.Windows.Forms.TextBox gameTimeoutTextbox;
         private System.Windows.Forms.Button saveGameTimeout;
         private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.CheckBox gamePriorityCheckbox;
+        private System.Windows.Forms.Label label15;
     }
 }
 

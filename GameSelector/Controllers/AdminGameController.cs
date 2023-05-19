@@ -27,8 +27,6 @@ namespace GameSelector.Controllers
             {
                 { "RequestSaveGame", OnRequestSaveGame },
                 { "RequestNewGame", OnRequestNewGame },
-                { "RequestIncreasePrio", OnRequestIncreasePrio },
-                { "RequestDecreasePrio", OnRequestDecreasePrio },
                 { "RequestDeleteGame", OnRequestDeleteGame },
             });
         }
@@ -56,7 +54,7 @@ namespace GameSelector.Controllers
             game.Description = gameDataView.Description;
             game.Explanation = gameDataView.Explanation;
             game.Color = gameDataView.Color;
-            game.Priority = gameDataView.Priority;
+            game.HasPriority = gameDataView.HasPriority;
 
             _gameDataBridge.UpdateGame(game);
 
@@ -79,56 +77,6 @@ namespace GameSelector.Controllers
 
             var games = _gameDataBridge.GetAllGames().Select(g => GameDataView.FromGame(g));
             _adminView.SetGamesList(games);
-        }
-
-        private List<Game> ChangePrio(GameDataView gdv, int offset)
-        {
-            var games = _gameDataBridge.GetAllGames().OrderBy(g => g.Priority).ToList();
-            var idx = games
-                .Select((g, i) => new { game = g, index = i })
-                .Single(o => o.game.Id == gdv.Id)
-                .index;
-
-            if (idx + offset >= games.Count || idx + offset < 0) return games;
-
-            (games[idx], games[idx + offset]) = (games[idx + offset], games[idx]);
-
-            var prioCounter = 0;
-            foreach (var game in games)
-            {
-                game.Priority = prioCounter++;
-                _gameDataBridge.UpdateGame(game);
-            }
-
-            return games;
-        }
-
-        private void OnRequestIncreasePrio(object value)
-        {
-            Debug.Assert(value is GameDataView);
-            var gameDataView = (GameDataView)value;
-
-            var games = ChangePrio(gameDataView, 1);
-
-            UpdateGamesList(games);
-
-            // Select game in the view:
-            var updatedGame = _gameDataBridge.GetGame(gameDataView.Id);
-            _adminView.UpdateGame(GameDataView.FromGame(updatedGame));
-        }
-
-        private void OnRequestDecreasePrio(object value)
-        {
-            Debug.Assert(value is GameDataView);
-            var gameDataView = (GameDataView)value;
-
-            var games = ChangePrio(gameDataView, -1);
-
-            UpdateGamesList(games);
-
-            // Select game in the view:
-            var updatedGame = _gameDataBridge.GetGame(gameDataView.Id);
-            _adminView.UpdateGame(GameDataView.FromGame(updatedGame));
         }
 
         private void OnRequestDeleteGame(object value)

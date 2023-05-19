@@ -29,7 +29,7 @@ namespace GameSelector.Model.Database
                 Description = dbGame.Description,
                 Explanation = dbGame.Explanation,
                 Color = dbGame.Color,
-                Priority = dbGame.Priority,
+                HasPriority = dbGame.Priority == 0 ? false : true,
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
             };
 
