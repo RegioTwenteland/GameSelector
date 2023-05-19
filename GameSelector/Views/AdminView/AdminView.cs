@@ -351,6 +351,8 @@ namespace GameSelector.Views
 
             if (gdv != null)
                 SendMessage("RequestSaveGame", gdv);
+
+            saveGameButton.Text = SaveText;
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -379,6 +381,8 @@ namespace GameSelector.Views
             gdv.Explanation = gameExplanationTextbox.Text;
             gdv.Color = gameColorComboBox.Text;
             gdv.HasPriority = gamePriorityCheckbox.Checked;
+            gdv.UnsavedChanges = true;
+            saveGameButton.Text = SaveText + UnsavedModifier;
         }
 
         public void SetGamesList(IEnumerable<GameDataView> games)
@@ -402,6 +406,7 @@ namespace GameSelector.Views
             gameColorComboBox.Text = string.Empty;
             gamePriorityCheckbox.Checked = false;
             currentOccupantTextbox.Text = string.Empty;
+            saveGameButton.Text = SaveText;
 
             if (game == null) return;
 
@@ -410,6 +415,8 @@ namespace GameSelector.Views
             gameExplanationTextbox.Text = game.Explanation;
             gameColorComboBox.Text = game.Color;
             gamePriorityCheckbox.Checked = game.HasPriority;
+
+            saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
 
             if (game.OccupiedBy != null)
                 currentOccupantTextbox.Text = $"{game.OccupiedBy.ScoutingName} - {game.OccupiedBy.GroupName}";
