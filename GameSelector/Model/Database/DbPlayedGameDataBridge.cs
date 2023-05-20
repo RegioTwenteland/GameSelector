@@ -22,8 +22,8 @@ namespace GameSelector.Model.Database
             return new PlayedGame
             {
                 Id = dbPlayedGame.Id,
-                PlayerId = dbPlayedGame.PlayerId,
-                GameId = dbPlayedGame.GameId,
+                Player = DbGroupDataBridge.DbGroupToGroup(dbPlayedGame.Player),
+                Game = DbGameDataBridge.DbGameToGame(dbPlayedGame.Game),
                 StartTime = new DateTime(dbPlayedGame.StartTime),
                 EndTime = new DateTime(dbPlayedGame.EndTime)
             };

@@ -1,9 +1,11 @@
 ﻿using CustomControls;
+using GameSelector.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TextBox = System.Windows.Forms.TextBox;
@@ -438,6 +440,31 @@ namespace GameSelector.Views
 
             SortGameListBox();
             gamesListBox.SelectedIndex = idx;
+        }
+
+        public void ShowPlayedGames(List<PlayedGame> playedGames)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var playedGame in playedGames)
+            {
+                sb.Append(playedGame.StartTime.ToString("HH:mm:ss"))
+                    .Append(" - ")
+                    .Append(playedGame.EndTime.ToString("HH:mm:ss"))
+                    .Append(": ")
+                    .Append(playedGame.Game.Description)
+                    .AppendLine();
+            }
+
+            MessageBox.Show(sb.ToString());
+        }
+
+        private void showPlayedGamesButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGroupDataView();
+
+            if (gdv != null)
+                SendMessage("RequestPlayedGames", gdv.Id);
         }
 
         public void ShowView()

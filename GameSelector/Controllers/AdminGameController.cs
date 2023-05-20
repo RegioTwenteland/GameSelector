@@ -28,6 +28,7 @@ namespace GameSelector.Controllers
                 { "RequestSaveGame", OnRequestSaveGame },
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestDeleteGame", OnRequestDeleteGame },
+                { "RequestPlayedGames", OnRequestPlayedGames }
             });
         }
 
@@ -104,6 +105,21 @@ namespace GameSelector.Controllers
             _gameDataBridge.DeleteGame(game);
 
             UpdateGamesList(_gameDataBridge.GetAllGames());
+        }
+
+        private void OnRequestPlayedGames(object value)
+        {
+            Debug.Assert(value is long);
+            var id = (long)value;
+
+            var group = new Group
+            {
+                Id = id,
+            };
+
+            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
+
+            _adminView.ShowPlayedGames(playedGames);
         }
     }
 }

@@ -63,6 +63,11 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.SetGamesList(gameNames)));
         }
 
+        public void ShowPlayedGames(List<PlayedGame> playedGames)
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowPlayedGames(playedGames)));
+        }
+
         public void ShowError(string errorText)
         {
             form.Invoke(new MethodInvoker(() => form.ShowError(errorText)));

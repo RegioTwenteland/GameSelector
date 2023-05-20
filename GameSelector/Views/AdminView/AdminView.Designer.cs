@@ -82,6 +82,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.showPlayedGamesButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -148,6 +149,7 @@
             // 
             // groupsTab
             // 
+            this.groupsTab.Controls.Add(this.showPlayedGamesButton);
             this.groupsTab.Controls.Add(this.isAdminCheckbox);
             this.groupsTab.Controls.Add(this.label13);
             this.groupsTab.Controls.Add(this.removeCardFromGroupButton);
@@ -207,7 +209,7 @@
             // 
             // addCardToGroupButton
             // 
-            this.addCardToGroupButton.Location = new System.Drawing.Point(377, 247);
+            this.addCardToGroupButton.Location = new System.Drawing.Point(377, 209);
             this.addCardToGroupButton.Name = "addCardToGroupButton";
             this.addCardToGroupButton.Size = new System.Drawing.Size(145, 23);
             this.addCardToGroupButton.TabIndex = 100;
@@ -218,7 +220,7 @@
             // lastScannedCardTextbox
             // 
             this.lastScannedCardTextbox.Enabled = false;
-            this.lastScannedCardTextbox.Location = new System.Drawing.Point(290, 249);
+            this.lastScannedCardTextbox.Location = new System.Drawing.Point(290, 211);
             this.lastScannedCardTextbox.Name = "lastScannedCardTextbox";
             this.lastScannedCardTextbox.Size = new System.Drawing.Size(81, 20);
             this.lastScannedCardTextbox.TabIndex = 2;
@@ -226,7 +228,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(171, 252);
+            this.label12.Location = new System.Drawing.Point(171, 214);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(113, 13);
             this.label12.TabIndex = 100;
@@ -640,6 +642,16 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
+            // showPlayedGamesButton
+            // 
+            this.showPlayedGamesButton.Location = new System.Drawing.Point(174, 245);
+            this.showPlayedGamesButton.Name = "showPlayedGamesButton";
+            this.showPlayedGamesButton.Size = new System.Drawing.Size(147, 23);
+            this.showPlayedGamesButton.TabIndex = 103;
+            this.showPlayedGamesButton.Text = "Gespeelde spellen";
+            this.showPlayedGamesButton.UseVisualStyleBackColor = true;
+            this.showPlayedGamesButton.Click += new System.EventHandler(this.showPlayedGamesButton_Click);
+            // 
             // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -722,6 +734,7 @@
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.CheckBox gamePriorityCheckbox;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button showPlayedGamesButton;
     }
 }
 

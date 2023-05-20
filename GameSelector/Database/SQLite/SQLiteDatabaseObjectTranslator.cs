@@ -38,8 +38,8 @@ namespace GameSelector.Database.SQLite
             return new SQLiteDbPlayedGame
             {
                 Id = playedGame.Id,
-                PlayerId = playedGame.PlayerId,
-                GameId = playedGame.GameId,
+                PlayerId = playedGame.Player.Id,
+                GameId = playedGame.Game.Id,
                 StartTime = playedGame.StartTime.Ticks,
                 EndTime = playedGame.EndTime.Ticks
             };

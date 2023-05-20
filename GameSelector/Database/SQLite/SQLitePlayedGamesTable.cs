@@ -16,12 +16,31 @@ namespace GameSelector.Database.SQLite
         public List<IDbPlayedGame> GetPlayedGamesByPlayerId(long playerId)
         {
             var sql = @"SELECT
-                            `played_games`.`id` AS played_game_id,
+	                        `played_games`.`id` AS played_game_id,
 	                        `played_games`.`player` AS played_game_player,
 	                        `played_games`.`game` AS played_game_game,
 	                        `played_games`.`start_time` AS played_game_start_time,
-	                        `played_games`.`end_time` AS played_game_end_time
+	                        `played_games`.`end_time` AS played_game_end_time,
+	
+	                        `games`.`id` AS game_id,
+	                        `games`.`code` AS game_code,
+	                        `games`.`description` AS game_description,
+	                        `games`.`explanation` AS game_explanation,
+	                        `games`.`color` AS game_color,
+	                        `games`.`priority` AS game_priority,
+	                        `games`.`occupied_by` AS game_occupied_by,
+	                        `games`.`start_time` AS game_start_time,
+	
+	                        `groups`.`id` AS group_id,
+	                        `groups`.`card_id` AS group_card_id,
+	                        `groups`.`group_name` AS group_name,
+	                        `groups`.`scouting_name` AS group_scouting_name,
+	                        `groups`.`is_admin` AS group_is_admin
                         FROM `played_games`
+                        LEFT JOIN `games`
+                        ON `games`.`id` = `played_games`.`game`
+                        LEFT JOIN `groups`
+                        ON `groups`.`id` = `played_games`.`player`
                         WHERE `player` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
@@ -42,12 +61,31 @@ namespace GameSelector.Database.SQLite
         public List<IDbPlayedGame> GetPlayedGamesByGameId(long gameId)
         {
             var sql = @"SELECT
-                            `played_games`.`id` AS played_game_id,
+	                        `played_games`.`id` AS played_game_id,
 	                        `played_games`.`player` AS played_game_player,
 	                        `played_games`.`game` AS played_game_game,
 	                        `played_games`.`start_time` AS played_game_start_time,
-	                        `played_games`.`end_time` AS played_game_end_time
+	                        `played_games`.`end_time` AS played_game_end_time,
+	
+	                        `games`.`id` AS game_id,
+	                        `games`.`code` AS game_code,
+	                        `games`.`description` AS game_description,
+	                        `games`.`explanation` AS game_explanation,
+	                        `games`.`color` AS game_color,
+	                        `games`.`priority` AS game_priority,
+	                        `games`.`occupied_by` AS game_occupied_by,
+	                        `games`.`start_time` AS game_start_time,
+	
+	                        `groups`.`id` AS group_id,
+	                        `groups`.`card_id` AS group_card_id,
+	                        `groups`.`group_name` AS group_name,
+	                        `groups`.`scouting_name` AS group_scouting_name,
+	                        `groups`.`is_admin` AS group_is_admin
                         FROM `played_games`
+                        LEFT JOIN `games`
+                        ON `games`.`id` = `played_games`.`game`
+                        LEFT JOIN `groups`
+                        ON `groups`.`id` = `played_games`.`player`
                         WHERE `game` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);

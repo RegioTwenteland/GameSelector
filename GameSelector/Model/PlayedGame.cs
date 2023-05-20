@@ -12,9 +12,9 @@ namespace GameSelector.Model
             set => _id.Value = value;
         }
 
-        public long PlayerId { get; set; }
+        public Group Player { get; set; }
 
-        public long GameId { get; set; }
+        public Game Game { get; set; }
 
         public DateTime StartTime { get; set; }
 

@@ -82,7 +82,7 @@ namespace GameSelector.Controllers
             var playedGameIds = new HashSet<long>();
             foreach (var game in playedGames)
             {
-                playedGameIds.Add(game.GameId);
+                playedGameIds.Add(game.Game.Id);
             }
 
             var possibleGames = new List<Game>(games.Count);
@@ -161,8 +161,8 @@ namespace GameSelector.Controllers
 
             var playedGame = new PlayedGame
             {
-                PlayerId = group.Id,
-                GameId = currentGame.Id,
+                Player = group,
+                Game = currentGame,
                 StartTime = currentGame.StartTime ?? DateTime.MinValue,
                 EndTime = DateTime.Now,
             };
