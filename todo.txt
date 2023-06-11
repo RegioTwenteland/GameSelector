@@ -1,2 +1,3 @@
 - Find a better way to add/remove database column. Right now it requires a lot of code changes.
 - Select database file at startup
+- Known bug: game codes are only sent to user view on startup.

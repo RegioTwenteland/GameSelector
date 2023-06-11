@@ -124,7 +124,14 @@ namespace GameSelector.Views
 
             if (_animationFrame % 10 == 0)
             {
-                searchingGameNameLabel.Text = _gameCodes[random.Next(0, _gameCodes.Length)];
+                if (_gameCodes.Length == 0)
+                {
+                    searchingGameNameLabel.Text = string.Empty;
+                }
+                else
+                {
+                    searchingGameNameLabel.Text = _gameCodes[random.Next(0, _gameCodes.Length)];
+                }
             }
 
             searchingProgressBar.Value++;

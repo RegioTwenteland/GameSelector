@@ -40,7 +40,7 @@ namespace GameSelector.Database.SQLite
                         (
                             `card_id`,
                             `group_name`,
-                            `scouting_name`
+                            `scouting_name`,
                             `remarks`
                         )
                         VALUES

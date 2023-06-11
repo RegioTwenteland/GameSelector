@@ -16,7 +16,7 @@ namespace GameSelector.Database.SQLite
                 Priority = game.HasPriority ? 1 : 0,
                 OccupiedById = game.OccupiedBy?.Id,
                 StartTime = game.StartTime.HasValue ? (long?)game.StartTime.Value.Ticks : null,
-                Remarks = game.Remarks,
+                Remarks = game.Remarks ?? "",
             };
         }
 
@@ -31,7 +31,7 @@ namespace GameSelector.Database.SQLite
                 Name = group.Name,
                 ScoutingName = group.ScoutingName,
                 IsAdmin = group.IsAdmin ? 1 : 0,
-                Remarks = group.Remarks,
+                Remarks = group.Remarks ?? "",
             };
         }
 
