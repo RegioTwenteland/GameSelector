@@ -21,6 +21,8 @@ namespace GameSelector.Views
 
         public DateTime StartTime { get; set; }
 
+        public string Remarks { get; set; }
+
         public bool UnsavedChanges { get; set; } = false;
 
         public override string ToString()
@@ -49,6 +51,7 @@ namespace GameSelector.Views
                 HasPriority = game.HasPriority,
                 OccupiedBy = GroupDataView.FromGroup(game.OccupiedBy),
                 StartTime = startTime,
+                Remarks = game.Remarks,
             };
         }
     }

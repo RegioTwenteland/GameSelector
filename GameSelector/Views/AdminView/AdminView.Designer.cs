@@ -36,6 +36,9 @@
             this.scoutingNameTextbox = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.groupsTab = new System.Windows.Forms.TabPage();
+            this.groupRemarksText = new System.Windows.Forms.RichTextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.showPlayedGamesButton = new System.Windows.Forms.Button();
             this.isAdminCheckbox = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.removeCardFromGroupButton = new System.Windows.Forms.Button();
@@ -82,7 +85,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.showPlayedGamesButton = new System.Windows.Forms.Button();
+            this.gameRemarksText = new System.Windows.Forms.RichTextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -93,9 +97,9 @@
             // 
             // saveGroupButton
             // 
-            this.saveGroupButton.Location = new System.Drawing.Point(171, 157);
+            this.saveGroupButton.Location = new System.Drawing.Point(171, 283);
             this.saveGroupButton.Name = "saveGroupButton";
-            this.saveGroupButton.Size = new System.Drawing.Size(289, 23);
+            this.saveGroupButton.Size = new System.Drawing.Size(391, 23);
             this.saveGroupButton.TabIndex = 100;
             this.saveGroupButton.Text = "Opslaan";
             this.saveGroupButton.UseVisualStyleBackColor = true;
@@ -105,7 +109,7 @@
             // 
             this.groupNameTextbox.Location = new System.Drawing.Point(260, 55);
             this.groupNameTextbox.Name = "groupNameTextbox";
-            this.groupNameTextbox.Size = new System.Drawing.Size(200, 20);
+            this.groupNameTextbox.Size = new System.Drawing.Size(302, 20);
             this.groupNameTextbox.TabIndex = 1;
             this.groupNameTextbox.TextChanged += new System.EventHandler(this.GroupDataChanged);
             // 
@@ -131,7 +135,7 @@
             // 
             this.scoutingNameTextbox.Location = new System.Drawing.Point(260, 29);
             this.scoutingNameTextbox.Name = "scoutingNameTextbox";
-            this.scoutingNameTextbox.Size = new System.Drawing.Size(200, 20);
+            this.scoutingNameTextbox.Size = new System.Drawing.Size(302, 20);
             this.scoutingNameTextbox.TabIndex = 0;
             this.scoutingNameTextbox.TextChanged += new System.EventHandler(this.GroupDataChanged);
             // 
@@ -149,6 +153,8 @@
             // 
             // groupsTab
             // 
+            this.groupsTab.Controls.Add(this.groupRemarksText);
+            this.groupsTab.Controls.Add(this.label16);
             this.groupsTab.Controls.Add(this.showPlayedGamesButton);
             this.groupsTab.Controls.Add(this.isAdminCheckbox);
             this.groupsTab.Controls.Add(this.label13);
@@ -177,10 +183,38 @@
             this.groupsTab.Text = "Groepen";
             this.groupsTab.UseVisualStyleBackColor = true;
             // 
+            // groupRemarksText
+            // 
+            this.groupRemarksText.Location = new System.Drawing.Point(260, 134);
+            this.groupRemarksText.Name = "groupRemarksText";
+            this.groupRemarksText.Size = new System.Drawing.Size(302, 120);
+            this.groupRemarksText.TabIndex = 105;
+            this.groupRemarksText.Text = "";
+            this.groupRemarksText.TextChanged += new System.EventHandler(this.GroupDataChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(171, 186);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(70, 13);
+            this.label16.TabIndex = 104;
+            this.label16.Text = "Opmerkingen";
+            // 
+            // showPlayedGamesButton
+            // 
+            this.showPlayedGamesButton.Location = new System.Drawing.Point(174, 509);
+            this.showPlayedGamesButton.Name = "showPlayedGamesButton";
+            this.showPlayedGamesButton.Size = new System.Drawing.Size(147, 23);
+            this.showPlayedGamesButton.TabIndex = 103;
+            this.showPlayedGamesButton.Text = "Gespeelde spellen";
+            this.showPlayedGamesButton.UseVisualStyleBackColor = true;
+            this.showPlayedGamesButton.Click += new System.EventHandler(this.showPlayedGamesButton_Click);
+            // 
             // isAdminCheckbox
             // 
             this.isAdminCheckbox.AutoSize = true;
-            this.isAdminCheckbox.Location = new System.Drawing.Point(260, 134);
+            this.isAdminCheckbox.Location = new System.Drawing.Point(260, 260);
             this.isAdminCheckbox.Name = "isAdminCheckbox";
             this.isAdminCheckbox.Size = new System.Drawing.Size(29, 17);
             this.isAdminCheckbox.TabIndex = 102;
@@ -191,7 +225,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(171, 138);
+            this.label13.Location = new System.Drawing.Point(171, 264);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(36, 13);
             this.label13.TabIndex = 101;
@@ -199,7 +233,7 @@
             // 
             // removeCardFromGroupButton
             // 
-            this.removeCardFromGroupButton.Location = new System.Drawing.Point(429, 1);
+            this.removeCardFromGroupButton.Location = new System.Drawing.Point(531, 1);
             this.removeCardFromGroupButton.Name = "removeCardFromGroupButton";
             this.removeCardFromGroupButton.Size = new System.Drawing.Size(31, 23);
             this.removeCardFromGroupButton.TabIndex = 100;
@@ -209,7 +243,7 @@
             // 
             // addCardToGroupButton
             // 
-            this.addCardToGroupButton.Location = new System.Drawing.Point(377, 209);
+            this.addCardToGroupButton.Location = new System.Drawing.Point(382, 486);
             this.addCardToGroupButton.Name = "addCardToGroupButton";
             this.addCardToGroupButton.Size = new System.Drawing.Size(145, 23);
             this.addCardToGroupButton.TabIndex = 100;
@@ -220,7 +254,7 @@
             // lastScannedCardTextbox
             // 
             this.lastScannedCardTextbox.Enabled = false;
-            this.lastScannedCardTextbox.Location = new System.Drawing.Point(290, 211);
+            this.lastScannedCardTextbox.Location = new System.Drawing.Point(295, 488);
             this.lastScannedCardTextbox.Name = "lastScannedCardTextbox";
             this.lastScannedCardTextbox.Size = new System.Drawing.Size(81, 20);
             this.lastScannedCardTextbox.TabIndex = 2;
@@ -228,7 +262,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(171, 214);
+            this.label12.Location = new System.Drawing.Point(176, 491);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(113, 13);
             this.label12.TabIndex = 100;
@@ -302,7 +336,7 @@
             this.cardIdTextbox.Enabled = false;
             this.cardIdTextbox.Location = new System.Drawing.Point(260, 3);
             this.cardIdTextbox.Name = "cardIdTextbox";
-            this.cardIdTextbox.Size = new System.Drawing.Size(163, 20);
+            this.cardIdTextbox.Size = new System.Drawing.Size(262, 20);
             this.cardIdTextbox.TabIndex = 100;
             this.cardIdTextbox.TextChanged += new System.EventHandler(this.GroupDataChanged);
             // 
@@ -319,7 +353,7 @@
             // 
             this.startTimePicker.Location = new System.Drawing.Point(260, 108);
             this.startTimePicker.Name = "startTimePicker";
-            this.startTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.startTimePicker.Size = new System.Drawing.Size(302, 20);
             this.startTimePicker.TabIndex = 100;
             // 
             // currentGameText
@@ -327,7 +361,7 @@
             this.currentGameText.Enabled = false;
             this.currentGameText.Location = new System.Drawing.Point(260, 81);
             this.currentGameText.Name = "currentGameText";
-            this.currentGameText.Size = new System.Drawing.Size(200, 20);
+            this.currentGameText.Size = new System.Drawing.Size(302, 20);
             this.currentGameText.TabIndex = 100;
             // 
             // label4
@@ -341,6 +375,8 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.gameRemarksText);
+            this.gamesTab.Controls.Add(this.label17);
             this.gamesTab.Controls.Add(this.gamePriorityCheckbox);
             this.gamesTab.Controls.Add(this.label15);
             this.gamesTab.Controls.Add(this.currentOccupantTextbox);
@@ -401,7 +437,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 217);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 343);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -642,15 +678,23 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
-            // showPlayedGamesButton
+            // gameRemarksText
             // 
-            this.showPlayedGamesButton.Location = new System.Drawing.Point(174, 245);
-            this.showPlayedGamesButton.Name = "showPlayedGamesButton";
-            this.showPlayedGamesButton.Size = new System.Drawing.Size(147, 23);
-            this.showPlayedGamesButton.TabIndex = 103;
-            this.showPlayedGamesButton.Text = "Gespeelde spellen";
-            this.showPlayedGamesButton.UseVisualStyleBackColor = true;
-            this.showPlayedGamesButton.Click += new System.EventHandler(this.showPlayedGamesButton_Click);
+            this.gameRemarksText.Location = new System.Drawing.Point(270, 217);
+            this.gameRemarksText.Name = "gameRemarksText";
+            this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
+            this.gameRemarksText.TabIndex = 107;
+            this.gameRemarksText.Text = "";
+            this.gameRemarksText.TextChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(171, 268);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(70, 13);
+            this.label17.TabIndex = 106;
+            this.label17.Text = "Opmerkingen";
             // 
             // AdminView
             // 
@@ -735,6 +779,10 @@
         private System.Windows.Forms.CheckBox gamePriorityCheckbox;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button showPlayedGamesButton;
+        private System.Windows.Forms.RichTextBox groupRemarksText;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.RichTextBox gameRemarksText;
+        private System.Windows.Forms.Label label17;
     }
 }
 

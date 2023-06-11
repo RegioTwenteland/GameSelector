@@ -24,5 +24,7 @@ namespace GameSelector.Database
         IDbGroup OccupiedBy { get; set; }
 
         long? StartTime { get; set; }
+
+        string Remarks { get; set; }
     }
 }

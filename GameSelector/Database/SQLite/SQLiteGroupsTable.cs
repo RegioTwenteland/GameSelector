@@ -16,21 +16,9 @@ namespace GameSelector.Database.SQLite
 
         public List<IDbGroup> GetAllGroups()
         {
-            var sql = @"SELECT
-	                        `groups`.`id` AS group_id,
-	                        `groups`.`card_id` AS group_card_id,
-	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name,
-                            `groups`.`is_admin` AS group_is_admin,
-	
-	                        `games`.`id` AS game_id,
-	                        `games`.`code` AS game_code,
-	                        `games`.`description` AS game_description,
-	                        `games`.`explanation` AS game_explanation,
-	                        `games`.`color` AS game_color,
-	                        `games`.`priority` AS game_priority,
-	                        `games`.`occupied_by` AS game_occupied_by,
-	                        `games`.`start_time` AS game_start_time
+            var sql = $@"SELECT
+                            {SQLiteDbGroup.SQLSelectFullGroup},
+                            {SQLiteDbGame.SQLSelectFullGame}
                         FROM `groups`
                         LEFT JOIN `games`
                         ON `groups`.`id` = `games`.`occupied_by`;";
@@ -51,21 +39,9 @@ namespace GameSelector.Database.SQLite
 
         public IDbGroup GetGroupById(long id)
         {
-            var sql = @"SELECT
-	                        `groups`.`id` AS group_id,
-	                        `groups`.`card_id` AS group_card_id,
-	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name,
-                            `groups`.`is_admin` AS group_is_admin,
-	
-	                        `games`.`id` AS game_id,
-	                        `games`.`code` AS game_code,
-	                        `games`.`description` AS game_description,
-	                        `games`.`explanation` AS game_explanation,
-	                        `games`.`color` AS game_color,
-	                        `games`.`priority` AS game_priority,
-	                        `games`.`occupied_by` AS game_occupied_by,
-	                        `games`.`start_time` AS game_start_time
+            var sql = $@"SELECT
+                            {SQLiteDbGroup.SQLSelectFullGroup},
+                            {SQLiteDbGame.SQLSelectFullGame}
                         FROM `groups`
                         LEFT JOIN `games`
                         ON `groups`.`id` = `games`.`occupied_by`
@@ -88,21 +64,9 @@ namespace GameSelector.Database.SQLite
 
         public IDbGroup GetGroupByCardId(string cardId)
         {
-            var sql = @"SELECT
-	                        `groups`.`id` AS group_id,
-	                        `groups`.`card_id` AS group_card_id,
-	                        `groups`.`group_name` AS group_name,
-	                        `groups`.`scouting_name` AS group_scouting_name,
-                            `groups`.`is_admin` AS group_is_admin,
-	
-	                        `games`.`id` AS game_id,
-	                        `games`.`code` AS game_code,
-	                        `games`.`description` AS game_description,
-	                        `games`.`explanation` AS game_explanation,
-	                        `games`.`color` AS game_color,
-	                        `games`.`priority` AS game_priority,
-	                        `games`.`occupied_by` AS game_occupied_by,
-	                        `games`.`start_time` AS game_start_time
+            var sql = $@"SELECT
+                            {SQLiteDbGroup.SQLSelectFullGroup},
+                            {SQLiteDbGame.SQLSelectFullGame}
                         FROM `groups`
                         LEFT JOIN `games`
                         ON `groups`.`id` = `games`.`occupied_by`
@@ -125,11 +89,8 @@ namespace GameSelector.Database.SQLite
 
         public void UpdateGroup(IDbGroup group)
         {
-            var sql = @"UPDATE `groups` SET
-	                        `card_id` = @card_id,
-	                        `group_name` = @name,
-	                        `scouting_name` = @scouting_name,
-                            `is_admin` = @is_admin
+            var sql = $@"UPDATE `groups` SET
+	                        {SQLiteDbGroup.SQLUpdateFullGroup}
                         WHERE `id` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
@@ -138,6 +99,7 @@ namespace GameSelector.Database.SQLite
             command.Parameters.AddWithValue("@name", group.Name);
             command.Parameters.AddWithValue("@scouting_name", group.ScoutingName);
             command.Parameters.AddWithValue("@is_admin", group.IsAdmin);
+            command.Parameters.AddWithValue("@remarks", group.Remarks);
 
             var rowsUpdated = command.ExecuteNonQuery();
 
@@ -146,23 +108,13 @@ namespace GameSelector.Database.SQLite
 
         public void InsertGroup(IDbGroup group)
         {
-            var sql = @"INSERT INTO `groups`
-                        (
-	                        `card_id`,
-	                        `group_name`,
-	                        `scouting_name`
-                        )
-                        VALUES
-                        (
-	                        @card_id,
-	                        @name,
-	                        @scouting_name
-                        );";
+            var sql = $@"INSERT INTO `groups` {SQLiteDbGroup.SQLInsertFullGroup};";
 
             var command = new SQLiteCommand(sql, _connection);
             command.Parameters.AddWithValue("@card_id", group.CardId);
             command.Parameters.AddWithValue("@name", group.Name);
             command.Parameters.AddWithValue("@scouting_name", group.ScoutingName);
+            command.Parameters.AddWithValue("@remarks", group.Remarks);
 
             var rowsUpdated = command.ExecuteNonQuery();
 

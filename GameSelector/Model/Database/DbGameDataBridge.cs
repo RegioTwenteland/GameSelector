@@ -31,6 +31,7 @@ namespace GameSelector.Model.Database
                 Color = dbGame.Color,
                 HasPriority = dbGame.Priority == 0 ? false : true,
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
+                Remarks = dbGame.Remarks,
             };
 
             output.OccupiedBy = group ?? DbGroupDataBridge.DbGroupToGroup(dbGame.OccupiedBy, output);

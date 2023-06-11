@@ -56,6 +56,7 @@ namespace GameSelector.Controllers
             game.Explanation = gameDataView.Explanation;
             game.Color = gameDataView.Color;
             game.HasPriority = gameDataView.HasPriority;
+            game.Remarks = gameDataView.Remarks;
 
             _gameDataBridge.UpdateGame(game);
 

@@ -19,5 +19,7 @@
         public bool IsAdmin { get; set; }
 
         public Game CurrentlyPlaying { get; set; }
+
+        public string Remarks { get; set; }
     }
 }

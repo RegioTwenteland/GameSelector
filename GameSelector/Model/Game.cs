@@ -32,5 +32,7 @@ namespace GameSelector.Model
         public Group OccupiedBy { get; set; }
 
         public DateTime? StartTime { get; set; }
+
+        public string Remarks { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.Security.Policy;
 
 namespace GameSelector.Database.SQLite
 {
@@ -26,6 +27,48 @@ namespace GameSelector.Database.SQLite
 
         public long? StartTime { get; set; }
 
+        public string Remarks { get; set; }
+
+        public const string SQLSelectFullGame = @"
+                            `games`.`id` AS game_id,
+                            `games`.`code` AS game_code,
+                            `games`.`description` AS game_description,
+                            `games`.`explanation` AS game_explanation,
+                            `games`.`color` AS game_color,
+                            `games`.`priority` AS game_priority,
+                            `games`.`occupied_by` AS game_occupied_by,
+                            `games`.`start_time` AS game_start_time,
+                            `games`.`remarks` AS game_remarks";
+
+        public const string SQLUpdateFullGame = @"
+                            `code` = @code,
+                            `description` = @description,
+                            `explanation` = @explanation,
+                            `color` = @color,
+                            `priority` = @priority,
+                            `occupied_by` = @occupied_by,
+                            `start_time` = @start_time,
+                            `remarks` = @remarks";
+
+        public const string SQLInsertFullGame = @"
+                        (
+                            `code`,
+                            `description`,
+                            `explanation`,
+                            `color`,
+                            `priority`,
+                            `remarks`
+                        )
+                        VALUES
+                        (
+                            @code,
+                            @description,
+                            @explanation,
+                            @color,
+                            @priority,
+                            @remarks
+                        )";
+
         public static IDbGame FromSqlReader(SQLiteDataReader reader, IDbGroup occupiedBy = null)
         {
             var output = new SQLiteDbGame
@@ -37,7 +80,8 @@ namespace GameSelector.Database.SQLite
                 Color = (string)reader["game_color"],
                 Priority = (long)reader["game_priority"],
                 OccupiedById = occupiedBy == null ? SQLiteDatabase.FromDbNull<long?>(reader["game_occupied_by"]) : occupiedBy.Id,
-                StartTime = SQLiteDatabase.FromDbNull<long?>(reader["game_start_time"])
+                StartTime = SQLiteDatabase.FromDbNull<long?>(reader["game_start_time"]),
+                Remarks = (string)reader["game_remarks"]
             };
 
             if (occupiedBy != null)

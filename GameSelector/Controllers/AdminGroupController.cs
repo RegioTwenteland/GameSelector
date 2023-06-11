@@ -85,6 +85,7 @@ namespace GameSelector.Controllers
             group.Name = groupDataView.GroupName;
             group.ScoutingName = groupDataView.ScoutingName;
             group.IsAdmin = groupDataView.IsAdmin;
+            group.Remarks = groupDataView.Remarks;
 
             _groupDataBridge.UpdateGroup(group);
 

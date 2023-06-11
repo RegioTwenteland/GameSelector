@@ -27,6 +27,7 @@ namespace GameSelector.Model.Database
                 Name = dbGroup.Name,
                 ScoutingName = dbGroup.ScoutingName,
                 IsAdmin = dbGroup.IsAdmin != 0,
+                Remarks = dbGroup.Remarks,
             };
 
             output.CurrentlyPlaying = game ?? DbGameDataBridge.DbGameToGame(dbGroup.CurrentlyPlaying, output);

@@ -18,5 +18,7 @@ namespace GameSelector.Database
         /// Warning: read-only. Dont use for modifying.
         /// </summary>
         IDbGame CurrentlyPlaying { get; set; }
+
+        string Remarks { get; set; }
     }
 }

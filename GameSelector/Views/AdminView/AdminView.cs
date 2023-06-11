@@ -221,6 +221,7 @@ namespace GameSelector.Views
             gdv.GroupName = groupNameTextbox.Text;
             gdv.ScoutingName = scoutingNameTextbox.Text;
             gdv.IsAdmin = isAdminCheckbox.Checked;
+            gdv.Remarks = groupRemarksText.Text;
             gdv.UnsavedChanges = true;
 
             saveGroupButton.Text = SaveText + UnsavedModifier;
@@ -240,6 +241,7 @@ namespace GameSelector.Views
             scoutingNameTextbox.Text = string.Empty;
             currentGameText.Text = string.Empty;
             saveGroupButton.Text = SaveText;
+            groupRemarksText.Text = string.Empty;
             isAdminCheckbox.Checked = false;
 
             if (group == null) return;
@@ -255,6 +257,7 @@ namespace GameSelector.Views
                     group.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
                     group.StartTime).ToString()
                 : null;
+            groupRemarksText.Text = group.Remarks;
 
             saveGroupButton.Text = SaveText + (group.UnsavedChanges ? UnsavedModifier : string.Empty);
         }
@@ -383,6 +386,7 @@ namespace GameSelector.Views
             gdv.Explanation = gameExplanationTextbox.Text;
             gdv.Color = gameColorComboBox.Text;
             gdv.HasPriority = gamePriorityCheckbox.Checked;
+            gdv.Remarks = gameRemarksText.Text;
             gdv.UnsavedChanges = true;
             saveGameButton.Text = SaveText + UnsavedModifier;
         }
@@ -408,6 +412,7 @@ namespace GameSelector.Views
             gameColorComboBox.Text = string.Empty;
             gamePriorityCheckbox.Checked = false;
             currentOccupantTextbox.Text = string.Empty;
+            gameRemarksText.Text = string.Empty;
             saveGameButton.Text = SaveText;
 
             if (game == null) return;
@@ -417,6 +422,7 @@ namespace GameSelector.Views
             gameExplanationTextbox.Text = game.Explanation;
             gameColorComboBox.Text = game.Color;
             gamePriorityCheckbox.Checked = game.HasPriority;
+            gameRemarksText.Text = game.Remarks;
 
             saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
 
