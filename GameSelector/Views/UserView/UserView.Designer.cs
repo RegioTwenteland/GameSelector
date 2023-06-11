@@ -83,12 +83,12 @@
             // gameExplanationLabel
             // 
             this.gameExplanationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.gameExplanationLabel.AutoSize = true;
+            this.gameExplanationLabel.BackColor = System.Drawing.Color.Black;
             this.gameExplanationLabel.Font = new System.Drawing.Font("Squares Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gameExplanationLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(230)))), ((int)(((byte)(254)))));
             this.gameExplanationLabel.Location = new System.Drawing.Point(12, 484);
             this.gameExplanationLabel.Name = "gameExplanationLabel";
-            this.gameExplanationLabel.Size = new System.Drawing.Size(134, 28);
+            this.gameExplanationLabel.Size = new System.Drawing.Size(1054, 145);
             this.gameExplanationLabel.TabIndex = 3;
             this.gameExplanationLabel.Text = "(Uitleg)";
             // 
