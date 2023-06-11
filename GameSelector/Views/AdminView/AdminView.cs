@@ -175,11 +175,11 @@ namespace GameSelector.Views
         {
             var gdv = GetCurrentGroupDataView();
 
+            if (gdv == null) return;
+
             gdv.UnsavedChanges = false;
             saveGroupButton.Text = SaveText;
-
-            if (gdv != null)
-                SendMessage("RequestSaveGroup", gdv);
+            SendMessage("RequestSaveGroup", gdv);
         }
 
         private void addGroupButton_Click(object sender, EventArgs e)
@@ -354,10 +354,11 @@ namespace GameSelector.Views
         {
             var gdv = GetCurrentGameDataView();
 
-            if (gdv != null)
-                SendMessage("RequestSaveGame", gdv);
-
+            if (gdv == null) return;
+            
+            gdv.UnsavedChanges = false;
             saveGameButton.Text = SaveText;
+            SendMessage("RequestSaveGame", gdv);
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
