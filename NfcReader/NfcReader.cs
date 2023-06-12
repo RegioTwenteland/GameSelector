@@ -45,9 +45,7 @@ namespace NfcReader
 
         private const int BYTES_PER_BLOCK = 16;
 
-        private string[] _allowedBlocks = { "4", "5", "6", "8", "9", "10", "12", "13", "14", "16", "17", "18", "20", "21", "22", "24", "25", "26", "28", "29", "30", "32", "33", "34", "36", "37", "38", "40", "41", "42", "44", "45", "46", "48", "49", "50", "52", "53", "54", "56", "57", "58", "60", "61", "62" };
-        //private byte[] _allowedBlocks = { 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 21, 22, 24, 25, 26, 28, 29, 30, 32, 33, 34, 36, 37, 38, 40, 41, 42, 44, 45, 46, 48, 49, 50, 52, 53, 54, 56, 57, 58, 60, 61, 62 };
-
+        private readonly string[] _allowedBlocks = { "4", "5", "6", "8", "9", "10", "12", "13", "14", "16", "17", "18", "20", "21", "22", "24", "25", "26", "28", "29", "30", "32", "33", "34", "36", "37", "38", "40", "41", "42", "44", "45", "46", "48", "49", "50", "52", "53", "54", "56", "57", "58", "60", "61", "62" };
 
         public bool WriteMessage(NdefMessage message)
         {
@@ -75,7 +73,7 @@ namespace NfcReader
                 }
 
                 var remainingBytes = bytes.Length % BYTES_PER_BLOCK;
-                if (!_nfcReader.WriteBlock(new ArraySegment<byte>(bytes, i * BYTES_PER_BLOCK, remainingBytes), _allowedBlocks[i]))
+                if (remainingBytes > 0 && !_nfcReader.WriteBlock(new ArraySegment<byte>(bytes, i * BYTES_PER_BLOCK, remainingBytes), _allowedBlocks[i]))
                 {
                     return false;
                 }
