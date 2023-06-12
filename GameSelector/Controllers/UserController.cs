@@ -74,19 +74,16 @@ namespace GameSelector.Controllers
             _userView.SetGameCodes(codes.ToArray());
         }
 
-        private List<Game> GetPossibleGames(Group group)
+        private List<Game> GetPossibleGames(List<Game> gamesNotOccupied, List<PlayedGame> playedGames, Group group)
         {
-            var games = _gameDataBridge.GetAllGamesNotOccupied();
-            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
-
             var playedGameIds = new HashSet<long>();
             foreach (var game in playedGames)
             {
                 playedGameIds.Add(game.Game.Id);
             }
 
-            var possibleGames = new List<Game>(games.Count);
-            foreach (var game in games)
+            var possibleGames = new List<Game>(gamesNotOccupied.Count);
+            foreach (var game in gamesNotOccupied)
             {
                 if (!playedGameIds.Contains(game.Id) && game.Active)
                 {
@@ -115,7 +112,10 @@ namespace GameSelector.Controllers
         {
             newGame = null;
 
-            var possibleGames = GetPossibleGames(group);
+            var gamesNotOccupied = _gameDataBridge.GetAllGamesNotOccupied();
+            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
+
+            var possibleGames = GetPossibleGames(gamesNotOccupied, playedGames, group);
 
             Game selectedGame = null;
 
@@ -123,11 +123,19 @@ namespace GameSelector.Controllers
 
             if (possibleGames.Count > 0)
             {
-                var prioGames = possibleGames.Where(g => g.HasPriority).ToList();
-                var normalGames = possibleGames.Where(g => !g.HasPriority).ToList();
-                ShuffleList(prioGames);
-                ShuffleList(normalGames);
-                possibleGames = prioGames.Concat(normalGames).ToList();
+                if (playedGames.Count > 1)
+                {
+                    var prioGames = possibleGames.Where(g => g.HasPriority).ToList();
+                    var normalGames = possibleGames.Where(g => !g.HasPriority).ToList();
+                    ShuffleList(prioGames);
+                    ShuffleList(normalGames);
+                    possibleGames = prioGames.Concat(normalGames).ToList();
+                }
+                else
+                {
+                    // The first game a group plays is completely random.
+                    ShuffleList(possibleGames);
+                }
 
                 selectedGame = possibleGames[0];
 
