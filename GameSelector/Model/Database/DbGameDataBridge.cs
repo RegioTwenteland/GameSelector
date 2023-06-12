@@ -28,6 +28,7 @@ namespace GameSelector.Model.Database
                 Code = dbGame.Code,
                 Description = dbGame.Description,
                 Explanation = dbGame.Explanation,
+                Active = dbGame.Active == 0 ? false : true,
                 Color = dbGame.Color,
                 HasPriority = dbGame.Priority == 0 ? false : true,
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,

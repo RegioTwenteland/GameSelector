@@ -13,6 +13,8 @@ namespace GameSelector.Views
 
         public string Explanation { get; set; }
 
+        public bool Active { get; set; }
+
         public string Color { get; set; }
 
         public bool HasPriority { get; set; }
@@ -47,6 +49,7 @@ namespace GameSelector.Views
                 Code = game.Code,
                 Description = game.Description,
                 Explanation = game.Explanation,
+                Active = game.Active,
                 Color = game.Color,
                 HasPriority = game.HasPriority,
                 OccupiedBy = GroupDataView.FromGroup(game.OccupiedBy),

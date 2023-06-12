@@ -385,6 +385,7 @@ namespace GameSelector.Views
             gdv.Code = gameCodeTextbox.Text;
             gdv.Description = gameDescriptionTextbox.Text;
             gdv.Explanation = gameExplanationTextbox.Text;
+            gdv.Active = gameActiveCheckbox.Checked;
             gdv.Color = gameColorComboBox.Text;
             gdv.HasPriority = gamePriorityCheckbox.Checked;
             gdv.Remarks = gameRemarksText.Text;
@@ -410,6 +411,7 @@ namespace GameSelector.Views
             gameCodeTextbox.Text = string.Empty;
             gameDescriptionTextbox.Text = string.Empty;
             gameExplanationTextbox.Text = string.Empty;
+            gameActiveCheckbox.Checked = false;
             gameColorComboBox.Text = string.Empty;
             gamePriorityCheckbox.Checked = false;
             currentOccupantTextbox.Text = string.Empty;
@@ -421,6 +423,7 @@ namespace GameSelector.Views
             gameCodeTextbox.Text = game.Code;
             gameDescriptionTextbox.Text = game.Description;
             gameExplanationTextbox.Text = game.Explanation;
+            gameActiveCheckbox.Checked = game.Active;
             gameColorComboBox.Text = game.Color;
             gamePriorityCheckbox.Checked = game.HasPriority;
             gameRemarksText.Text = game.Remarks;

@@ -5,22 +5,9 @@ CREATE TABLE IF NOT EXISTS "played_games" (
 	"game"	INTEGER NOT NULL,
 	"start_time"	INTEGER NOT NULL,
 	"end_time"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("player") REFERENCES "groups"("id"),
-	FOREIGN KEY("game") REFERENCES "games"("id"),
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
-CREATE TABLE IF NOT EXISTS "games" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"code"	TEXT NOT NULL,
-	"description"	TEXT,
-	"explanation"	TEXT,
-	"color"	TEXT,
-	"priority"	INTEGER NOT NULL DEFAULT 0,
-	"occupied_by"	INTEGER,
-	"start_time"	INTEGER,
-	"remarks"	TEXT NOT NULL,
-	FOREIGN KEY("occupied_by") REFERENCES "groups"("id"),
-	PRIMARY KEY("id" AUTOINCREMENT)
+	FOREIGN KEY("game") REFERENCES "games"("id")
 );
 CREATE TABLE IF NOT EXISTS "groups" (
 	"id"	INTEGER,
@@ -30,5 +17,19 @@ CREATE TABLE IF NOT EXISTS "groups" (
 	"is_admin"	INTEGER NOT NULL DEFAULT 0,
 	"remarks"	TEXT NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "games" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"code"	TEXT NOT NULL,
+	"description"	TEXT,
+	"explanation"	TEXT,
+	"active"	INTEGER NOT NULL DEFAULT 1,
+	"color"	TEXT,
+	"priority"	INTEGER NOT NULL DEFAULT 0,
+	"occupied_by"	INTEGER,
+	"start_time"	INTEGER,
+	"remarks"	TEXT NOT NULL,
+	PRIMARY KEY("id"),
+	FOREIGN KEY("occupied_by") REFERENCES "groups"("id")
 );
 COMMIT;

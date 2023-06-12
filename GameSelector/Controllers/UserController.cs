@@ -88,7 +88,7 @@ namespace GameSelector.Controllers
             var possibleGames = new List<Game>(games.Count);
             foreach (var game in games)
             {
-                if (!playedGameIds.Contains(game.Id))
+                if (!playedGameIds.Contains(game.Id) && game.Active)
                 {
                     possibleGames.Add(game);
                 }

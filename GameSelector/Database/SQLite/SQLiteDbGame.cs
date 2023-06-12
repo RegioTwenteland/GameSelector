@@ -14,6 +14,8 @@ namespace GameSelector.Database.SQLite
 
         public string Explanation { get; set; }
 
+        public long Active { get; set; }
+
         public string Color { get; set; }
 
         public long Priority { get; set; }
@@ -34,6 +36,7 @@ namespace GameSelector.Database.SQLite
                             `games`.`code` AS game_code,
                             `games`.`description` AS game_description,
                             `games`.`explanation` AS game_explanation,
+                            `games`.`active` AS game_active,
                             `games`.`color` AS game_color,
                             `games`.`priority` AS game_priority,
                             `games`.`occupied_by` AS game_occupied_by,
@@ -44,6 +47,7 @@ namespace GameSelector.Database.SQLite
                             `code` = @code,
                             `description` = @description,
                             `explanation` = @explanation,
+                            `active` = @active,
                             `color` = @color,
                             `priority` = @priority,
                             `occupied_by` = @occupied_by,
@@ -55,6 +59,7 @@ namespace GameSelector.Database.SQLite
                             `code`,
                             `description`,
                             `explanation`,
+                            `active`,
                             `color`,
                             `priority`,
                             `remarks`
@@ -64,6 +69,7 @@ namespace GameSelector.Database.SQLite
                             @code,
                             @description,
                             @explanation,
+                            @active,
                             @color,
                             @priority,
                             @remarks
@@ -77,6 +83,7 @@ namespace GameSelector.Database.SQLite
                 Code = (string)reader["game_code"],
                 Description = (string)reader["game_description"],
                 Explanation = (string)reader["game_explanation"],
+                Active = (long)reader["game_active"],
                 Color = (string)reader["game_color"],
                 Priority = (long)reader["game_priority"],
                 OccupiedById = occupiedBy == null ? SQLiteDatabase.FromDbNull<long?>(reader["game_occupied_by"]) : occupiedBy.Id,

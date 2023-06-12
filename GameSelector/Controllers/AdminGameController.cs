@@ -54,6 +54,7 @@ namespace GameSelector.Controllers
             game.Code = gameDataView.Code;
             game.Description = gameDataView.Description;
             game.Explanation = gameDataView.Explanation;
+            game.Active = gameDataView.Active;
             game.Color = gameDataView.Color;
             game.HasPriority = gameDataView.HasPriority;
             game.Remarks = gameDataView.Remarks;
@@ -72,6 +73,7 @@ namespace GameSelector.Controllers
                 Code = "Nieuw",
                 Description = "Spel",
                 Explanation = string.Empty,
+                Active = true,
                 Color = string.Empty
             };
 

@@ -12,6 +12,7 @@ namespace GameSelector.Database.SQLite
                 Code = game.Code,
                 Description = game.Description,
                 Explanation = game.Explanation,
+                Active = game.Active ? 1 : 0,
                 Color = game.Color,
                 Priority = game.HasPriority ? 1 : 0,
                 OccupiedById = game.OccupiedBy?.Id,

@@ -57,6 +57,10 @@
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gamesTab = new System.Windows.Forms.TabPage();
+            this.gameActiveCheckbox = new System.Windows.Forms.CheckBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.gameRemarksText = new System.Windows.Forms.RichTextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.gamePriorityCheckbox = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
             this.currentOccupantTextbox = new System.Windows.Forms.TextBox();
@@ -85,8 +89,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.gameRemarksText = new System.Windows.Forms.RichTextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -375,6 +377,8 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.gameActiveCheckbox);
+            this.gamesTab.Controls.Add(this.label18);
             this.gamesTab.Controls.Add(this.gameRemarksText);
             this.gamesTab.Controls.Add(this.label17);
             this.gamesTab.Controls.Add(this.gamePriorityCheckbox);
@@ -400,10 +404,46 @@
             this.gamesTab.Text = "Spellen";
             this.gamesTab.UseVisualStyleBackColor = true;
             // 
+            // gameActiveCheckbox
+            // 
+            this.gameActiveCheckbox.AutoSize = true;
+            this.gameActiveCheckbox.Location = new System.Drawing.Point(270, 141);
+            this.gameActiveCheckbox.Name = "gameActiveCheckbox";
+            this.gameActiveCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.gameActiveCheckbox.TabIndex = 109;
+            this.gameActiveCheckbox.UseVisualStyleBackColor = true;
+            this.gameActiveCheckbox.CheckedChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label18
+            // 
+            this.label18.Location = new System.Drawing.Point(171, 142);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(44, 13);
+            this.label18.TabIndex = 108;
+            this.label18.Text = "Actief";
+            // 
+            // gameRemarksText
+            // 
+            this.gameRemarksText.Location = new System.Drawing.Point(270, 237);
+            this.gameRemarksText.Name = "gameRemarksText";
+            this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
+            this.gameRemarksText.TabIndex = 107;
+            this.gameRemarksText.Text = "";
+            this.gameRemarksText.TextChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(171, 288);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(70, 13);
+            this.label17.TabIndex = 106;
+            this.label17.Text = "Opmerkingen";
+            // 
             // gamePriorityCheckbox
             // 
             this.gamePriorityCheckbox.AutoSize = true;
-            this.gamePriorityCheckbox.Location = new System.Drawing.Point(270, 168);
+            this.gamePriorityCheckbox.Location = new System.Drawing.Point(270, 188);
             this.gamePriorityCheckbox.Name = "gamePriorityCheckbox";
             this.gamePriorityCheckbox.Size = new System.Drawing.Size(15, 14);
             this.gamePriorityCheckbox.TabIndex = 102;
@@ -413,7 +453,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(171, 169);
+            this.label15.Location = new System.Drawing.Point(171, 189);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(44, 13);
             this.label15.TabIndex = 101;
@@ -422,14 +462,14 @@
             // currentOccupantTextbox
             // 
             this.currentOccupantTextbox.Enabled = false;
-            this.currentOccupantTextbox.Location = new System.Drawing.Point(270, 191);
+            this.currentOccupantTextbox.Location = new System.Drawing.Point(270, 211);
             this.currentOccupantTextbox.Name = "currentOccupantTextbox";
             this.currentOccupantTextbox.Size = new System.Drawing.Size(260, 20);
             this.currentOccupantTextbox.TabIndex = 7;
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(171, 194);
+            this.label11.Location = new System.Drawing.Point(171, 214);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 17);
             this.label11.TabIndex = 100;
@@ -437,7 +477,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 343);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 363);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -533,7 +573,7 @@
             "Blauw",
             "Rood",
             "Groen"});
-            this.gameColorComboBox.Location = new System.Drawing.Point(270, 141);
+            this.gameColorComboBox.Location = new System.Drawing.Point(270, 161);
             this.gameColorComboBox.Name = "gameColorComboBox";
             this.gameColorComboBox.Size = new System.Drawing.Size(260, 21);
             this.gameColorComboBox.TabIndex = 6;
@@ -567,7 +607,7 @@
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(171, 141);
+            this.label7.Location = new System.Drawing.Point(171, 161);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(93, 17);
             this.label7.TabIndex = 100;
@@ -678,24 +718,6 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
-            // gameRemarksText
-            // 
-            this.gameRemarksText.Location = new System.Drawing.Point(270, 217);
-            this.gameRemarksText.Name = "gameRemarksText";
-            this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
-            this.gameRemarksText.TabIndex = 107;
-            this.gameRemarksText.Text = "";
-            this.gameRemarksText.TextChanged += new System.EventHandler(this.GameDataChanged);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(171, 268);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(70, 13);
-            this.label17.TabIndex = 106;
-            this.label17.Text = "Opmerkingen";
-            // 
             // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -783,6 +805,8 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.RichTextBox gameRemarksText;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.CheckBox gameActiveCheckbox;
+        private System.Windows.Forms.Label label18;
     }
 }
 

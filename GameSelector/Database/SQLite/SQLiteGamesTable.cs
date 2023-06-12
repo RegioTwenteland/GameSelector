@@ -123,6 +123,7 @@ namespace GameSelector.Database.SQLite
             command.Parameters.AddWithValue("@code", game.Code);
             command.Parameters.AddWithValue("@description", game.Description);
             command.Parameters.AddWithValue("@explanation", game.Explanation);
+            command.Parameters.AddWithValue("@active", game.Active);
             command.Parameters.AddWithValue("@color", game.Color);
             command.Parameters.AddWithValue("@priority", game.Priority);
             command.Parameters.AddWithValue("@remarks", game.Remarks);
@@ -150,6 +151,7 @@ namespace GameSelector.Database.SQLite
             command.Parameters.AddWithValue("@code", game.Code);
             command.Parameters.AddWithValue("@description", game.Description);
             command.Parameters.AddWithValue("@explanation", game.Explanation);
+            command.Parameters.AddWithValue("@active", game.Active);
             command.Parameters.AddWithValue("@color", game.Color);
             command.Parameters.AddWithValue("@priority", game.Priority);
             command.Parameters.AddWithValue("@remarks", game.Remarks);

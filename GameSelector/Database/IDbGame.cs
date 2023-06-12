@@ -11,7 +11,9 @@ namespace GameSelector.Database
         string Description { get; set; }
 
         string Explanation { get; set; }
-        
+
+        long Active { get; set; }
+
         string Color { get; set; }
 
         long Priority { get; set; }
