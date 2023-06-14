@@ -1,6 +1,7 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,25 +36,27 @@ namespace GameSelector.Views
 
         private void UserView_Load(object sender, EventArgs e)
         {
+            var screen = Screen.AllScreens.First();
+
             // if there are multiple screens, put this one on a secondary screen
             if (Screen.AllScreens.Length > 1)
             {
-                var screen = Screen.AllScreens
+                screen = Screen.AllScreens
                     .Where(s => s.Primary == false)
                     .FirstOrDefault();
-
-                Location = new System.Drawing.Point
-                {
-                    X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
-                    Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
-                };
-
-                _insertCardView.Load += (_s, _e) => _insertCardView.Location = new System.Drawing.Point
-                {
-                    X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - _insertCardView.Width / 2,
-                    Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - _insertCardView.Height / 2
-                };
             }
+
+            Location = new System.Drawing.Point
+            {
+                X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
+                Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
+            };
+
+            _insertCardView.Load += (_s, _e) => _insertCardView.Location = new System.Drawing.Point
+            {
+                X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - _insertCardView.Width / 2,
+                Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - _insertCardView.Height / 2
+            };
 
             gameAnnouncerLabel.Text = PAUSED_MESSAGE;
             searchingGameNameLabel.Text = "---";

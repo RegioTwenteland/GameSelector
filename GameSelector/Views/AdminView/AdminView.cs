@@ -36,19 +36,20 @@ namespace GameSelector.Views
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // if there are multiple screens, put this one on the primary
+            var screen = Screen.AllScreens.First();
             if (Screen.AllScreens.Length > 1)
             {
-                var screen = Screen.AllScreens
+                // if there are multiple screens, put this one on the primary
+                screen = Screen.AllScreens
                     .Where(s => s.Primary == true)
                     .FirstOrDefault();
-
-                Location = new Point
-                {
-                    X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
-                    Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
-                };
             }
+
+            Location = new Point
+            {
+                X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
+                Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
+            };
         }
 
         public void ShowGameTimeout(int timeout)
