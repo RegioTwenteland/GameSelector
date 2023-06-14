@@ -50,6 +50,10 @@ namespace GameSelector.Views
                 X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
                 Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
             };
+
+#if DEBUG
+            testUserViewButton.Visible = true;
+#endif
         }
 
         public void ShowGameTimeout(int timeout)
@@ -60,6 +64,11 @@ namespace GameSelector.Views
         private void saveGameTimeout_Click(object sender, EventArgs e)
         {
             SendMessage("SaveGameTimeout", int.Parse(gameTimeoutTextbox.Text));
+        }
+
+        private void testUserViewButton_Click(object sender, EventArgs e)
+        {
+            SendMessage("TestUserView", null);
         }
 
         private void ForceTextboxToInt(object sender, EventArgs e)

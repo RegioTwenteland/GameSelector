@@ -81,6 +81,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.adminTab = new System.Windows.Forms.TabPage();
+            this.testUserViewButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.gameTimeoutTextbox = new System.Windows.Forms.TextBox();
@@ -628,6 +629,7 @@
             // 
             // adminTab
             // 
+            this.adminTab.Controls.Add(this.testUserViewButton);
             this.adminTab.Controls.Add(this.closeButton);
             this.adminTab.Controls.Add(this.label14);
             this.adminTab.Controls.Add(this.gameTimeoutTextbox);
@@ -643,6 +645,17 @@
             this.adminTab.TabIndex = 100;
             this.adminTab.Text = "Admin";
             this.adminTab.UseVisualStyleBackColor = true;
+            // 
+            // testUserViewButton
+            // 
+            this.testUserViewButton.Location = new System.Drawing.Point(9, 514);
+            this.testUserViewButton.Name = "testUserViewButton";
+            this.testUserViewButton.Size = new System.Drawing.Size(111, 23);
+            this.testUserViewButton.TabIndex = 106;
+            this.testUserViewButton.Text = "Test user view";
+            this.testUserViewButton.UseVisualStyleBackColor = true;
+            this.testUserViewButton.Visible = false;
+            this.testUserViewButton.Click += new System.EventHandler(this.testUserViewButton_Click);
             // 
             // closeButton
             // 
@@ -820,6 +833,7 @@
         private System.Windows.Forms.CheckBox gameActiveCheckbox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button ForceEndGameButton;
+        private System.Windows.Forms.Button testUserViewButton;
     }
 }
 

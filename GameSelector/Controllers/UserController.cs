@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace GameSelector.Controllers
 {
@@ -48,7 +50,22 @@ namespace GameSelector.Controllers
                 { "CardEjected", OnCardEjected},
                 { "AnimationComplete", OnAnimationComplete },
                 { "UserViewReady", OnUserViewReady },
+                { "TestUserView", OnTestUserView }
             });
+        }
+
+        private void OnTestUserView(object obj)
+        {
+            Debug.Assert(obj is null);
+
+            var occupant = _groupDataBridge.GetAllGroups().OrderByDescending(g => g.Name.Length + g.ScoutingName.Length).First();
+            var games = _gameDataBridge.GetAllGames();
+            foreach (var game in games)
+            {
+                game.OccupiedBy = occupant;
+                _userView.ShowGameImmediate(GameDataView.FromGame(game));
+                Thread.Sleep(1000);
+            }
         }
 
         private void OnStateChanged(object sender, EventArgs e)
@@ -239,6 +256,8 @@ namespace GameSelector.Controllers
                 _userView.ShowReady();
             }
         }
+
+        private bool _tempDone = false;
 
         private void OnAnimationComplete(object value)
         {

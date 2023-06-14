@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 using System.Windows.Forms;
@@ -24,7 +22,6 @@ namespace GameSelector.Views
         {
             Task.Run(() =>
             {
-                ////Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(form);
                 onClose?.Invoke();
@@ -33,6 +30,11 @@ namespace GameSelector.Views
             form.Load += (s, e) => Ready?.Invoke(this, EventArgs.Empty);
 
             WaitOnFormLoad(form);
+        }
+
+        public void ShowGameImmediate(GameDataView game)
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowGameImmediate(game)));
         }
 
         public void ShowGame(GameDataView game)

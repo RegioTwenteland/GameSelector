@@ -86,6 +86,15 @@ namespace GameSelector.Views
             Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
         }
 
+        public void ShowGameImmediate(GameDataView game)
+        {
+            gameAnnouncerLabel.Text = SELECTED_MESSAGE + game.OccupiedBy.ScoutingName + ":";
+            gameCodeLabel.Text = game.Code;
+            searchingGameNameLabel.Text = game.Code;
+            gameDescriptionLabel.Text = game.Description;
+            gameExplanationLabel.Text = game.Explanation;
+        }
+
         public void ShowGame(GameDataView game)
         {
             _insertCardView.Hide();
