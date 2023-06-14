@@ -106,6 +106,7 @@ namespace GameSelector.Controllers
 
             var groups = _groupDataBridge.GetAllGroups().Select(g => GroupDataView.FromGroup(g));
             _adminView.SetGroupsList(groups);
+            _adminView.SetGroupSelected(groups.First(g => g.ScoutingName == "Nieuwe"));
         }
 
         private void OnRequestDeleteGroup(object value)

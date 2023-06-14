@@ -96,6 +96,7 @@ namespace GameSelector.Controllers
 
             var games = _gameDataBridge.GetAllGames().Select(g => GameDataView.FromGame(g));
             _adminView.SetGamesList(games);
+            _adminView.SetGameSelected(games.First(g => g.Code == "Nieuw"));
         }
 
         private void OnRequestDeleteGame(object value)
