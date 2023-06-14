@@ -88,6 +88,11 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.UpdateGame(game)));
         }
 
+        public void SetGameSelected(GameDataView game)
+        {
+            form.Invoke(new MethodInvoker(() => form.SetGameSelected(game)));
+        }
+
         public void ShowView()
         {
             form.Invoke(new MethodInvoker(() => form.ShowView()));

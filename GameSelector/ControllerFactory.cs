@@ -71,6 +71,7 @@ namespace GameSelector
             return new AdminGameController(
                 AdminView,
                 Model.GameDataBridge,
+                Model.GroupDataBridge,
                 Model.PlayedGameDataBridge
             );
         }

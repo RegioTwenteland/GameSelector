@@ -57,6 +57,7 @@
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gamesTab = new System.Windows.Forms.TabPage();
+            this.ForceEndGameButton = new System.Windows.Forms.Button();
             this.gameActiveCheckbox = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
             this.gameRemarksText = new System.Windows.Forms.RichTextBox();
@@ -377,6 +378,7 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.ForceEndGameButton);
             this.gamesTab.Controls.Add(this.gameActiveCheckbox);
             this.gamesTab.Controls.Add(this.label18);
             this.gamesTab.Controls.Add(this.gameRemarksText);
@@ -403,6 +405,16 @@
             this.gamesTab.TabIndex = 100;
             this.gamesTab.Text = "Spellen";
             this.gamesTab.UseVisualStyleBackColor = true;
+            // 
+            // ForceEndGameButton
+            // 
+            this.ForceEndGameButton.Location = new System.Drawing.Point(499, 209);
+            this.ForceEndGameButton.Name = "ForceEndGameButton";
+            this.ForceEndGameButton.Size = new System.Drawing.Size(31, 23);
+            this.ForceEndGameButton.TabIndex = 110;
+            this.ForceEndGameButton.Text = "✖";
+            this.ForceEndGameButton.UseVisualStyleBackColor = true;
+            this.ForceEndGameButton.Click += new System.EventHandler(this.ForceEndGameButton_Click);
             // 
             // gameActiveCheckbox
             // 
@@ -464,7 +476,7 @@
             this.currentOccupantTextbox.Enabled = false;
             this.currentOccupantTextbox.Location = new System.Drawing.Point(270, 211);
             this.currentOccupantTextbox.Name = "currentOccupantTextbox";
-            this.currentOccupantTextbox.Size = new System.Drawing.Size(260, 20);
+            this.currentOccupantTextbox.Size = new System.Drawing.Size(223, 20);
             this.currentOccupantTextbox.TabIndex = 7;
             // 
             // label11
@@ -807,6 +819,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox gameActiveCheckbox;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button ForceEndGameButton;
     }
 }
 

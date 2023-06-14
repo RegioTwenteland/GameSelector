@@ -374,6 +374,21 @@ namespace GameSelector.Views
                 SendMessage("RequestDeleteGame", gdv);
         }
 
+        private void ForceEndGameButton_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGameDataView();
+
+            if (gdv != null && gdv.OccupiedBy != null)
+            {
+                var confirm = MessageBox.Show("Weet je zeker dat je dit spel geforceerd wil beëindigen?", "", MessageBoxButtons.YesNo);
+
+                if (confirm == DialogResult.Yes)
+                {
+                    SendMessage("RequestForceEndGame", gdv);
+                }
+            }
+        }
+
         private void GameDataChanged(object sender, EventArgs e)
         {
             if (!_gameDataUserControl) return;
@@ -431,7 +446,7 @@ namespace GameSelector.Views
             saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
 
             if (game.OccupiedBy != null)
-                currentOccupantTextbox.Text = $"{game.OccupiedBy.ScoutingName} - {game.OccupiedBy.GroupName}";
+                currentOccupantTextbox.Text = $"{game.OccupiedBy.ScoutingName} - {game.OccupiedBy.GroupName} ({game.StartTime.ToString("HH:mm:ss")})";
         }
 
         public void UpdateGame(GameDataView game)
@@ -449,6 +464,15 @@ namespace GameSelector.Views
             }
 
             SortGameListBox();
+            gamesListBox.SelectedIndex = idx;
+        }
+
+        public void SetGameSelected(GameDataView game)
+        {
+            if (game == null) return;
+
+            var idx = GetGameListBoxIndex(game);
+
             gamesListBox.SelectedIndex = idx;
         }
 
