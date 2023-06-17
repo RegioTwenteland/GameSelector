@@ -28,7 +28,12 @@ namespace GameSelector.Views
 
         private void OnCardInserted(object sender, EventArgs e)
         {
-            SendMessage("CardInserted", _nfcReader.GetCardUID());
+            var uid = _nfcReader.GetCardUID();
+
+            if (!string.IsNullOrEmpty(uid))
+            {
+                SendMessage("CardInserted", uid);
+            }
         }
 
         private void OnCardEjected(object sender, EventArgs e)
