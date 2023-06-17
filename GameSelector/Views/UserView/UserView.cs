@@ -196,8 +196,13 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = string.Empty;
         }
 
-        public void ShowReady()
+        public void ShowReady(bool playSound = true)
         {
+            if (playSound)
+            {
+                _audioPlayer.PlayEndSession();
+            }
+
             _insertCardView.Show();
 
             searchingProgressBar.Value = 0;
@@ -214,7 +219,7 @@ namespace GameSelector.Views
         {
             Task.Delay(delay).ContinueWith(t =>
             {
-                Invoke(new Action(ShowReady));
+                Invoke(new Action(() => ShowReady()));
             });
         }
     }

@@ -76,7 +76,7 @@ namespace GameSelector.Controllers
                     _userView.ShowPaused();
                     break;
                 case GameState.State.Playing:
-                    _userView.ShowReady();
+                    _userView.ShowReady(playSound: false);
                     break;
                 default:
                     throw new NotImplementedException();
