@@ -140,7 +140,7 @@ namespace GameSelector.Controllers
 
             if (possibleGames.Count > 0)
             {
-                if (playedGames.Count > 1)
+                if (playedGames.Count >= 1)
                 {
                     var prioGames = possibleGames.Where(g => g.HasPriority).ToList();
                     var normalGames = possibleGames.Where(g => !g.HasPriority).ToList();
