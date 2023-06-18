@@ -23,6 +23,11 @@ namespace GameSelector.Views
 
         private string[] _gameCodes = new[] { string.Empty };
 
+        /// <summary>
+        /// Function to call when the <see cref="ShowReady"/> method is called.
+        /// </summary>
+        private Action _playOnReady = null;
+
         public UserView(Action<string, object> sendMessage, AudioPlayer audioPlayer)
         {
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -160,6 +165,7 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = _selectedGame.Explanation;
 
             _audioPlayer.PlaySelectionComplete();
+            _playOnReady = _audioPlayer.PlayEndSession;
             SendMessage("AnimationComplete", null);
         }
 
@@ -196,12 +202,10 @@ namespace GameSelector.Views
             gameExplanationLabel.Text = string.Empty;
         }
 
-        public void ShowReady(bool playSound = true)
+        public void ShowReady()
         {
-            if (playSound)
-            {
-                _audioPlayer.PlayEndSession();
-            }
+            _playOnReady?.Invoke();
+            _playOnReady = null;
 
             _insertCardView.Show();
 
@@ -219,7 +223,7 @@ namespace GameSelector.Views
         {
             Task.Delay(delay).ContinueWith(t =>
             {
-                Invoke(new Action(() => ShowReady()));
+                Invoke(new Action(ShowReady));
             });
         }
     }

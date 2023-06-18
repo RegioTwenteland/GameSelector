@@ -57,9 +57,9 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.ShowPaused()));
         }
 
-        public void ShowReady(bool playSound = true)
+        public void ShowReady()
         {
-            form.Invoke(new MethodInvoker(() => form.ShowReady(playSound)));
+            form.Invoke(new MethodInvoker(() => form.ShowReady()));
         }
 
         public void ShowReadyAfter(TimeSpan delay)
