@@ -19,14 +19,19 @@ namespace GameSelector
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
+            if(args.Length > 0)
+            {
+                ObjectManager.Model.SetDataSourceParam(args[0]);
+            }
+
             var controllers = new List<AbstractController>
             {
-                ControllerFactory.UserController,
-                ControllerFactory.AdminController,
-                ControllerFactory.AdminGroupController,
-                ControllerFactory.AdminGameController,
+                ObjectManager.UserController,
+                ObjectManager.AdminController,
+                ObjectManager.AdminGroupController,
+                ObjectManager.AdminGameController,
             };
 
             foreach (var controller in controllers)
@@ -34,7 +39,7 @@ namespace GameSelector
                 controller.Start(Stop);
             }
 
-            _messages = ControllerFactory.MessageCollection;
+            _messages = ObjectManager.MessageCollection;
             _messageCancellationToken = _messageCancellationTokenSource.Token;
 
             while (!_messages.IsCompleted)

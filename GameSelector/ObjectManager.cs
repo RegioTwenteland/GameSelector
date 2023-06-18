@@ -6,13 +6,10 @@ using System.Collections.Concurrent;
 
 namespace GameSelector
 {
-    internal static class ControllerFactory
+    internal static class ObjectManager
     {
         private static GameState _gameState;
         private static GameState GameState { get => _gameState ?? (_gameState = new GameState()); }
-
-        private static IModel _model;
-        private static IModel Model { get => _model ?? (_model = ModelFactory.GetModel()); }
 
         private static INfcReader _nfcReader;
         private static INfcReader NfcReader
@@ -33,6 +30,9 @@ namespace GameSelector
 
         private static UserViewAdapter _userView;
         private static UserViewAdapter UserView { get => _userView ?? (_userView = new UserViewAdapter(MessageCollection, AudioPlayer)); }
+
+        private static IModel _model;
+        public static IModel Model { get => _model ?? (_model = ModelFactory.GetModel()); }
 
         private static BlockingCollection<Message> _messageCollection;
         public static BlockingCollection<Message> MessageCollection { get => _messageCollection ?? (_messageCollection = new BlockingCollection<Message>()); }

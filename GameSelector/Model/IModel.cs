@@ -2,6 +2,8 @@
 {
     internal interface IModel
     {
+        void SetDataSourceParam(string parameters);
+
         IGameDataBridge GameDataBridge { get; }
 
         IGroupDataBridge GroupDataBridge { get; }
