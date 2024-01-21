@@ -21,6 +21,7 @@ namespace GameSelector.SQLite
                 OccupiedById = game.OccupiedBy?.Id,
                 StartTime = game.StartTime.HasValue ? (long?)game.StartTime.Value.Ticks : null,
                 Remarks = game.Remarks ?? "",
+                Timeout = game.Timeout.Ticks,
             };
         }
 
@@ -68,6 +69,7 @@ namespace GameSelector.SQLite
                 HasPriority = dbGame.Priority == 0 ? false : true,
                 StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
                 Remarks = dbGame.Remarks,
+                Timeout = new TimeSpan(dbGame.Timeout),
             };
 
             output.OccupiedBy = group ?? ToGroup(dbGame.OccupiedBy, output);

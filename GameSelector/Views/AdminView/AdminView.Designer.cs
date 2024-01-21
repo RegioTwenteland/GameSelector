@@ -57,6 +57,9 @@
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gamesTab = new System.Windows.Forms.TabPage();
+            this.timeoutNumber = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.ForceEndGameButton = new System.Windows.Forms.Button();
             this.gameActiveCheckbox = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -95,6 +98,7 @@
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.gamesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.adminTab.SuspendLayout();
             this.SuspendLayout();
@@ -379,6 +383,9 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.timeoutNumber);
+            this.gamesTab.Controls.Add(this.label20);
+            this.gamesTab.Controls.Add(this.label19);
             this.gamesTab.Controls.Add(this.ForceEndGameButton);
             this.gamesTab.Controls.Add(this.gameActiveCheckbox);
             this.gamesTab.Controls.Add(this.label18);
@@ -406,6 +413,32 @@
             this.gamesTab.TabIndex = 100;
             this.gamesTab.Text = "Spellen";
             this.gamesTab.UseVisualStyleBackColor = true;
+            // 
+            // timeoutNumber
+            // 
+            this.timeoutNumber.Location = new System.Drawing.Point(270, 364);
+            this.timeoutNumber.Name = "timeoutNumber";
+            this.timeoutNumber.Size = new System.Drawing.Size(198, 20);
+            this.timeoutNumber.TabIndex = 114;
+            this.timeoutNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(474, 366);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(45, 13);
+            this.label20.TabIndex = 113;
+            this.label20.Text = "Minuten";
+            // 
+            // label19
+            // 
+            this.label19.Location = new System.Drawing.Point(171, 364);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(93, 17);
+            this.label19.TabIndex = 112;
+            this.label19.Text = "Timeout";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ForceEndGameButton
             // 
@@ -490,7 +523,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 363);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 389);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -763,6 +796,7 @@
             this.flowLayoutPanel2.PerformLayout();
             this.gamesTab.ResumeLayout(false);
             this.gamesTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.adminTab.ResumeLayout(false);
@@ -834,6 +868,9 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button ForceEndGameButton;
         private System.Windows.Forms.Button testUserViewButton;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.NumericUpDown timeoutNumber;
     }
 }
 

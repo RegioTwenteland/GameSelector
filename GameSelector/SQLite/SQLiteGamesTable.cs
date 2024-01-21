@@ -127,6 +127,7 @@ namespace GameSelector.SQLite
             command.Parameters.AddWithValue("@color", game.Color);
             command.Parameters.AddWithValue("@priority", game.Priority);
             command.Parameters.AddWithValue("@remarks", game.Remarks);
+            command.Parameters.AddWithValue("@timeout", game.Timeout);
             ////var theValue = SQLiteDatabase.ToDbNull(game.OccupiedById);
             if (game.OccupiedById == null)
                 command.Parameters.AddWithValue("@occupied_by", DBNull.Value);

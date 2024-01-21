@@ -71,6 +71,7 @@ namespace GameSelector.Controllers
             game.Color = gameDataView.Color;
             game.HasPriority = gameDataView.HasPriority;
             game.Remarks = gameDataView.Remarks;
+            game.Timeout = TimeSpan.FromMinutes(gameDataView.TimeoutMinutes);
 
             _gameDataBridge.UpdateGame(game);
 

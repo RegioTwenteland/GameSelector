@@ -414,6 +414,7 @@ namespace GameSelector.Views
             gdv.Color = gameColorComboBox.Text;
             gdv.HasPriority = gamePriorityCheckbox.Checked;
             gdv.Remarks = gameRemarksText.Text;
+            gdv.TimeoutMinutes = (long)timeoutNumber.Value;
             gdv.UnsavedChanges = true;
             saveGameButton.Text = SaveText + UnsavedModifier;
         }
@@ -442,6 +443,7 @@ namespace GameSelector.Views
             currentOccupantTextbox.Text = string.Empty;
             gameRemarksText.Text = string.Empty;
             saveGameButton.Text = SaveText;
+            timeoutNumber.Value = 0;
 
             if (game == null) return;
 
@@ -452,6 +454,7 @@ namespace GameSelector.Views
             gameColorComboBox.Text = game.Color;
             gamePriorityCheckbox.Checked = game.HasPriority;
             gameRemarksText.Text = game.Remarks;
+            timeoutNumber.Value = game.TimeoutMinutes;
 
             saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
 

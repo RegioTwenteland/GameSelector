@@ -29,6 +29,8 @@ namespace GameSelector.SQLite
 
         public string Remarks { get; set; }
 
+        public long Timeout { get; set; }
+
         public const string SQLSelectFullGame = @"
                             `games`.`id` AS game_id,
                             `games`.`code` AS game_code,
@@ -39,7 +41,8 @@ namespace GameSelector.SQLite
                             `games`.`priority` AS game_priority,
                             `games`.`occupied_by` AS game_occupied_by,
                             `games`.`start_time` AS game_start_time,
-                            `games`.`remarks` AS game_remarks";
+                            `games`.`remarks` AS game_remarks,
+                            `games`.`timeout` AS game_timeout";
 
         public const string SQLUpdateFullGame = @"
                             `code` = @code,
@@ -50,7 +53,8 @@ namespace GameSelector.SQLite
                             `priority` = @priority,
                             `occupied_by` = @occupied_by,
                             `start_time` = @start_time,
-                            `remarks` = @remarks";
+                            `remarks` = @remarks,
+                            `timeout` = @timeout";
 
         public const string SQLInsertFullGame = @"
                         (
@@ -86,7 +90,8 @@ namespace GameSelector.SQLite
                 Priority = (long)reader["game_priority"],
                 OccupiedById = occupiedBy == null ? SQLiteDatabase.FromDbNull<long?>(reader["game_occupied_by"]) : occupiedBy.Id,
                 StartTime = SQLiteDatabase.FromDbNull<long?>(reader["game_start_time"]),
-                Remarks = (string)reader["game_remarks"]
+                Remarks = (string)reader["game_remarks"],
+                Timeout = (long)reader["game_timeout"],
             };
 
             if (occupiedBy != null)

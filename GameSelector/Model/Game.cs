@@ -36,5 +36,7 @@ namespace GameSelector.Model
         public DateTime? StartTime { get; set; }
 
         public string Remarks { get; set; }
+
+        public TimeSpan Timeout { get; set; }
     }
 }

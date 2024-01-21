@@ -25,6 +25,8 @@ namespace GameSelector.Views
 
         public string Remarks { get; set; }
 
+        public long TimeoutMinutes { get; set; }
+
         public bool UnsavedChanges { get; set; } = false;
 
         public override string ToString()
@@ -55,6 +57,7 @@ namespace GameSelector.Views
                 OccupiedBy = GroupDataView.FromGroup(game.OccupiedBy),
                 StartTime = startTime,
                 Remarks = game.Remarks,
+                TimeoutMinutes = game.Timeout.Minutes,
             };
         }
     }

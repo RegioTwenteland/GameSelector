@@ -5,9 +5,9 @@ CREATE TABLE IF NOT EXISTS "played_games" (
 	"game"	INTEGER NOT NULL,
 	"start_time"	INTEGER NOT NULL,
 	"end_time"	INTEGER,
-	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("player") REFERENCES "groups"("id"),
-	FOREIGN KEY("game") REFERENCES "games"("id")
+	FOREIGN KEY("game") REFERENCES "games"("id"),
+	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "groups" (
 	"id"	INTEGER,
@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS "games" (
 	"occupied_by"	INTEGER,
 	"start_time"	INTEGER,
 	"remarks"	TEXT NOT NULL,
-	PRIMARY KEY("id"),
-	FOREIGN KEY("occupied_by") REFERENCES "groups"("id")
+	"timeout"	INTEGER NOT NULL DEFAULT 0,
+	FOREIGN KEY("occupied_by") REFERENCES "groups"("id"),
+	PRIMARY KEY("id")
 );
 COMMIT;
