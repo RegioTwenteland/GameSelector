@@ -14,8 +14,8 @@ namespace GameSelector.Views
     {
         private readonly AdminView form;
 
-        public AdminViewAdapter(BlockingCollection<Message> messages)
-            : base(messages)
+        public AdminViewAdapter(MessageSender messageSender)
+            : base(messageSender)
         {
             form = new AdminView(SendMessage);
         }

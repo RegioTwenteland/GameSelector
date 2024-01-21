@@ -6,16 +6,16 @@ namespace GameSelector.Views
 {
     internal abstract class AbstractView
     {
-        private BlockingCollection<Message> messages;
+        private MessageSender _messageSender;
 
-        protected AbstractView(BlockingCollection<Message> messages)
+        protected AbstractView(MessageSender messageSender)
         {
-            this.messages = messages;
+            _messageSender = messageSender;
         }
 
         protected void SendMessage(string key, object value = null)
         {
-            messages.Add(new Message(key, value));
+            _messageSender.Send(new Message(key, value));
         }
 
         protected static void WaitOnFormLoad(Form form)

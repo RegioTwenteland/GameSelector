@@ -26,7 +26,7 @@ namespace GameSelector
         {
             var original = Console.ForegroundColor;
             Console.ForegroundColor = color;
-            Console.WriteLine($"[{logType}] {who.GetType().Name}: {message}");
+            Console.WriteLine($"{DateTime.Now}: [{logType}] {who.GetType().Name}: {message}");
             Console.ForegroundColor = original;
         }
     }

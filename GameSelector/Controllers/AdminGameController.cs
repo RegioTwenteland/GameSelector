@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameSelector.Controllers
 {
@@ -13,18 +14,23 @@ namespace GameSelector.Controllers
         private IGameDataBridge _gameDataBridge;
         private IGroupDataBridge _groupDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
+        private MessageSender _messageSender;
+
+        private readonly TimeSpan GameTimeoutCheckInterval = TimeSpan.FromMinutes(1);
 
         public AdminGameController(
             AdminViewAdapter adminView,
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
-            IPlayedGameDataBridge playedGameDataBridge
+            IPlayedGameDataBridge playedGameDataBridge,
+            MessageSender messageSender
         )
         {
             _adminView = adminView;
             _gameDataBridge = gameDataBridge;
             _groupDataBridge = groupDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
+            _messageSender = messageSender;
 
             _gameDataBridge.GameUpdated += OnGameUpdated;
 
@@ -34,7 +40,8 @@ namespace GameSelector.Controllers
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestDeleteGame", OnRequestDeleteGame },
                 { "RequestForceEndGame", OnRequestForceEndGame },
-                { "RequestPlayedGames", OnRequestPlayedGames }
+                { "RequestPlayedGames", OnRequestPlayedGames },
+                { "RequestGameTimeoutCheck", RequestGameTimeoutCheck },
             });
         }
 
@@ -42,12 +49,20 @@ namespace GameSelector.Controllers
         {
             var gdv = GameDataView.FromGame(e.Game);
             _adminView.UpdateGame(gdv);
-            _adminView.SetGameSelected(gdv);
+            _adminView.UpdateGroup(gdv.OccupiedBy);
+        }
+
+        private void SchedulePeriodicGameTimeoutCheck()
+        {
+            _messageSender.Send(new Message("RequestGameTimeoutCheck", null));
+            Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => SchedulePeriodicGameTimeoutCheck());
         }
 
         public override void Start(Action stop)
         {
             UpdateGamesList(_gameDataBridge.GetAllGames());
+
+            Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => SchedulePeriodicGameTimeoutCheck());
         }
 
         private void UpdateGamesList(List<Game> games)
@@ -125,15 +140,8 @@ namespace GameSelector.Controllers
             UpdateGamesList(_gameDataBridge.GetAllGames());
         }
 
-        private void OnRequestForceEndGame(object value)
+        private void ForceEndGame(Group group, Game game)
         {
-            Debug.Assert(value is GameDataView);
-
-            var gdv = (GameDataView)value;
-
-            var group = _groupDataBridge.GetGroup(gdv.OccupiedBy.Id);
-            var game = _gameDataBridge.GetGame(gdv.Id);
-
             var playedGame = new PlayedGame
             {
                 Player = group,
@@ -150,6 +158,18 @@ namespace GameSelector.Controllers
             _gameDataBridge.UpdateGame(game);
         }
 
+        private void OnRequestForceEndGame(object value)
+        {
+            Debug.Assert(value is GameDataView);
+
+            var gdv = (GameDataView)value;
+
+            var group = _groupDataBridge.GetGroup(gdv.OccupiedBy.Id);
+            var game = _gameDataBridge.GetGame(gdv.Id);
+
+            ForceEndGame(group, game);
+        }
+
         private void OnRequestPlayedGames(object value)
         {
             Debug.Assert(value is long);
@@ -163,6 +183,28 @@ namespace GameSelector.Controllers
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
 
             _adminView.ShowPlayedGames(playedGames);
+        }
+
+        private void RequestGameTimeoutCheck(object value)
+        {
+            Debug.Assert(value is null);
+
+            var allGames = _gameDataBridge.GetAllGames();
+
+            foreach (var game in allGames)
+            {
+                if (!game.StartTime.HasValue || game.Timeout.Ticks == 0)
+                {
+                    continue;
+                }
+
+                var now = DateTime.Now;
+
+                if (game.StartTime.Value + game.Timeout > now)
+                {
+                    ForceEndGame(game.OccupiedBy, game);
+                }
+            }
         }
     }
 }

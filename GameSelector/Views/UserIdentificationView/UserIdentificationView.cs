@@ -10,8 +10,8 @@ namespace GameSelector.Views
 
         //private string _errorMessage = string.Empty;
 
-        public UserIdentificationView(BlockingCollection<Message> messages, INfcReader nfcReader)
-            : base(messages)
+        public UserIdentificationView(MessageSender messageSender, INfcReader nfcReader)
+            : base(messageSender)
         {
             _nfcReader = nfcReader;
 
