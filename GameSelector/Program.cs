@@ -23,7 +23,7 @@ namespace GameSelector
         {
             if(args.Length > 0)
             {
-                ObjectManager.Model.SetDataSourceParam(args[0]);
+                ObjectManager.Model.SetDataSource(args[0]);
             }
 
             var controllers = new List<AbstractController>

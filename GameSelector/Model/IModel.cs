@@ -2,7 +2,7 @@
 {
     internal interface IModel
     {
-        void SetDataSourceParam(string parameters);
+        void SetDataSource(string dataSource);
 
         IGameDataBridge GameDataBridge { get; }
 

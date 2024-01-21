@@ -1,5 +1,4 @@
-﻿using GameSelector.Database;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace GameSelector.Model

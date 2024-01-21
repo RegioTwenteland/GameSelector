@@ -1,11 +1,9 @@
 ﻿using GameSelector.Model;
-using GameSelector.Model.Database;
 using GameSelector.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace GameSelector.Controllers
 {

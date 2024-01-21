@@ -1,5 +1,6 @@
 ﻿using GameSelector.Controllers;
 using GameSelector.Model;
+using GameSelector.SQLite;
 using GameSelector.Views;
 using NfcReader;
 using System.Collections.Concurrent;
@@ -32,10 +33,22 @@ namespace GameSelector
         private static UserViewAdapter UserView { get => _userView ?? (_userView = new UserViewAdapter(MessageCollection, AudioPlayer)); }
 
         private static IModel _model;
-        public static IModel Model { get => _model ?? (_model = ModelFactory.GetModel()); }
+        public static IModel Model { get => _model ?? (_model = new SQLiteModel()); }
 
         private static BlockingCollection<Message> _messageCollection;
         public static BlockingCollection<Message> MessageCollection { get => _messageCollection ?? (_messageCollection = new BlockingCollection<Message>()); }
+
+        private static AdminController _adminController;
+        public static AdminController AdminController { get => _adminController ?? (_adminController = CreateAdminController()); }
+
+        private static AdminGroupController _adminGroupController;
+        public static AdminGroupController AdminGroupController { get => _adminGroupController ?? (_adminGroupController = CreateAdminGroupController()); }
+
+        private static AdminGameController _adminGameController;
+        public static AdminGameController AdminGameController { get => _adminGameController ?? (_adminGameController = CreateAdminGameController()); }
+
+        private static UserController _userController;
+        public static UserController UserController { get => _userController ?? (_userController = CreateUserController()); }
 
         private static AdminController CreateAdminController()
         {
@@ -46,10 +59,6 @@ namespace GameSelector
                 Model.GameDataBridge
             );
         }
-
-        private static AdminController _adminController;
-
-        public static AdminController AdminController { get => _adminController ?? (_adminController = CreateAdminController()); }
 
         private static AdminGroupController CreateAdminGroupController()
         {
@@ -62,10 +71,6 @@ namespace GameSelector
             );
         }
 
-        private static AdminGroupController _adminGroupController;
-
-        public static AdminGroupController AdminGroupController { get => _adminGroupController ?? (_adminGroupController = CreateAdminGroupController()); }
-
         private static AdminGameController CreateAdminGameController()
         {
             return new AdminGameController(
@@ -75,10 +80,6 @@ namespace GameSelector
                 Model.PlayedGameDataBridge
             );
         }
-
-        private static AdminGameController _adminGameController;
-
-        public static AdminGameController AdminGameController { get => _adminGameController ?? (_adminGameController = CreateAdminGameController()); }
 
         private static UserController CreateUserController()
         {
@@ -92,9 +93,5 @@ namespace GameSelector
                 Model.PlayedGameDataBridge
             );
         }
-
-        private static UserController _userController;
-
-        public static UserController UserController { get => _userController ?? (_userController = CreateUserController()); }
     }
 }
