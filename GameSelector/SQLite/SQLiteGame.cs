@@ -1,23 +1,43 @@
-﻿using System.Data.SQLite;
+﻿using GameSelector.SQLite.Common;
+using System.Data.SQLite;
 
 namespace GameSelector.SQLite
 {
-    internal class SQLiteGame
+    internal class SQLiteGame : SQLiteObject
     {
+        public SQLiteGame()
+            : base(tableName: SQLiteGamesTable.TableName)
+        {
+        }
+
+        public SQLiteGame(SQLiteDataReader reader)
+            : this()
+        {
+            FillPropsFromSqlReader(reader);
+        }
+
+        [SQLiteColumn(Name = "id")]
         public long Id { get; set; }
 
+        [SQLiteColumn(Name = "code")]
         public string Code { get; set; }
 
+        [SQLiteColumn(Name = "description")]
         public string Description { get; set; }
 
+        [SQLiteColumn(Name = "explanation")]
         public string Explanation { get; set; }
 
+        [SQLiteColumn(Name = "active")]
         public long Active { get; set; }
 
+        [SQLiteColumn(Name = "color")]
         public string Color { get; set; }
 
+        [SQLiteColumn(Name = "priority")]
         public long Priority { get; set; }
 
+        [SQLiteColumn(Name = "occupied_by")]
         public long? OccupiedById { get; set; }
 
         /// <summary>
@@ -25,24 +45,17 @@ namespace GameSelector.SQLite
         /// </summary>
         public SQLiteGroup OccupiedBy { get; set; }
 
+        [SQLiteColumn(Name = "start_time")]
         public long? StartTime { get; set; }
 
+        [SQLiteColumn(Name = "remarks")]
         public string Remarks { get; set; }
 
+        [SQLiteColumn(Name = "timeout")]
         public long Timeout { get; set; }
 
-        public const string SQLSelectFullGame = @"
-                            `games`.`id` AS game_id,
-                            `games`.`code` AS game_code,
-                            `games`.`description` AS game_description,
-                            `games`.`explanation` AS game_explanation,
-                            `games`.`active` AS game_active,
-                            `games`.`color` AS game_color,
-                            `games`.`priority` AS game_priority,
-                            `games`.`occupied_by` AS game_occupied_by,
-                            `games`.`start_time` AS game_start_time,
-                            `games`.`remarks` AS game_remarks,
-                            `games`.`timeout` AS game_timeout";
+        public static string SQLSelectFull =>
+            SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGame), SQLiteGamesTable.TableName);
 
         public const string SQLUpdateFullGame = @"
                             `code` = @code,
@@ -76,35 +89,5 @@ namespace GameSelector.SQLite
                             @priority,
                             @remarks
                         )";
-
-        public static SQLiteGame FromSqlReader(SQLiteDataReader reader, SQLiteGroup occupiedBy = null)
-        {
-            var output = new SQLiteGame
-            {
-                Id = (long)reader["game_id"],
-                Code = (string)reader["game_code"],
-                Description = (string)reader["game_description"],
-                Explanation = (string)reader["game_explanation"],
-                Active = (long)reader["game_active"],
-                Color = (string)reader["game_color"],
-                Priority = (long)reader["game_priority"],
-                OccupiedById = occupiedBy == null ? SQLiteDatabase.FromDbNull<long?>(reader["game_occupied_by"]) : occupiedBy.Id,
-                StartTime = SQLiteDatabase.FromDbNull<long?>(reader["game_start_time"]),
-                Remarks = (string)reader["game_remarks"],
-                Timeout = (long)reader["game_timeout"],
-            };
-
-            if (occupiedBy != null)
-            {
-                output.OccupiedBy = occupiedBy;
-            }
-            else
-            {
-                if (output.OccupiedById.HasValue)
-                    output.OccupiedBy = SQLiteGroup.FromSqlReader(reader, output);
-            }
-
-            return output;
-        }
     }
 }

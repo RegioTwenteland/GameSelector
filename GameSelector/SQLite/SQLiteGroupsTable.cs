@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GameSelector.SQLite.Common;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace GameSelector.SQLite
     {
         private SQLiteConnection _connection;
 
+        public const string TableName = "groups";
+
         public SQLiteGroupsTable(SQLiteConnection connection)
         {
             _connection = connection;
@@ -16,12 +19,15 @@ namespace GameSelector.SQLite
 
         public List<SQLiteGroup> GetAllGroups()
         {
+            var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
+            var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
+
             var sql = $@"SELECT
-                            {SQLiteGroup.SQLSelectFullGroup},
-                            {SQLiteGame.SQLSelectFullGame}
-                        FROM `groups`
-                        LEFT JOIN `games`
-                        ON `groups`.`id` = `games`.`occupied_by`;";
+                            {SQLiteGroup.SQLSelectFull},
+                            {SQLiteGame.SQLSelectFull}
+                        FROM `{TableName}`
+                        LEFT JOIN `{SQLiteGamesTable.TableName}`
+                        ON `{TableName}`.`{groupIdColName}` = `{SQLiteGamesTable.TableName}`.`{gameOccupiedByColName}`;";
 
             var command = new SQLiteCommand(sql, _connection);
 
@@ -31,7 +37,11 @@ namespace GameSelector.SQLite
 
             while (reader.Read())
             {
-                outputList.Add(SQLiteGroup.FromSqlReader(reader));
+                var toAdd = new SQLiteGroup(reader);
+                var assocWith = new SQLiteGame(reader);
+                if (assocWith.OccupiedById != null)
+                    toAdd.CurrentlyPlaying = assocWith;
+                outputList.Add(toAdd);
             }
 
             return outputList;
@@ -39,13 +49,16 @@ namespace GameSelector.SQLite
 
         public SQLiteGroup GetGroupById(long id)
         {
+            var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
+            var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
+
             var sql = $@"SELECT
-                            {SQLiteGroup.SQLSelectFullGroup},
-                            {SQLiteGame.SQLSelectFullGame}
-                        FROM `groups`
-                        LEFT JOIN `games`
-                        ON `groups`.`id` = `games`.`occupied_by`
-                        WHERE `groups`.`id` = @id;";
+                            {SQLiteGroup.SQLSelectFull},
+                            {SQLiteGame.SQLSelectFull}
+                        FROM `{TableName}`
+                        LEFT JOIN `{SQLiteGamesTable.TableName}`
+                        ON `{TableName}`.`{groupIdColName}` = `{SQLiteGamesTable.TableName}`.`{gameOccupiedByColName}`
+                        WHERE `{TableName}`.`{groupIdColName}` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
             command.Parameters.AddWithValue("@id", id);
@@ -56,7 +69,11 @@ namespace GameSelector.SQLite
 
             while (reader.Read())
             {
-                outputList.Add(SQLiteGroup.FromSqlReader(reader));
+                var toAdd = new SQLiteGroup(reader);
+                var assocWith = new SQLiteGame(reader);
+                if (assocWith.OccupiedById != null)
+                    toAdd.CurrentlyPlaying = assocWith;
+                outputList.Add(toAdd);
             }
 
             return outputList.SingleOrDefault();
@@ -64,13 +81,17 @@ namespace GameSelector.SQLite
 
         public SQLiteGroup GetGroupByCardId(string cardId)
         {
+            var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
+            var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
+            var groupCardIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.CardId));
+
             var sql = $@"SELECT
-                            {SQLiteGroup.SQLSelectFullGroup},
-                            {SQLiteGame.SQLSelectFullGame}
-                        FROM `groups`
-                        LEFT JOIN `games`
-                        ON `groups`.`id` = `games`.`occupied_by`
-                        WHERE `groups`.`card_id` = @cardId;";
+                            {SQLiteGroup.SQLSelectFull},
+                            {SQLiteGame.SQLSelectFull}
+                        FROM `{TableName}`
+                        LEFT JOIN `{SQLiteGamesTable.TableName}`
+                        ON `{TableName}`.`{groupIdColName}` = `{SQLiteGamesTable.TableName}`.`{gameOccupiedByColName}`
+                        WHERE `{TableName}`.`{groupCardIdColName}` = @cardId;";
 
             var command = new SQLiteCommand(sql, _connection);
             command.Parameters.AddWithValue("@cardId", cardId);
@@ -81,7 +102,11 @@ namespace GameSelector.SQLite
 
             while (reader.Read())
             {
-                outputList.Add(SQLiteGroup.FromSqlReader(reader));
+                var toAdd = new SQLiteGroup(reader);
+                var assocWith = new SQLiteGame(reader);
+                if (assocWith.OccupiedById != null)
+                    toAdd.CurrentlyPlaying = assocWith;
+                outputList.Add(toAdd);
             }
 
             return outputList.SingleOrDefault();

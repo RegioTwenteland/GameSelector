@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -47,14 +48,36 @@ namespace GameSelector.SQLite
 
         public static T FromDbNull<T>(object dbValue)
         {
-            var val = dbValue.GetType() == typeof(DBNull) ? default : (T)dbValue;
-            return val;
+            return dbValue.GetType() == typeof(DBNull) ? default : (T)dbValue;
+        }
+
+        public static object FromDbNull(Type T, object dbValue)
+        {
+            if (dbValue.GetType() == typeof(DBNull))
+            {
+                return null;
+            }
+
+            var underlyingType = Nullable.GetUnderlyingType(T);
+
+            if (underlyingType is null)
+            {
+                return Convert.ChangeType(dbValue, T);
+            }
+
+            return Convert.ChangeType(dbValue, underlyingType);
         }
 
         public static object ToDbNull<T>(T? value)
             where T : struct
         {
             return value.HasValue ? (object)value.Value : DBNull.Value;
+        }
+
+        public static object ToDbNull(object value)
+        {
+            Debug.Assert(value.GetType().IsValueType);
+            return value is null ? DBNull.Value : value;
         }
     }
 }

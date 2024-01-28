@@ -1,17 +1,34 @@
-﻿using System.Data.SQLite;
+﻿using GameSelector.SQLite.Common;
+using System.Data.SQLite;
 
 namespace GameSelector.SQLite
 {
-    internal class SQLiteGroup
+    internal class SQLiteGroup : SQLiteObject
     {
+        public SQLiteGroup()
+            : base(SQLiteGroupsTable.TableName)
+        {
+        }
+
+        public SQLiteGroup(SQLiteDataReader reader)
+            : this()
+        {
+            FillPropsFromSqlReader(reader);
+        }
+
+        [SQLiteColumn(Name = "id")]
         public long Id { get; set; }
 
+        [SQLiteColumn(Name = "card_id")]
         public string CardId { get; set; }
 
+        [SQLiteColumn(Name = "group_name")]
         public string Name { get; set; }
 
+        [SQLiteColumn(Name = "scouting_name")]
         public string ScoutingName { get; set; }
 
+        [SQLiteColumn(Name = "is_admin")]
         public long IsAdmin { get; set; }
 
         /// <summary>
@@ -19,15 +36,11 @@ namespace GameSelector.SQLite
         /// </summary>
         public SQLiteGame CurrentlyPlaying { get; set; }
 
+        [SQLiteColumn(Name = "remarks")]
         public string Remarks { get; set; }
 
-        public const string SQLSelectFullGroup = @"
-                            `groups`.`id` AS group_id,
-                            `groups`.`card_id` AS group_card_id,
-                            `groups`.`group_name` AS group_name,
-                            `groups`.`scouting_name` AS group_scouting_name,
-                            `groups`.`is_admin` AS group_is_admin,
-                            `groups`.`remarks` AS group_remarks";
+        public static string SQLSelectFull =>
+            SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGroup), SQLiteGroupsTable.TableName);
 
         public const string SQLUpdateFullGroup = @"
                             `card_id` = @card_id,
@@ -50,30 +63,5 @@ namespace GameSelector.SQLite
                             @scouting_name,
                             @remarks
                         )";
-
-        public static SQLiteGroup FromSqlReader(SQLiteDataReader reader, SQLiteGame CurrentlyPlaying = null)
-        {
-            
-            var output = new SQLiteGroup
-            {
-                Id = (long)reader["group_id"],
-                CardId = SQLiteDatabase.FromDbNull<string>(reader["group_card_id"]),
-                Name = (string)reader["group_name"],
-                ScoutingName = (string)reader["group_scouting_name"],
-                IsAdmin = (long)reader["group_is_admin"],
-                Remarks = (string)reader["group_remarks"]
-            };
-
-            try
-            {
-                output.CurrentlyPlaying = CurrentlyPlaying ?? SQLiteGame.FromSqlReader(reader, output);
-            }
-            catch
-            {
-                output.CurrentlyPlaying = null;
-            }
-
-            return output;
-        }
     }
 }

@@ -1,11 +1,25 @@
-﻿using System.Data.SQLite;
+﻿using GameSelector.SQLite.Common;
+using System.Data.SQLite;
 
 namespace GameSelector.SQLite
 {
-    internal class SQLitePlayedGame
+    internal class SQLitePlayedGame : SQLiteObject
     {
+        public SQLitePlayedGame()
+            : base(SQLitePlayedGamesTable.TableName)
+        {
+        }
+
+        public SQLitePlayedGame(SQLiteDataReader reader)
+            : this()
+        {
+            FillPropsFromSqlReader(reader);
+        }
+
+        [SQLiteColumn(Name = "id")]
         public long Id { get; set; }
 
+        [SQLiteColumn(Name = "player")]
         public long PlayerId { get; set; }
 
         /// <summary>
@@ -13,6 +27,7 @@ namespace GameSelector.SQLite
         /// </summary>
         public SQLiteGroup Player { get; set; }
 
+        [SQLiteColumn(Name = "game")]
         public long GameId { get; set; }
 
         /// <summary>
@@ -20,16 +35,14 @@ namespace GameSelector.SQLite
         /// </summary>
         public SQLiteGame Game { get; set; }
 
+        [SQLiteColumn(Name = "start_time")]
         public long StartTime { get; set; }
 
+        [SQLiteColumn(Name = "end_time")]
         public long EndTime { get; set; }
 
-        public const string SQLSelectFullPlayedGame = @"
-                            `played_games`.`id` AS played_game_id,
-                            `played_games`.`player` AS played_game_player,
-                            `played_games`.`game` AS played_game_game,
-                            `played_games`.`start_time` AS played_game_start_time,
-                            `played_games`.`end_time` AS played_game_end_time";
+        public static string SQLSelectFullPlayedGame =>
+            SQLiteHelper.GetFullSelectQuery(typeof(SQLitePlayedGame), SQLitePlayedGamesTable.TableName);
 
         public const string SQLInsertFullPlayedGame = @"
                         (
@@ -46,18 +59,18 @@ namespace GameSelector.SQLite
                             @end_time
                         )";
 
-        public static SQLitePlayedGame FromSqlReader(SQLiteDataReader reader)
-        {
-            return new SQLitePlayedGame
-            {
-                Id = (long)reader["played_game_id"],
-                PlayerId = (long)reader["played_game_player"],
-                Player = SQLiteGroup.FromSqlReader(reader),
-                GameId = (long)reader["played_game_game"],
-                Game = SQLiteGame.FromSqlReader(reader),
-                StartTime = (long)reader["played_game_start_time"],
-                EndTime = (long)reader["played_game_end_time"],
-            };
-        }
+        ////public static SQLitePlayedGame FromSqlReader(SQLiteDataReader reader)
+        ////{
+        ////    return new SQLitePlayedGame
+        ////    {
+        ////        Id = (long)reader["played_game_id"],
+        ////        PlayerId = (long)reader["played_game_player"],
+        ////        Player = new SQLiteGroup(reader),
+        ////        GameId = (long)reader["played_game_game"],
+        ////        Game = new SQLiteGame(reader),
+        ////        StartTime = (long)reader["played_game_start_time"],
+        ////        EndTime = (long)reader["played_game_end_time"],
+        ////    };
+        ////}
     }
 }
