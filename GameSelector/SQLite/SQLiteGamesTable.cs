@@ -76,6 +76,7 @@ namespace GameSelector.SQLite
         public SQLiteGame GetGameById(long id)
         {
             var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
+            var gameIdColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.Id));
             var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
 
             var sql = $@"SELECT
@@ -84,7 +85,7 @@ namespace GameSelector.SQLite
                         FROM `{TableName}`
                         LEFT JOIN `{SQLiteGroupsTable.TableName}`
                         ON `{TableName}`.`{gameOccupiedByColName}` = `{SQLiteGroupsTable.TableName}`.`{groupIdColName}`
-                        WHERE `games`.`id` = @id;";
+                        WHERE `{TableName}`.`{gameIdColName}` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
             command.Parameters.AddWithValue("@id", id);
@@ -143,30 +144,15 @@ namespace GameSelector.SQLite
 
         public void UpdateGame(SQLiteGame game)
         {
+            var gameIdColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.Id));
+
             var sql = $@"UPDATE `games` SET
-	                        {SQLiteGame.SQLUpdateFullGame}
-                        WHERE `games`.`id` = @id;";
+	                        {game.SQLUpdateFull}
+                        WHERE `{TableName}`.`{gameIdColName}` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
+            game.AddAllParametersForPreparedStatement(command);
             command.Parameters.AddWithValue("@id", game.Id);
-            command.Parameters.AddWithValue("@code", game.Code);
-            command.Parameters.AddWithValue("@description", game.Description);
-            command.Parameters.AddWithValue("@explanation", game.Explanation);
-            command.Parameters.AddWithValue("@active", game.Active);
-            command.Parameters.AddWithValue("@color", game.Color);
-            command.Parameters.AddWithValue("@priority", game.Priority);
-            command.Parameters.AddWithValue("@remarks", game.Remarks);
-            command.Parameters.AddWithValue("@timeout", game.Timeout);
-            ////var theValue = SQLiteDatabase.ToDbNull(game.OccupiedById);
-            if (game.OccupiedById == null)
-                command.Parameters.AddWithValue("@occupied_by", DBNull.Value);
-            else
-                command.Parameters.AddWithValue("@occupied_by", game.OccupiedById.Value);
-
-            if (game.StartTime == null)
-                command.Parameters.AddWithValue("@start_time", DBNull.Value);
-            else
-                command.Parameters.AddWithValue("@start_time", game.StartTime.Value);
 
             var rowsUpdated = command.ExecuteNonQuery();
 

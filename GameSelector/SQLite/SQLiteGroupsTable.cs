@@ -114,17 +114,16 @@ namespace GameSelector.SQLite
 
         public void UpdateGroup(SQLiteGroup group)
         {
-            var sql = $@"UPDATE `groups` SET
-	                        {SQLiteGroup.SQLUpdateFullGroup}
-                        WHERE `id` = @id;";
+            var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
+
+            var sql = $@"UPDATE `{TableName}` SET
+	                        {group.SQLUpdateFull}
+                        WHERE `{groupIdColName}` = @id;";
 
             var command = new SQLiteCommand(sql, _connection);
+            group.AddAllParametersForPreparedStatement(command);
+
             command.Parameters.AddWithValue("@id", group.Id);
-            command.Parameters.AddWithValue("@card_id", group.CardId);
-            command.Parameters.AddWithValue("@name", group.Name);
-            command.Parameters.AddWithValue("@scouting_name", group.ScoutingName);
-            command.Parameters.AddWithValue("@is_admin", group.IsAdmin);
-            command.Parameters.AddWithValue("@remarks", group.Remarks);
 
             var rowsUpdated = command.ExecuteNonQuery();
 

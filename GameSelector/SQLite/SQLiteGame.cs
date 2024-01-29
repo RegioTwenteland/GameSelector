@@ -57,18 +57,6 @@ namespace GameSelector.SQLite
         public static string SQLSelectFull =>
             SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGame), SQLiteGamesTable.TableName);
 
-        public const string SQLUpdateFullGame = @"
-                            `code` = @code,
-                            `description` = @description,
-                            `explanation` = @explanation,
-                            `active` = @active,
-                            `color` = @color,
-                            `priority` = @priority,
-                            `occupied_by` = @occupied_by,
-                            `start_time` = @start_time,
-                            `remarks` = @remarks,
-                            `timeout` = @timeout";
-
         public const string SQLInsertFullGame = @"
                         (
                             `code`,

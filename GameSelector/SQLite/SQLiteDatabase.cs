@@ -76,7 +76,6 @@ namespace GameSelector.SQLite
 
         public static object ToDbNull(object value)
         {
-            Debug.Assert(value.GetType().IsValueType);
             return value is null ? DBNull.Value : value;
         }
     }

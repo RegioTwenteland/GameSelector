@@ -27,5 +27,34 @@ namespace GameSelector.SQLite.Common
                 col.Prop.SetValue(this, val);
             }
         }
+
+        public void AddAllParametersForPreparedStatement(SQLiteCommand command)
+        {
+            var columns = SQLiteHelper.GetColumnsFromType(GetType(), TableName)
+                .Where(c => !c.IsPK);
+
+            foreach (var col in columns)
+            {
+                command.Parameters.AddWithValue($"@{col.Alias}", SQLiteDatabase.ToDbNull(col.Prop.GetValue(this)));
+            }
+        }
+
+        public string SQLUpdateFull
+        {
+            get
+            {
+                var output = new List<string>();
+
+                var cols = SQLiteHelper.GetColumnsFromType(GetType(), TableName);
+                foreach (var col in cols)
+                {
+                    if (col.IsPK) continue;
+
+                    output.Add($"`{col.DbName}` = @{col.Alias}");
+                }
+
+                return string.Join($",{Environment.NewLine}", output);
+            }
+        }
     }
 }

@@ -12,13 +12,22 @@ namespace GameSelector.SQLite.Common
         {
             public string DbName { get; set; }
 
+            public bool IsPK { get; set; }
+
             public string Alias { get; set; }
 
             public PropertyInfo Prop { get; set; }
         }
 
+        private static Dictionary<Type, List<Column>> _columnsCache = new Dictionary<Type, List<Column>>();
+
         public static List<Column> GetColumnsFromType(Type type, string tableName)
         {
+            if (_columnsCache.ContainsKey(type))
+            {
+                return _columnsCache[type];
+            }
+
             List<Column> output = new List<Column>();
 
             var allProps = type.GetProperties();
@@ -37,39 +46,35 @@ namespace GameSelector.SQLite.Common
                     output.Add(new Column
                     {
                         DbName = colAttr.Name,
+                        IsPK = colAttr.IsPK,
                         Alias = $"{tableName}_{colAttr.Name}",
                         Prop = prop,
                     });
                 }
             }
 
+            _columnsCache.Add(type, output);
+
             return output;
         }
 
-        public static string GetFullSelectQuery(Type type, string tableName)
-        {
-            var columns = GetColumnsFromType(type, tableName);
-
-            var output = new List<string>();
-            foreach (var col in columns)
-            {
-                output.Add($@"`{tableName}`.`{col.DbName}` AS {col.Alias}");
-            }
-            return string.Join($",{Environment.NewLine}", output);
-        }
-
-        public static string GetDbName<T>(string propertyName)
-        {
-            PropertyInfo info = typeof(T).GetProperty(propertyName);
-
-            Debug.Assert(info != null);
-
-            var attr = info.GetCustomAttributes(true)
-                .Select(a => a as SQLiteColumnAttribute)
-                .Where(a => a != null)
+        public static Column GetColumnInfo<T>(string propertyName, string tableName) where T : SQLiteObject =>
+            GetColumnsFromType(typeof(T), tableName)
+                .Where(c => c.Prop.Name == propertyName)
                 .Single();
 
-            return attr.Name;
-        }
+        public static string GetFullSelectQuery(Type type, string tableName) =>
+            string.Join(
+                $",{Environment.NewLine}",
+                GetColumnsFromType(type, tableName)
+                    .Select(c => $@"`{tableName}`.`{c.DbName}` AS {c.Alias}"));
+
+        public static string GetDbName<T>(string propertyName) where T : SQLiteObject =>
+            typeof(T)
+            .GetProperties()
+            .Where(p => p.Name == propertyName)
+            .Single()
+            .GetCustomAttribute<SQLiteColumnAttribute>()
+            ?.Name;
     }
 }

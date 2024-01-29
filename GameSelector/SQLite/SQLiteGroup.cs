@@ -1,5 +1,8 @@
 ﻿using GameSelector.SQLite.Common;
+using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Text;
 
 namespace GameSelector.SQLite
 {
@@ -16,7 +19,7 @@ namespace GameSelector.SQLite
             FillPropsFromSqlReader(reader);
         }
 
-        [SQLiteColumn(Name = "id")]
+        [SQLiteColumn(Name = "id", IsPK = true)]
         public long Id { get; set; }
 
         [SQLiteColumn(Name = "card_id")]
@@ -41,13 +44,6 @@ namespace GameSelector.SQLite
 
         public static string SQLSelectFull =>
             SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGroup), SQLiteGroupsTable.TableName);
-
-        public const string SQLUpdateFullGroup = @"
-                            `card_id` = @card_id,
-                            `group_name` = @name,
-                            `scouting_name` = @scouting_name,
-                            `is_admin` = @is_admin,
-                            `remarks` = @remarks";
 
         public const string SQLInsertFullGroup = @"
                         (
