@@ -1,4 +1,5 @@
 ﻿using GameSelector.SQLite.Common;
+using GameSelector.SQLite.SQLSyntax;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -19,19 +20,11 @@ namespace GameSelector.SQLite
 
         public List<SQLiteGroup> GetAllGroups()
         {
-            var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
-            var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
-
-            var sql = $@"SELECT
-                            {SQLiteGroup.SQLSelectFull},
-                            {SQLiteGame.SQLSelectFull}
-                        FROM `{TableName}`
-                        LEFT JOIN `{SQLiteGamesTable.TableName}`
-                        ON `{TableName}`.`{groupIdColName}` = `{SQLiteGamesTable.TableName}`.`{gameOccupiedByColName}`;";
-
-            var command = new SQLiteCommand(sql, _connection);
-
-            var reader = command.ExecuteReader();
+            var reader = new SQLQuery(_connection)
+                .Select<SQLiteGroup>().Select<SQLiteGame>()
+                .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.Id), nameof(SQLiteGame.OccupiedById))
+                .Execute();
 
             var outputList = new List<SQLiteGroup>();
 
@@ -49,21 +42,12 @@ namespace GameSelector.SQLite
 
         public SQLiteGroup GetGroupById(long id)
         {
-            var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
-            var groupIdColName = SQLiteHelper.GetDbName<SQLiteGroup>(nameof(SQLiteGroup.Id));
-
-            var sql = $@"SELECT
-                            {SQLiteGroup.SQLSelectFull},
-                            {SQLiteGame.SQLSelectFull}
-                        FROM `{TableName}`
-                        LEFT JOIN `{SQLiteGamesTable.TableName}`
-                        ON `{TableName}`.`{groupIdColName}` = `{SQLiteGamesTable.TableName}`.`{gameOccupiedByColName}`
-                        WHERE `{TableName}`.`{groupIdColName}` = @id;";
-
-            var command = new SQLiteCommand(sql, _connection);
-            command.Parameters.AddWithValue("@id", id);
-
-            var reader = command.ExecuteReader();
+            var reader = new SQLQuery(_connection)
+                .Select<SQLiteGroup>().Select<SQLiteGame>()
+                .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.Id), nameof(SQLiteGame.OccupiedById))
+                .Where<SQLiteGroup>(nameof(SQLiteGroup.Id)).Equals(id)
+                .Execute();
 
             var outputList = new List<SQLiteGroup>();
 

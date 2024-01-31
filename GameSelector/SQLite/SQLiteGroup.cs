@@ -6,6 +6,7 @@ using System.Text;
 
 namespace GameSelector.SQLite
 {
+    [SQLiteTable(TableName = "groups")]
     internal class SQLiteGroup : SQLiteObject
     {
         public SQLiteGroup()
@@ -43,7 +44,7 @@ namespace GameSelector.SQLite
         public string Remarks { get; set; }
 
         public static string SQLSelectFull =>
-            SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGroup), SQLiteGroupsTable.TableName);
+            SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGroup));
 
         public const string SQLInsertFullGroup = @"
                         (

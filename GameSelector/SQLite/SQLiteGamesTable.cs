@@ -55,7 +55,7 @@ namespace GameSelector.SQLite
             var gameOccupiedByColName = SQLiteHelper.GetDbName<SQLiteGame>(nameof(SQLiteGame.OccupiedById));
 
             var sql = $@"SELECT
-	                        {SQLiteGame.SQLSelectFull},
+	                        {SQLiteGame.SQLSelectFull}
                         FROM `{TableName}`
                         WHERE `{TableName}`.`{gameOccupiedByColName}` IS NULL;";
 

@@ -3,6 +3,7 @@ using System.Data.SQLite;
 
 namespace GameSelector.SQLite
 {
+    [SQLiteTable(TableName = "played_games")]
     internal class SQLitePlayedGame : SQLiteObject
     {
         public SQLitePlayedGame()
@@ -42,7 +43,7 @@ namespace GameSelector.SQLite
         public long EndTime { get; set; }
 
         public static string SQLSelectFullPlayedGame =>
-            SQLiteHelper.GetFullSelectQuery(typeof(SQLitePlayedGame), SQLitePlayedGamesTable.TableName);
+            SQLiteHelper.GetFullSelectQuery(typeof(SQLitePlayedGame));
 
         public const string SQLInsertFullPlayedGame = @"
                         (

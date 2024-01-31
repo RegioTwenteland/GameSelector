@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameSelector.SQLite.Common
 {
@@ -18,7 +16,7 @@ namespace GameSelector.SQLite.Common
 
         protected void FillPropsFromSqlReader(SQLiteDataReader reader)
         {
-            var cols = SQLiteHelper.GetColumnsFromType(GetType(), TableName);
+            var cols = SQLiteHelper.GetColumnsFromType(GetType());
 
             foreach (var col in cols)
             {
@@ -30,7 +28,7 @@ namespace GameSelector.SQLite.Common
 
         public void AddAllParametersForPreparedStatement(SQLiteCommand command)
         {
-            var columns = SQLiteHelper.GetColumnsFromType(GetType(), TableName)
+            var columns = SQLiteHelper.GetColumnsFromType(GetType())
                 .Where(c => !c.IsPK);
 
             foreach (var col in columns)
@@ -45,7 +43,7 @@ namespace GameSelector.SQLite.Common
             {
                 var output = new List<string>();
 
-                var cols = SQLiteHelper.GetColumnsFromType(GetType(), TableName);
+                var cols = SQLiteHelper.GetColumnsFromType(GetType());
                 foreach (var col in cols)
                 {
                     if (col.IsPK) continue;

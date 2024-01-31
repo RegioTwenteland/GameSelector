@@ -21,12 +21,14 @@ namespace GameSelector.SQLite.Common
 
         private static Dictionary<Type, List<Column>> _columnsCache = new Dictionary<Type, List<Column>>();
 
-        public static List<Column> GetColumnsFromType(Type type, string tableName)
+        public static List<Column> GetColumnsFromType(Type type)
         {
             if (_columnsCache.ContainsKey(type))
             {
                 return _columnsCache[type];
             }
+
+            string tableName = GetTableName(type);
 
             List<Column> output = new List<Column>();
 
@@ -59,22 +61,32 @@ namespace GameSelector.SQLite.Common
         }
 
         public static Column GetColumnInfo<T>(string propertyName, string tableName) where T : SQLiteObject =>
-            GetColumnsFromType(typeof(T), tableName)
+            GetColumnsFromType(typeof(T))
                 .Where(c => c.Prop.Name == propertyName)
                 .Single();
 
-        public static string GetFullSelectQuery(Type type, string tableName) =>
+        public static string GetFullSelectQuery(Type table) =>
             string.Join(
                 $",{Environment.NewLine}",
-                GetColumnsFromType(type, tableName)
-                    .Select(c => $@"`{tableName}`.`{c.DbName}` AS {c.Alias}"));
+                GetColumnsFromType(table)
+                    .Select(c => $@"`{GetTableName(table)}`.`{c.DbName}` AS {c.Alias}"));
 
         public static string GetDbName<T>(string propertyName) where T : SQLiteObject =>
-            typeof(T)
-            .GetProperties()
+            GetDbName(typeof(T), propertyName);
+
+        public static string GetDbName(Type t, string propertyName) =>
+            t.GetProperties()
             .Where(p => p.Name == propertyName)
             .Single()
             .GetCustomAttribute<SQLiteColumnAttribute>()
             ?.Name;
+
+        public static string GetTableName<T>() where T : SQLiteObject =>
+            GetTableName(typeof(T));
+
+        public static string GetTableName(Type tableType) =>
+            tableType
+            .GetCustomAttribute<SQLiteTableAttribute>()
+            ?.TableName;
     }
 }
