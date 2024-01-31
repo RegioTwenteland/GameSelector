@@ -81,9 +81,11 @@
     <Compile Include="Controllers\AdminGroupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="SQLite\Common\SQLiteColumnAttribute.cs" />
+    <Compile Include="SQLite\Common\SQLiteForeignKeyAttribute.cs" />
     <Compile Include="SQLite\Common\SQLiteHelper.cs" />
     <Compile Include="SQLite\Common\SQLiteObject.cs" />
     <Compile Include="SQLite\Common\SQLiteTableAttribute.cs" />
+    <Compile Include="SQLite\ExtensionMethods.cs" />
     <Compile Include="SQLite\SQLiteDatabaseObjectTranslator.cs" />
     <Compile Include="SQLite\SQLiteGame.cs" />
     <Compile Include="SQLite\SQLiteGroup.cs" />
@@ -108,7 +110,9 @@
     <Compile Include="Model\PlayedGame.cs" />
     <Compile Include="SQLite\SQLitePlayedGameDataBridge.cs" />
     <Compile Include="Model\SetOnce.cs" />
+    <Compile Include="SQLite\SQLSyntax\Delete\DeleteSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\EqualsLiteralSyntax.cs" />
+    <Compile Include="SQLite\SQLSyntax\Insert\InsertSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Select\NestedSelectSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Select\OnSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\SQLSyntax.cs" />
@@ -116,6 +120,8 @@
     <Compile Include="SQLite\SQLSyntax\Select\FromSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Select\LeftJoinSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Select\SelectSyntax.cs" />
+    <Compile Include="SQLite\SQLSyntax\Update\SetSyntax.cs" />
+    <Compile Include="SQLite\SQLSyntax\Update\UpdateSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\WhereSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\SQLQuery.cs" />
     <Compile Include="Views\AbstractView.cs" />

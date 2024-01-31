@@ -43,7 +43,7 @@ namespace GameSelector.SQLite
         public long EndTime { get; set; }
 
         public static string SQLSelectFullPlayedGame =>
-            SQLiteHelper.GetFullSelectQuery(typeof(SQLitePlayedGame));
+            SQLiteHelper.SqlForSelectTableItems(typeof(SQLitePlayedGame));
 
         public const string SQLInsertFullPlayedGame = @"
                         (

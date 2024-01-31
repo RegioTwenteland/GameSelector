@@ -37,6 +37,17 @@ namespace GameSelector.SQLite.Common
             }
         }
 
+        public void AddAllParametersForPreparedStatementToDict(Dictionary<string, object> dict)
+        {
+            var columns = SQLiteHelper.GetColumnsFromType(GetType())
+                .Where(c => !c.IsPK);
+
+            foreach (var col in columns)
+            {
+                dict.Add($"@{col.Alias}", SQLiteDatabase.ToDbNull(col.Prop.GetValue(this)));
+            }
+        }
+
         public string SQLUpdateFull
         {
             get

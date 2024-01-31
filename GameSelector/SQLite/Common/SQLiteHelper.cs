@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace GameSelector.SQLite.Common
 {
@@ -30,7 +31,7 @@ namespace GameSelector.SQLite.Common
 
             string tableName = GetTableName(type);
 
-            List<Column> output = new List<Column>();
+            var output = new List<Column>();
 
             var allProps = type.GetProperties();
 
@@ -60,16 +61,69 @@ namespace GameSelector.SQLite.Common
             return output;
         }
 
-        public static Column GetColumnInfo<T>(string propertyName, string tableName) where T : SQLiteObject =>
-            GetColumnsFromType(typeof(T))
-                .Where(c => c.Prop.Name == propertyName)
-                .Single();
+        private static Dictionary<Type, List<PropertyInfo>> _fkCache = new Dictionary<Type, List<PropertyInfo>>();
 
-        public static string GetFullSelectQuery(Type table) =>
+
+        public static List<PropertyInfo> GetForeignKeysFromType(Type type)
+        {
+            if (_fkCache.ContainsKey(type))
+            {
+                return _fkCache[type];
+            }
+
+            var output = new List<PropertyInfo>();
+
+            var allProps = type.GetProperties();
+
+            foreach (var prop in allProps)
+            {
+                var attributes = prop.GetCustomAttributes(true);
+
+                foreach (var attr in attributes)
+                {
+                    if (attr is SQLiteForeignKeyAttribute fkAttr)
+                    {
+                        output.Add(prop);
+                        break;
+                    }
+                }
+            }
+
+            _fkCache.Add(type, output);
+
+            return output;
+        }
+
+        public static string SqlForSelectTableItems(Type table) =>
             string.Join(
                 $",{Environment.NewLine}",
                 GetColumnsFromType(table)
                     .Select(c => $@"`{GetTableName(table)}`.`{c.DbName}` AS {c.Alias}"));
+
+        public static string SqlForInsertTableItems(Type table)
+        {
+            var output = new StringBuilder();
+            
+            output.AppendLine("(");
+
+            var columns = GetColumnsFromType(table)
+                .Where(c => !c.IsPK);
+
+            output.Append(string.Join(
+                $",{Environment.NewLine}",
+                columns.Select(c => $"    `{c.DbName}`")));
+            output.AppendLine();
+            output.AppendLine(")");
+            output.AppendLine("VALUES");
+            output.AppendLine("(");
+            output.Append(string.Join(
+                $",{Environment.NewLine}",
+                columns.Select(c => $"    @{c.Alias}")));
+            output.AppendLine();
+            output.Append(")");
+
+            return output.ToString();
+        }
 
         public static string GetDbName<T>(string propertyName) where T : SQLiteObject =>
             GetDbName(typeof(T), propertyName);

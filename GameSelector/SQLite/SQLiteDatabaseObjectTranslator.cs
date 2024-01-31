@@ -57,6 +57,7 @@ namespace GameSelector.SQLite
         public Game ToGame(SQLiteGame dbGame, Group group = null)
         {
             if (dbGame == null) return null;
+            if (dbGame.Id == 0) return null;
 
             var output = new Game
             {
@@ -80,6 +81,7 @@ namespace GameSelector.SQLite
         public Group ToGroup(SQLiteGroup dbGroup, Game game = null)
         {
             if (dbGroup == null) return null;
+            if (dbGroup.Id == 0) return null;
 
             var output = new Group
             {
@@ -99,6 +101,7 @@ namespace GameSelector.SQLite
         public PlayedGame ToPlayedGame(SQLitePlayedGame dbPlayedGame)
         {
             if (dbPlayedGame == null) return null;
+            if (dbPlayedGame.Id == 0) return null;
 
             return new PlayedGame
             {

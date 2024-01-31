@@ -56,7 +56,7 @@ namespace GameSelector.SQLite
         public long Timeout { get; set; }
 
         public static string SQLSelectFull =>
-            SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGame));
+            SQLiteHelper.SqlForSelectTableItems(typeof(SQLiteGame));
 
         public const string SQLInsertFullGame = @"
                         (

@@ -38,13 +38,14 @@ namespace GameSelector.SQLite
         /// <summary>
         /// Warning: read-only. Dont use for modifying.
         /// </summary>
+        [SQLiteForeignKey]
         public SQLiteGame CurrentlyPlaying { get; set; }
 
         [SQLiteColumn(Name = "remarks")]
         public string Remarks { get; set; }
 
         public static string SQLSelectFull =>
-            SQLiteHelper.GetFullSelectQuery(typeof(SQLiteGroup));
+            SQLiteHelper.SqlForSelectTableItems(typeof(SQLiteGroup));
 
         public const string SQLInsertFullGroup = @"
                         (

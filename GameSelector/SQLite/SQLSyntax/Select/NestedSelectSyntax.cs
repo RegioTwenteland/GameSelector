@@ -26,6 +26,6 @@ namespace GameSelector.SQLite.SQLSyntax
             return new NestedSelectSyntax(Metadata, this, typeof(Table));
         }
 
-        public override string Generate() => $"{_parentSyntax.Generate()}, {SQLiteHelper.GetFullSelectQuery(_table)}";
+        public override string Generate() => $"{_parentSyntax.Generate()}, {SQLiteHelper.SqlForSelectTableItems(_table)}";
     }
 }

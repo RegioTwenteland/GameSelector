@@ -27,5 +27,19 @@ namespace GameSelector.SQLite.SQLSyntax
 
             return command.ExecuteReader();
         }
+
+        public int ExecuteNonQuery()
+        {
+            var sql = Generate();
+
+            var command = new SQLiteCommand(sql, Metadata.Connection);
+
+            foreach (var parameter in Metadata.PreparedParameters)
+            {
+                command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+            }
+
+            return command.ExecuteNonQuery();
+        }
     }
 }
