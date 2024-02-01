@@ -27,6 +27,11 @@ namespace GameSelector.SQLite.SQLSyntax.Select
             return new WhereSyntax(Metadata, this, typeof(Table), col);
         }
 
+        public LeftJoinSyntax LeftJoin<Table>()
+        {
+            return new LeftJoinSyntax(Metadata, this, typeof(Table));
+        }
+
         public override string Generate() =>
             $"{_leftJoinSyntax.Generate()} ON " +
             $"`{SQLiteHelper.GetTableName(_table1)}`.`{_col1}` = `{SQLiteHelper.GetTableName(_table2)}`.`{_col2}`";

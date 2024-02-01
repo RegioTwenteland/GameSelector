@@ -26,6 +26,7 @@ namespace GameSelector.SQLite
         /// <summary>
         /// Warning: read-only. Don't use for modifying.
         /// </summary>
+        [SQLiteForeignKey]
         public SQLiteGroup Player { get; set; }
 
         [SQLiteColumn(Name = "game")]
@@ -34,6 +35,7 @@ namespace GameSelector.SQLite
         /// <summary>
         /// Warning: read-only. Don't use for modifying.
         /// </summary>
+        [SQLiteForeignKey]
         public SQLiteGame Game { get; set; }
 
         [SQLiteColumn(Name = "start_time")]
@@ -59,19 +61,5 @@ namespace GameSelector.SQLite
                             @start_time,
                             @end_time
                         )";
-
-        ////public static SQLitePlayedGame FromSqlReader(SQLiteDataReader reader)
-        ////{
-        ////    return new SQLitePlayedGame
-        ////    {
-        ////        Id = (long)reader["played_game_id"],
-        ////        PlayerId = (long)reader["played_game_player"],
-        ////        Player = new SQLiteGroup(reader),
-        ////        GameId = (long)reader["played_game_game"],
-        ////        Game = new SQLiteGame(reader),
-        ////        StartTime = (long)reader["played_game_start_time"],
-        ////        EndTime = (long)reader["played_game_end_time"],
-        ////    };
-        ////}
     }
 }
