@@ -26,6 +26,11 @@ namespace GameSelector.SQLite.SQLSyntax
             return new EqualsLiteralSyntax(Metadata, this, value);
         }
 
+        public EqualsNullSyntax EqualsNull()
+        {
+            return new EqualsNullSyntax(Metadata, this);
+        }
+
         public override string Generate() =>
             $"{_parentSyntax.Generate()} WHERE `{SQLiteHelper.GetTableName(_table)}`.`{_col}`";
     }

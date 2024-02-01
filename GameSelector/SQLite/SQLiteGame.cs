@@ -44,6 +44,7 @@ namespace GameSelector.SQLite
         /// <summary>
         /// Warning: read-only. Don't use for modifying.
         /// </summary>
+        [SQLiteForeignKey]
         public SQLiteGroup OccupiedBy { get; set; }
 
         [SQLiteColumn(Name = "start_time")]
