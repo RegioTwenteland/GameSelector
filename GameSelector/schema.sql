@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS "groups" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "games" (
-	"id"	INTEGER NOT NULL UNIQUE,
+	"id"	INTEGER,
 	"code"	TEXT NOT NULL,
 	"description"	TEXT,
 	"explanation"	TEXT,
@@ -31,6 +31,6 @@ CREATE TABLE IF NOT EXISTS "games" (
 	"remarks"	TEXT NOT NULL,
 	"timeout"	INTEGER NOT NULL DEFAULT 0,
 	FOREIGN KEY("occupied_by") REFERENCES "groups"("id"),
-	PRIMARY KEY("id")
+	PRIMARY KEY("id" AUTOINCREMENT)
 );
 COMMIT;

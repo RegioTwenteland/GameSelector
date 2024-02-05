@@ -91,7 +91,7 @@ namespace GameSelector.Controllers
             _userView.SetGameCodes(codes.ToArray());
         }
 
-        private List<Game> GetPossibleGames(List<Game> gamesNotOccupied, List<PlayedGame> playedGames, Group group)
+        private List<Game> GetPossibleGames(IEnumerable<Game> gamesNotOccupied, IEnumerable<PlayedGame> playedGames, Group group)
         {
             var playedGameIds = new HashSet<long>();
             foreach (var game in playedGames)
@@ -99,7 +99,7 @@ namespace GameSelector.Controllers
                 playedGameIds.Add(game.Game.Id);
             }
 
-            var possibleGames = new List<Game>(gamesNotOccupied.Count);
+            var possibleGames = new List<Game>();
             foreach (var game in gamesNotOccupied)
             {
                 if (!playedGameIds.Contains(game.Id) && game.Active)
@@ -140,7 +140,7 @@ namespace GameSelector.Controllers
 
             if (possibleGames.Count > 0)
             {
-                if (playedGames.Count >= 1)
+                if (playedGames.Any())
                 {
                     var prioGames = possibleGames.Where(g => g.HasPriority).ToList();
                     var normalGames = possibleGames.Where(g => !g.HasPriority).ToList();

@@ -10,14 +10,12 @@ namespace GameSelector.SQLite
     {
         private SQLiteConnection _connection;
 
-        public const string TableName = "groups";
-
         public SQLiteGroupsTable(SQLiteConnection connection)
         {
             _connection = connection;
         }
 
-        public List<SQLiteGroup> GetAllGroups()
+        public IEnumerable<SQLiteGroup> GetAllGroups()
         {
             return new SQLQuery(_connection)
                 .Select<SQLiteGroup>().Select<SQLiteGame>()

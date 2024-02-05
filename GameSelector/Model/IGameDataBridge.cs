@@ -7,9 +7,9 @@ namespace GameSelector.Model
     {
         event EventHandler<GameUpdatedEventArgs> GameUpdated;
 
-        List<Game> GetAllGames();
+        IEnumerable<Game> GetAllGames();
 
-        List<Game> GetAllGamesNotOccupied();
+        IEnumerable<Game> GetAllGamesNotOccupied();
 
         Game GetGame(long id);
 

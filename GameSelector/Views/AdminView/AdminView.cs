@@ -489,7 +489,7 @@ namespace GameSelector.Views
             gamesListBox.SelectedIndex = idx;
         }
 
-        public void ShowPlayedGames(List<PlayedGame> playedGames)
+        public void ShowPlayedGames(IEnumerable<PlayedGame> playedGames)
         {
             var sb = new StringBuilder();
 

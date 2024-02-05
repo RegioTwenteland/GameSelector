@@ -16,20 +16,18 @@ namespace GameSelector.SQLite
             _objectTranslator = database.ObjectTranslator;
         }
 
-        public List<PlayedGame> GetPlayedGamesByPlayer(Group group)
+        public IEnumerable<PlayedGame> GetPlayedGamesByPlayer(Group group)
         {
             return
                 _playedGamesTable.GetPlayedGamesByPlayerId(group.Id)
-                .Select(dbG => _objectTranslator.ToPlayedGame(dbG))
-                .ToList();
+                .Select(dbG => _objectTranslator.ToPlayedGame(dbG));
         }
 
-        public List<PlayedGame> GetPlayedGamesByGame(Game game)
+        public IEnumerable<PlayedGame> GetPlayedGamesByGame(Game game)
         {
             return
                 _playedGamesTable.GetPlayedGamesByGameId(game.Id)
-                .Select(dbG => _objectTranslator.ToPlayedGame(dbG))
-                .ToList();
+                .Select(dbG => _objectTranslator.ToPlayedGame(dbG));
         }
 
         public void InsertPlayedGame(PlayedGame playedGame)

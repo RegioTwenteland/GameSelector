@@ -125,8 +125,20 @@ namespace GameSelector.SQLite.Common
             return output.ToString();
         }
 
-        public static string GetDbName<T>(string propertyName) where T : SQLiteObject =>
-            GetDbName(typeof(T), propertyName);
+        public static string SqlForUpdateTableItem(Type table)
+        {
+            var output = new List<string>();
+
+            var cols = GetColumnsFromType(table);
+            foreach (var col in cols)
+            {
+                if (col.IsPK) continue;
+
+                output.Add($"`{col.DbName}` = @{col.Alias}");
+            }
+
+            return string.Join($",{Environment.NewLine}", output);
+        }
 
         public static string GetDbName(Type t, string propertyName) =>
             t.GetProperties()
@@ -134,9 +146,6 @@ namespace GameSelector.SQLite.Common
             .Single()
             .GetCustomAttribute<SQLiteColumnAttribute>()
             ?.Name;
-
-        public static string GetTableName<T>() where T : SQLiteObject =>
-            GetTableName(typeof(T));
 
         public static string GetTableName(Type tableType) =>
             tableType

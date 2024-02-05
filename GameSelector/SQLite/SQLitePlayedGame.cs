@@ -7,14 +7,12 @@ namespace GameSelector.SQLite
     internal class SQLitePlayedGame : SQLiteObject
     {
         public SQLitePlayedGame()
-            : base(SQLitePlayedGamesTable.TableName)
         {
         }
 
         public SQLitePlayedGame(SQLiteDataReader reader)
-            : this()
+            : base(reader)
         {
-            FillPropsFromSqlReader(reader);
         }
 
         [SQLiteColumn(Name = "id")]
@@ -43,23 +41,5 @@ namespace GameSelector.SQLite
 
         [SQLiteColumn(Name = "end_time")]
         public long EndTime { get; set; }
-
-        public static string SQLSelectFullPlayedGame =>
-            SQLiteHelper.SqlForSelectTableItems(typeof(SQLitePlayedGame));
-
-        public const string SQLInsertFullPlayedGame = @"
-                        (
-                            `player`,
-                            `game`,
-                            `start_time`,
-                            `end_time`
-                        )
-                        VALUES
-                        (
-                            @player_id,
-                            @game_id,
-                            @start_time,
-                            @end_time
-                        )";
     }
 }

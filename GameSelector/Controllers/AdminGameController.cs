@@ -65,7 +65,7 @@ namespace GameSelector.Controllers
             Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => SchedulePeriodicGameTimeoutCheck());
         }
 
-        private void UpdateGamesList(List<Game> games)
+        private void UpdateGamesList(IEnumerable<Game> games)
         {
             var gdv = games.Select(g => GameDataView.FromGame(g));
             _adminView.SetGamesList(gdv);
@@ -129,7 +129,7 @@ namespace GameSelector.Controllers
             }
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByGame(game);
-            if (playedGames.Count > 0)
+            if (playedGames.Any())
             {
                 _adminView.ShowError("Verwijderen mislukt: Spel is al gespeeld");
                 return;

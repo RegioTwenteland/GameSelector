@@ -125,7 +125,7 @@ namespace GameSelector.Controllers
             }
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
-            if (playedGames.Count > 0)
+            if (playedGames.Any())
             {
                 _adminView.ShowError("Verwijderen mislukt: groep heeft al spellen gespeeld");
                 return;
@@ -136,7 +136,7 @@ namespace GameSelector.Controllers
             UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }
 
-        private void UpdateGroupsList(List<Group> groups)
+        private void UpdateGroupsList(IEnumerable<Group> groups)
         {
             var gdv = groups.Select(g => GroupDataView.FromGroup(g));
             _adminView.SetGroupsList(gdv);

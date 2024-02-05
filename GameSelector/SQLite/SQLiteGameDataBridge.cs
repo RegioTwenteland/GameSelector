@@ -18,7 +18,7 @@ namespace GameSelector.SQLite
             _objectTranslator = database.ObjectTranslator;
         }
 
-        public List<Game> GetAllGames()
+        public IEnumerable<Game> GetAllGames()
         {
             return
                 _gamesTable.GetAllGames()
@@ -26,7 +26,7 @@ namespace GameSelector.SQLite
                 .ToList();
         }
 
-        public List<Game> GetAllGamesNotOccupied()
+        public IEnumerable<Game> GetAllGamesNotOccupied()
         {
             return
                 _gamesTable.GetAllGamesNotOccupied()

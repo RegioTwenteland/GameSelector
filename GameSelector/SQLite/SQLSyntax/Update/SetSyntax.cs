@@ -23,6 +23,6 @@ namespace GameSelector.SQLite.SQLSyntax
         }
 
         public override string Generate() =>
-            $"{_updateSyntax.Generate()} SET {_obj.SQLUpdateFull}";
+            $"{_updateSyntax.Generate()} SET {SQLiteHelper.SqlForUpdateTableItem(_obj.GetType())}";
     }
 }

@@ -8,8 +8,6 @@ namespace GameSelector.SQLite
 {
     internal class SQLitePlayedGamesTable
     {
-        public static string TableName = "played_games";
-
         private SQLiteConnection _connection;
 
         public SQLitePlayedGamesTable(SQLiteConnection connection)
@@ -17,7 +15,7 @@ namespace GameSelector.SQLite
             _connection = connection;
         }
 
-        public List<SQLitePlayedGame> GetPlayedGamesByPlayerId(long playerId)
+        public IEnumerable<SQLitePlayedGame> GetPlayedGamesByPlayerId(long playerId)
         {
             return new SQLQuery(_connection)
                 .Select<SQLitePlayedGame>()
@@ -34,7 +32,7 @@ namespace GameSelector.SQLite
                 .ToList();
         }
 
-        public List<SQLitePlayedGame> GetPlayedGamesByGameId(long gameId)
+        public IEnumerable<SQLitePlayedGame> GetPlayedGamesByGameId(long gameId)
         {
             return new SQLQuery(_connection)
                 .Select<SQLitePlayedGame>()

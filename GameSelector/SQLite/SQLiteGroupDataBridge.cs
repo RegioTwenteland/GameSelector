@@ -16,12 +16,11 @@ namespace GameSelector.SQLite
             _objectTranslator = database.ObjectTranslator;
         }
 
-        public List<Group> GetAllGroups()
+        public IEnumerable<Group> GetAllGroups()
         {
             return
                 _groupsTable.GetAllGroups()
-                .Select(dbG => _objectTranslator.ToGroup(dbG))
-                .ToList();
+                .Select(dbG => _objectTranslator.ToGroup(dbG));
         }
 
         public Group GetGroup(string cardId)

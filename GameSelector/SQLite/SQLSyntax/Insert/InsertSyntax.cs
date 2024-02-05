@@ -1,6 +1,5 @@
 ﻿using GameSelector.SQLite.Common;
 using System;
-using System.Data.Linq;
 
 namespace GameSelector.SQLite.SQLSyntax
 {

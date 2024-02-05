@@ -5,7 +5,7 @@ namespace GameSelector.Model
 {
     internal interface IGroupDataBridge
     {
-        List<Group> GetAllGroups();
+        IEnumerable<Group> GetAllGroups();
 
         Group GetGroup(string cardId);
 
