@@ -22,37 +22,31 @@ namespace GameSelector.SQLite
         {
             return
                 _gamesTable.GetAllGames()
-                .Select(dbG => _objectTranslator.ToGame(dbG))
-                .ToList();
+                .Select(dbG => _objectTranslator.ToGame(dbG));
         }
 
         public IEnumerable<Game> GetAllGamesNotOccupied()
         {
             return
                 _gamesTable.GetAllGamesNotOccupied()
-                .Select(dbG => _objectTranslator.ToGame(dbG))
-                .ToList();
+                .Select(dbG => _objectTranslator.ToGame(dbG));
         }
+
+        public Game GetGameBeingPlayedBy(Group group)
+        {
+            var dbGame = _gamesTable.GetGameBeingPlayedBy(group.Id);
+            return _objectTranslator.ToGame(dbGame);
+        }
+
 
         public Game GetGame(long id)
         {
             return _objectTranslator.ToGame(_gamesTable.GetGameById(id));
         }
 
-        public Game GetGameOccupiedBy(Group group)
-        {
-            return _objectTranslator.ToGame(_gamesTable.GetGameOccupiedBy(group.Id));
-        }
-
         public void UpdateGame(Game game)
         {
             _gamesTable.UpdateGame(_objectTranslator.ToSQLiteGame(game));
-
-            if (game.OccupiedBy != null)
-            {
-                // make sure the event passes the correct game to whomever wants to know
-                game.OccupiedBy.CurrentlyPlaying = game;
-            }
 
             GameUpdated?.Invoke(this, new GameUpdatedEventArgs { Game = game });
         }

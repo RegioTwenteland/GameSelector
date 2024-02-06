@@ -30,12 +30,7 @@ namespace GameSelector.Views
                 return null;
             }
 
-            var startTime = DateTime.MinValue;
-
-            if (group.CurrentlyPlaying != null && group.CurrentlyPlaying.StartTime.HasValue)
-            {
-                startTime = group.CurrentlyPlaying.StartTime.Value;
-            }
+            var startTime = group.StartTime ?? DateTime.MinValue;
 
             return new GroupDataView
             {

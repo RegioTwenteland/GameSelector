@@ -23,6 +23,13 @@ namespace GameSelector.SQLite
                 .Select(dbG => _objectTranslator.ToGroup(dbG));
         }
 
+        public IEnumerable<Group> GetAllGroupsPlaying(Game game)
+        {
+            return
+                _groupsTable.GetAllGroupsPlaying(game.Id)
+                .Select(dbG => _objectTranslator.ToGroup(dbG));
+        }
+
         public Group GetGroup(string cardId)
         {
             return _objectTranslator.ToGroup(_groupsTable.GetGroupByCardId(cardId));

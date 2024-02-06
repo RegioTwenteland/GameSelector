@@ -20,7 +20,17 @@ namespace GameSelector.SQLite
             return new SQLQuery(_connection)
                 .Select<SQLiteGroup>().Select<SQLiteGame>()
                 .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
-                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.Id), nameof(SQLiteGame.OccupiedById))
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.CurrentlyPlayingId), nameof(SQLiteGame.Id))
+                .Execute()
+                .Get<SQLiteGroup>().ToList();
+        }
+
+        public IEnumerable<SQLiteGroup> GetAllGroupsPlaying(long gameId)
+        {
+            return new SQLQuery(_connection)
+                .Select<SQLiteGroup>().Select<SQLiteGame>()
+                .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.CurrentlyPlayingId), nameof(SQLiteGame.Id))
                 .Execute()
                 .Get<SQLiteGroup>().ToList();
         }
@@ -30,7 +40,7 @@ namespace GameSelector.SQLite
             return new SQLQuery(_connection)
                 .Select<SQLiteGroup>().Select<SQLiteGame>()
                 .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
-                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.Id), nameof(SQLiteGame.OccupiedById))
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.CurrentlyPlayingId), nameof(SQLiteGame.Id))
                 .Where<SQLiteGroup>(nameof(SQLiteGroup.Id)).Equals(id)
                 .Execute()
                 .Get<SQLiteGroup>()
@@ -42,7 +52,7 @@ namespace GameSelector.SQLite
             return new SQLQuery(_connection)
                 .Select<SQLiteGroup>().Select<SQLiteGame>()
                 .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
-                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.Id), nameof(SQLiteGame.OccupiedById))
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.CurrentlyPlayingId), nameof(SQLiteGame.Id))
                 .Where<SQLiteGroup>(nameof(SQLiteGroup.CardId)).Equals(cardId)
                 .Execute()
                 .Get<SQLiteGroup>()

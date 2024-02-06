@@ -114,6 +114,7 @@
     <Compile Include="SQLite\SQLSyntax\Delete\DeleteSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\EqualsNullSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\EqualsLiteralSyntax.cs" />
+    <Compile Include="SQLite\SQLSyntax\GroupBySyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Insert\InsertSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Select\NestedSelectSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Select\OnSyntax.cs" />

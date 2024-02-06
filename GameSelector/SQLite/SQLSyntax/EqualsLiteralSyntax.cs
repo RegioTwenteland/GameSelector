@@ -16,6 +16,11 @@
             Metadata.PreparedParameters.Add(_parameterName, literal);
         }
 
+        public GroupBySyntax GroupBy<Table>(string col)
+        {
+            return new GroupBySyntax(Metadata, this, typeof(Table), col);
+        }
+
         public override string Generate() =>
             $"{_whereSyntax.Generate()} = {_parameterName}";
     }

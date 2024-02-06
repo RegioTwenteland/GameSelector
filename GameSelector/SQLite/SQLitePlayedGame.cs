@@ -15,7 +15,7 @@ namespace GameSelector.SQLite
         {
         }
 
-        [SQLiteColumn(Name = "id")]
+        [SQLiteColumn(Name = "id", IsPK = true)]
         public long Id { get; set; }
 
         [SQLiteColumn(Name = "player")]

@@ -1,4 +1,6 @@
-﻿namespace GameSelector.Model
+﻿using System;
+
+namespace GameSelector.Model
 {
     internal class Group
     {
@@ -19,6 +21,8 @@
         public bool IsAdmin { get; set; }
 
         public Game CurrentlyPlaying { get; set; }
+
+        public DateTime? StartTime { get; set; }
 
         public string Remarks { get; set; }
     }

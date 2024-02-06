@@ -11,9 +11,9 @@ namespace GameSelector.Model
 
         IEnumerable<Game> GetAllGamesNotOccupied();
 
-        Game GetGame(long id);
+        Game GetGameBeingPlayedBy(Group group);
 
-        Game GetGameOccupiedBy(Group group);
+        Game GetGame(long id);
 
         void UpdateGame(Game game);
 

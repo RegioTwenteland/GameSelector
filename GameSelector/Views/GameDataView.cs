@@ -19,8 +19,6 @@ namespace GameSelector.Views
 
         public bool HasPriority { get; set; }
 
-        public GroupDataView OccupiedBy { get; set; }
-
         public DateTime StartTime { get; set; }
 
         public string Remarks { get; set; }
@@ -40,11 +38,6 @@ namespace GameSelector.Views
             
             var startTime = DateTime.MinValue;
 
-            if (game.StartTime != null && game.StartTime.HasValue)
-            {
-                startTime = game.StartTime.Value;
-            }
-
             return new GameDataView
             {
                 Id = game.Id,
@@ -54,7 +47,6 @@ namespace GameSelector.Views
                 Active = game.Active,
                 Color = game.Color,
                 HasPriority = game.HasPriority,
-                OccupiedBy = GroupDataView.FromGroup(game.OccupiedBy),
                 StartTime = startTime,
                 Remarks = game.Remarks,
                 TimeoutMinutes = game.Timeout.Minutes,

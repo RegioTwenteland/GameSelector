@@ -32,14 +32,14 @@ namespace GameSelector.Views
             WaitOnFormLoad(form);
         }
 
-        public void ShowGameImmediate(GameDataView game)
+        public void ShowGameImmediate(GameDataView game, GroupDataView group)
         {
-            form.Invoke(new MethodInvoker(() => form.ShowGameImmediate(game)));
+            form.Invoke(new MethodInvoker(() => form.ShowGameImmediate(game, group)));
         }
 
-        public void ShowGame(GameDataView game)
+        public void ShowGame(GameDataView game, GroupDataView group)
         {
-            form.Invoke(new MethodInvoker(() => form.ShowGame(game)));
+            form.Invoke(new MethodInvoker(() => form.ShowGame(game, group)));
         }
 
         public void ShowAlreadyPlaying(GameDataView game)

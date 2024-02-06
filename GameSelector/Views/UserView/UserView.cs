@@ -78,6 +78,7 @@ namespace GameSelector.Views
         private Timer _animationTimer;
         private int _animationFrame;
         private GameDataView _selectedGame;
+        private GroupDataView _gameSelectedFor;
 
         public void ShowNoGamesLeft()
         {
@@ -91,16 +92,16 @@ namespace GameSelector.Views
             Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
         }
 
-        public void ShowGameImmediate(GameDataView game)
+        public void ShowGameImmediate(GameDataView game, GroupDataView group)
         {
-            gameAnnouncerLabel.Text = SELECTED_MESSAGE + game.OccupiedBy.ScoutingName + ":";
+            gameAnnouncerLabel.Text = SELECTED_MESSAGE + group.ScoutingName + ":";
             gameCodeLabel.Text = game.Code;
             searchingGameNameLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;
             gameExplanationLabel.Text = game.Explanation;
         }
 
-        public void ShowGame(GameDataView game)
+        public void ShowGame(GameDataView game, GroupDataView group)
         {
             _insertCardView.Hide();
 
@@ -119,6 +120,7 @@ namespace GameSelector.Views
             _audioPlayer.PlaySelectionStart();
 
             _selectedGame = game;
+            _gameSelectedFor = group;
 
             _animationFrame = 0;
             _animationTimer = new Timer();
@@ -158,7 +160,7 @@ namespace GameSelector.Views
         {
             _animationTimer.Stop();
 
-            gameAnnouncerLabel.Text = SELECTED_MESSAGE + _selectedGame.OccupiedBy.ScoutingName + ":";
+            gameAnnouncerLabel.Text = SELECTED_MESSAGE + _gameSelectedFor.ScoutingName + ":";
             gameCodeLabel.Text = _selectedGame.Code;
             searchingGameNameLabel.Text = _selectedGame.Code;
             gameDescriptionLabel.Text = _selectedGame.Description;

@@ -31,10 +31,6 @@ namespace GameSelector.Model
 
         public bool HasPriority { get; set; }
 
-        public Group OccupiedBy { get; set; }
-
-        public DateTime? StartTime { get; set; }
-
         public string Remarks { get; set; }
 
         public TimeSpan Timeout { get; set; }

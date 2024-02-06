@@ -62,8 +62,7 @@ namespace GameSelector.Controllers
             var games = _gameDataBridge.GetAllGames();
             foreach (var game in games)
             {
-                game.OccupiedBy = occupant;
-                _userView.ShowGameImmediate(GameDataView.FromGame(game));
+                _userView.ShowGameImmediate(GameDataView.FromGame(game), GroupDataView.FromGroup(occupant));
                 Thread.Sleep(1000);
             }
         }
@@ -156,14 +155,14 @@ namespace GameSelector.Controllers
 
                 selectedGame = possibleGames[0];
 
-                selectedGame.StartTime = DateTime.Now;
-                selectedGame.OccupiedBy = group;
+                group.StartTime = DateTime.Now;
+                group.CurrentlyPlaying = selectedGame;
 
                 newNdefData = new NdefMessage(
                     group.ScoutingName,
                     group.Name,
                     selectedGame.Code,
-                    selectedGame.StartTime.Value.ToString("HH:mm:ss")
+                    group.StartTime.Value.ToString("HH:mm:ss")
                 );
             }
 
@@ -171,7 +170,7 @@ namespace GameSelector.Controllers
 
             if (success && selectedGame != null)
             {
-                _gameDataBridge.UpdateGame(selectedGame);
+                _groupDataBridge.UpdateGroup(group);
                 newGame = selectedGame;
             }
 
@@ -181,23 +180,21 @@ namespace GameSelector.Controllers
         private void EndGameFor(Game currentGame, Group group)
         {
             if (currentGame == null) return;
-
-            Debug.Assert(currentGame.StartTime.HasValue);
+            if (!group.StartTime.HasValue) return;
 
             var playedGame = new PlayedGame
             {
                 Player = group,
                 Game = currentGame,
-                StartTime = currentGame.StartTime ?? DateTime.MinValue,
+                StartTime = group.StartTime ?? DateTime.MinValue,
                 EndTime = DateTime.Now,
             };
 
             _playedGameDataBridge.InsertPlayedGame(playedGame);
 
-            currentGame.OccupiedBy = null;
-            currentGame.StartTime = null;
+            group.StartTime = null;
 
-            _gameDataBridge.UpdateGame(currentGame);
+            _groupDataBridge.UpdateGroup(group);
         }
 
         private void LogUserIn()
@@ -208,9 +205,9 @@ namespace GameSelector.Controllers
 
             if (group.IsAdmin) return; // admin groups can't play games
 
-            var currentGame = _gameDataBridge.GetGameOccupiedBy(group);
+            var currentGame = group.CurrentlyPlaying;
 
-            if (currentGame != null && (DateTime.Now - currentGame.StartTime < TimeSpan.FromMinutes(GlobalSettings.GameTimeoutMinutes)))
+            if (currentGame != null && (DateTime.Now - group.StartTime < TimeSpan.FromMinutes(GlobalSettings.GameTimeoutMinutes)))
             {
                 _loggedInUser = _currentCard;
                 _userView.ShowAlreadyPlaying(GameDataView.FromGame(currentGame));
@@ -229,7 +226,7 @@ namespace GameSelector.Controllers
                 return;
             }
 
-            _userView.ShowGame(GameDataView.FromGame(newGame));
+            _userView.ShowGame(GameDataView.FromGame(newGame), GroupDataView.FromGroup(group));
         }
 
         private void OnCardInserted(object value)

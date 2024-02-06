@@ -7,6 +7,8 @@ namespace GameSelector.Model
     {
         IEnumerable<Group> GetAllGroups();
 
+        IEnumerable<Group> GetAllGroupsPlaying(Game game);
+
         Group GetGroup(string cardId);
 
         Group GetGroup(long id);

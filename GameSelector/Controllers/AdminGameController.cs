@@ -39,7 +39,7 @@ namespace GameSelector.Controllers
                 { "RequestSaveGame", OnRequestSaveGame },
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestDeleteGame", OnRequestDeleteGame },
-                { "RequestForceEndGame", OnRequestForceEndGame },
+                { "RequestForceEndGameForGroup", OnRequestForceEndGameForGroup },
                 { "RequestPlayedGames", OnRequestPlayedGames },
                 { "RequestGameTimeoutCheck", RequestGameTimeoutCheck },
             });
@@ -49,7 +49,6 @@ namespace GameSelector.Controllers
         {
             var gdv = GameDataView.FromGame(e.Game);
             _adminView.UpdateGame(gdv);
-            _adminView.UpdateGroup(gdv.OccupiedBy);
         }
 
         private void SchedulePeriodicGameTimeoutCheck()
@@ -122,7 +121,7 @@ namespace GameSelector.Controllers
             var game = _gameDataBridge.GetGame(gameDataView.Id);
 
             // Do some sanity checks:
-            if (game.OccupiedBy != null)
+            if (_groupDataBridge.GetAllGroupsPlaying(game).Any())
             {
                 _adminView.ShowError("Verwijderen mislukt: Spel wordt momenteel gespeeld");
                 return;
@@ -140,34 +139,33 @@ namespace GameSelector.Controllers
             UpdateGamesList(_gameDataBridge.GetAllGames());
         }
 
-        private void ForceEndGame(Group group, Game game)
+        private void ForceEndGame(Group group)
         {
+            var game = _gameDataBridge.GetGameBeingPlayedBy(group);
+
             var playedGame = new PlayedGame
             {
                 Player = group,
                 Game = game,
-                StartTime = game.StartTime ?? DateTime.MinValue,
+                StartTime = group.StartTime ?? DateTime.MinValue,
                 EndTime = DateTime.MinValue,
             };
 
             _playedGameDataBridge.InsertPlayedGame(playedGame);
+            group.StartTime = null;
 
-            game.OccupiedBy = null;
-            game.StartTime = null;
-
-            _gameDataBridge.UpdateGame(game);
+            _groupDataBridge.UpdateGroup(group);
         }
 
-        private void OnRequestForceEndGame(object value)
+        private void OnRequestForceEndGameForGroup(object value)
         {
-            Debug.Assert(value is GameDataView);
+            Debug.Assert(value is GroupDataView);
 
-            var gdv = (GameDataView)value;
+            var gdv = (GroupDataView)value;
 
-            var group = _groupDataBridge.GetGroup(gdv.OccupiedBy.Id);
-            var game = _gameDataBridge.GetGame(gdv.Id);
+            var group = _groupDataBridge.GetGroup(gdv.Id);
 
-            ForceEndGame(group, game);
+            ForceEndGame(group);
         }
 
         private void OnRequestPlayedGames(object value)
@@ -189,20 +187,27 @@ namespace GameSelector.Controllers
         {
             Debug.Assert(value is null);
 
-            var allGames = _gameDataBridge.GetAllGames();
+            var allGroups = _groupDataBridge.GetAllGroups();
 
-            foreach (var game in allGames)
+            foreach (var group in allGroups)
             {
-                if (!game.StartTime.HasValue || game.Timeout.Ticks == 0)
+                if (!group.StartTime.HasValue)
+                {
+                    continue;
+                }
+
+                var game = _gameDataBridge.GetGameBeingPlayedBy(group);
+
+                if (game == null)
                 {
                     continue;
                 }
 
                 var now = DateTime.Now;
 
-                if (game.StartTime.Value + game.Timeout > now)
+                if (group.StartTime.Value + game.Timeout > now)
                 {
-                    ForceEndGame(game.OccupiedBy, game);
+                    ForceEndGame(group);
                 }
             }
         }

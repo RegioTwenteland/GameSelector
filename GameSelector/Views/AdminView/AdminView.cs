@@ -219,6 +219,21 @@ namespace GameSelector.Views
             cardIdTextbox.Text = "";
         }
 
+        private void endGameForGroup_Click(object sender, EventArgs e)
+        {
+            var gdv = GetCurrentGroupDataView();
+
+            if (gdv != null && gdv.CurrentGame != null)
+            {
+                var confirm = MessageBox.Show("Weet je zeker dat je dit spel geforceerd wil beëindigen?", "", MessageBoxButtons.YesNo);
+
+                if (confirm == DialogResult.Yes)
+                {
+                    SendMessage("RequestForceEndGameForGroup", gdv);
+                }
+            }
+        }
+
         private void GroupDataChanged(object sender, EventArgs e)
         {
             if (!_groupDataUserControl) return;
@@ -384,21 +399,6 @@ namespace GameSelector.Views
                 SendMessage("RequestDeleteGame", gdv);
         }
 
-        private void ForceEndGameButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGameDataView();
-
-            if (gdv != null && gdv.OccupiedBy != null)
-            {
-                var confirm = MessageBox.Show("Weet je zeker dat je dit spel geforceerd wil beëindigen?", "", MessageBoxButtons.YesNo);
-
-                if (confirm == DialogResult.Yes)
-                {
-                    SendMessage("RequestForceEndGame", gdv);
-                }
-            }
-        }
-
         private void GameDataChanged(object sender, EventArgs e)
         {
             if (!_gameDataUserControl) return;
@@ -440,7 +440,6 @@ namespace GameSelector.Views
             gameActiveCheckbox.Checked = false;
             gameColorComboBox.Text = string.Empty;
             gamePriorityCheckbox.Checked = false;
-            currentOccupantTextbox.Text = string.Empty;
             gameRemarksText.Text = string.Empty;
             saveGameButton.Text = SaveText;
             timeoutNumber.Value = 0;
@@ -457,9 +456,6 @@ namespace GameSelector.Views
             timeoutNumber.Value = game.TimeoutMinutes;
 
             saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
-
-            if (game.OccupiedBy != null)
-                currentOccupantTextbox.Text = $"{game.OccupiedBy.ScoutingName} - {game.OccupiedBy.GroupName} ({game.StartTime.ToString("HH:mm:ss")})";
         }
 
         public void UpdateGame(GameDataView game)

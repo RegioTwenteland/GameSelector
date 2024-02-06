@@ -18,47 +18,42 @@ namespace GameSelector.SQLite
         public IEnumerable<SQLiteGame> GetAllGames()
         {
             return new SQLQuery(_connection)
-                .Select<SQLiteGame>().Select<SQLiteGroup>()
+                .Select<SQLiteGame>()
                 .From<SQLiteGame>()
-                .LeftJoin<SQLiteGroup>()
-                .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.OccupiedById), nameof(SQLiteGroup.Id))
                 .Execute()
-                .Get<SQLiteGame>()
-                .ToList();
+                .Get<SQLiteGame>();
         }
 
         public IEnumerable<SQLiteGame> GetAllGamesNotOccupied()
         {
             return new SQLQuery(_connection)
-                .Select<SQLiteGame>()
-                .From<SQLiteGame>()
-                .Where<SQLiteGame>(nameof(SQLiteGame.OccupiedById)).EqualsNull()
+                .Select<SQLiteGame>().From<SQLiteGame>()
+                .LeftJoin<SQLiteGroup>()
+                .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.Id), nameof(SQLiteGroup.CurrentlyPlayingId))
+                .Where<SQLiteGroup>(nameof(SQLiteGroup.Id)).EqualsNull()
+                .GroupBy<SQLiteGame>(nameof(SQLiteGame.Id))
                 .Execute()
-                .Get<SQLiteGame>()
-                .ToList();
+                .Get<SQLiteGame>();
         }
 
-        public SQLiteGame GetGameById(long id)
+        public SQLiteGame GetGameBeingPlayedBy(long groupId)
         {
             return new SQLQuery(_connection)
-                .Select<SQLiteGame>().Select<SQLiteGroup>()
-                .From<SQLiteGame>()
+                .Select<SQLiteGame>().From<SQLiteGame>()
                 .LeftJoin<SQLiteGroup>()
-                .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.OccupiedById), nameof(SQLiteGroup.Id))
-                .Where<SQLiteGame>(nameof(SQLiteGame.Id)).Equals(id)
+                .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.Id), nameof(SQLiteGroup.CurrentlyPlayingId))
+                .Where<SQLiteGroup>(nameof(SQLiteGroup.Id)).Equals(groupId)
                 .Execute()
                 .Get<SQLiteGame>()
                 .SingleOrDefault();
         }
 
-        public SQLiteGame GetGameOccupiedBy(long playerId)
+        public SQLiteGame GetGameById(long id)
         {
             return new SQLQuery(_connection)
-                .Select<SQLiteGame>().Select<SQLiteGroup>()
+                .Select<SQLiteGame>()
                 .From<SQLiteGame>()
-                .LeftJoin<SQLiteGroup>()
-                .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.OccupiedById), nameof(SQLiteGroup.Id))
-                .Where<SQLiteGame>(nameof(SQLiteGame.OccupiedById)).Equals(playerId)
+                .Where<SQLiteGame>(nameof(SQLiteGame.Id)).Equals(id)
                 .Execute()
                 .Get<SQLiteGame>()
                 .SingleOrDefault();

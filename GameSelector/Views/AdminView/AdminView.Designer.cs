@@ -60,15 +60,12 @@
             this.timeoutNumber = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.ForceEndGameButton = new System.Windows.Forms.Button();
             this.gameActiveCheckbox = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
             this.gameRemarksText = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.gamePriorityCheckbox = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.currentOccupantTextbox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.saveGameButton = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -94,6 +91,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.endGameForGroup = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -161,6 +159,7 @@
             // 
             // groupsTab
             // 
+            this.groupsTab.Controls.Add(this.endGameForGroup);
             this.groupsTab.Controls.Add(this.groupRemarksText);
             this.groupsTab.Controls.Add(this.label16);
             this.groupsTab.Controls.Add(this.showPlayedGamesButton);
@@ -369,7 +368,7 @@
             this.currentGameText.Enabled = false;
             this.currentGameText.Location = new System.Drawing.Point(260, 81);
             this.currentGameText.Name = "currentGameText";
-            this.currentGameText.Size = new System.Drawing.Size(302, 20);
+            this.currentGameText.Size = new System.Drawing.Size(262, 20);
             this.currentGameText.TabIndex = 100;
             // 
             // label4
@@ -386,15 +385,12 @@
             this.gamesTab.Controls.Add(this.timeoutNumber);
             this.gamesTab.Controls.Add(this.label20);
             this.gamesTab.Controls.Add(this.label19);
-            this.gamesTab.Controls.Add(this.ForceEndGameButton);
             this.gamesTab.Controls.Add(this.gameActiveCheckbox);
             this.gamesTab.Controls.Add(this.label18);
             this.gamesTab.Controls.Add(this.gameRemarksText);
             this.gamesTab.Controls.Add(this.label17);
             this.gamesTab.Controls.Add(this.gamePriorityCheckbox);
             this.gamesTab.Controls.Add(this.label15);
-            this.gamesTab.Controls.Add(this.currentOccupantTextbox);
-            this.gamesTab.Controls.Add(this.label11);
             this.gamesTab.Controls.Add(this.saveGameButton);
             this.gamesTab.Controls.Add(this.label10);
             this.gamesTab.Controls.Add(this.flowLayoutPanel1);
@@ -416,7 +412,7 @@
             // 
             // timeoutNumber
             // 
-            this.timeoutNumber.Location = new System.Drawing.Point(270, 364);
+            this.timeoutNumber.Location = new System.Drawing.Point(270, 335);
             this.timeoutNumber.Name = "timeoutNumber";
             this.timeoutNumber.Size = new System.Drawing.Size(198, 20);
             this.timeoutNumber.TabIndex = 114;
@@ -425,7 +421,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(474, 366);
+            this.label20.Location = new System.Drawing.Point(474, 337);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(45, 13);
             this.label20.TabIndex = 113;
@@ -433,22 +429,12 @@
             // 
             // label19
             // 
-            this.label19.Location = new System.Drawing.Point(171, 364);
+            this.label19.Location = new System.Drawing.Point(171, 335);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(93, 17);
             this.label19.TabIndex = 112;
             this.label19.Text = "Timeout";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ForceEndGameButton
-            // 
-            this.ForceEndGameButton.Location = new System.Drawing.Point(499, 209);
-            this.ForceEndGameButton.Name = "ForceEndGameButton";
-            this.ForceEndGameButton.Size = new System.Drawing.Size(31, 23);
-            this.ForceEndGameButton.TabIndex = 110;
-            this.ForceEndGameButton.Text = "✖";
-            this.ForceEndGameButton.UseVisualStyleBackColor = true;
-            this.ForceEndGameButton.Click += new System.EventHandler(this.ForceEndGameButton_Click);
             // 
             // gameActiveCheckbox
             // 
@@ -470,7 +456,7 @@
             // 
             // gameRemarksText
             // 
-            this.gameRemarksText.Location = new System.Drawing.Point(270, 237);
+            this.gameRemarksText.Location = new System.Drawing.Point(270, 208);
             this.gameRemarksText.Name = "gameRemarksText";
             this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
             this.gameRemarksText.TabIndex = 107;
@@ -480,7 +466,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(171, 288);
+            this.label17.Location = new System.Drawing.Point(171, 259);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(70, 13);
             this.label17.TabIndex = 106;
@@ -505,25 +491,9 @@
             this.label15.TabIndex = 101;
             this.label15.Text = "Prioriteit";
             // 
-            // currentOccupantTextbox
-            // 
-            this.currentOccupantTextbox.Enabled = false;
-            this.currentOccupantTextbox.Location = new System.Drawing.Point(270, 211);
-            this.currentOccupantTextbox.Name = "currentOccupantTextbox";
-            this.currentOccupantTextbox.Size = new System.Drawing.Size(223, 20);
-            this.currentOccupantTextbox.TabIndex = 7;
-            // 
-            // label11
-            // 
-            this.label11.Location = new System.Drawing.Point(171, 214);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(93, 17);
-            this.label11.TabIndex = 100;
-            this.label11.Text = "Huidige bezetting";
-            // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 389);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 360);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -776,6 +746,16 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
+            // endGameForGroup
+            // 
+            this.endGameForGroup.Location = new System.Drawing.Point(531, 79);
+            this.endGameForGroup.Name = "endGameForGroup";
+            this.endGameForGroup.Size = new System.Drawing.Size(31, 23);
+            this.endGameForGroup.TabIndex = 106;
+            this.endGameForGroup.Text = "✖";
+            this.endGameForGroup.UseVisualStyleBackColor = true;
+            this.endGameForGroup.Click += new System.EventHandler(this.endGameForGroup_Click);
+            // 
             // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -835,8 +815,6 @@
         private System.Windows.Forms.Label label10;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private System.Windows.Forms.Button saveGameButton;
-        private System.Windows.Forms.TextBox currentOccupantTextbox;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ListBox groupsListBox;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button addGroupButton;
@@ -866,11 +844,11 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox gameActiveCheckbox;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Button ForceEndGameButton;
         private System.Windows.Forms.Button testUserViewButton;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.NumericUpDown timeoutNumber;
+        private System.Windows.Forms.Button endGameForGroup;
     }
 }
 

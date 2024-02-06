@@ -28,7 +28,6 @@ namespace GameSelector.Controllers
             _gameDataBridge = gameDataBridge;
 
             _gameState.StateChanged += OnGameStateChanged;
-            _gameDataBridge.GameUpdated += OnGameUpdated;
 
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
@@ -38,11 +37,6 @@ namespace GameSelector.Controllers
                 { "RequestStartStopGame", OnRequestStartStopGame },
                 { "SaveGameTimeout", OnSaveGameTimeout }
             });
-        }
-
-        private void OnGameUpdated(object sender, GameUpdatedEventArgs e)
-        {
-            _adminView.UpdateGroup(GroupDataView.FromGroup(e.Game.OccupiedBy));
         }
 
         public override void Start(Action stop)

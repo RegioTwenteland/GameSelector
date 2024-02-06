@@ -10,6 +10,11 @@
             _whereSyntax = whereSyntax;
         }
 
+        public GroupBySyntax GroupBy<Table>(string col)
+        {
+            return new GroupBySyntax(Metadata, this, typeof(Table), col);
+        }
+
         public override string Generate() =>
             $"{_whereSyntax.Generate()} IS NULL";
     }

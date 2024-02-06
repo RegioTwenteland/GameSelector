@@ -36,6 +36,12 @@ namespace GameSelector.SQLite
         [SQLiteForeignKey]
         public SQLiteGame CurrentlyPlaying { get; set; }
 
+        [SQLiteColumn(Name = "currently_playing")]
+        public long? CurrentlyPlayingId { get; set; }
+
+        [SQLiteColumn(Name = "start_time")]
+        public long? StartTime { get; set; }
+
         [SQLiteColumn(Name = "remarks")]
         public string Remarks { get; set; }
     }

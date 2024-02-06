@@ -36,18 +36,6 @@ namespace GameSelector.SQLite
         [SQLiteColumn(Name = "priority")]
         public long Priority { get; set; }
 
-        [SQLiteColumn(Name = "occupied_by")]
-        public long? OccupiedById { get; set; }
-
-        /// <summary>
-        /// Warning: read-only. Don't use for modifying.
-        /// </summary>
-        [SQLiteForeignKey]
-        public SQLiteGroup OccupiedBy { get; set; }
-
-        [SQLiteColumn(Name = "start_time")]
-        public long? StartTime { get; set; }
-
         [SQLiteColumn(Name = "remarks")]
         public string Remarks { get; set; }
 

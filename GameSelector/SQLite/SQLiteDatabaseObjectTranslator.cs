@@ -18,8 +18,6 @@ namespace GameSelector.SQLite
                 Active = game.Active ? 1 : 0,
                 Color = game.Color,
                 Priority = game.HasPriority ? 1 : 0,
-                OccupiedById = game.OccupiedBy?.Id,
-                StartTime = game.StartTime.HasValue ? (long?)game.StartTime.Value.Ticks : null,
                 Remarks = game.Remarks ?? "",
                 Timeout = game.Timeout.Ticks,
             };
@@ -36,6 +34,8 @@ namespace GameSelector.SQLite
                 Name = group.Name,
                 ScoutingName = group.ScoutingName,
                 IsAdmin = group.IsAdmin ? 1 : 0,
+                CurrentlyPlayingId = group.CurrentlyPlaying?.Id,
+                StartTime = group.StartTime.HasValue ? (long?)group.StartTime.Value.Ticks : null,
                 Remarks = group.Remarks ?? "",
             };
         }
@@ -54,7 +54,7 @@ namespace GameSelector.SQLite
             };
         }
 
-        public Game ToGame(SQLiteGame dbGame, Group group = null)
+        public Game ToGame(SQLiteGame dbGame)
         {
             if (dbGame == null) return null;
             if (dbGame.Id == 0) return null;
@@ -68,17 +68,14 @@ namespace GameSelector.SQLite
                 Active = dbGame.Active == 0 ? false : true,
                 Color = dbGame.Color,
                 HasPriority = dbGame.Priority == 0 ? false : true,
-                StartTime = dbGame.StartTime.HasValue ? (DateTime?)new DateTime(dbGame.StartTime.Value) : null,
                 Remarks = dbGame.Remarks,
                 Timeout = new TimeSpan(dbGame.Timeout),
             };
 
-            output.OccupiedBy = group ?? ToGroup(dbGame.OccupiedBy, output);
-
             return output;
         }
 
-        public Group ToGroup(SQLiteGroup dbGroup, Game game = null)
+        public Group ToGroup(SQLiteGroup dbGroup)
         {
             if (dbGroup == null) return null;
             if (dbGroup.Id == 0) return null;
@@ -90,10 +87,10 @@ namespace GameSelector.SQLite
                 Name = dbGroup.Name,
                 ScoutingName = dbGroup.ScoutingName,
                 IsAdmin = dbGroup.IsAdmin != 0,
+                CurrentlyPlaying = ToGame(dbGroup.CurrentlyPlaying),
+                StartTime = dbGroup.StartTime.HasValue ? (DateTime?)new DateTime(dbGroup.StartTime.Value) : null,
                 Remarks = dbGroup.Remarks,
             };
-
-            output.CurrentlyPlaying = game ?? ToGame(dbGroup.CurrentlyPlaying, output);
 
             return output;
         }
