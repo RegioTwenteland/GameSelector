@@ -25,10 +25,10 @@ namespace GameSelector.SQLite
                 .Select(dbG => _objectTranslator.ToGame(dbG));
         }
 
-        public IEnumerable<Game> GetAllGamesNotOccupied()
+        public IEnumerable<Game> GetAllGamesAvailable()
         {
             return
-                _gamesTable.GetAllGamesNotOccupied()
+                _gamesTable.GetAllGamesAvailable()
                 .Select(dbG => _objectTranslator.ToGame(dbG));
         }
 

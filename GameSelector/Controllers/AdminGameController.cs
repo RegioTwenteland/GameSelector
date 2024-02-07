@@ -86,6 +86,7 @@ namespace GameSelector.Controllers
             game.HasPriority = gameDataView.HasPriority;
             game.Remarks = gameDataView.Remarks;
             game.Timeout = TimeSpan.FromMinutes(gameDataView.TimeoutMinutes);
+            game.MaxPlayerAmount = gameDataView.MaxPlayerAmount;
 
             _gameDataBridge.UpdateGame(game);
 

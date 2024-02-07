@@ -90,7 +90,7 @@ namespace GameSelector.Controllers
             _userView.SetGameCodes(codes.ToArray());
         }
 
-        private List<Game> GetPossibleGames(IEnumerable<Game> gamesNotOccupied, IEnumerable<PlayedGame> playedGames, Group group)
+        private List<Game> GetPossibleGames(IEnumerable<Game> gamesAvailable, IEnumerable<PlayedGame> playedGames, Group group)
         {
             var playedGameIds = new HashSet<long>();
             foreach (var game in playedGames)
@@ -99,7 +99,7 @@ namespace GameSelector.Controllers
             }
 
             var possibleGames = new List<Game>();
-            foreach (var game in gamesNotOccupied)
+            foreach (var game in gamesAvailable)
             {
                 if (!playedGameIds.Contains(game.Id) && game.Active)
                 {
@@ -128,10 +128,10 @@ namespace GameSelector.Controllers
         {
             newGame = null;
 
-            var gamesNotOccupied = _gameDataBridge.GetAllGamesNotOccupied();
+            var gamesAvailable = _gameDataBridge.GetAllGamesAvailable();
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
 
-            var possibleGames = GetPossibleGames(gamesNotOccupied, playedGames, group);
+            var possibleGames = GetPossibleGames(gamesAvailable, playedGames, group);
 
             Game selectedGame = null;
 

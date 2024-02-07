@@ -415,6 +415,7 @@ namespace GameSelector.Views
             gdv.HasPriority = gamePriorityCheckbox.Checked;
             gdv.Remarks = gameRemarksText.Text;
             gdv.TimeoutMinutes = (long)timeoutNumber.Value;
+            gdv.MaxPlayerAmount = (long)maxPlayerAmountNumber.Value;
             gdv.UnsavedChanges = true;
             saveGameButton.Text = SaveText + UnsavedModifier;
         }
@@ -443,6 +444,7 @@ namespace GameSelector.Views
             gameRemarksText.Text = string.Empty;
             saveGameButton.Text = SaveText;
             timeoutNumber.Value = 0;
+            maxPlayerAmountNumber.Value = 0;
 
             if (game == null) return;
 
@@ -454,6 +456,7 @@ namespace GameSelector.Views
             gamePriorityCheckbox.Checked = game.HasPriority;
             gameRemarksText.Text = game.Remarks;
             timeoutNumber.Value = game.TimeoutMinutes;
+            maxPlayerAmountNumber.Value = game.MaxPlayerAmount;
 
             saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
         }

@@ -24,14 +24,16 @@ namespace GameSelector.SQLite
                 .Get<SQLiteGame>();
         }
 
-        public IEnumerable<SQLiteGame> GetAllGamesNotOccupied()
+        public IEnumerable<SQLiteGame> GetAllGamesAvailable()
         {
             return new SQLQuery(_connection)
                 .Select<SQLiteGame>().From<SQLiteGame>()
                 .LeftJoin<SQLiteGroup>()
                 .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.Id), nameof(SQLiteGroup.CurrentlyPlayingId))
-                .Where<SQLiteGroup>(nameof(SQLiteGroup.Id)).EqualsNull()
                 .GroupBy<SQLiteGame>(nameof(SQLiteGame.Id))
+                .Having()
+                .Count<SQLiteGame>(nameof(SQLiteGame.Id))
+                .LessThan<SQLiteGame>(nameof(SQLiteGame.MaxPlayerAmount))
                 .Execute()
                 .Get<SQLiteGame>();
         }
@@ -64,7 +66,7 @@ namespace GameSelector.SQLite
             var rowsUpdated = new SQLQuery(_connection)
                 .Update<SQLiteGame>()
                 .Set(game)
-                .Where<SQLiteGame>(nameof(SQLiteGame.Id))
+                .Where<SQLiteGame>(nameof(SQLiteGame.Id)).Equals(game.Id)
                 .ExecuteNonQuery();
 
             Debug.Assert(rowsUpdated == 1);

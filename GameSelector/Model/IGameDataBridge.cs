@@ -9,7 +9,7 @@ namespace GameSelector.Model
 
         IEnumerable<Game> GetAllGames();
 
-        IEnumerable<Game> GetAllGamesNotOccupied();
+        IEnumerable<Game> GetAllGamesAvailable();
 
         Game GetGameBeingPlayedBy(Group group);
 

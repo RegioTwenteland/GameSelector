@@ -32,6 +32,11 @@ namespace GameSelector.SQLite.SQLSyntax.Select
             return new LeftJoinSyntax(Metadata, this, typeof(Table));
         }
 
+        public GroupBySyntax GroupBy<Table>(string col)
+        {
+            return new GroupBySyntax(Metadata, this, typeof(Table), col);
+        }
+
         public override string Generate() =>
             $"{_leftJoinSyntax.Generate()} ON " +
             $"`{SQLiteHelper.GetTableName(_table1)}`.`{_col1}` = `{SQLiteHelper.GetTableName(_table2)}`.`{_col2}`";

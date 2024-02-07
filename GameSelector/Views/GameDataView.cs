@@ -25,6 +25,8 @@ namespace GameSelector.Views
 
         public long TimeoutMinutes { get; set; }
 
+        public long MaxPlayerAmount { get; set; }
+
         public bool UnsavedChanges { get; set; } = false;
 
         public override string ToString()
@@ -50,6 +52,7 @@ namespace GameSelector.Views
                 StartTime = startTime,
                 Remarks = game.Remarks,
                 TimeoutMinutes = game.Timeout.Minutes,
+                MaxPlayerAmount = game.MaxPlayerAmount,
             };
         }
     }

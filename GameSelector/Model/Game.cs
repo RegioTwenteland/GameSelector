@@ -34,5 +34,7 @@ namespace GameSelector.Model
         public string Remarks { get; set; }
 
         public TimeSpan Timeout { get; set; }
+
+        public long MaxPlayerAmount { get; set; } = 1;
     }
 }

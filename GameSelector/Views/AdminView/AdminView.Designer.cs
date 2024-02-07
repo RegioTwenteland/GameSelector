@@ -36,6 +36,7 @@
             this.scoutingNameTextbox = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.groupsTab = new System.Windows.Forms.TabPage();
+            this.endGameForGroup = new System.Windows.Forms.Button();
             this.groupRemarksText = new System.Windows.Forms.RichTextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.showPlayedGamesButton = new System.Windows.Forms.Button();
@@ -91,7 +92,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.endGameForGroup = new System.Windows.Forms.Button();
+            this.maxPlayerAmountNumber = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -99,6 +101,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.adminTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).BeginInit();
             this.SuspendLayout();
             // 
             // saveGroupButton
@@ -189,6 +192,16 @@
             this.groupsTab.TabIndex = 100;
             this.groupsTab.Text = "Groepen";
             this.groupsTab.UseVisualStyleBackColor = true;
+            // 
+            // endGameForGroup
+            // 
+            this.endGameForGroup.Location = new System.Drawing.Point(531, 79);
+            this.endGameForGroup.Name = "endGameForGroup";
+            this.endGameForGroup.Size = new System.Drawing.Size(31, 23);
+            this.endGameForGroup.TabIndex = 106;
+            this.endGameForGroup.Text = "✖";
+            this.endGameForGroup.UseVisualStyleBackColor = true;
+            this.endGameForGroup.Click += new System.EventHandler(this.endGameForGroup_Click);
             // 
             // groupRemarksText
             // 
@@ -382,6 +395,8 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.maxPlayerAmountNumber);
+            this.gamesTab.Controls.Add(this.label21);
             this.gamesTab.Controls.Add(this.timeoutNumber);
             this.gamesTab.Controls.Add(this.label20);
             this.gamesTab.Controls.Add(this.label19);
@@ -493,7 +508,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 360);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 406);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -746,15 +761,22 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
-            // endGameForGroup
+            // maxPlayerAmountNumber
             // 
-            this.endGameForGroup.Location = new System.Drawing.Point(531, 79);
-            this.endGameForGroup.Name = "endGameForGroup";
-            this.endGameForGroup.Size = new System.Drawing.Size(31, 23);
-            this.endGameForGroup.TabIndex = 106;
-            this.endGameForGroup.Text = "✖";
-            this.endGameForGroup.UseVisualStyleBackColor = true;
-            this.endGameForGroup.Click += new System.EventHandler(this.endGameForGroup_Click);
+            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 361);
+            this.maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
+            this.maxPlayerAmountNumber.Size = new System.Drawing.Size(260, 20);
+            this.maxPlayerAmountNumber.TabIndex = 117;
+            this.maxPlayerAmountNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label21
+            // 
+            this.label21.Location = new System.Drawing.Point(171, 361);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(93, 17);
+            this.label21.TabIndex = 115;
+            this.label21.Text = "Max spelers";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // AdminView
             // 
@@ -781,6 +803,7 @@
             this.flowLayoutPanel1.PerformLayout();
             this.adminTab.ResumeLayout(false);
             this.adminTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -849,6 +872,8 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.NumericUpDown timeoutNumber;
         private System.Windows.Forms.Button endGameForGroup;
+        private System.Windows.Forms.NumericUpDown maxPlayerAmountNumber;
+        private System.Windows.Forms.Label label21;
     }
 }
 
