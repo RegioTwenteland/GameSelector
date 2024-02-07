@@ -153,6 +153,7 @@ namespace GameSelector.Controllers
             };
 
             _playedGameDataBridge.InsertPlayedGame(playedGame);
+            group.CurrentlyPlaying = null;
             group.StartTime = null;
 
             _groupDataBridge.UpdateGroup(group);

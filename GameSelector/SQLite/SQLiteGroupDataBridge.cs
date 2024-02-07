@@ -1,4 +1,5 @@
 ﻿using GameSelector.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace GameSelector.SQLite
     {
         private readonly SQLiteGroupsTable _groupsTable;
         private readonly SQLiteDatabaseObjectTranslator _objectTranslator;
+
+        public event EventHandler<GroupUpdatedEventArgs> GroupUpdated;
 
         public SQLiteGroupDataBridge(SQLiteDatabase database)
         {
@@ -43,6 +46,8 @@ namespace GameSelector.SQLite
         public void UpdateGroup(Group group)
         {
             _groupsTable.UpdateGroup(_objectTranslator.ToSQLiteGroup(group));
+
+            GroupUpdated?.Invoke(this, new GroupUpdatedEventArgs { Group = group });
         }
 
         public void InsertGroup(Group group)

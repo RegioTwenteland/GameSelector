@@ -29,12 +29,20 @@ namespace GameSelector.Controllers
             _gameDataBridge = gameDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
 
+            _groupDataBridge.GroupUpdated += OnGroupUpdated;
+
             SetMessageHandlers(new Dictionary<string, Action<object>>
             {
                 { "RequestSaveGroup", OnRequestSaveGroup },
                 { "RequestNewGroup", OnRequestNewGroup },
                 { "RequestDeleteGroup", OnRequestDeleteGroup },
             });
+        }
+
+        private void OnGroupUpdated(object sender, GroupUpdatedEventArgs e)
+        {
+            var gdv = GroupDataView.FromGroup(e.Group);
+            _adminView.UpdateGroup(gdv);
         }
 
         public override void Start(Action stop)

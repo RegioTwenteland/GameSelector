@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="AudioPlayer.cs" />
     <Compile Include="MessageSender.cs" />
+    <Compile Include="Model\GroupUpdatedEventArgs.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />

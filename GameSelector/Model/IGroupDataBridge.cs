@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameSelector.Model
 {
     internal interface IGroupDataBridge
     {
+        event EventHandler<GroupUpdatedEventArgs> GroupUpdated;
+
         IEnumerable<Group> GetAllGroups();
 
         IEnumerable<Group> GetAllGroupsPlaying(Game game);
