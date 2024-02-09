@@ -116,6 +116,7 @@
     <Compile Include="SQLite\SQLSyntax\EqualsNullSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\EqualsLiteralSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\GroupBySyntax.cs" />
+    <Compile Include="SQLite\SQLSyntax\OrSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\Insert\InsertSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\LessThanSyntax.cs" />
     <Compile Include="SQLite\SQLSyntax\CountSyntax.cs" />

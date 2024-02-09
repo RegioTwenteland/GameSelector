@@ -2,12 +2,12 @@
 {
     internal class EqualsNullSyntax : SQLSyntax
     {
-        private WhereSyntax _whereSyntax;
+        private SQLSyntax _sqlSyntax;
 
-        public EqualsNullSyntax(QueryMetadata metadata, WhereSyntax whereSyntax)
+        public EqualsNullSyntax(QueryMetadata metadata, SQLSyntax parentSyntax)
             : base(metadata)
         {
-            _whereSyntax = whereSyntax;
+            _sqlSyntax = parentSyntax;
         }
 
         public GroupBySyntax GroupBy<Table>(string col)
@@ -16,6 +16,6 @@
         }
 
         public override string Generate() =>
-            $"{_whereSyntax.Generate()} IS NULL";
+            $"{_sqlSyntax.Generate()} IS NULL";
     }
 }

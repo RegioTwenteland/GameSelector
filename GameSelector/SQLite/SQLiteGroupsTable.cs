@@ -31,6 +31,7 @@ namespace GameSelector.SQLite
                 .Select<SQLiteGroup>().Select<SQLiteGame>()
                 .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
                 .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.CurrentlyPlayingId), nameof(SQLiteGame.Id))
+                .Where<SQLiteGame>(nameof(SQLiteGame.Id)).Equals(gameId)
                 .Execute()
                 .Get<SQLiteGroup>().ToList();
         }

@@ -34,6 +34,7 @@ namespace GameSelector.SQLite
                 .Having()
                 .Count<SQLiteGame>(nameof(SQLiteGame.Id))
                 .LessThan<SQLiteGame>(nameof(SQLiteGame.MaxPlayerAmount))
+                .Or<SQLiteGroup>(nameof(SQLiteGroup.Id)).EqualsNull()
                 .Execute()
                 .Get<SQLiteGame>();
         }

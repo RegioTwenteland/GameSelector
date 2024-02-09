@@ -21,6 +21,11 @@ namespace GameSelector.SQLite.SQLSyntax
             _col = SQLiteHelper.GetDbName(_table, prop);
         }
 
+        public OrSyntax Or<Table>(string prop)
+        {
+            return new OrSyntax(Metadata, this, typeof(Table), prop);
+        }
+
         public override string Generate() =>
             $"{_parentSyntax.Generate()} < `{SQLiteHelper.GetTableName(_table)}`.`{_col}`";
     }

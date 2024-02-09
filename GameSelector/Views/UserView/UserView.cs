@@ -84,7 +84,7 @@ namespace GameSelector.Views
         {
             _insertCardView.Hide();
 
-            gameAnnouncerLabel.Text = "Je hebt alle spellen al gespeeld!";
+            gameAnnouncerLabel.Text = "Er zijn geen spellen meer beschikbaar";
             gameCodeLabel.Text = "";
             gameDescriptionLabel.Text = "";
             gameExplanationLabel.Text = "";
