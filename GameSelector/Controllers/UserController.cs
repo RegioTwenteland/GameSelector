@@ -44,7 +44,7 @@ namespace GameSelector.Controllers
 
             userView.Ready += (s, e) => _gameState.StateChanged += OnStateChanged;
 
-            SetMessageHandlers(new Dictionary<string, Action<object>>
+            SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
                 { "CardInserted", OnCardInserted },
                 { "CardEjected", OnCardEjected},
@@ -54,9 +54,9 @@ namespace GameSelector.Controllers
             });
         }
 
-        private void OnTestUserView(object obj)
+        private void OnTestUserView(Message message)
         {
-            Debug.Assert(obj is null);
+            Debug.Assert(message.Value is null);
 
             var occupant = _groupDataBridge.GetAllGroups().OrderByDescending(g => g.Name.Length + g.ScoutingName.Length).First();
             var games = _gameDataBridge.GetAllGames();
@@ -229,11 +229,11 @@ namespace GameSelector.Controllers
             _userView.ShowGame(GameDataView.FromGame(newGame), GroupDataView.FromGroup(group));
         }
 
-        private void OnCardInserted(object value)
+        private void OnCardInserted(Message message)
         {
-            Debug.Assert(value is string);
+            Debug.Assert(message.Value is string);
 
-            _currentCard = (string)value;
+            _currentCard = (string)message.Value;
 
             if (_loggedInUser == string.Empty && _gameState.CurrentState != GameState.State.Paused)
                 LogUserIn();
@@ -241,9 +241,9 @@ namespace GameSelector.Controllers
 
         private bool _readyOnEject = false;
 
-        private void OnCardEjected(object value)
+        private void OnCardEjected(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             _currentCard = string.Empty;
 
@@ -254,11 +254,9 @@ namespace GameSelector.Controllers
             }
         }
 
-        private bool _tempDone = false;
-
-        private void OnAnimationComplete(object value)
+        private void OnAnimationComplete(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             if (_currentCard == _loggedInUser)
             {
@@ -270,9 +268,9 @@ namespace GameSelector.Controllers
             }
         }
 
-        private void OnUserViewReady(object value)
+        private void OnUserViewReady(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             _loggedInUser = string.Empty;
         }

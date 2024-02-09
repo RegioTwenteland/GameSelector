@@ -8,14 +8,13 @@ namespace GameSelector
         public Message(string key, object value)
         {
             CreatedAt = DateTime.Now;
-            Handled = false;
             Key = key;
             Value = value;
         }
 
-        public DateTime CreatedAt { get; }
+        public Guid Id { get; } = Guid.NewGuid();
 
-        public bool Handled { get; }
+        public DateTime CreatedAt { get; }
 
         public string Key { get; }
 

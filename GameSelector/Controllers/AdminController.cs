@@ -29,10 +29,10 @@ namespace GameSelector.Controllers
 
             _gameState.StateChanged += OnGameStateChanged;
 
-            SetMessageHandlers(new Dictionary<string, Action<object>>
+            SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
                 { "CardInserted", OnUserLogin },
-                { "CardEjected", o => { } },
+                { "CardEjected", m => { } },
                 { "ShowAdminError", ShowAdminError },
                 { "RequestStartStopGame", OnRequestStartStopGame },
                 { "SaveGameTimeout", OnSaveGameTimeout }
@@ -65,11 +65,11 @@ namespace GameSelector.Controllers
             }
         }
 
-        private void OnUserLogin(object value)
+        private void OnUserLogin(Message message)
         {
-            Debug.Assert(value is string);
+            Debug.Assert(message.Value is string);
 
-            var cardId = (string)value;
+            var cardId = (string)message.Value;
             var group = _groupDataBridge.GetGroup(cardId);
 
 
@@ -89,15 +89,15 @@ namespace GameSelector.Controllers
             _adminView.ShowLastScannedCardId(cardId);
         }
 
-        private void ShowAdminError(object value)
+        private void ShowAdminError(Message message)
         {
-            Debug.Assert(value is string);
-            ShowAdminError((string)value);
+            Debug.Assert(message.Value is string);
+            ShowAdminError((string)message.Value);
         }
 
-        private void OnRequestStartStopGame(object value)
+        private void OnRequestStartStopGame(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             if (_gameState.CurrentState == GameState.State.Paused)
             {
@@ -109,11 +109,11 @@ namespace GameSelector.Controllers
             }
         }
 
-        private void OnSaveGameTimeout(object value)
+        private void OnSaveGameTimeout(Message message)
         {
-            Debug.Assert(value is int);
+            Debug.Assert(message.Value is int);
 
-            GlobalSettings.GameTimeoutMinutes = (int)value;
+            GlobalSettings.GameTimeoutMinutes = (int)message.Value;
         }
     }
 }

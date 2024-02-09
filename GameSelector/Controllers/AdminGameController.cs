@@ -34,14 +34,14 @@ namespace GameSelector.Controllers
 
             _gameDataBridge.GameUpdated += OnGameUpdated;
 
-            SetMessageHandlers(new Dictionary<string, Action<object>>
+            SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
                 { "RequestSaveGame", OnRequestSaveGame },
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestDeleteGame", OnRequestDeleteGame },
                 { "RequestForceEndGameForGroup", OnRequestForceEndGameForGroup },
                 { "RequestPlayedGames", OnRequestPlayedGames },
-                { "RequestGameTimeoutCheck", RequestGameTimeoutCheck },
+                { "RequestGameTimeoutCheck", OnRequestTimeoutCheck },
             });
         }
 
@@ -70,11 +70,11 @@ namespace GameSelector.Controllers
             _adminView.SetGamesList(gdv);
         }
 
-        private void OnRequestSaveGame(object value)
+        private void OnRequestSaveGame(Message message)
         {
-            Debug.Assert(value is GameDataView);
+            Debug.Assert(message.Value is GameDataView);
 
-            var gameDataView = (GameDataView)value;
+            var gameDataView = (GameDataView)message.Value;
 
             var game = _gameDataBridge.GetGame(gameDataView.Id);
 
@@ -93,9 +93,9 @@ namespace GameSelector.Controllers
             _adminView.UpdateGame(gameDataView);
         }
 
-        private void OnRequestNewGame(object value)
+        private void OnRequestNewGame(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             var newGame = new Game
             {
@@ -113,11 +113,11 @@ namespace GameSelector.Controllers
             _adminView.SetGameSelected(games.First(g => g.Code == "Nieuw"));
         }
 
-        private void OnRequestDeleteGame(object value)
+        private void OnRequestDeleteGame(Message message)
         {
-            Debug.Assert(value is GameDataView);
+            Debug.Assert(message.Value is GameDataView);
 
-            var gameDataView = (GameDataView)value;
+            var gameDataView = (GameDataView)message.Value;
 
             var game = _gameDataBridge.GetGame(gameDataView.Id);
 
@@ -159,21 +159,21 @@ namespace GameSelector.Controllers
             _groupDataBridge.UpdateGroup(group);
         }
 
-        private void OnRequestForceEndGameForGroup(object value)
+        private void OnRequestForceEndGameForGroup(Message message)
         {
-            Debug.Assert(value is GroupDataView);
+            Debug.Assert(message.Value is GroupDataView);
 
-            var gdv = (GroupDataView)value;
+            var gdv = (GroupDataView)message.Value;
 
             var group = _groupDataBridge.GetGroup(gdv.Id);
 
             ForceEndGame(group);
         }
 
-        private void OnRequestPlayedGames(object value)
+        private void OnRequestPlayedGames(Message message)
         {
-            Debug.Assert(value is long);
-            var id = (long)value;
+            Debug.Assert(message.Value is long);
+            var id = (long)message.Value;
 
             var group = new Group
             {
@@ -185,9 +185,9 @@ namespace GameSelector.Controllers
             _adminView.ShowPlayedGames(playedGames);
         }
 
-        private void RequestGameTimeoutCheck(object value)
+        private void OnRequestTimeoutCheck(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             var allGroups = _groupDataBridge.GetAllGroups();
 

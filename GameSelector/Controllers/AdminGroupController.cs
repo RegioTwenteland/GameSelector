@@ -31,7 +31,7 @@ namespace GameSelector.Controllers
 
             _groupDataBridge.GroupUpdated += OnGroupUpdated;
 
-            SetMessageHandlers(new Dictionary<string, Action<object>>
+            SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
                 { "RequestSaveGroup", OnRequestSaveGroup },
                 { "RequestNewGroup", OnRequestNewGroup },
@@ -50,11 +50,11 @@ namespace GameSelector.Controllers
             UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }
 
-        private void OnRequestSaveGroup(object value)
+        private void OnRequestSaveGroup(Message message)
         {
-            Debug.Assert(value is GroupDataView);
+            Debug.Assert(message.Value is GroupDataView);
 
-            var groupDataView = (GroupDataView)value;
+            var groupDataView = (GroupDataView)message.Value;
 
             var group = _groupDataBridge.GetGroup(groupDataView.Id);
 
@@ -93,9 +93,9 @@ namespace GameSelector.Controllers
             _adminView.UpdateGroup(GroupDataView.FromGroup(group));
         }
 
-        private void OnRequestNewGroup(object value)
+        private void OnRequestNewGroup(Message message)
         {
-            Debug.Assert(value is null);
+            Debug.Assert(message.Value is null);
 
             var newGroup = new Group
             {
@@ -110,11 +110,11 @@ namespace GameSelector.Controllers
             _adminView.SetGroupSelected(groups.First(g => g.ScoutingName == "Nieuwe"));
         }
 
-        private void OnRequestDeleteGroup(object value)
+        private void OnRequestDeleteGroup(Message message)
         {
-            Debug.Assert(value is GroupDataView);
+            Debug.Assert(message.Value is GroupDataView);
 
-            var groupDataView = (GroupDataView)value;
+            var groupDataView = (GroupDataView)message.Value;
 
             var group = _groupDataBridge.GetGroup(groupDataView.Id);
 
