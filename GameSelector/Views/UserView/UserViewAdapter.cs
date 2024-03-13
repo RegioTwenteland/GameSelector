@@ -12,10 +12,9 @@ namespace GameSelector.Views
 
         public event EventHandler Ready;
 
-        public UserViewAdapter(MessageSender messageSender, AudioPlayer audioPlayer)
-            : base(messageSender)
+        public UserViewAdapter(TargetedMessageSender messageSender, AudioPlayer audioPlayer)
         {
-            form = new UserView(SendMessage, audioPlayer);
+            form = new UserView(messageSender, audioPlayer);
         }
 
         public void Start(Action onClose)

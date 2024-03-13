@@ -24,22 +24,30 @@ namespace GameSelector
         private static AudioPlayer AudioPlayer { get => _audioPlayer ?? (_audioPlayer = new AudioPlayer()); }
 
         private static AdminViewAdapter _adminView;
-        private static AdminViewAdapter AdminView { get => _adminView ?? (_adminView = new AdminViewAdapter(MessageSender)); }
+        private static AdminViewAdapter AdminView { get => 
+                _adminView ?? (_adminView = new AdminViewAdapter(
+                    CreateTargetedMessageSender(AdminController.ControllerId),
+                    CreateTargetedMessageSender(AdminGroupController.ControllerId),
+                    CreateTargetedMessageSender(AdminGameController.ControllerId))); }
 
         private static UserIdentificationView _userIdentificationView;
-        private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageSender, NfcReader)); }
+        private static UserIdentificationView UserIdentificationView { get =>
+                _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(
+                    CreateTargetedMessageSender(AdminController.ControllerId),
+                    CreateTargetedMessageSender(ControllerId.BroadcastId),
+                    NfcReader)); }
 
         private static UserViewAdapter _userView;
-        private static UserViewAdapter UserView { get => _userView ?? (_userView = new UserViewAdapter(MessageSender, AudioPlayer)); }
+        private static UserViewAdapter UserView { get =>
+                _userView ?? (_userView = new UserViewAdapter(
+                    CreateTargetedMessageSender(UserController.ControllerId),
+                    AudioPlayer)); }
 
         private static IModel _model;
         public static IModel Model { get => _model ?? (_model = new SQLiteModel()); }
 
         private static BlockingCollection<Message> _messageCollection;
         public static BlockingCollection<Message> MessageCollection { get => _messageCollection ?? (_messageCollection = new BlockingCollection<Message>()); }
-
-        public static MessageSender _messageSender;
-        public static MessageSender MessageSender { get => _messageSender ?? (_messageSender = new MessageSender(MessageCollection)); }
 
         private static AdminController _adminController;
         public static AdminController AdminController { get => _adminController ?? (_adminController = CreateAdminController()); }
@@ -81,7 +89,7 @@ namespace GameSelector
                 Model.GameDataBridge,
                 Model.GroupDataBridge,
                 Model.PlayedGameDataBridge,
-                MessageSender
+                CreateMessageSender()
             );
         }
 
@@ -97,5 +105,10 @@ namespace GameSelector
                 Model.PlayedGameDataBridge
             );
         }
+
+        private static MessageSender CreateMessageSender() => new MessageSender(MessageCollection);
+
+        private static TargetedMessageSender CreateTargetedMessageSender(ControllerId recipient)
+            => new TargetedMessageSender(recipient, CreateMessageSender());
     }
 }

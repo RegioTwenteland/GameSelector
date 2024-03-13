@@ -24,6 +24,9 @@ namespace GameSelector.Controllers
         private string _currentCard = string.Empty;
         private string _loggedInUser = string.Empty;
 
+        public static ControllerId ControllerId { get; } = new ControllerId("User controller");
+
+
         public UserController(
             GameState gameState,
             UserIdentificationView userIdentificationView,
@@ -32,7 +35,7 @@ namespace GameSelector.Controllers
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
             IPlayedGameDataBridge playedGameDataBridge
-        )
+        ) : base(ControllerId)
         {
             _gameState = gameState;
             _userIdentificationView = userIdentificationView;

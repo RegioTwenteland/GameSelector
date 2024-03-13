@@ -5,9 +5,11 @@ namespace GameSelector
 {
     internal class Message
     {
-        public Message(string key, object value)
+        public Message(ControllerId sender, ControllerId recipient, string key, object value = null)
         {
             CreatedAt = DateTime.Now;
+            Sender = sender;
+            Recipient = recipient;
             Key = key;
             Value = value;
         }
@@ -15,12 +17,16 @@ namespace GameSelector
         public Guid Id { get; } = Guid.NewGuid();
 
         public DateTime CreatedAt { get; }
+        public ControllerId Sender { get; private set; }
+
+        public ControllerId Recipient { get; private set; }
 
         public string Key { get; }
 
         public object Value { get; }
 
         private bool _consumed = false;
+
 
         public void SetConsumed()
         {

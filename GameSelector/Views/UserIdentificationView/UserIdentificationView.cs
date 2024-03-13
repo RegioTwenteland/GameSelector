@@ -8,16 +8,22 @@ namespace GameSelector.Views
     {
         private readonly INfcReader _nfcReader;
 
-        //private string _errorMessage = string.Empty;
+        private TargetedMessageSender _adminMessageSender;
+        private TargetedMessageSender _broadcastMessageSender;
 
-        public UserIdentificationView(MessageSender messageSender, INfcReader nfcReader)
-            : base(messageSender)
+        public UserIdentificationView(
+            TargetedMessageSender adminMessageSender,
+            TargetedMessageSender broadcastMessageSender,
+            INfcReader nfcReader)
         {
+            _adminMessageSender = adminMessageSender;
+            _broadcastMessageSender = broadcastMessageSender;
+
             _nfcReader = nfcReader;
 
             if (!_nfcReader.ConnectionInitialized)
             {
-                SendMessage("ShowAdminError", "Kon niet verbinden met de NFC reader. Sluit de reader aan en start de applicatie opnieuw.");
+                _adminMessageSender.Send("ShowAdminError", "Kon niet verbinden met de NFC reader. Sluit de reader aan en start de applicatie opnieuw.");
                 return;
             }
 
@@ -32,18 +38,18 @@ namespace GameSelector.Views
 
             if (!string.IsNullOrEmpty(uid))
             {
-                SendMessage("CardInserted", uid);
+                _broadcastMessageSender.Send("CardInserted", uid);
             }
         }
 
         private void OnCardEjected(object sender, EventArgs e)
         {
-            SendMessage("CardEjected");
+            _broadcastMessageSender.Send("CardEjected");
         }
 
         private void OnReaderDisconnected(object sender, EventArgs e)
         {
-            SendMessage("ShowAdminError", "Connectie met de NFC reader is verloren gegaan. Sluit de reader aan en start de applicatie opnieuw.");
+            _adminMessageSender.Send("ShowAdminError", "Connectie met de NFC reader is verloren gegaan. Sluit de reader aan en start de applicatie opnieuw.");
 
             _nfcReader.CardDetected -= OnCardInserted;
             _nfcReader.CardRemoved -= OnCardEjected;

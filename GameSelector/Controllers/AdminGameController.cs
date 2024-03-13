@@ -18,13 +18,15 @@ namespace GameSelector.Controllers
 
         private readonly TimeSpan GameTimeoutCheckInterval = TimeSpan.FromMinutes(1);
 
+        public static ControllerId ControllerId { get; } = new ControllerId("Admin game controller");
+
         public AdminGameController(
             AdminViewAdapter adminView,
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
             IPlayedGameDataBridge playedGameDataBridge,
             MessageSender messageSender
-        )
+        ) : base(ControllerId)
         {
             _adminView = adminView;
             _gameDataBridge = gameDataBridge;
@@ -53,7 +55,7 @@ namespace GameSelector.Controllers
 
         private void SchedulePeriodicGameTimeoutCheck()
         {
-            _messageSender.Send(new Message("RequestGameTimeoutCheck", null));
+            _messageSender.Send(Id, "RequestGameTimeoutCheck");
             Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => SchedulePeriodicGameTimeoutCheck());
         }
 

@@ -15,12 +15,14 @@ namespace GameSelector.Controllers
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
 
+        public static ControllerId ControllerId { get; } = new ControllerId("Generic admin controller");
+
         public AdminController(
             GameState gameState,
             AdminViewAdapter adminView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge
-        )
+        ) : base(ControllerId)
         {
             _gameState = gameState;
             _adminView = adminView;

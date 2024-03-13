@@ -17,17 +17,26 @@ namespace GameSelector.Views
         /////////////////////////////////////////////////////
         // GLOBAL
         /////////////////////////////////////////////////////
-        private Action<string, object> SendMessage;
+
+        TargetedMessageSender _generalMessageSender;
+        TargetedMessageSender _groupsMessageSender;
+        TargetedMessageSender _gamesMessageSender;
 
         private const string SaveText = "Opslaan";
         private const string UnsavedModifier = "*";
 
         Regex _intRgx = new Regex("[^0-9]");
 
-        public AdminView(Action<string, object> sendMessage)
+        public AdminView(
+            TargetedMessageSender generalMessageSender,
+            TargetedMessageSender groupsMessageSender,
+            TargetedMessageSender gamesMessageSender)
         {
             InitializeComponent();
-            SendMessage = sendMessage;
+
+            _generalMessageSender = generalMessageSender;
+            _groupsMessageSender = groupsMessageSender;
+            _gamesMessageSender = gamesMessageSender;
 
             startTimePicker.Format = DateTimePickerFormat.Custom;
             startTimePicker.CustomFormat = "dd/MM/yyyy hh:mm:ss";
@@ -63,12 +72,13 @@ namespace GameSelector.Views
 
         private void saveGameTimeout_Click(object sender, EventArgs e)
         {
-            SendMessage("SaveGameTimeout", int.Parse(gameTimeoutTextbox.Text));
+            var newGameTimeout = int.Parse(gameTimeoutTextbox.Text);
+            _generalMessageSender.Send("SaveGameTimeout", newGameTimeout);
         }
 
         private void testUserViewButton_Click(object sender, EventArgs e)
         {
-            SendMessage("TestUserView", null);
+            _generalMessageSender.Send("TestUserView");
         }
 
         private void ForceTextboxToInt(object sender, EventArgs e)
@@ -106,7 +116,7 @@ namespace GameSelector.Views
 
         private void startStopGameButton_Click(object sender, EventArgs e)
         {
-            SendMessage("RequestStartStopGame", null);
+            _gamesMessageSender.Send("RequestStartStopGame");
         }
 
         public void ShowGamePaused()
@@ -189,12 +199,12 @@ namespace GameSelector.Views
 
             gdv.UnsavedChanges = false;
             saveGroupButton.Text = SaveText;
-            SendMessage("RequestSaveGroup", gdv);
+            _groupsMessageSender.Send("RequestSaveGroup", gdv);
         }
 
         private void addGroupButton_Click(object sender, EventArgs e)
         {
-            SendMessage("RequestNewGroup", null);
+            _groupsMessageSender.Send("RequestNewGroup");
         }
 
         private void deleteGroupButton_Click(object sender, EventArgs e)
@@ -202,7 +212,7 @@ namespace GameSelector.Views
             var gdv = GetCurrentGroupDataView();
 
             if (gdv != null)
-                SendMessage("RequestDeleteGroup", gdv);
+                _groupsMessageSender.Send("RequestDeleteGroup", gdv);
         }
 
         private void addCardToGroupButton_Click(object sender, EventArgs e)
@@ -229,7 +239,7 @@ namespace GameSelector.Views
 
                 if (confirm == DialogResult.Yes)
                 {
-                    SendMessage("RequestForceEndGameForGroup", gdv);
+                    _groupsMessageSender.Send("RequestForceEndGameForGroup", gdv);
                 }
             }
         }
@@ -383,12 +393,12 @@ namespace GameSelector.Views
             
             gdv.UnsavedChanges = false;
             saveGameButton.Text = SaveText;
-            SendMessage("RequestSaveGame", gdv);
+            _gamesMessageSender.Send("RequestSaveGame", gdv);
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
-            SendMessage("RequestNewGame", null);
+            _gamesMessageSender.Send("RequestNewGame");
         }
 
         private void deleteGameButton_Click(object sender, EventArgs e)
@@ -396,7 +406,7 @@ namespace GameSelector.Views
             var gdv = GetCurrentGameDataView();
 
             if (gdv != null)
-                SendMessage("RequestDeleteGame", gdv);
+                _gamesMessageSender.Send("RequestDeleteGame", gdv);
         }
 
         private void GameDataChanged(object sender, EventArgs e)
@@ -510,7 +520,7 @@ namespace GameSelector.Views
             var gdv = GetCurrentGroupDataView();
 
             if (gdv != null)
-                SendMessage("RequestPlayedGames", gdv.Id);
+                _gamesMessageSender.Send("RequestPlayedGames", gdv.Id);
         }
 
         public void ShowView()

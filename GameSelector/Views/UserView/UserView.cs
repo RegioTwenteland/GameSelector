@@ -16,7 +16,7 @@ namespace GameSelector.Views
         private const string PAUSED_MESSAGE = "Spel is gepauzeerd";
         private const string SELECTED_MESSAGE = "Speciaal geselecteerd voor ";
 
-        private Action<string, object> SendMessage;
+        TargetedMessageSender _messageSender;
         private AudioPlayer _audioPlayer;
 
         private InsertCardView _insertCardView = new InsertCardView();
@@ -28,14 +28,14 @@ namespace GameSelector.Views
         /// </summary>
         private Action _playOnReady = null;
 
-        public UserView(Action<string, object> sendMessage, AudioPlayer audioPlayer)
+        public UserView(TargetedMessageSender messageSender, AudioPlayer audioPlayer)
         {
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
 
             InitializeComponent();
-            SendMessage = sendMessage;
+            _messageSender = messageSender;
             _audioPlayer = audioPlayer;
         }
 
@@ -89,7 +89,7 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = "";
             gameExplanationLabel.Text = "";
 
-            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _messageSender.Send("AnimationComplete"))));
         }
 
         public void ShowGameImmediate(GameDataView game, GroupDataView group)
@@ -112,7 +112,7 @@ namespace GameSelector.Views
                 gameDescriptionLabel.Text = "";
                 gameExplanationLabel.Text = "";
 
-                Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+                Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _messageSender.Send("AnimationComplete"))));
 
                 return;
             }
@@ -168,7 +168,7 @@ namespace GameSelector.Views
 
             _audioPlayer.PlaySelectionComplete();
             _playOnReady = _audioPlayer.PlayEndSession;
-            SendMessage("AnimationComplete", null);
+            _messageSender.Send("AnimationComplete");
         }
 
         public void ShowAlreadyPlaying(GameDataView game)
@@ -182,7 +182,7 @@ namespace GameSelector.Views
                 gameDescriptionLabel.Text = "";
                 gameExplanationLabel.Text = "";
 
-                SendMessage("AnimationComplete", null);
+                _messageSender.Send("AnimationComplete");
 
                 return;
             }
@@ -191,7 +191,7 @@ namespace GameSelector.Views
             gameCodeLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;
             gameExplanationLabel.Text = game.Explanation;
-            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _messageSender.Send("AnimationComplete"))));
         }
 
         public void ShowPaused()
@@ -219,7 +219,7 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = string.Empty;
             gameExplanationLabel.Text = string.Empty;
 
-            SendMessage("UserViewReady", null);
+            _messageSender.Send("UserViewReady");
         }
         public void ShowReadyAfter(TimeSpan delay)
         {

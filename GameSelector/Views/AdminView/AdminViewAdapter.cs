@@ -14,10 +14,12 @@ namespace GameSelector.Views
     {
         private readonly AdminView form;
 
-        public AdminViewAdapter(MessageSender messageSender)
-            : base(messageSender)
+        public AdminViewAdapter(
+            TargetedMessageSender generalMessageSender,
+            TargetedMessageSender groupsMessageSender,
+            TargetedMessageSender gamesMessageSender)
         {
-            form = new AdminView(SendMessage);
+            form = new AdminView(generalMessageSender, groupsMessageSender, gamesMessageSender);
         }
 
         public void Start(Action onClose)

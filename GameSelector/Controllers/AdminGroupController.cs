@@ -15,13 +15,16 @@ namespace GameSelector.Controllers
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
 
+        public static ControllerId ControllerId { get; } = new ControllerId("Admin group controller");
+
+
         public AdminGroupController(
             AdminViewAdapter adminView,
             UserIdentificationView userIdentificationView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
             IPlayedGameDataBridge playedGameDataBridge
-        )
+        ) : base(ControllerId)
         {
             _adminView = adminView;
             _userIdentificationView = userIdentificationView;
