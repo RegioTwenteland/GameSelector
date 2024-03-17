@@ -55,9 +55,9 @@ namespace GameSelector.Controllers
 
         private void OnRequestSaveGroup(Message message)
         {
-            Debug.Assert(message.Value is GroupDataView);
+            Debug.Assert(message.Data is GroupDataView);
 
-            var groupDataView = (GroupDataView)message.Value;
+            var groupDataView = (GroupDataView)message.Data;
 
             var group = _groupDataBridge.GetGroup(groupDataView.Id);
 
@@ -98,7 +98,7 @@ namespace GameSelector.Controllers
 
         private void OnRequestNewGroup(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             var newGroup = new Group
             {
@@ -115,9 +115,9 @@ namespace GameSelector.Controllers
 
         private void OnRequestDeleteGroup(Message message)
         {
-            Debug.Assert(message.Value is GroupDataView);
+            Debug.Assert(message.Data is GroupDataView);
 
-            var groupDataView = (GroupDataView)message.Value;
+            var groupDataView = (GroupDataView)message.Data;
 
             var group = _groupDataBridge.GetGroup(groupDataView.Id);
 

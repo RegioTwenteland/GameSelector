@@ -74,9 +74,9 @@ namespace GameSelector.Controllers
 
         private void OnRequestSaveGame(Message message)
         {
-            Debug.Assert(message.Value is GameDataView);
+            Debug.Assert(message.Data is GameDataView);
 
-            var gameDataView = (GameDataView)message.Value;
+            var gameDataView = (GameDataView)message.Data;
 
             var game = _gameDataBridge.GetGame(gameDataView.Id);
 
@@ -97,7 +97,7 @@ namespace GameSelector.Controllers
 
         private void OnRequestNewGame(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             var newGame = new Game
             {
@@ -117,9 +117,9 @@ namespace GameSelector.Controllers
 
         private void OnRequestDeleteGame(Message message)
         {
-            Debug.Assert(message.Value is GameDataView);
+            Debug.Assert(message.Data is GameDataView);
 
-            var gameDataView = (GameDataView)message.Value;
+            var gameDataView = (GameDataView)message.Data;
 
             var game = _gameDataBridge.GetGame(gameDataView.Id);
 
@@ -163,9 +163,9 @@ namespace GameSelector.Controllers
 
         private void OnRequestForceEndGameForGroup(Message message)
         {
-            Debug.Assert(message.Value is GroupDataView);
+            Debug.Assert(message.Data is GroupDataView);
 
-            var gdv = (GroupDataView)message.Value;
+            var gdv = (GroupDataView)message.Data;
 
             var group = _groupDataBridge.GetGroup(gdv.Id);
 
@@ -174,8 +174,8 @@ namespace GameSelector.Controllers
 
         private void OnRequestPlayedGames(Message message)
         {
-            Debug.Assert(message.Value is long);
-            var id = (long)message.Value;
+            Debug.Assert(message.Data is long);
+            var id = (long)message.Data;
 
             var group = new Group
             {
@@ -189,7 +189,7 @@ namespace GameSelector.Controllers
 
         private void OnRequestTimeoutCheck(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             var allGroups = _groupDataBridge.GetAllGroups();
 

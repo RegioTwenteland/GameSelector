@@ -23,10 +23,10 @@ namespace GameSelector.Controllers
 
         public void HandleMessage(Message message)
         {
-            if (_messageHandlers.ContainsKey(message.Key))
+            if (_messageHandlers.ContainsKey(message.Command))
             {
                 message.SetConsumed();
-                _messageHandlers[message.Key](message);
+                _messageHandlers[message.Command](message);
             }
         }
     }

@@ -69,9 +69,9 @@ namespace GameSelector.Controllers
 
         private void OnUserLogin(Message message)
         {
-            Debug.Assert(message.Value is string);
+            Debug.Assert(message.Data is string);
 
-            var cardId = (string)message.Value;
+            var cardId = (string)message.Data;
             var group = _groupDataBridge.GetGroup(cardId);
 
 
@@ -93,13 +93,13 @@ namespace GameSelector.Controllers
 
         private void ShowAdminError(Message message)
         {
-            Debug.Assert(message.Value is string);
-            ShowAdminError((string)message.Value);
+            Debug.Assert(message.Data is string);
+            ShowAdminError((string)message.Data);
         }
 
         private void OnRequestStartStopGame(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             if (_gameState.CurrentState == GameState.State.Paused)
             {
@@ -113,9 +113,9 @@ namespace GameSelector.Controllers
 
         private void OnSaveGameTimeout(Message message)
         {
-            Debug.Assert(message.Value is int);
+            Debug.Assert(message.Data is int);
 
-            GlobalSettings.GameTimeoutMinutes = (int)message.Value;
+            GlobalSettings.GameTimeoutMinutes = (int)message.Data;
         }
     }
 }

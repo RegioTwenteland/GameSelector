@@ -59,7 +59,7 @@ namespace GameSelector.Controllers
 
         private void OnTestUserView(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             var occupant = _groupDataBridge.GetAllGroups().OrderByDescending(g => g.Name.Length + g.ScoutingName.Length).First();
             var games = _gameDataBridge.GetAllGames();
@@ -234,9 +234,9 @@ namespace GameSelector.Controllers
 
         private void OnCardInserted(Message message)
         {
-            Debug.Assert(message.Value is string);
+            Debug.Assert(message.Data is string);
 
-            _currentCard = (string)message.Value;
+            _currentCard = (string)message.Data;
 
             if (_loggedInUser == string.Empty && _gameState.CurrentState != GameState.State.Paused)
                 LogUserIn();
@@ -246,7 +246,7 @@ namespace GameSelector.Controllers
 
         private void OnCardEjected(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             _currentCard = string.Empty;
 
@@ -259,7 +259,7 @@ namespace GameSelector.Controllers
 
         private void OnAnimationComplete(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             if (_currentCard == _loggedInUser)
             {
@@ -273,7 +273,7 @@ namespace GameSelector.Controllers
 
         private void OnUserViewReady(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Data is null);
 
             _loggedInUser = string.Empty;
         }
