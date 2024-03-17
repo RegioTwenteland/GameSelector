@@ -1,6 +1,6 @@
-﻿namespace GameSelector
+﻿namespace WashLine
 {
-    internal class TargetedMessageSender
+    public class TargetedMessageSender
     {
         private ControllerId _sender;
         private ControllerId _recipient;

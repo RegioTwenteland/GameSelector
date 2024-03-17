@@ -4,6 +4,7 @@ using GameSelector.SQLite;
 using GameSelector.Views;
 using NfcReader;
 using System.Collections.Concurrent;
+using WashLine;
 
 namespace GameSelector
 {

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Concurrent;
-using System.Diagnostics;
 
-namespace GameSelector
+namespace WashLine
 {
-    internal class MessageSender
+    public class MessageSender
     {
         private BlockingCollection<Message> _messageCollection;
 

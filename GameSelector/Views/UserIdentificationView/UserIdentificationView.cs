@@ -1,6 +1,6 @@
 ﻿using NfcReader;
 using System;
-using System.Collections.Concurrent;
+using WashLine;
 
 namespace GameSelector.Views
 {

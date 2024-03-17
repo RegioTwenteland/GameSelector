@@ -62,7 +62,6 @@
     <Reference Include="System.Data.SQLite, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,9 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioPlayer.cs" />
-    <Compile Include="TargetedMessageSender.cs" />
-    <Compile Include="ControllerId.cs" />
-    <Compile Include="MessageSender.cs" />
     <Compile Include="Model\GroupUpdatedEventArgs.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
@@ -101,7 +97,6 @@
     <Compile Include="SQLite\SQLiteDatabase.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GlobalSettings.cs" />
-    <Compile Include="Message.cs" />
     <Compile Include="SQLite\SQLiteGroupDataBridge.cs" />
     <Compile Include="SQLite\SQLiteGameDataBridge.cs" />
     <Compile Include="SQLite\SQLiteModel.cs" />
@@ -214,6 +209,10 @@
     <ProjectReference Include="..\NfcReader\NfcReader.csproj">
       <Project>{9b649ad8-067f-4d8f-a8c2-f833f14d99a9}</Project>
       <Name>NfcReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WashLine\WashLine.csproj">
+      <Project>{79146277-c3fb-467d-9438-e9a5e8917782}</Project>
+      <Name>WashLine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

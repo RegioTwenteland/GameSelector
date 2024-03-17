@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace GameSelector
+namespace WashLine
 {
-    internal class ControllerId
+    public class ControllerId
     {
         public Guid Id { get; }
 
