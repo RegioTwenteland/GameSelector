@@ -103,6 +103,8 @@ namespace GameSelector.Controllers
                 Description = "Spel",
                 Explanation = string.Empty,
                 Active = true,
+                Timeout = TimeSpan.FromMinutes(15),
+                MaxPlayerAmount = 1,
                 Color = string.Empty
             };
 
