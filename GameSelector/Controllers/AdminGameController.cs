@@ -209,7 +209,9 @@ namespace GameSelector.Controllers
 
                 var now = DateTime.Now;
 
-                if (group.StartTime.Value + game.Timeout > now)
+                var deadline = group.StartTime.Value + game.Timeout;
+
+                if (now >= deadline)
                 {
                     ForceEndGame(group);
                 }
