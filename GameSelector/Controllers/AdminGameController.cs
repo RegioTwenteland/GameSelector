@@ -51,17 +51,11 @@ namespace GameSelector.Controllers
             _adminView.UpdateGame(gdv);
         }
 
-        private void SchedulePeriodicGameTimeoutCheck()
-        {
-            _messageSender.Send(new Message("RequestGameTimeoutCheck", null));
-            Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => SchedulePeriodicGameTimeoutCheck());
-        }
-
         public override void Start(Action stop)
         {
             UpdateGamesList(_gameDataBridge.GetAllGames());
 
-            Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => SchedulePeriodicGameTimeoutCheck());
+            _messageSender.Send(new Message("RequestGameTimeoutCheck", null));
         }
 
         private void UpdateGamesList(IEnumerable<Game> games)
@@ -216,6 +210,8 @@ namespace GameSelector.Controllers
                     ForceEndGame(group);
                 }
             }
+
+            Task.Delay(GameTimeoutCheckInterval).ContinueWith(t => _messageSender.Send(new Message("RequestGameTimeoutCheck", null)));
         }
     }
 }
