@@ -35,7 +35,8 @@ namespace GameSelector.Controllers
                 { "CardEjected", m => { } },
                 { "ShowAdminError", ShowAdminError },
                 { "RequestStartStopGame", OnRequestStartStopGame },
-                { "SaveGameTimeout", OnSaveGameTimeout }
+                { "SaveGameTimeout", OnSaveGameTimeout },
+                { "SaveAnimationLength", OnSaveAnimationLength },
             });
         }
 
@@ -44,6 +45,7 @@ namespace GameSelector.Controllers
             _adminView.Start(stop);
 
             _adminView.ShowGameTimeout(GlobalSettings.GameTimeoutMinutes);
+            _adminView.ShowAnimationLength(GlobalSettings.AnimationLengthMilliseconds);
 
             _gameState.CurrentState = GameState.State.Paused;
         }
@@ -114,6 +116,13 @@ namespace GameSelector.Controllers
             Debug.Assert(message.Value is int);
 
             GlobalSettings.GameTimeoutMinutes = (int)message.Value;
+        }
+
+        private void OnSaveAnimationLength(Message message)
+        {
+            Debug.Assert(message.Value is int);
+
+            GlobalSettings.AnimationLengthMilliseconds = (int)message.Value;
         }
     }
 }

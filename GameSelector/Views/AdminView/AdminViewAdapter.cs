@@ -33,9 +33,14 @@ namespace GameSelector.Views
             WaitOnFormLoad(form);
         }
 
-        public void ShowGameTimeout(int timeout)
+        public void ShowGameTimeout(int timeoutMinutes)
         {
-            form.Invoke(new MethodInvoker(() => form.ShowGameTimeout(timeout)));
+            form.Invoke(new MethodInvoker(() => form.ShowGameTimeout(timeoutMinutes)));
+        }
+
+        public void ShowAnimationLength(int lengthMs)
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowAnimationLength(lengthMs)));
         }
 
         public void UpdateGroup(GroupDataView group)

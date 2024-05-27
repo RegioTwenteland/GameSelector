@@ -58,6 +58,8 @@
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gamesTab = new System.Windows.Forms.TabPage();
+            this.maxPlayerAmountNumber = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
             this.timeoutNumber = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -86,22 +88,22 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.gameTimeoutTextbox = new System.Windows.Forms.TextBox();
-            this.saveGameTimeout = new System.Windows.Forms.Button();
+            this.saveGlobalSettings = new System.Windows.Forms.Button();
             this.hideButton = new System.Windows.Forms.Button();
             this.gameStateLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.maxPlayerAmountNumber = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.animationLengthTextbox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.gamesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.adminTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).BeginInit();
             this.SuspendLayout();
             // 
             // saveGroupButton
@@ -425,6 +427,23 @@
             this.gamesTab.Text = "Spellen";
             this.gamesTab.UseVisualStyleBackColor = true;
             // 
+            // maxPlayerAmountNumber
+            // 
+            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 361);
+            this.maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
+            this.maxPlayerAmountNumber.Size = new System.Drawing.Size(260, 20);
+            this.maxPlayerAmountNumber.TabIndex = 117;
+            this.maxPlayerAmountNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            // 
+            // label21
+            // 
+            this.label21.Location = new System.Drawing.Point(171, 361);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(93, 17);
+            this.label21.TabIndex = 115;
+            this.label21.Text = "Max spelers";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // timeoutNumber
             // 
             this.timeoutNumber.Location = new System.Drawing.Point(270, 335);
@@ -647,11 +666,13 @@
             // 
             // adminTab
             // 
+            this.adminTab.Controls.Add(this.label11);
+            this.adminTab.Controls.Add(this.animationLengthTextbox);
             this.adminTab.Controls.Add(this.testUserViewButton);
             this.adminTab.Controls.Add(this.closeButton);
             this.adminTab.Controls.Add(this.label14);
             this.adminTab.Controls.Add(this.gameTimeoutTextbox);
-            this.adminTab.Controls.Add(this.saveGameTimeout);
+            this.adminTab.Controls.Add(this.saveGlobalSettings);
             this.adminTab.Controls.Add(this.hideButton);
             this.adminTab.Controls.Add(this.gameStateLabel);
             this.adminTab.Controls.Add(this.label9);
@@ -698,19 +719,19 @@
             // 
             this.gameTimeoutTextbox.Location = new System.Drawing.Point(123, 161);
             this.gameTimeoutTextbox.Name = "gameTimeoutTextbox";
-            this.gameTimeoutTextbox.Size = new System.Drawing.Size(40, 20);
+            this.gameTimeoutTextbox.Size = new System.Drawing.Size(92, 20);
             this.gameTimeoutTextbox.TabIndex = 103;
             this.gameTimeoutTextbox.TextChanged += new System.EventHandler(this.ForceTextboxToInt);
             // 
-            // saveGameTimeout
+            // saveGlobalSettings
             // 
-            this.saveGameTimeout.Location = new System.Drawing.Point(169, 159);
-            this.saveGameTimeout.Name = "saveGameTimeout";
-            this.saveGameTimeout.Size = new System.Drawing.Size(75, 23);
-            this.saveGameTimeout.TabIndex = 102;
-            this.saveGameTimeout.Text = "Opslaan";
-            this.saveGameTimeout.UseVisualStyleBackColor = true;
-            this.saveGameTimeout.Click += new System.EventHandler(this.saveGameTimeout_Click);
+            this.saveGlobalSettings.Location = new System.Drawing.Point(6, 213);
+            this.saveGlobalSettings.Name = "saveGlobalSettings";
+            this.saveGlobalSettings.Size = new System.Drawing.Size(209, 23);
+            this.saveGlobalSettings.TabIndex = 102;
+            this.saveGlobalSettings.Text = "Opslaan";
+            this.saveGlobalSettings.UseVisualStyleBackColor = true;
+            this.saveGlobalSettings.Click += new System.EventHandler(this.saveGlobalSettings_Click);
             // 
             // hideButton
             // 
@@ -761,22 +782,21 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
-            // maxPlayerAmountNumber
+            // label11
             // 
-            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 361);
-            this.maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
-            this.maxPlayerAmountNumber.Size = new System.Drawing.Size(260, 20);
-            this.maxPlayerAmountNumber.TabIndex = 117;
-            this.maxPlayerAmountNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 190);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(101, 13);
+            this.label11.TabIndex = 108;
+            this.label11.Text = "Animatie lengte (ms)";
             // 
-            // label21
+            // animationLengthTextbox
             // 
-            this.label21.Location = new System.Drawing.Point(171, 361);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(93, 17);
-            this.label21.TabIndex = 115;
-            this.label21.Text = "Max spelers";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.animationLengthTextbox.Location = new System.Drawing.Point(123, 187);
+            this.animationLengthTextbox.Name = "animationLengthTextbox";
+            this.animationLengthTextbox.Size = new System.Drawing.Size(92, 20);
+            this.animationLengthTextbox.TabIndex = 107;
             // 
             // AdminView
             // 
@@ -798,12 +818,12 @@
             this.flowLayoutPanel2.PerformLayout();
             this.gamesTab.ResumeLayout(false);
             this.gamesTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.adminTab.ResumeLayout(false);
             this.adminTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -856,7 +876,7 @@
         private System.Windows.Forms.Button hideButton;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox gameTimeoutTextbox;
-        private System.Windows.Forms.Button saveGameTimeout;
+        private System.Windows.Forms.Button saveGlobalSettings;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.CheckBox gamePriorityCheckbox;
         private System.Windows.Forms.Label label15;
@@ -874,6 +894,8 @@
         private System.Windows.Forms.Button endGameForGroup;
         private System.Windows.Forms.NumericUpDown maxPlayerAmountNumber;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox animationLengthTextbox;
     }
 }
 

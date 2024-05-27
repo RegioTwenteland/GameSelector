@@ -56,14 +56,20 @@ namespace GameSelector.Views
 #endif
         }
 
-        public void ShowGameTimeout(int timeout)
+        public void ShowGameTimeout(int timeoutMinutes)
         {
-            gameTimeoutTextbox.Text = timeout.ToString();
+            gameTimeoutTextbox.Text = timeoutMinutes.ToString();
         }
 
-        private void saveGameTimeout_Click(object sender, EventArgs e)
+        public void ShowAnimationLength(int lengthMs)
+        {
+            animationLengthTextbox.Text = lengthMs.ToString();
+        }
+
+        private void saveGlobalSettings_Click(object sender, EventArgs e)
         {
             SendMessage("SaveGameTimeout", int.Parse(gameTimeoutTextbox.Text));
+            SendMessage("SaveAnimationLength", int.Parse(animationLengthTextbox.Text));
         }
 
         private void testUserViewButton_Click(object sender, EventArgs e)

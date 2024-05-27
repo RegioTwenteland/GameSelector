@@ -10,16 +10,19 @@ namespace GameSelector.Views
 {
     internal partial class UserView : MaterialForm
     {
-        private const int ANIMATION_LENGTH_MS = 4000;
-        private const int ANIMATION_FRAME_AMT = 99;
+        private const int TIME_TO_SHOW_RANDOM_GAME_MS = 300;
+        private const int FRAME_TIME_MS = 50;
+        private const int TIME_TO_SHOW_RANDOM_GAME_FRAMES = TIME_TO_SHOW_RANDOM_GAME_MS / FRAME_TIME_MS;
 
         private const string PAUSED_MESSAGE = "Spel is gepauzeerd";
         private const string SELECTED_MESSAGE = "Speciaal geselecteerd voor ";
 
-        private Action<string, object> SendMessage;
-        private AudioPlayer _audioPlayer;
+        private static readonly Random random = new Random();
 
-        private InsertCardView _insertCardView = new InsertCardView();
+        private readonly Action<string, object> _sendMessage;
+        private readonly AudioPlayer _audioPlayer;
+
+        private readonly InsertCardView _insertCardView = new InsertCardView();
 
         private string[] _gameCodes = new[] { string.Empty };
 
@@ -35,7 +38,7 @@ namespace GameSelector.Views
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
 
             InitializeComponent();
-            SendMessage = sendMessage;
+            _sendMessage = sendMessage;
             _audioPlayer = audioPlayer;
         }
 
@@ -51,13 +54,13 @@ namespace GameSelector.Views
                     .FirstOrDefault();
             }
 
-            Location = new System.Drawing.Point
+            Location = new Point
             {
                 X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
                 Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
             };
 
-            _insertCardView.Load += (_s, _e) => _insertCardView.Location = new System.Drawing.Point
+            _insertCardView.Load += (_s, _e) => _insertCardView.Location = new Point
             {
                 X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - _insertCardView.Width / 2,
                 Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - _insertCardView.Height / 2
@@ -76,7 +79,6 @@ namespace GameSelector.Views
         }
 
         private Timer _animationTimer;
-        private int _animationFrame;
         private GameDataView _selectedGame;
         private GroupDataView _gameSelectedFor;
 
@@ -89,7 +91,7 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = "";
             gameExplanationLabel.Text = "";
 
-            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _sendMessage("AnimationComplete", null))));
         }
 
         public void ShowGameImmediate(GameDataView game, GroupDataView group)
@@ -100,6 +102,8 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = game.Description;
             gameExplanationLabel.Text = game.Explanation;
         }
+
+        private int _frameCounter = 0;
 
         public void ShowGame(GameDataView game, GroupDataView group)
         {
@@ -112,7 +116,7 @@ namespace GameSelector.Views
                 gameDescriptionLabel.Text = "";
                 gameExplanationLabel.Text = "";
 
-                Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+                Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _sendMessage("AnimationComplete", null))));
 
                 return;
             }
@@ -122,43 +126,41 @@ namespace GameSelector.Views
             _selectedGame = game;
             _gameSelectedFor = group;
 
-            _animationFrame = 0;
+            var frameAmt = GlobalSettings.AnimationLengthMilliseconds / FRAME_TIME_MS;
+
             _animationTimer = new Timer();
             _animationTimer.Tick += AnimationFrame;
-            _animationTimer.Interval = ANIMATION_LENGTH_MS / ANIMATION_FRAME_AMT;
+            _animationTimer.Interval = FRAME_TIME_MS;
 
-            searchingProgressBar.Maximum = ANIMATION_FRAME_AMT;
+            searchingProgressBar.Maximum = frameAmt;
             _animationTimer.Start();
         }
 
-        Random random = new Random();
-
         private void AnimationFrame(object sender, EventArgs args)
         {
-            if (_animationFrame++ >= ANIMATION_FRAME_AMT)
+            ////var now = DateTime.Now;
+            ////Console.WriteLine($"AnimationFrame: {now.Second}.{now.Millisecond}");
+            if (searchingProgressBar.Value >= searchingProgressBar.Maximum)
             {
                 EndAnimation();
                 return;
             }
 
-            if (_animationFrame % 10 == 0)
+            if (_frameCounter++ % TIME_TO_SHOW_RANDOM_GAME_FRAMES == 0)
             {
-                if (_gameCodes.Length == 0)
-                {
-                    searchingGameNameLabel.Text = string.Empty;
-                }
-                else
-                {
-                    searchingGameNameLabel.Text = _gameCodes[random.Next(0, _gameCodes.Length)];
-                }
+                searchingGameNameLabel.Text = _gameCodes.Length == 0
+                    ? string.Empty
+                    : _gameCodes[random.Next(0, _gameCodes.Length)];
             }
 
-            searchingProgressBar.Value++;
+            searchingProgressBar.Value = Math.Min(searchingProgressBar.Maximum, searchingProgressBar.Value + 1);
         }
 
         private void EndAnimation()
         {
             _animationTimer.Stop();
+            _animationTimer.Dispose();
+            _animationTimer = null;
 
             gameAnnouncerLabel.Text = SELECTED_MESSAGE + _gameSelectedFor.ScoutingName + ":";
             gameCodeLabel.Text = _selectedGame.Code;
@@ -166,9 +168,11 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = _selectedGame.Description;
             gameExplanationLabel.Text = _selectedGame.Explanation;
 
+            searchingProgressBar.Value = searchingProgressBar.Maximum;
+
             _audioPlayer.PlaySelectionComplete();
             _playOnReady = _audioPlayer.PlayEndSession;
-            SendMessage("AnimationComplete", null);
+            _sendMessage("AnimationComplete", null);
         }
 
         public void ShowAlreadyPlaying(GameDataView game)
@@ -182,7 +186,7 @@ namespace GameSelector.Views
                 gameDescriptionLabel.Text = "";
                 gameExplanationLabel.Text = "";
 
-                SendMessage("AnimationComplete", null);
+                _sendMessage("AnimationComplete", null);
 
                 return;
             }
@@ -191,7 +195,7 @@ namespace GameSelector.Views
             gameCodeLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;
             gameExplanationLabel.Text = game.Explanation;
-            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => SendMessage("AnimationComplete", null))));
+            Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _sendMessage("AnimationComplete", null))));
         }
 
         public void ShowPaused()
@@ -219,7 +223,7 @@ namespace GameSelector.Views
             gameDescriptionLabel.Text = string.Empty;
             gameExplanationLabel.Text = string.Empty;
 
-            SendMessage("UserViewReady", null);
+            _sendMessage("UserViewReady", null);
         }
         public void ShowReadyAfter(TimeSpan delay)
         {

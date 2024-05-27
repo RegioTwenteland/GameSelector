@@ -13,7 +13,7 @@ namespace GameSelector
         {
             Assembly a = Assembly.GetExecutingAssembly();
 
-            var selectionStartFile = a.GetManifestResourceStream("GameSelector.audio.start_met_zoeken.wav");
+            var selectionStartFile = a.GetManifestResourceStream("GameSelector.audio.zoeken.wav");
             var selectionCompleteFile = a.GetManifestResourceStream("GameSelector.audio.spel_gevonden.wav");
             var endSessionFile = a.GetManifestResourceStream("GameSelector.audio.begin_spel.wav");
 

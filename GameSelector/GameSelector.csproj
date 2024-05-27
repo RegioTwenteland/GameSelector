@@ -221,6 +221,9 @@
     <EmbeddedResource Include="audio\spel_gevonden.wav" />
     <EmbeddedResource Include="audio\start_met_zoeken.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="audio\zoeken.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
