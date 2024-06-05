@@ -43,6 +43,7 @@ namespace GameSelector.Controllers
             _playedGameDataBridge = playedGameDataBridge;
 
             userView.Ready += (s, e) => _gameState.StateChanged += OnStateChanged;
+            _gameDataBridge.GameUpdated += OnGameUpdated;
 
             SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
@@ -82,10 +83,20 @@ namespace GameSelector.Controllers
             }
         }
 
+        private void OnGameUpdated(object sender, GameUpdatedEventArgs e)
+        {
+            UpdateGameCodes();
+        }
+
         public override void Start(Action stop)
         {
             _userView.Start(stop);
 
+            UpdateGameCodes();
+        }
+
+        private void UpdateGameCodes()
+        {
             var codes = _gameDataBridge.GetAllGames().Select(g => g.Code);
             _userView.SetGameCodes(codes.ToArray());
         }

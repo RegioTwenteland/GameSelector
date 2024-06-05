@@ -138,8 +138,6 @@ namespace GameSelector.Views
 
         private void AnimationFrame(object sender, EventArgs args)
         {
-            ////var now = DateTime.Now;
-            ////Console.WriteLine($"AnimationFrame: {now.Second}.{now.Millisecond}");
             if (searchingProgressBar.Value >= searchingProgressBar.Maximum)
             {
                 EndAnimation();
