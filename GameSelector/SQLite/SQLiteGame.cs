@@ -30,9 +30,6 @@ namespace GameSelector.SQLite
         [SQLiteColumn(Name = "active")]
         public long Active { get; set; }
 
-        [SQLiteColumn(Name = "color")]
-        public string Color { get; set; }
-
         [SQLiteColumn(Name = "priority")]
         public long Priority { get; set; }
 

@@ -78,12 +78,12 @@
             this.gamesListBox = new System.Windows.Forms.ListBox();
             this.gameCodeTextbox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.gameColorComboBox = new System.Windows.Forms.ComboBox();
             this.gameDescriptionTextbox = new System.Windows.Forms.TextBox();
             this.gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.adminTab = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
+            this.animationLengthTextbox = new System.Windows.Forms.TextBox();
             this.testUserViewButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
@@ -94,8 +94,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.startStopGameButton = new System.Windows.Forms.Button();
             this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.animationLengthTextbox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -414,11 +412,9 @@
             this.gamesTab.Controls.Add(this.gamesListBox);
             this.gamesTab.Controls.Add(this.gameCodeTextbox);
             this.gamesTab.Controls.Add(this.label5);
-            this.gamesTab.Controls.Add(this.gameColorComboBox);
             this.gamesTab.Controls.Add(this.gameDescriptionTextbox);
             this.gamesTab.Controls.Add(this.gameExplanationTextbox);
             this.gamesTab.Controls.Add(this.label6);
-            this.gamesTab.Controls.Add(this.label7);
             this.gamesTab.Location = new System.Drawing.Point(4, 22);
             this.gamesTab.Name = "gamesTab";
             this.gamesTab.Padding = new System.Windows.Forms.Padding(3);
@@ -429,7 +425,7 @@
             // 
             // maxPlayerAmountNumber
             // 
-            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 361);
+            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 334);
             this.maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
             this.maxPlayerAmountNumber.Size = new System.Drawing.Size(260, 20);
             this.maxPlayerAmountNumber.TabIndex = 117;
@@ -437,7 +433,7 @@
             // 
             // label21
             // 
-            this.label21.Location = new System.Drawing.Point(171, 361);
+            this.label21.Location = new System.Drawing.Point(171, 334);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(93, 17);
             this.label21.TabIndex = 115;
@@ -446,7 +442,7 @@
             // 
             // timeoutNumber
             // 
-            this.timeoutNumber.Location = new System.Drawing.Point(270, 335);
+            this.timeoutNumber.Location = new System.Drawing.Point(270, 308);
             this.timeoutNumber.Name = "timeoutNumber";
             this.timeoutNumber.Size = new System.Drawing.Size(198, 20);
             this.timeoutNumber.TabIndex = 114;
@@ -455,7 +451,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(474, 337);
+            this.label20.Location = new System.Drawing.Point(474, 310);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(45, 13);
             this.label20.TabIndex = 113;
@@ -463,7 +459,7 @@
             // 
             // label19
             // 
-            this.label19.Location = new System.Drawing.Point(171, 335);
+            this.label19.Location = new System.Drawing.Point(171, 308);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(93, 17);
             this.label19.TabIndex = 112;
@@ -490,7 +486,7 @@
             // 
             // gameRemarksText
             // 
-            this.gameRemarksText.Location = new System.Drawing.Point(270, 208);
+            this.gameRemarksText.Location = new System.Drawing.Point(270, 181);
             this.gameRemarksText.Name = "gameRemarksText";
             this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
             this.gameRemarksText.TabIndex = 107;
@@ -500,7 +496,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(171, 259);
+            this.label17.Location = new System.Drawing.Point(171, 232);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(70, 13);
             this.label17.TabIndex = 106;
@@ -509,7 +505,7 @@
             // gamePriorityCheckbox
             // 
             this.gamePriorityCheckbox.AutoSize = true;
-            this.gamePriorityCheckbox.Location = new System.Drawing.Point(270, 188);
+            this.gamePriorityCheckbox.Location = new System.Drawing.Point(270, 161);
             this.gamePriorityCheckbox.Name = "gamePriorityCheckbox";
             this.gamePriorityCheckbox.Size = new System.Drawing.Size(15, 14);
             this.gamePriorityCheckbox.TabIndex = 102;
@@ -519,7 +515,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(171, 189);
+            this.label15.Location = new System.Drawing.Point(171, 162);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(44, 13);
             this.label15.TabIndex = 101;
@@ -527,7 +523,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 406);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 379);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -615,20 +611,6 @@
             this.label5.Text = "Omschrijving";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // gameColorComboBox
-            // 
-            this.gameColorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.gameColorComboBox.FormattingEnabled = true;
-            this.gameColorComboBox.Items.AddRange(new object[] {
-            "Blauw",
-            "Rood",
-            "Groen"});
-            this.gameColorComboBox.Location = new System.Drawing.Point(270, 161);
-            this.gameColorComboBox.Name = "gameColorComboBox";
-            this.gameColorComboBox.Size = new System.Drawing.Size(260, 21);
-            this.gameColorComboBox.TabIndex = 6;
-            this.gameColorComboBox.TextChanged += new System.EventHandler(this.GameDataChanged);
-            // 
             // gameDescriptionTextbox
             // 
             this.gameDescriptionTextbox.Location = new System.Drawing.Point(270, 29);
@@ -655,15 +637,6 @@
             this.label6.Text = "Uitleg";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(171, 161);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(93, 17);
-            this.label7.TabIndex = 100;
-            this.label7.Text = "Kleur";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // adminTab
             // 
             this.adminTab.Controls.Add(this.label11);
@@ -684,6 +657,22 @@
             this.adminTab.TabIndex = 100;
             this.adminTab.Text = "Admin";
             this.adminTab.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 190);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(101, 13);
+            this.label11.TabIndex = 108;
+            this.label11.Text = "Animatie lengte (ms)";
+            // 
+            // animationLengthTextbox
+            // 
+            this.animationLengthTextbox.Location = new System.Drawing.Point(123, 187);
+            this.animationLengthTextbox.Name = "animationLengthTextbox";
+            this.animationLengthTextbox.Size = new System.Drawing.Size(92, 20);
+            this.animationLengthTextbox.TabIndex = 107;
             // 
             // testUserViewButton
             // 
@@ -782,22 +771,6 @@
             this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
             this.errorFlowLayout.TabIndex = 100;
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 190);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(101, 13);
-            this.label11.TabIndex = 108;
-            this.label11.Text = "Animatie lengte (ms)";
-            // 
-            // animationLengthTextbox
-            // 
-            this.animationLengthTextbox.Location = new System.Drawing.Point(123, 187);
-            this.animationLengthTextbox.Name = "animationLengthTextbox";
-            this.animationLengthTextbox.Size = new System.Drawing.Size(92, 20);
-            this.animationLengthTextbox.TabIndex = 107;
-            // 
             // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -839,9 +812,7 @@
         private System.Windows.Forms.TabPage gamesTab;
         private System.Windows.Forms.ListBox gamesListBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox gameColorComboBox;
         private System.Windows.Forms.TextBox gameDescriptionTextbox;
         private System.Windows.Forms.RichTextBox gameExplanationTextbox;
         private System.Windows.Forms.Label label8;

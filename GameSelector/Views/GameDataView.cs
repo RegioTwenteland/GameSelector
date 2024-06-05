@@ -15,8 +15,6 @@ namespace GameSelector.Views
 
         public bool Active { get; set; }
 
-        public string Color { get; set; }
-
         public bool HasPriority { get; set; }
 
         public DateTime StartTime { get; set; }
@@ -47,7 +45,6 @@ namespace GameSelector.Views
                 Description = game.Description,
                 Explanation = game.Explanation,
                 Active = game.Active,
-                Color = game.Color,
                 HasPriority = game.HasPriority,
                 StartTime = startTime,
                 Remarks = game.Remarks,

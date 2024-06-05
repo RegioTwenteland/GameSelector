@@ -27,8 +27,6 @@ namespace GameSelector.Model
 
         public bool Active { get; set; }
 
-        public string Color { get; set; }
-
         public bool HasPriority { get; set; }
 
         public string Remarks { get; set; }

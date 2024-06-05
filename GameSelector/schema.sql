@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS "games" (
 	"description"	TEXT,
 	"explanation"	TEXT,
 	"active"	INTEGER NOT NULL DEFAULT 1,
-	"color"	TEXT,
 	"priority"	INTEGER NOT NULL DEFAULT 0,
 	"remarks"	TEXT NOT NULL,
 	"timeout"	INTEGER NOT NULL DEFAULT 0,

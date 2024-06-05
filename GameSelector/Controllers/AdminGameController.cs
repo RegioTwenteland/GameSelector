@@ -76,7 +76,6 @@ namespace GameSelector.Controllers
             game.Description = gameDataView.Description;
             game.Explanation = gameDataView.Explanation;
             game.Active = gameDataView.Active;
-            game.Color = gameDataView.Color;
             game.HasPriority = gameDataView.HasPriority;
             game.Remarks = gameDataView.Remarks;
             game.Timeout = TimeSpan.FromMinutes(gameDataView.TimeoutMinutes);
@@ -98,8 +97,7 @@ namespace GameSelector.Controllers
                 Explanation = string.Empty,
                 Active = true,
                 Timeout = TimeSpan.FromMinutes(15),
-                MaxPlayerAmount = 1,
-                Color = string.Empty
+                MaxPlayerAmount = 1
             };
 
             _gameDataBridge.InsertGame(newGame);

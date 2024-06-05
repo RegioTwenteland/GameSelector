@@ -417,7 +417,6 @@ namespace GameSelector.Views
             gdv.Description = gameDescriptionTextbox.Text;
             gdv.Explanation = gameExplanationTextbox.Text;
             gdv.Active = gameActiveCheckbox.Checked;
-            gdv.Color = gameColorComboBox.Text;
             gdv.HasPriority = gamePriorityCheckbox.Checked;
             gdv.Remarks = gameRemarksText.Text;
             gdv.TimeoutMinutes = (long)timeoutNumber.Value;
@@ -445,7 +444,6 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = string.Empty;
             gameExplanationTextbox.Text = string.Empty;
             gameActiveCheckbox.Checked = false;
-            gameColorComboBox.Text = string.Empty;
             gamePriorityCheckbox.Checked = false;
             gameRemarksText.Text = string.Empty;
             saveGameButton.Text = SaveText;
@@ -458,7 +456,6 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = game.Description;
             gameExplanationTextbox.Text = game.Explanation;
             gameActiveCheckbox.Checked = game.Active;
-            gameColorComboBox.Text = game.Color;
             gamePriorityCheckbox.Checked = game.HasPriority;
             gameRemarksText.Text = game.Remarks;
             timeoutNumber.Value = game.TimeoutMinutes;
