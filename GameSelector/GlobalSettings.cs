@@ -17,6 +17,6 @@ namespace GameSelector
 
         public static int GameTimeoutMinutes { get; set; } = 5;
 
-        public static int AnimationLengthMilliseconds { get; set; } = 4000;
+        public static int AnimationLengthMilliseconds { get; set; } = 2000;
     }
 }
