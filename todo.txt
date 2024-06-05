@@ -1,3 +1,11 @@
-- Find a better way to add/remove database column. Right now it requires a lot of code changes.
-- Select database file at startup
 - Known bug: game codes are only sent to user view on startup.
+- Remove color column in database
+- Make priority a number instead of boolean
+- Change admin view to use User Controls which are dynamically added as a tab page (https://stackoverflow.com/a/5796396)
+- Change admin view to use a table of some sort instead of whatever this is
+- Create open file dialog
+	- Investigate use of zeromq for message sending
+	OR
+	- Make messages specific to one controller instead of all messages being broadcasts
+- Make one way of sending broadcast messages (e.g. "game paused" and "card inserted" use different methods)
+- Update to .NET Core
