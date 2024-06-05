@@ -1,4 +1,3 @@
-- Make priority a number instead of boolean
 - Change admin view to use User Controls which are dynamically added as a tab page (https://stackoverflow.com/a/5796396)
 - Change admin view to use a table of some sort instead of whatever this is
 - Create open file dialog

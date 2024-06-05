@@ -101,39 +101,13 @@ namespace GameSelector.Controllers
             _userView.SetGameCodes(codes.ToArray());
         }
 
-        private List<Game> GetPossibleGames(IEnumerable<Game> gamesAvailable, IEnumerable<PlayedGame> playedGames, Group group)
+        private IEnumerable<Game> GetPossibleGames(IEnumerable<Game> gamesAvailable, IEnumerable<PlayedGame> playedGames)
         {
-            var playedGameIds = new HashSet<long>();
-            foreach (var game in playedGames)
-            {
-                playedGameIds.Add(game.Game.Id);
-            }
-
-            var possibleGames = new List<Game>();
-            foreach (var game in gamesAvailable)
-            {
-                if (!playedGameIds.Contains(game.Id) && game.Active)
-                {
-                    possibleGames.Add(game);
-                }
-            }
-
-            return possibleGames;
+            var playedGameIds = playedGames.Select(pg => pg.Game.Id).ToHashSet();
+            return gamesAvailable.Where(game => (!playedGameIds.Contains(game.Id)) && game.Active);
         }
 
-        private static Random rng = new Random();
-
-        private void ShuffleList<T>(IList<T> list)
-        {
-            var n = list.Count;
-
-            while (n > 1)
-            {
-                --n;
-                int k = rng.Next(n + 1);
-                (list[n], list[k]) = (list[k], list[n]);
-            }
-        }
+        private static readonly Random rng = new Random();
 
         private bool SelectNewGameFor(Group group, out Game newGame)
         {
@@ -142,7 +116,7 @@ namespace GameSelector.Controllers
             var gamesAvailable = _gameDataBridge.GetAllGamesAvailable();
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
 
-            var possibleGames = GetPossibleGames(gamesAvailable, playedGames, group);
+            var possibleGames = GetPossibleGames(gamesAvailable, playedGames).ToList();
 
             Game selectedGame = null;
 
@@ -152,19 +126,19 @@ namespace GameSelector.Controllers
             {
                 if (playedGames.Any())
                 {
-                    var prioGames = possibleGames.Where(g => g.HasPriority).ToList();
-                    var normalGames = possibleGames.Where(g => !g.HasPriority).ToList();
-                    ShuffleList(prioGames);
-                    ShuffleList(normalGames);
-                    possibleGames = prioGames.Concat(normalGames).ToList();
+                    var highestPrioGames = possibleGames
+                        .GroupBy(game => game.Priority)
+                        .OrderByDescending(grouping => grouping.Key)
+                        .First()
+                        .ToList();
+
+                    selectedGame = highestPrioGames[rng.Next(highestPrioGames.Count)];
                 }
                 else
                 {
                     // The first game a group plays is completely random.
-                    ShuffleList(possibleGames);
+                    selectedGame = possibleGames[rng.Next(possibleGames.Count)];
                 }
-
-                selectedGame = possibleGames[0];
 
                 group.StartTime = DateTime.Now;
                 group.CurrentlyPlaying = selectedGame;

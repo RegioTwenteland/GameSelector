@@ -58,6 +58,7 @@
             this.currentGameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gamesTab = new System.Windows.Forms.TabPage();
+            this.priorityNumber = new System.Windows.Forms.NumericUpDown();
             this.maxPlayerAmountNumber = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
             this.timeoutNumber = new System.Windows.Forms.NumericUpDown();
@@ -67,7 +68,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.gameRemarksText = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.gamePriorityCheckbox = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
             this.saveGameButton = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -98,6 +98,7 @@
             this.groupsTab.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.gamesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.priorityNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -395,6 +396,7 @@
             // 
             // gamesTab
             // 
+            this.gamesTab.Controls.Add(this.priorityNumber);
             this.gamesTab.Controls.Add(this.maxPlayerAmountNumber);
             this.gamesTab.Controls.Add(this.label21);
             this.gamesTab.Controls.Add(this.timeoutNumber);
@@ -404,7 +406,6 @@
             this.gamesTab.Controls.Add(this.label18);
             this.gamesTab.Controls.Add(this.gameRemarksText);
             this.gamesTab.Controls.Add(this.label17);
-            this.gamesTab.Controls.Add(this.gamePriorityCheckbox);
             this.gamesTab.Controls.Add(this.label15);
             this.gamesTab.Controls.Add(this.saveGameButton);
             this.gamesTab.Controls.Add(this.label10);
@@ -423,9 +424,17 @@
             this.gamesTab.Text = "Spellen";
             this.gamesTab.UseVisualStyleBackColor = true;
             // 
+            // priorityNumber
+            // 
+            this.priorityNumber.Location = new System.Drawing.Point(270, 161);
+            this.priorityNumber.Name = "priorityNumber";
+            this.priorityNumber.Size = new System.Drawing.Size(260, 20);
+            this.priorityNumber.TabIndex = 118;
+            this.priorityNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            // 
             // maxPlayerAmountNumber
             // 
-            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 334);
+            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 340);
             this.maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
             this.maxPlayerAmountNumber.Size = new System.Drawing.Size(260, 20);
             this.maxPlayerAmountNumber.TabIndex = 117;
@@ -433,7 +442,7 @@
             // 
             // label21
             // 
-            this.label21.Location = new System.Drawing.Point(171, 334);
+            this.label21.Location = new System.Drawing.Point(171, 340);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(93, 17);
             this.label21.TabIndex = 115;
@@ -442,7 +451,7 @@
             // 
             // timeoutNumber
             // 
-            this.timeoutNumber.Location = new System.Drawing.Point(270, 308);
+            this.timeoutNumber.Location = new System.Drawing.Point(270, 314);
             this.timeoutNumber.Name = "timeoutNumber";
             this.timeoutNumber.Size = new System.Drawing.Size(198, 20);
             this.timeoutNumber.TabIndex = 114;
@@ -451,7 +460,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(474, 310);
+            this.label20.Location = new System.Drawing.Point(474, 316);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(45, 13);
             this.label20.TabIndex = 113;
@@ -459,7 +468,7 @@
             // 
             // label19
             // 
-            this.label19.Location = new System.Drawing.Point(171, 308);
+            this.label19.Location = new System.Drawing.Point(171, 314);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(93, 17);
             this.label19.TabIndex = 112;
@@ -486,7 +495,7 @@
             // 
             // gameRemarksText
             // 
-            this.gameRemarksText.Location = new System.Drawing.Point(270, 181);
+            this.gameRemarksText.Location = new System.Drawing.Point(270, 187);
             this.gameRemarksText.Name = "gameRemarksText";
             this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
             this.gameRemarksText.TabIndex = 107;
@@ -496,26 +505,16 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(171, 232);
+            this.label17.Location = new System.Drawing.Point(171, 238);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(70, 13);
             this.label17.TabIndex = 106;
             this.label17.Text = "Opmerkingen";
             // 
-            // gamePriorityCheckbox
-            // 
-            this.gamePriorityCheckbox.AutoSize = true;
-            this.gamePriorityCheckbox.Location = new System.Drawing.Point(270, 161);
-            this.gamePriorityCheckbox.Name = "gamePriorityCheckbox";
-            this.gamePriorityCheckbox.Size = new System.Drawing.Size(15, 14);
-            this.gamePriorityCheckbox.TabIndex = 102;
-            this.gamePriorityCheckbox.UseVisualStyleBackColor = true;
-            this.gamePriorityCheckbox.CheckedChanged += new System.EventHandler(this.GameDataChanged);
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(171, 162);
+            this.label15.Location = new System.Drawing.Point(171, 163);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(44, 13);
             this.label15.TabIndex = 101;
@@ -523,7 +522,7 @@
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 379);
+            this.saveGameButton.Location = new System.Drawing.Point(174, 385);
             this.saveGameButton.Name = "saveGameButton";
             this.saveGameButton.Size = new System.Drawing.Size(356, 23);
             this.saveGameButton.TabIndex = 100;
@@ -791,6 +790,7 @@
             this.flowLayoutPanel2.PerformLayout();
             this.gamesTab.ResumeLayout(false);
             this.gamesTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.priorityNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -849,7 +849,6 @@
         private System.Windows.Forms.TextBox gameTimeoutTextbox;
         private System.Windows.Forms.Button saveGlobalSettings;
         private System.Windows.Forms.Button closeButton;
-        private System.Windows.Forms.CheckBox gamePriorityCheckbox;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button showPlayedGamesButton;
         private System.Windows.Forms.RichTextBox groupRemarksText;
@@ -867,6 +866,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox animationLengthTextbox;
+        private System.Windows.Forms.NumericUpDown priorityNumber;
     }
 }
 

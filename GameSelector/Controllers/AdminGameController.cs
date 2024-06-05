@@ -76,7 +76,7 @@ namespace GameSelector.Controllers
             game.Description = gameDataView.Description;
             game.Explanation = gameDataView.Explanation;
             game.Active = gameDataView.Active;
-            game.HasPriority = gameDataView.HasPriority;
+            game.Priority = gameDataView.Priority;
             game.Remarks = gameDataView.Remarks;
             game.Timeout = TimeSpan.FromMinutes(gameDataView.TimeoutMinutes);
             game.MaxPlayerAmount = gameDataView.MaxPlayerAmount;
@@ -96,6 +96,7 @@ namespace GameSelector.Controllers
                 Description = "Spel",
                 Explanation = string.Empty,
                 Active = true,
+                Priority = 10,
                 Timeout = TimeSpan.FromMinutes(15),
                 MaxPlayerAmount = 1
             };

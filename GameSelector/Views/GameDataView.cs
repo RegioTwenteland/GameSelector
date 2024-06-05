@@ -15,7 +15,7 @@ namespace GameSelector.Views
 
         public bool Active { get; set; }
 
-        public bool HasPriority { get; set; }
+        public long Priority { get; set; }
 
         public DateTime StartTime { get; set; }
 
@@ -29,7 +29,7 @@ namespace GameSelector.Views
 
         public override string ToString()
         {
-            return $"{Code}: {Description}{(HasPriority ? " (P)" : string.Empty)}";
+            return $"{Code} [{(Active ? "Actief" : "Inactief")}] ({Priority})";
         }
 
         public static GameDataView FromGame(Game game)
@@ -45,7 +45,7 @@ namespace GameSelector.Views
                 Description = game.Description,
                 Explanation = game.Explanation,
                 Active = game.Active,
-                HasPriority = game.HasPriority,
+                Priority = game.Priority,
                 StartTime = startTime,
                 Remarks = game.Remarks,
                 TimeoutMinutes = game.Timeout.Minutes,

@@ -417,7 +417,7 @@ namespace GameSelector.Views
             gdv.Description = gameDescriptionTextbox.Text;
             gdv.Explanation = gameExplanationTextbox.Text;
             gdv.Active = gameActiveCheckbox.Checked;
-            gdv.HasPriority = gamePriorityCheckbox.Checked;
+            gdv.Priority = (long)priorityNumber.Value;
             gdv.Remarks = gameRemarksText.Text;
             gdv.TimeoutMinutes = (long)timeoutNumber.Value;
             gdv.MaxPlayerAmount = (long)maxPlayerAmountNumber.Value;
@@ -444,7 +444,7 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = string.Empty;
             gameExplanationTextbox.Text = string.Empty;
             gameActiveCheckbox.Checked = false;
-            gamePriorityCheckbox.Checked = false;
+            priorityNumber.Value = 0;
             gameRemarksText.Text = string.Empty;
             saveGameButton.Text = SaveText;
             timeoutNumber.Value = 0;
@@ -456,7 +456,7 @@ namespace GameSelector.Views
             gameDescriptionTextbox.Text = game.Description;
             gameExplanationTextbox.Text = game.Explanation;
             gameActiveCheckbox.Checked = game.Active;
-            gamePriorityCheckbox.Checked = game.HasPriority;
+            priorityNumber.Value = game.Priority;
             gameRemarksText.Text = game.Remarks;
             timeoutNumber.Value = game.TimeoutMinutes;
             maxPlayerAmountNumber.Value = game.MaxPlayerAmount;
