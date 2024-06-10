@@ -29,776 +29,809 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminView));
-            this.saveGroupButton = new System.Windows.Forms.Button();
-            this.groupNameTextbox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.scoutingNameTextbox = new System.Windows.Forms.TextBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.groupsTab = new System.Windows.Forms.TabPage();
-            this.endGameForGroup = new System.Windows.Forms.Button();
-            this.groupRemarksText = new System.Windows.Forms.RichTextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.showPlayedGamesButton = new System.Windows.Forms.Button();
-            this.isAdminCheckbox = new System.Windows.Forms.CheckBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.removeCardFromGroupButton = new System.Windows.Forms.Button();
-            this.addCardToGroupButton = new System.Windows.Forms.Button();
-            this.lastScannedCardTextbox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.groupsListBox = new System.Windows.Forms.ListBox();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.addGroupButton = new System.Windows.Forms.Button();
-            this.deleteGroupButton = new System.Windows.Forms.Button();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cardIdTextbox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.startTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.currentGameText = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.gamesTab = new System.Windows.Forms.TabPage();
-            this.priorityNumber = new System.Windows.Forms.NumericUpDown();
-            this.maxPlayerAmountNumber = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
-            this.timeoutNumber = new System.Windows.Forms.NumericUpDown();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.gameActiveCheckbox = new System.Windows.Forms.CheckBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.gameRemarksText = new System.Windows.Forms.RichTextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.saveGameButton = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.addGameButton = new System.Windows.Forms.Button();
-            this.deleteGameButton = new System.Windows.Forms.Button();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.gamesListBox = new System.Windows.Forms.ListBox();
-            this.gameCodeTextbox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.gameDescriptionTextbox = new System.Windows.Forms.TextBox();
-            this.gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.adminTab = new System.Windows.Forms.TabPage();
-            this.label11 = new System.Windows.Forms.Label();
-            this.animationLengthTextbox = new System.Windows.Forms.TextBox();
-            this.testUserViewButton = new System.Windows.Forms.Button();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.gameTimeoutTextbox = new System.Windows.Forms.TextBox();
-            this.saveGlobalSettings = new System.Windows.Forms.Button();
-            this.hideButton = new System.Windows.Forms.Button();
-            this.gameStateLabel = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.startStopGameButton = new System.Windows.Forms.Button();
-            this.errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabControl1.SuspendLayout();
-            this.groupsTab.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
-            this.gamesTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priorityNumber)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).BeginInit();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.adminTab.SuspendLayout();
-            this.SuspendLayout();
+            saveGroupButton = new System.Windows.Forms.Button();
+            groupNameTextbox = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            scoutingNameTextbox = new System.Windows.Forms.TextBox();
+            tabControl1 = new System.Windows.Forms.TabControl();
+            groupsTab = new System.Windows.Forms.TabPage();
+            endGameForGroup = new System.Windows.Forms.Button();
+            groupRemarksText = new System.Windows.Forms.RichTextBox();
+            label16 = new System.Windows.Forms.Label();
+            showPlayedGamesButton = new System.Windows.Forms.Button();
+            isAdminCheckbox = new System.Windows.Forms.CheckBox();
+            label13 = new System.Windows.Forms.Label();
+            removeCardFromGroupButton = new System.Windows.Forms.Button();
+            addCardToGroupButton = new System.Windows.Forms.Button();
+            lastScannedCardTextbox = new System.Windows.Forms.TextBox();
+            label12 = new System.Windows.Forms.Label();
+            groupsListBox = new System.Windows.Forms.ListBox();
+            flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            addGroupButton = new System.Windows.Forms.Button();
+            deleteGroupButton = new System.Windows.Forms.Button();
+            label8 = new System.Windows.Forms.Label();
+            cardIdTextbox = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            startTimePicker = new System.Windows.Forms.DateTimePicker();
+            currentGameText = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            gamesTab = new System.Windows.Forms.TabPage();
+            priorityNumber = new System.Windows.Forms.NumericUpDown();
+            maxPlayerAmountNumber = new System.Windows.Forms.NumericUpDown();
+            label21 = new System.Windows.Forms.Label();
+            timeoutNumber = new System.Windows.Forms.NumericUpDown();
+            label20 = new System.Windows.Forms.Label();
+            label19 = new System.Windows.Forms.Label();
+            gameActiveCheckbox = new System.Windows.Forms.CheckBox();
+            label18 = new System.Windows.Forms.Label();
+            gameRemarksText = new System.Windows.Forms.RichTextBox();
+            label17 = new System.Windows.Forms.Label();
+            label15 = new System.Windows.Forms.Label();
+            saveGameButton = new System.Windows.Forms.Button();
+            label10 = new System.Windows.Forms.Label();
+            flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            addGameButton = new System.Windows.Forms.Button();
+            deleteGameButton = new System.Windows.Forms.Button();
+            gamesListBox = new System.Windows.Forms.ListBox();
+            gameCodeTextbox = new System.Windows.Forms.TextBox();
+            label5 = new System.Windows.Forms.Label();
+            gameDescriptionTextbox = new System.Windows.Forms.TextBox();
+            gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
+            label6 = new System.Windows.Forms.Label();
+            adminTab = new System.Windows.Forms.TabPage();
+            label11 = new System.Windows.Forms.Label();
+            animationLengthTextbox = new System.Windows.Forms.TextBox();
+            testUserViewButton = new System.Windows.Forms.Button();
+            closeButton = new System.Windows.Forms.Button();
+            label14 = new System.Windows.Forms.Label();
+            gameTimeoutTextbox = new System.Windows.Forms.TextBox();
+            saveGlobalSettings = new System.Windows.Forms.Button();
+            hideButton = new System.Windows.Forms.Button();
+            gameStateLabel = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
+            startStopGameButton = new System.Windows.Forms.Button();
+            errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
+            tabControl1.SuspendLayout();
+            groupsTab.SuspendLayout();
+            flowLayoutPanel2.SuspendLayout();
+            gamesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)priorityNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)maxPlayerAmountNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)timeoutNumber).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
+            adminTab.SuspendLayout();
+            SuspendLayout();
             // 
             // saveGroupButton
             // 
-            this.saveGroupButton.Location = new System.Drawing.Point(171, 283);
-            this.saveGroupButton.Name = "saveGroupButton";
-            this.saveGroupButton.Size = new System.Drawing.Size(391, 23);
-            this.saveGroupButton.TabIndex = 100;
-            this.saveGroupButton.Text = "Opslaan";
-            this.saveGroupButton.UseVisualStyleBackColor = true;
-            this.saveGroupButton.Click += new System.EventHandler(this.saveGroupButton_Click);
+            saveGroupButton.Location = new System.Drawing.Point(200, 327);
+            saveGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            saveGroupButton.Name = "saveGroupButton";
+            saveGroupButton.Size = new System.Drawing.Size(456, 27);
+            saveGroupButton.TabIndex = 100;
+            saveGroupButton.Text = "Opslaan";
+            saveGroupButton.UseVisualStyleBackColor = true;
+            saveGroupButton.Click += saveGroupButton_Click;
             // 
             // groupNameTextbox
             // 
-            this.groupNameTextbox.Location = new System.Drawing.Point(260, 55);
-            this.groupNameTextbox.Name = "groupNameTextbox";
-            this.groupNameTextbox.Size = new System.Drawing.Size(302, 20);
-            this.groupNameTextbox.TabIndex = 1;
-            this.groupNameTextbox.TextChanged += new System.EventHandler(this.GroupDataChanged);
+            groupNameTextbox.Location = new System.Drawing.Point(303, 63);
+            groupNameTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupNameTextbox.Name = "groupNameTextbox";
+            groupNameTextbox.Size = new System.Drawing.Size(352, 23);
+            groupNameTextbox.TabIndex = 1;
+            groupNameTextbox.TextChanged += GroupDataChanged;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(171, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
-            this.label1.TabIndex = 100;
-            this.label1.Text = "Groep naam";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(200, 67);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(72, 15);
+            label1.TabIndex = 100;
+            label1.Text = "Groep naam";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(171, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 13);
-            this.label2.TabIndex = 100;
-            this.label2.Text = "Scouting naam";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(200, 37);
+            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(87, 15);
+            label2.TabIndex = 100;
+            label2.Text = "Scouting naam";
             // 
             // scoutingNameTextbox
             // 
-            this.scoutingNameTextbox.Location = new System.Drawing.Point(260, 29);
-            this.scoutingNameTextbox.Name = "scoutingNameTextbox";
-            this.scoutingNameTextbox.Size = new System.Drawing.Size(302, 20);
-            this.scoutingNameTextbox.TabIndex = 0;
-            this.scoutingNameTextbox.TextChanged += new System.EventHandler(this.GroupDataChanged);
+            scoutingNameTextbox.Location = new System.Drawing.Point(303, 33);
+            scoutingNameTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            scoutingNameTextbox.Name = "scoutingNameTextbox";
+            scoutingNameTextbox.Size = new System.Drawing.Size(352, 23);
+            scoutingNameTextbox.TabIndex = 0;
+            scoutingNameTextbox.TextChanged += GroupDataChanged;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.groupsTab);
-            this.tabControl1.Controls.Add(this.gamesTab);
-            this.tabControl1.Controls.Add(this.adminTab);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tabControl1.Location = new System.Drawing.Point(5, 5);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(707, 569);
-            this.tabControl1.TabIndex = 100;
+            tabControl1.Controls.Add(groupsTab);
+            tabControl1.Controls.Add(gamesTab);
+            tabControl1.Controls.Add(adminTab);
+            tabControl1.Dock = System.Windows.Forms.DockStyle.Left;
+            tabControl1.Location = new System.Drawing.Point(6, 6);
+            tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new System.Drawing.Size(825, 656);
+            tabControl1.TabIndex = 100;
             // 
             // groupsTab
             // 
-            this.groupsTab.Controls.Add(this.endGameForGroup);
-            this.groupsTab.Controls.Add(this.groupRemarksText);
-            this.groupsTab.Controls.Add(this.label16);
-            this.groupsTab.Controls.Add(this.showPlayedGamesButton);
-            this.groupsTab.Controls.Add(this.isAdminCheckbox);
-            this.groupsTab.Controls.Add(this.label13);
-            this.groupsTab.Controls.Add(this.removeCardFromGroupButton);
-            this.groupsTab.Controls.Add(this.addCardToGroupButton);
-            this.groupsTab.Controls.Add(this.lastScannedCardTextbox);
-            this.groupsTab.Controls.Add(this.label12);
-            this.groupsTab.Controls.Add(this.groupsListBox);
-            this.groupsTab.Controls.Add(this.flowLayoutPanel2);
-            this.groupsTab.Controls.Add(this.label8);
-            this.groupsTab.Controls.Add(this.cardIdTextbox);
-            this.groupsTab.Controls.Add(this.label1);
-            this.groupsTab.Controls.Add(this.label3);
-            this.groupsTab.Controls.Add(this.startTimePicker);
-            this.groupsTab.Controls.Add(this.scoutingNameTextbox);
-            this.groupsTab.Controls.Add(this.saveGroupButton);
-            this.groupsTab.Controls.Add(this.groupNameTextbox);
-            this.groupsTab.Controls.Add(this.label2);
-            this.groupsTab.Controls.Add(this.currentGameText);
-            this.groupsTab.Controls.Add(this.label4);
-            this.groupsTab.Location = new System.Drawing.Point(4, 22);
-            this.groupsTab.Name = "groupsTab";
-            this.groupsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.groupsTab.Size = new System.Drawing.Size(699, 543);
-            this.groupsTab.TabIndex = 100;
-            this.groupsTab.Text = "Groepen";
-            this.groupsTab.UseVisualStyleBackColor = true;
+            groupsTab.Controls.Add(endGameForGroup);
+            groupsTab.Controls.Add(groupRemarksText);
+            groupsTab.Controls.Add(label16);
+            groupsTab.Controls.Add(showPlayedGamesButton);
+            groupsTab.Controls.Add(isAdminCheckbox);
+            groupsTab.Controls.Add(label13);
+            groupsTab.Controls.Add(removeCardFromGroupButton);
+            groupsTab.Controls.Add(addCardToGroupButton);
+            groupsTab.Controls.Add(lastScannedCardTextbox);
+            groupsTab.Controls.Add(label12);
+            groupsTab.Controls.Add(groupsListBox);
+            groupsTab.Controls.Add(flowLayoutPanel2);
+            groupsTab.Controls.Add(label8);
+            groupsTab.Controls.Add(cardIdTextbox);
+            groupsTab.Controls.Add(label1);
+            groupsTab.Controls.Add(label3);
+            groupsTab.Controls.Add(startTimePicker);
+            groupsTab.Controls.Add(scoutingNameTextbox);
+            groupsTab.Controls.Add(saveGroupButton);
+            groupsTab.Controls.Add(groupNameTextbox);
+            groupsTab.Controls.Add(label2);
+            groupsTab.Controls.Add(currentGameText);
+            groupsTab.Controls.Add(label4);
+            groupsTab.Location = new System.Drawing.Point(4, 24);
+            groupsTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupsTab.Name = "groupsTab";
+            groupsTab.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupsTab.Size = new System.Drawing.Size(817, 628);
+            groupsTab.TabIndex = 100;
+            groupsTab.Text = "Groepen";
+            groupsTab.UseVisualStyleBackColor = true;
             // 
             // endGameForGroup
             // 
-            this.endGameForGroup.Location = new System.Drawing.Point(531, 79);
-            this.endGameForGroup.Name = "endGameForGroup";
-            this.endGameForGroup.Size = new System.Drawing.Size(31, 23);
-            this.endGameForGroup.TabIndex = 106;
-            this.endGameForGroup.Text = "✖";
-            this.endGameForGroup.UseVisualStyleBackColor = true;
-            this.endGameForGroup.Click += new System.EventHandler(this.endGameForGroup_Click);
+            endGameForGroup.Location = new System.Drawing.Point(620, 91);
+            endGameForGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            endGameForGroup.Name = "endGameForGroup";
+            endGameForGroup.Size = new System.Drawing.Size(36, 27);
+            endGameForGroup.TabIndex = 106;
+            endGameForGroup.Text = "✖";
+            endGameForGroup.UseVisualStyleBackColor = true;
+            endGameForGroup.Click += endGameForGroup_Click;
             // 
             // groupRemarksText
             // 
-            this.groupRemarksText.Location = new System.Drawing.Point(260, 134);
-            this.groupRemarksText.Name = "groupRemarksText";
-            this.groupRemarksText.Size = new System.Drawing.Size(302, 120);
-            this.groupRemarksText.TabIndex = 105;
-            this.groupRemarksText.Text = "";
-            this.groupRemarksText.TextChanged += new System.EventHandler(this.GroupDataChanged);
+            groupRemarksText.Location = new System.Drawing.Point(303, 155);
+            groupRemarksText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupRemarksText.Name = "groupRemarksText";
+            groupRemarksText.Size = new System.Drawing.Size(352, 138);
+            groupRemarksText.TabIndex = 105;
+            groupRemarksText.Text = "";
+            groupRemarksText.TextChanged += GroupDataChanged;
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(171, 186);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(70, 13);
-            this.label16.TabIndex = 104;
-            this.label16.Text = "Opmerkingen";
+            label16.AutoSize = true;
+            label16.Location = new System.Drawing.Point(200, 215);
+            label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new System.Drawing.Size(80, 15);
+            label16.TabIndex = 104;
+            label16.Text = "Opmerkingen";
             // 
             // showPlayedGamesButton
             // 
-            this.showPlayedGamesButton.Location = new System.Drawing.Point(174, 509);
-            this.showPlayedGamesButton.Name = "showPlayedGamesButton";
-            this.showPlayedGamesButton.Size = new System.Drawing.Size(147, 23);
-            this.showPlayedGamesButton.TabIndex = 103;
-            this.showPlayedGamesButton.Text = "Gespeelde spellen";
-            this.showPlayedGamesButton.UseVisualStyleBackColor = true;
-            this.showPlayedGamesButton.Click += new System.EventHandler(this.showPlayedGamesButton_Click);
+            showPlayedGamesButton.Location = new System.Drawing.Point(203, 587);
+            showPlayedGamesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            showPlayedGamesButton.Name = "showPlayedGamesButton";
+            showPlayedGamesButton.Size = new System.Drawing.Size(172, 27);
+            showPlayedGamesButton.TabIndex = 103;
+            showPlayedGamesButton.Text = "Gespeelde spellen";
+            showPlayedGamesButton.UseVisualStyleBackColor = true;
+            showPlayedGamesButton.Click += showPlayedGamesButton_Click;
             // 
             // isAdminCheckbox
             // 
-            this.isAdminCheckbox.AutoSize = true;
-            this.isAdminCheckbox.Location = new System.Drawing.Point(260, 260);
-            this.isAdminCheckbox.Name = "isAdminCheckbox";
-            this.isAdminCheckbox.Size = new System.Drawing.Size(29, 17);
-            this.isAdminCheckbox.TabIndex = 102;
-            this.isAdminCheckbox.Text = " ";
-            this.isAdminCheckbox.UseVisualStyleBackColor = true;
-            this.isAdminCheckbox.CheckedChanged += new System.EventHandler(this.GroupDataChanged);
+            isAdminCheckbox.AutoSize = true;
+            isAdminCheckbox.Location = new System.Drawing.Point(303, 300);
+            isAdminCheckbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            isAdminCheckbox.Name = "isAdminCheckbox";
+            isAdminCheckbox.Size = new System.Drawing.Size(29, 19);
+            isAdminCheckbox.TabIndex = 102;
+            isAdminCheckbox.Text = " ";
+            isAdminCheckbox.UseVisualStyleBackColor = true;
+            isAdminCheckbox.CheckedChanged += GroupDataChanged;
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(171, 264);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(36, 13);
-            this.label13.TabIndex = 101;
-            this.label13.Text = "Admin";
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(200, 305);
+            label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(43, 15);
+            label13.TabIndex = 101;
+            label13.Text = "Admin";
             // 
             // removeCardFromGroupButton
             // 
-            this.removeCardFromGroupButton.Location = new System.Drawing.Point(531, 1);
-            this.removeCardFromGroupButton.Name = "removeCardFromGroupButton";
-            this.removeCardFromGroupButton.Size = new System.Drawing.Size(31, 23);
-            this.removeCardFromGroupButton.TabIndex = 100;
-            this.removeCardFromGroupButton.Text = "✖";
-            this.removeCardFromGroupButton.UseVisualStyleBackColor = true;
-            this.removeCardFromGroupButton.Click += new System.EventHandler(this.removeCardFromGroupButton_Click);
+            removeCardFromGroupButton.Location = new System.Drawing.Point(620, 1);
+            removeCardFromGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            removeCardFromGroupButton.Name = "removeCardFromGroupButton";
+            removeCardFromGroupButton.Size = new System.Drawing.Size(36, 27);
+            removeCardFromGroupButton.TabIndex = 100;
+            removeCardFromGroupButton.Text = "✖";
+            removeCardFromGroupButton.UseVisualStyleBackColor = true;
+            removeCardFromGroupButton.Click += removeCardFromGroupButton_Click;
             // 
             // addCardToGroupButton
             // 
-            this.addCardToGroupButton.Location = new System.Drawing.Point(382, 486);
-            this.addCardToGroupButton.Name = "addCardToGroupButton";
-            this.addCardToGroupButton.Size = new System.Drawing.Size(145, 23);
-            this.addCardToGroupButton.TabIndex = 100;
-            this.addCardToGroupButton.Text = "Koppel aan huidige groep";
-            this.addCardToGroupButton.UseVisualStyleBackColor = true;
-            this.addCardToGroupButton.Click += new System.EventHandler(this.addCardToGroupButton_Click);
+            addCardToGroupButton.Location = new System.Drawing.Point(446, 561);
+            addCardToGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            addCardToGroupButton.Name = "addCardToGroupButton";
+            addCardToGroupButton.Size = new System.Drawing.Size(169, 27);
+            addCardToGroupButton.TabIndex = 100;
+            addCardToGroupButton.Text = "Koppel aan huidige groep";
+            addCardToGroupButton.UseVisualStyleBackColor = true;
+            addCardToGroupButton.Click += addCardToGroupButton_Click;
             // 
             // lastScannedCardTextbox
             // 
-            this.lastScannedCardTextbox.Enabled = false;
-            this.lastScannedCardTextbox.Location = new System.Drawing.Point(295, 488);
-            this.lastScannedCardTextbox.Name = "lastScannedCardTextbox";
-            this.lastScannedCardTextbox.Size = new System.Drawing.Size(81, 20);
-            this.lastScannedCardTextbox.TabIndex = 2;
+            lastScannedCardTextbox.Enabled = false;
+            lastScannedCardTextbox.Location = new System.Drawing.Point(344, 563);
+            lastScannedCardTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            lastScannedCardTextbox.Name = "lastScannedCardTextbox";
+            lastScannedCardTextbox.Size = new System.Drawing.Size(94, 23);
+            lastScannedCardTextbox.TabIndex = 2;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(176, 491);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(113, 13);
-            this.label12.TabIndex = 100;
-            this.label12.Text = "Laatst gescande kaart";
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(205, 567);
+            label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(120, 15);
+            label12.TabIndex = 100;
+            label12.Text = "Laatst gescande kaart";
             // 
             // groupsListBox
             // 
-            this.groupsListBox.FormattingEnabled = true;
-            this.groupsListBox.Location = new System.Drawing.Point(6, 6);
-            this.groupsListBox.Name = "groupsListBox";
-            this.groupsListBox.Size = new System.Drawing.Size(159, 498);
-            this.groupsListBox.TabIndex = 100;
-            this.groupsListBox.SelectedIndexChanged += new System.EventHandler(this.groupsListBox_SelectedIndexChanged);
+            groupsListBox.FormattingEnabled = true;
+            groupsListBox.ItemHeight = 15;
+            groupsListBox.Location = new System.Drawing.Point(7, 7);
+            groupsListBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupsListBox.Name = "groupsListBox";
+            groupsListBox.Size = new System.Drawing.Size(185, 574);
+            groupsListBox.TabIndex = 100;
+            groupsListBox.SelectedIndexChanged += groupsListBox_SelectedIndexChanged;
             // 
             // flowLayoutPanel2
             // 
-            this.flowLayoutPanel2.Controls.Add(this.addGroupButton);
-            this.flowLayoutPanel2.Controls.Add(this.deleteGroupButton);
-            this.flowLayoutPanel2.Controls.Add(this.materialLabel2);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 506);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(159, 31);
-            this.flowLayoutPanel2.TabIndex = 100;
+            flowLayoutPanel2.Controls.Add(addGroupButton);
+            flowLayoutPanel2.Controls.Add(deleteGroupButton);
+            flowLayoutPanel2.Location = new System.Drawing.Point(7, 584);
+            flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new System.Drawing.Size(186, 36);
+            flowLayoutPanel2.TabIndex = 100;
             // 
             // addGroupButton
             // 
-            this.addGroupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addGroupButton.Location = new System.Drawing.Point(3, 3);
-            this.addGroupButton.Name = "addGroupButton";
-            this.addGroupButton.Size = new System.Drawing.Size(73, 23);
-            this.addGroupButton.TabIndex = 100;
-            this.addGroupButton.Text = "➕";
-            this.addGroupButton.UseVisualStyleBackColor = true;
-            this.addGroupButton.Click += new System.EventHandler(this.addGroupButton_Click);
+            addGroupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            addGroupButton.Location = new System.Drawing.Point(4, 3);
+            addGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            addGroupButton.Name = "addGroupButton";
+            addGroupButton.Size = new System.Drawing.Size(85, 27);
+            addGroupButton.TabIndex = 100;
+            addGroupButton.Text = "➕";
+            addGroupButton.UseVisualStyleBackColor = true;
+            addGroupButton.Click += addGroupButton_Click;
             // 
             // deleteGroupButton
             // 
-            this.deleteGroupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteGroupButton.Location = new System.Drawing.Point(82, 3);
-            this.deleteGroupButton.Name = "deleteGroupButton";
-            this.deleteGroupButton.Size = new System.Drawing.Size(73, 23);
-            this.deleteGroupButton.TabIndex = 100;
-            this.deleteGroupButton.Text = "✖";
-            this.deleteGroupButton.UseVisualStyleBackColor = true;
-            this.deleteGroupButton.Click += new System.EventHandler(this.deleteGroupButton_Click);
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(3, 29);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(108, 19);
-            this.materialLabel2.TabIndex = 100;
-            this.materialLabel2.Text = "materialLabel2";
+            deleteGroupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            deleteGroupButton.Location = new System.Drawing.Point(97, 3);
+            deleteGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            deleteGroupButton.Name = "deleteGroupButton";
+            deleteGroupButton.Size = new System.Drawing.Size(85, 27);
+            deleteGroupButton.TabIndex = 100;
+            deleteGroupButton.Text = "✖";
+            deleteGroupButton.UseVisualStyleBackColor = true;
+            deleteGroupButton.Click += deleteGroupButton_Click;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(171, 6);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 13);
-            this.label8.TabIndex = 100;
-            this.label8.Text = "Kaart ID";
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(200, 7);
+            label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(48, 15);
+            label8.TabIndex = 100;
+            label8.Text = "Kaart ID";
             // 
             // cardIdTextbox
             // 
-            this.cardIdTextbox.Enabled = false;
-            this.cardIdTextbox.Location = new System.Drawing.Point(260, 3);
-            this.cardIdTextbox.Name = "cardIdTextbox";
-            this.cardIdTextbox.Size = new System.Drawing.Size(262, 20);
-            this.cardIdTextbox.TabIndex = 100;
-            this.cardIdTextbox.TextChanged += new System.EventHandler(this.GroupDataChanged);
+            cardIdTextbox.Enabled = false;
+            cardIdTextbox.Location = new System.Drawing.Point(303, 3);
+            cardIdTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            cardIdTextbox.Name = "cardIdTextbox";
+            cardIdTextbox.Size = new System.Drawing.Size(305, 23);
+            cardIdTextbox.TabIndex = 100;
+            cardIdTextbox.TextChanged += GroupDataChanged;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(171, 84);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 13);
-            this.label3.TabIndex = 100;
-            this.label3.Text = "Huidig spel";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(200, 97);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(67, 15);
+            label3.TabIndex = 100;
+            label3.Text = "Huidig spel";
             // 
             // startTimePicker
             // 
-            this.startTimePicker.Location = new System.Drawing.Point(260, 108);
-            this.startTimePicker.Name = "startTimePicker";
-            this.startTimePicker.Size = new System.Drawing.Size(302, 20);
-            this.startTimePicker.TabIndex = 100;
+            startTimePicker.Location = new System.Drawing.Point(303, 125);
+            startTimePicker.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            startTimePicker.Name = "startTimePicker";
+            startTimePicker.Size = new System.Drawing.Size(352, 23);
+            startTimePicker.TabIndex = 100;
             // 
             // currentGameText
             // 
-            this.currentGameText.Enabled = false;
-            this.currentGameText.Location = new System.Drawing.Point(260, 81);
-            this.currentGameText.Name = "currentGameText";
-            this.currentGameText.Size = new System.Drawing.Size(262, 20);
-            this.currentGameText.TabIndex = 100;
+            currentGameText.Enabled = false;
+            currentGameText.Location = new System.Drawing.Point(303, 93);
+            currentGameText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            currentGameText.Name = "currentGameText";
+            currentGameText.Size = new System.Drawing.Size(305, 23);
+            currentGameText.TabIndex = 100;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(171, 114);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 13);
-            this.label4.TabIndex = 100;
-            this.label4.Text = "Begintijd";
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(200, 132);
+            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(54, 15);
+            label4.TabIndex = 100;
+            label4.Text = "Begintijd";
             // 
             // gamesTab
             // 
-            this.gamesTab.Controls.Add(this.priorityNumber);
-            this.gamesTab.Controls.Add(this.maxPlayerAmountNumber);
-            this.gamesTab.Controls.Add(this.label21);
-            this.gamesTab.Controls.Add(this.timeoutNumber);
-            this.gamesTab.Controls.Add(this.label20);
-            this.gamesTab.Controls.Add(this.label19);
-            this.gamesTab.Controls.Add(this.gameActiveCheckbox);
-            this.gamesTab.Controls.Add(this.label18);
-            this.gamesTab.Controls.Add(this.gameRemarksText);
-            this.gamesTab.Controls.Add(this.label17);
-            this.gamesTab.Controls.Add(this.label15);
-            this.gamesTab.Controls.Add(this.saveGameButton);
-            this.gamesTab.Controls.Add(this.label10);
-            this.gamesTab.Controls.Add(this.flowLayoutPanel1);
-            this.gamesTab.Controls.Add(this.gamesListBox);
-            this.gamesTab.Controls.Add(this.gameCodeTextbox);
-            this.gamesTab.Controls.Add(this.label5);
-            this.gamesTab.Controls.Add(this.gameDescriptionTextbox);
-            this.gamesTab.Controls.Add(this.gameExplanationTextbox);
-            this.gamesTab.Controls.Add(this.label6);
-            this.gamesTab.Location = new System.Drawing.Point(4, 22);
-            this.gamesTab.Name = "gamesTab";
-            this.gamesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.gamesTab.Size = new System.Drawing.Size(699, 543);
-            this.gamesTab.TabIndex = 100;
-            this.gamesTab.Text = "Spellen";
-            this.gamesTab.UseVisualStyleBackColor = true;
+            gamesTab.Controls.Add(priorityNumber);
+            gamesTab.Controls.Add(maxPlayerAmountNumber);
+            gamesTab.Controls.Add(label21);
+            gamesTab.Controls.Add(timeoutNumber);
+            gamesTab.Controls.Add(label20);
+            gamesTab.Controls.Add(label19);
+            gamesTab.Controls.Add(gameActiveCheckbox);
+            gamesTab.Controls.Add(label18);
+            gamesTab.Controls.Add(gameRemarksText);
+            gamesTab.Controls.Add(label17);
+            gamesTab.Controls.Add(label15);
+            gamesTab.Controls.Add(saveGameButton);
+            gamesTab.Controls.Add(label10);
+            gamesTab.Controls.Add(flowLayoutPanel1);
+            gamesTab.Controls.Add(gamesListBox);
+            gamesTab.Controls.Add(gameCodeTextbox);
+            gamesTab.Controls.Add(label5);
+            gamesTab.Controls.Add(gameDescriptionTextbox);
+            gamesTab.Controls.Add(gameExplanationTextbox);
+            gamesTab.Controls.Add(label6);
+            gamesTab.Location = new System.Drawing.Point(4, 24);
+            gamesTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gamesTab.Name = "gamesTab";
+            gamesTab.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gamesTab.Size = new System.Drawing.Size(817, 628);
+            gamesTab.TabIndex = 100;
+            gamesTab.Text = "Spellen";
+            gamesTab.UseVisualStyleBackColor = true;
             // 
             // priorityNumber
             // 
-            this.priorityNumber.Location = new System.Drawing.Point(270, 161);
-            this.priorityNumber.Name = "priorityNumber";
-            this.priorityNumber.Size = new System.Drawing.Size(260, 20);
-            this.priorityNumber.TabIndex = 118;
-            this.priorityNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            priorityNumber.Location = new System.Drawing.Point(315, 186);
+            priorityNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            priorityNumber.Name = "priorityNumber";
+            priorityNumber.Size = new System.Drawing.Size(303, 23);
+            priorityNumber.TabIndex = 118;
+            priorityNumber.ValueChanged += GameDataChanged;
             // 
             // maxPlayerAmountNumber
             // 
-            this.maxPlayerAmountNumber.Location = new System.Drawing.Point(270, 340);
-            this.maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
-            this.maxPlayerAmountNumber.Size = new System.Drawing.Size(260, 20);
-            this.maxPlayerAmountNumber.TabIndex = 117;
-            this.maxPlayerAmountNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            maxPlayerAmountNumber.Location = new System.Drawing.Point(315, 392);
+            maxPlayerAmountNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            maxPlayerAmountNumber.Name = "maxPlayerAmountNumber";
+            maxPlayerAmountNumber.Size = new System.Drawing.Size(303, 23);
+            maxPlayerAmountNumber.TabIndex = 117;
+            maxPlayerAmountNumber.ValueChanged += GameDataChanged;
             // 
             // label21
             // 
-            this.label21.Location = new System.Drawing.Point(171, 340);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(93, 17);
-            this.label21.TabIndex = 115;
-            this.label21.Text = "Max spelers";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label21.Location = new System.Drawing.Point(200, 392);
+            label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(108, 20);
+            label21.TabIndex = 115;
+            label21.Text = "Max spelers";
+            label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timeoutNumber
             // 
-            this.timeoutNumber.Location = new System.Drawing.Point(270, 314);
-            this.timeoutNumber.Name = "timeoutNumber";
-            this.timeoutNumber.Size = new System.Drawing.Size(198, 20);
-            this.timeoutNumber.TabIndex = 114;
-            this.timeoutNumber.ValueChanged += new System.EventHandler(this.GameDataChanged);
+            timeoutNumber.Location = new System.Drawing.Point(315, 362);
+            timeoutNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            timeoutNumber.Name = "timeoutNumber";
+            timeoutNumber.Size = new System.Drawing.Size(231, 23);
+            timeoutNumber.TabIndex = 114;
+            timeoutNumber.ValueChanged += GameDataChanged;
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(474, 316);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(45, 13);
-            this.label20.TabIndex = 113;
-            this.label20.Text = "Minuten";
+            label20.AutoSize = true;
+            label20.Location = new System.Drawing.Point(553, 365);
+            label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(52, 15);
+            label20.TabIndex = 113;
+            label20.Text = "Minuten";
             // 
             // label19
             // 
-            this.label19.Location = new System.Drawing.Point(171, 314);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(93, 17);
-            this.label19.TabIndex = 112;
-            this.label19.Text = "Timeout";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label19.Location = new System.Drawing.Point(200, 362);
+            label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(108, 20);
+            label19.TabIndex = 112;
+            label19.Text = "Timeout";
+            label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gameActiveCheckbox
             // 
-            this.gameActiveCheckbox.AutoSize = true;
-            this.gameActiveCheckbox.Location = new System.Drawing.Point(270, 141);
-            this.gameActiveCheckbox.Name = "gameActiveCheckbox";
-            this.gameActiveCheckbox.Size = new System.Drawing.Size(15, 14);
-            this.gameActiveCheckbox.TabIndex = 109;
-            this.gameActiveCheckbox.UseVisualStyleBackColor = true;
-            this.gameActiveCheckbox.CheckedChanged += new System.EventHandler(this.GameDataChanged);
+            gameActiveCheckbox.AutoSize = true;
+            gameActiveCheckbox.Location = new System.Drawing.Point(315, 163);
+            gameActiveCheckbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gameActiveCheckbox.Name = "gameActiveCheckbox";
+            gameActiveCheckbox.Size = new System.Drawing.Size(15, 14);
+            gameActiveCheckbox.TabIndex = 109;
+            gameActiveCheckbox.UseVisualStyleBackColor = true;
+            gameActiveCheckbox.CheckedChanged += GameDataChanged;
             // 
             // label18
             // 
-            this.label18.Location = new System.Drawing.Point(171, 142);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(44, 13);
-            this.label18.TabIndex = 108;
-            this.label18.Text = "Actief";
+            label18.Location = new System.Drawing.Point(200, 164);
+            label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label18.Name = "label18";
+            label18.Size = new System.Drawing.Size(51, 15);
+            label18.TabIndex = 108;
+            label18.Text = "Actief";
             // 
             // gameRemarksText
             // 
-            this.gameRemarksText.Location = new System.Drawing.Point(270, 187);
-            this.gameRemarksText.Name = "gameRemarksText";
-            this.gameRemarksText.Size = new System.Drawing.Size(260, 120);
-            this.gameRemarksText.TabIndex = 107;
-            this.gameRemarksText.Text = "";
-            this.gameRemarksText.TextChanged += new System.EventHandler(this.GameDataChanged);
+            gameRemarksText.Location = new System.Drawing.Point(315, 216);
+            gameRemarksText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gameRemarksText.Name = "gameRemarksText";
+            gameRemarksText.Size = new System.Drawing.Size(303, 138);
+            gameRemarksText.TabIndex = 107;
+            gameRemarksText.Text = "";
+            gameRemarksText.TextChanged += GameDataChanged;
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(171, 238);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(70, 13);
-            this.label17.TabIndex = 106;
-            this.label17.Text = "Opmerkingen";
+            label17.AutoSize = true;
+            label17.Location = new System.Drawing.Point(200, 275);
+            label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(80, 15);
+            label17.TabIndex = 106;
+            label17.Text = "Opmerkingen";
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(171, 163);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(44, 13);
-            this.label15.TabIndex = 101;
-            this.label15.Text = "Prioriteit";
+            label15.AutoSize = true;
+            label15.Location = new System.Drawing.Point(200, 188);
+            label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(52, 15);
+            label15.TabIndex = 101;
+            label15.Text = "Prioriteit";
             // 
             // saveGameButton
             // 
-            this.saveGameButton.Location = new System.Drawing.Point(174, 385);
-            this.saveGameButton.Name = "saveGameButton";
-            this.saveGameButton.Size = new System.Drawing.Size(356, 23);
-            this.saveGameButton.TabIndex = 100;
-            this.saveGameButton.Text = "Opslaan";
-            this.saveGameButton.UseVisualStyleBackColor = true;
-            this.saveGameButton.Click += new System.EventHandler(this.saveGameButton_Click);
+            saveGameButton.Location = new System.Drawing.Point(203, 444);
+            saveGameButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            saveGameButton.Name = "saveGameButton";
+            saveGameButton.Size = new System.Drawing.Size(415, 27);
+            saveGameButton.TabIndex = 100;
+            saveGameButton.Text = "Opslaan";
+            saveGameButton.UseVisualStyleBackColor = true;
+            saveGameButton.Click += saveGameButton_Click;
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(171, 4);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(93, 17);
-            this.label10.TabIndex = 100;
-            this.label10.Text = "Code";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label10.Location = new System.Drawing.Point(200, 5);
+            label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(108, 20);
+            label10.TabIndex = 100;
+            label10.Text = "Code";
+            label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.addGameButton);
-            this.flowLayoutPanel1.Controls.Add(this.deleteGameButton);
-            this.flowLayoutPanel1.Controls.Add(this.materialLabel1);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 506);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(159, 31);
-            this.flowLayoutPanel1.TabIndex = 100;
+            flowLayoutPanel1.Controls.Add(addGameButton);
+            flowLayoutPanel1.Controls.Add(deleteGameButton);
+            flowLayoutPanel1.Location = new System.Drawing.Point(7, 584);
+            flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new System.Drawing.Size(186, 36);
+            flowLayoutPanel1.TabIndex = 100;
             // 
             // addGameButton
             // 
-            this.addGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addGameButton.Location = new System.Drawing.Point(3, 3);
-            this.addGameButton.Name = "addGameButton";
-            this.addGameButton.Size = new System.Drawing.Size(73, 23);
-            this.addGameButton.TabIndex = 100;
-            this.addGameButton.Text = "➕";
-            this.addGameButton.UseVisualStyleBackColor = true;
-            this.addGameButton.Click += new System.EventHandler(this.addGameButton_Click);
+            addGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            addGameButton.Location = new System.Drawing.Point(4, 3);
+            addGameButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            addGameButton.Name = "addGameButton";
+            addGameButton.Size = new System.Drawing.Size(85, 27);
+            addGameButton.TabIndex = 100;
+            addGameButton.Text = "➕";
+            addGameButton.UseVisualStyleBackColor = true;
+            addGameButton.Click += addGameButton_Click;
             // 
             // deleteGameButton
             // 
-            this.deleteGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteGameButton.Location = new System.Drawing.Point(82, 3);
-            this.deleteGameButton.Name = "deleteGameButton";
-            this.deleteGameButton.Size = new System.Drawing.Size(73, 23);
-            this.deleteGameButton.TabIndex = 100;
-            this.deleteGameButton.Text = "✖";
-            this.deleteGameButton.UseVisualStyleBackColor = true;
-            this.deleteGameButton.Click += new System.EventHandler(this.deleteGameButton_Click);
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(3, 29);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(108, 19);
-            this.materialLabel1.TabIndex = 100;
-            this.materialLabel1.Text = "materialLabel1";
+            deleteGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            deleteGameButton.Location = new System.Drawing.Point(97, 3);
+            deleteGameButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            deleteGameButton.Name = "deleteGameButton";
+            deleteGameButton.Size = new System.Drawing.Size(85, 27);
+            deleteGameButton.TabIndex = 100;
+            deleteGameButton.Text = "✖";
+            deleteGameButton.UseVisualStyleBackColor = true;
+            deleteGameButton.Click += deleteGameButton_Click;
             // 
             // gamesListBox
             // 
-            this.gamesListBox.FormattingEnabled = true;
-            this.gamesListBox.Location = new System.Drawing.Point(6, 6);
-            this.gamesListBox.Name = "gamesListBox";
-            this.gamesListBox.Size = new System.Drawing.Size(159, 498);
-            this.gamesListBox.TabIndex = 100;
-            this.gamesListBox.SelectedIndexChanged += new System.EventHandler(this.gamesListBox_SelectedIndexChanged);
+            gamesListBox.FormattingEnabled = true;
+            gamesListBox.ItemHeight = 15;
+            gamesListBox.Location = new System.Drawing.Point(7, 7);
+            gamesListBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gamesListBox.Name = "gamesListBox";
+            gamesListBox.Size = new System.Drawing.Size(185, 574);
+            gamesListBox.TabIndex = 100;
+            gamesListBox.SelectedIndexChanged += gamesListBox_SelectedIndexChanged;
             // 
             // gameCodeTextbox
             // 
-            this.gameCodeTextbox.Location = new System.Drawing.Point(270, 3);
-            this.gameCodeTextbox.Name = "gameCodeTextbox";
-            this.gameCodeTextbox.Size = new System.Drawing.Size(260, 20);
-            this.gameCodeTextbox.TabIndex = 3;
-            this.gameCodeTextbox.TextChanged += new System.EventHandler(this.GameDataChanged);
+            gameCodeTextbox.Location = new System.Drawing.Point(315, 3);
+            gameCodeTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gameCodeTextbox.Name = "gameCodeTextbox";
+            gameCodeTextbox.Size = new System.Drawing.Size(303, 23);
+            gameCodeTextbox.TabIndex = 3;
+            gameCodeTextbox.TextChanged += GameDataChanged;
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(171, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(93, 17);
-            this.label5.TabIndex = 100;
-            this.label5.Text = "Omschrijving";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label5.Location = new System.Drawing.Point(200, 35);
+            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(108, 20);
+            label5.TabIndex = 100;
+            label5.Text = "Omschrijving";
+            label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gameDescriptionTextbox
             // 
-            this.gameDescriptionTextbox.Location = new System.Drawing.Point(270, 29);
-            this.gameDescriptionTextbox.Name = "gameDescriptionTextbox";
-            this.gameDescriptionTextbox.Size = new System.Drawing.Size(260, 20);
-            this.gameDescriptionTextbox.TabIndex = 4;
-            this.gameDescriptionTextbox.TextChanged += new System.EventHandler(this.GameDataChanged);
+            gameDescriptionTextbox.Location = new System.Drawing.Point(315, 33);
+            gameDescriptionTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gameDescriptionTextbox.Name = "gameDescriptionTextbox";
+            gameDescriptionTextbox.Size = new System.Drawing.Size(303, 23);
+            gameDescriptionTextbox.TabIndex = 4;
+            gameDescriptionTextbox.TextChanged += GameDataChanged;
             // 
             // gameExplanationTextbox
             // 
-            this.gameExplanationTextbox.Location = new System.Drawing.Point(270, 55);
-            this.gameExplanationTextbox.Name = "gameExplanationTextbox";
-            this.gameExplanationTextbox.Size = new System.Drawing.Size(260, 80);
-            this.gameExplanationTextbox.TabIndex = 5;
-            this.gameExplanationTextbox.Text = "";
-            this.gameExplanationTextbox.TextChanged += new System.EventHandler(this.GameDataChanged);
+            gameExplanationTextbox.Location = new System.Drawing.Point(315, 63);
+            gameExplanationTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gameExplanationTextbox.Name = "gameExplanationTextbox";
+            gameExplanationTextbox.Size = new System.Drawing.Size(303, 92);
+            gameExplanationTextbox.TabIndex = 5;
+            gameExplanationTextbox.Text = "";
+            gameExplanationTextbox.TextChanged += GameDataChanged;
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(171, 87);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(93, 17);
-            this.label6.TabIndex = 100;
-            this.label6.Text = "Uitleg";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label6.Location = new System.Drawing.Point(200, 100);
+            label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(108, 20);
+            label6.TabIndex = 100;
+            label6.Text = "Uitleg";
+            label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // adminTab
             // 
-            this.adminTab.Controls.Add(this.label11);
-            this.adminTab.Controls.Add(this.animationLengthTextbox);
-            this.adminTab.Controls.Add(this.testUserViewButton);
-            this.adminTab.Controls.Add(this.closeButton);
-            this.adminTab.Controls.Add(this.label14);
-            this.adminTab.Controls.Add(this.gameTimeoutTextbox);
-            this.adminTab.Controls.Add(this.saveGlobalSettings);
-            this.adminTab.Controls.Add(this.hideButton);
-            this.adminTab.Controls.Add(this.gameStateLabel);
-            this.adminTab.Controls.Add(this.label9);
-            this.adminTab.Controls.Add(this.startStopGameButton);
-            this.adminTab.Location = new System.Drawing.Point(4, 22);
-            this.adminTab.Name = "adminTab";
-            this.adminTab.Padding = new System.Windows.Forms.Padding(3);
-            this.adminTab.Size = new System.Drawing.Size(699, 543);
-            this.adminTab.TabIndex = 100;
-            this.adminTab.Text = "Admin";
-            this.adminTab.UseVisualStyleBackColor = true;
+            adminTab.Controls.Add(label11);
+            adminTab.Controls.Add(animationLengthTextbox);
+            adminTab.Controls.Add(testUserViewButton);
+            adminTab.Controls.Add(closeButton);
+            adminTab.Controls.Add(label14);
+            adminTab.Controls.Add(gameTimeoutTextbox);
+            adminTab.Controls.Add(saveGlobalSettings);
+            adminTab.Controls.Add(hideButton);
+            adminTab.Controls.Add(gameStateLabel);
+            adminTab.Controls.Add(label9);
+            adminTab.Controls.Add(startStopGameButton);
+            adminTab.Location = new System.Drawing.Point(4, 24);
+            adminTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            adminTab.Name = "adminTab";
+            adminTab.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            adminTab.Size = new System.Drawing.Size(817, 628);
+            adminTab.TabIndex = 100;
+            adminTab.Text = "Admin";
+            adminTab.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 190);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(101, 13);
-            this.label11.TabIndex = 108;
-            this.label11.Text = "Animatie lengte (ms)";
+            label11.AutoSize = true;
+            label11.Location = new System.Drawing.Point(19, 219);
+            label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(118, 15);
+            label11.TabIndex = 108;
+            label11.Text = "Animatie lengte (ms)";
             // 
             // animationLengthTextbox
             // 
-            this.animationLengthTextbox.Location = new System.Drawing.Point(123, 187);
-            this.animationLengthTextbox.Name = "animationLengthTextbox";
-            this.animationLengthTextbox.Size = new System.Drawing.Size(92, 20);
-            this.animationLengthTextbox.TabIndex = 107;
+            animationLengthTextbox.Location = new System.Drawing.Point(144, 216);
+            animationLengthTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            animationLengthTextbox.Name = "animationLengthTextbox";
+            animationLengthTextbox.Size = new System.Drawing.Size(107, 23);
+            animationLengthTextbox.TabIndex = 107;
             // 
             // testUserViewButton
             // 
-            this.testUserViewButton.Location = new System.Drawing.Point(9, 514);
-            this.testUserViewButton.Name = "testUserViewButton";
-            this.testUserViewButton.Size = new System.Drawing.Size(111, 23);
-            this.testUserViewButton.TabIndex = 106;
-            this.testUserViewButton.Text = "Test user view";
-            this.testUserViewButton.UseVisualStyleBackColor = true;
-            this.testUserViewButton.Visible = false;
-            this.testUserViewButton.Click += new System.EventHandler(this.testUserViewButton_Click);
+            testUserViewButton.Location = new System.Drawing.Point(10, 593);
+            testUserViewButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            testUserViewButton.Name = "testUserViewButton";
+            testUserViewButton.Size = new System.Drawing.Size(130, 27);
+            testUserViewButton.TabIndex = 106;
+            testUserViewButton.Text = "Test user view";
+            testUserViewButton.UseVisualStyleBackColor = true;
+            testUserViewButton.Visible = false;
+            testUserViewButton.Click += testUserViewButton_Click;
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(6, 64);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(111, 23);
-            this.closeButton.TabIndex = 105;
-            this.closeButton.Text = "Programma sluiten";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            closeButton.Location = new System.Drawing.Point(7, 74);
+            closeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new System.Drawing.Size(130, 27);
+            closeButton.TabIndex = 105;
+            closeButton.Text = "Programma sluiten";
+            closeButton.UseVisualStyleBackColor = true;
+            closeButton.Click += closeButton_Click;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 164);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(111, 13);
-            this.label14.TabIndex = 104;
-            this.label14.Text = "Spel timeout (minuten)";
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(7, 189);
+            label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(130, 15);
+            label14.TabIndex = 104;
+            label14.Text = "Spel timeout (minuten)";
             // 
             // gameTimeoutTextbox
             // 
-            this.gameTimeoutTextbox.Location = new System.Drawing.Point(123, 161);
-            this.gameTimeoutTextbox.Name = "gameTimeoutTextbox";
-            this.gameTimeoutTextbox.Size = new System.Drawing.Size(92, 20);
-            this.gameTimeoutTextbox.TabIndex = 103;
-            this.gameTimeoutTextbox.TextChanged += new System.EventHandler(this.ForceTextboxToInt);
+            gameTimeoutTextbox.Location = new System.Drawing.Point(144, 186);
+            gameTimeoutTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            gameTimeoutTextbox.Name = "gameTimeoutTextbox";
+            gameTimeoutTextbox.Size = new System.Drawing.Size(107, 23);
+            gameTimeoutTextbox.TabIndex = 103;
+            gameTimeoutTextbox.TextChanged += ForceTextboxToInt;
             // 
             // saveGlobalSettings
             // 
-            this.saveGlobalSettings.Location = new System.Drawing.Point(6, 213);
-            this.saveGlobalSettings.Name = "saveGlobalSettings";
-            this.saveGlobalSettings.Size = new System.Drawing.Size(209, 23);
-            this.saveGlobalSettings.TabIndex = 102;
-            this.saveGlobalSettings.Text = "Opslaan";
-            this.saveGlobalSettings.UseVisualStyleBackColor = true;
-            this.saveGlobalSettings.Click += new System.EventHandler(this.saveGlobalSettings_Click);
+            saveGlobalSettings.Location = new System.Drawing.Point(7, 246);
+            saveGlobalSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            saveGlobalSettings.Name = "saveGlobalSettings";
+            saveGlobalSettings.Size = new System.Drawing.Size(244, 27);
+            saveGlobalSettings.TabIndex = 102;
+            saveGlobalSettings.Text = "Opslaan";
+            saveGlobalSettings.UseVisualStyleBackColor = true;
+            saveGlobalSettings.Click += saveGlobalSettings_Click;
             // 
             // hideButton
             // 
-            this.hideButton.Location = new System.Drawing.Point(6, 35);
-            this.hideButton.Name = "hideButton";
-            this.hideButton.Size = new System.Drawing.Size(111, 23);
-            this.hideButton.TabIndex = 101;
-            this.hideButton.Text = "Vergrendelen";
-            this.hideButton.UseVisualStyleBackColor = true;
-            this.hideButton.Click += new System.EventHandler(this.hideButton_Click);
+            hideButton.Location = new System.Drawing.Point(7, 40);
+            hideButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            hideButton.Name = "hideButton";
+            hideButton.Size = new System.Drawing.Size(130, 27);
+            hideButton.TabIndex = 101;
+            hideButton.Text = "Vergrendelen";
+            hideButton.UseVisualStyleBackColor = true;
+            hideButton.Click += hideButton_Click;
             // 
             // gameStateLabel
             // 
-            this.gameStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameStateLabel.Location = new System.Drawing.Point(221, 9);
-            this.gameStateLabel.Name = "gameStateLabel";
-            this.gameStateLabel.Size = new System.Drawing.Size(118, 16);
-            this.gameStateLabel.TabIndex = 100;
-            this.gameStateLabel.Text = "GEPAUZEERD";
+            gameStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            gameStateLabel.Location = new System.Drawing.Point(258, 10);
+            gameStateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            gameStateLabel.Name = "gameStateLabel";
+            gameStateLabel.Size = new System.Drawing.Size(138, 18);
+            gameStateLabel.TabIndex = 100;
+            gameStateLabel.Text = "GEPAUZEERD";
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(123, 11);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(92, 13);
-            this.label9.TabIndex = 100;
-            this.label9.Text = "Spel is momenteel";
+            label9.AutoSize = true;
+            label9.Location = new System.Drawing.Point(144, 13);
+            label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(104, 15);
+            label9.TabIndex = 100;
+            label9.Text = "Spel is momenteel";
             // 
             // startStopGameButton
             // 
-            this.startStopGameButton.Location = new System.Drawing.Point(6, 6);
-            this.startStopGameButton.Name = "startStopGameButton";
-            this.startStopGameButton.Size = new System.Drawing.Size(111, 23);
-            this.startStopGameButton.TabIndex = 100;
-            this.startStopGameButton.Text = "Start spel";
-            this.startStopGameButton.UseVisualStyleBackColor = true;
-            this.startStopGameButton.Click += new System.EventHandler(this.startStopGameButton_Click);
+            startStopGameButton.Location = new System.Drawing.Point(7, 7);
+            startStopGameButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            startStopGameButton.Name = "startStopGameButton";
+            startStopGameButton.Size = new System.Drawing.Size(130, 27);
+            startStopGameButton.TabIndex = 100;
+            startStopGameButton.Text = "Start spel";
+            startStopGameButton.UseVisualStyleBackColor = true;
+            startStopGameButton.Click += startStopGameButton_Click;
             // 
             // errorFlowLayout
             // 
-            this.errorFlowLayout.AutoScroll = true;
-            this.errorFlowLayout.Dock = System.Windows.Forms.DockStyle.Right;
-            this.errorFlowLayout.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.errorFlowLayout.Location = new System.Drawing.Point(710, 5);
-            this.errorFlowLayout.Name = "errorFlowLayout";
-            this.errorFlowLayout.Padding = new System.Windows.Forms.Padding(5);
-            this.errorFlowLayout.Size = new System.Drawing.Size(200, 569);
-            this.errorFlowLayout.TabIndex = 100;
+            errorFlowLayout.AutoScroll = true;
+            errorFlowLayout.Dock = System.Windows.Forms.DockStyle.Right;
+            errorFlowLayout.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            errorFlowLayout.Location = new System.Drawing.Point(829, 6);
+            errorFlowLayout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            errorFlowLayout.Name = "errorFlowLayout";
+            errorFlowLayout.Padding = new System.Windows.Forms.Padding(6);
+            errorFlowLayout.Size = new System.Drawing.Size(233, 656);
+            errorFlowLayout.TabIndex = 100;
             // 
             // AdminView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(915, 579);
-            this.ControlBox = false;
-            this.Controls.Add(this.errorFlowLayout);
-            this.Controls.Add(this.tabControl1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "AdminView";
-            this.Padding = new System.Windows.Forms.Padding(5);
-            this.Text = "Admin";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.groupsTab.ResumeLayout(false);
-            this.groupsTab.PerformLayout();
-            this.flowLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel2.PerformLayout();
-            this.gamesTab.ResumeLayout(false);
-            this.gamesTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priorityNumber)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxPlayerAmountNumber)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeoutNumber)).EndInit();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
-            this.adminTab.ResumeLayout(false);
-            this.adminTab.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1068, 668);
+            ControlBox = false;
+            Controls.Add(errorFlowLayout);
+            Controls.Add(tabControl1);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "AdminView";
+            Padding = new System.Windows.Forms.Padding(6);
+            Text = "Admin";
+            Load += Form1_Load;
+            tabControl1.ResumeLayout(false);
+            groupsTab.ResumeLayout(false);
+            groupsTab.PerformLayout();
+            flowLayoutPanel2.ResumeLayout(false);
+            gamesTab.ResumeLayout(false);
+            gamesTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)priorityNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)maxPlayerAmountNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)timeoutNumber).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            adminTab.ResumeLayout(false);
+            adminTab.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -827,13 +860,11 @@
         private System.Windows.Forms.Button addGameButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label10;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private System.Windows.Forms.Button saveGameButton;
         private System.Windows.Forms.ListBox groupsListBox;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button addGroupButton;
         private System.Windows.Forms.Button deleteGroupButton;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private System.Windows.Forms.Button addCardToGroupButton;
         private System.Windows.Forms.TextBox lastScannedCardTextbox;
         private System.Windows.Forms.Label label12;
