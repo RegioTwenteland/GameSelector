@@ -1,7 +1,12 @@
 - Change admin view to use User Controls which are dynamically added as a tab page (https://stackoverflow.com/a/5796396)
 - Change admin view to use a table of some sort instead of whatever this is
 - Create open file dialog
-	- Investigate use of zeromq for message sending
-	OR
-	- Make messages specific to one controller instead of all messages being broadcasts
+- Make admin cards not be a "group" anymore, but something else entirely
+- Investigate use of zeromq for message sending OR Make messages specific to one controller instead of all messages being broadcasts
+- More statistics
+	- Amount of times a game has been played
+	- Amount of current players per game
+	- Amount of occupable spots (sum all max player amounts)
+	- Amount of cards handed out
 - Make one way of sending broadcast messages (e.g. "game paused" and "card inserted" use different methods)
+- If it is possible: support multiple card readers acting as one
