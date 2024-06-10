@@ -5,4 +5,3 @@
 	OR
 	- Make messages specific to one controller instead of all messages being broadcasts
 - Make one way of sending broadcast messages (e.g. "game paused" and "card inserted" use different methods)
-- Update to .NET Core
