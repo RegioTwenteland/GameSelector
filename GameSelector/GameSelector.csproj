@@ -21,9 +21,6 @@
     <EmbeddedResource Include="audio\zoeken.wav" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MaterialSkin">
-      <Version>0.2.1</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.117</Version>

@@ -1,14 +1,13 @@
-﻿using MaterialSkin;
-using MaterialSkin.Controls;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    internal partial class UserView : MaterialForm
+    internal partial class UserView : Form
     {
         private const int TIME_TO_SHOW_RANDOM_GAME_MS = 300;
         private const int FRAME_TIME_MS = 50;
@@ -33,11 +32,11 @@ namespace GameSelector.Views
 
         public UserView(Action<string, object> sendMessage, AudioPlayer audioPlayer)
         {
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-
             InitializeComponent();
+
+            gameExplanationLabel.Parent = pictureBox1;
+            FormBorderStyle = FormBorderStyle.None;
+
             _sendMessage = sendMessage;
             _audioPlayer = audioPlayer;
         }

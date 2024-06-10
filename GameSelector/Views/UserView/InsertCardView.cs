@@ -1,13 +1,14 @@
-﻿using MaterialSkin.Controls;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    public partial class InsertCardView : MaterialForm
+    public partial class InsertCardView : Form
     {
         public InsertCardView()
         {
             InitializeComponent();
+
+            FormBorderStyle = FormBorderStyle.None;
         }
 
         private void InsertCardView_Load(object sender, System.EventArgs e)
