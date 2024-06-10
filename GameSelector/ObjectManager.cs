@@ -16,7 +16,7 @@ namespace GameSelector
         private static INfcReader NfcReader
         {
             get => _nfcReader ??
-                (_nfcReader = NfcReaderFactory.CreateNfcReader(GlobalSettings.SimulateNfc, Program.RegisterTerminateAction));
+                (_nfcReader = NfcReaderFactory.CreateNfcReader(GlobalSettings.SimulateNfc));
         }
 
         private static AudioPlayer _audioPlayer;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NfcReader
@@ -15,12 +16,9 @@ namespace NfcReader
         private SimulatorView _simulatorView;
         private Thread _simulatorThreadView;
 
-        public NfcReaderSimulator(Action<Action> registerTerminateAction)
+        public NfcReaderSimulator()
         {
-            _simulatorThreadView = new Thread(ViewThread);
-            _simulatorThreadView.Start();
-
-            registerTerminateAction(Terminate);
+            Task.Run(ViewThread);
         }
 
         public void Terminate()

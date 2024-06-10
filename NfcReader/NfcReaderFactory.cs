@@ -4,9 +4,9 @@ namespace NfcReader
 {
     public static class NfcReaderFactory
     {
-        public static INfcReader CreateNfcReader(bool simulated, Action<Action> registerTerminateAction)
+        public static INfcReader CreateNfcReader(bool simulated)
         {
-            return simulated ? new NfcReaderSimulator(registerTerminateAction) : (INfcReader)new NfcReader();
+            return simulated ? new NfcReaderSimulator() : new NfcReader();
         }
     }
 }
