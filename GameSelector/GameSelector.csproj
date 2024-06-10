@@ -9,7 +9,11 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<PlatformTarget>x86</PlatformTarget>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Content Include="favicon.ico" />
+	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CustomControls\CustomControls.csproj" />
 		<ProjectReference Include="..\NfcReader\NfcReader.csproj" />
