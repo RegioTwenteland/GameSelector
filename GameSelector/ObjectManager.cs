@@ -4,8 +4,9 @@ using GameSelector.NfcReader;
 using GameSelector.SQLite;
 using GameSelector.Views;
 using GameSelector.Views.AdminScaffoldView;
-using GameSelector.Views.AdminSettingsView;
+using GameSelector.Views.AdminGroupView;
 using System.Collections.Concurrent;
+using GameSelector.Views.AdminSettingsView;
 
 namespace GameSelector
 {
@@ -30,6 +31,9 @@ namespace GameSelector
 
         private static AdminSettingsViewAdapter _adminSettingsView;
         private static AdminSettingsViewAdapter AdminSettingsView { get => _adminSettingsView ?? (_adminSettingsView = new AdminSettingsViewAdapter(MessageSender, AdminScaffoldView)); }
+
+        private static AdminGroupViewAdapter _adminGroupView;
+        private static AdminGroupViewAdapter AdminGroupView { get => _adminGroupView ?? (_adminGroupView = new AdminGroupViewAdapter(MessageSender, AdminScaffoldView)); }
 
         private static UserIdentificationView _userIdentificationView;
         private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageSender, NfcReader)); }
@@ -82,6 +86,7 @@ namespace GameSelector
         {
             return new AdminGroupController(
                 AdminScaffoldView,
+                AdminGroupView,
                 UserIdentificationView,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,

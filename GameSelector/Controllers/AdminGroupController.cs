@@ -1,5 +1,6 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
+using GameSelector.Views.AdminGroupView;
 using GameSelector.Views.AdminScaffoldView;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,24 @@ namespace GameSelector.Controllers
 {
     internal class AdminGroupController : AbstractController
     {
-        private AdminScaffoldViewAdapter _adminView;
+        private AdminScaffoldViewAdapter _adminScaffoldView;
+        private AdminGroupViewAdapter _adminGroupView;
         private UserIdentificationView _userIdentificationView;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
 
         public AdminGroupController(
-            AdminScaffoldViewAdapter adminView,
+            AdminScaffoldViewAdapter adminScaffoldView,
+            AdminGroupViewAdapter adminGroupView,
             UserIdentificationView userIdentificationView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
             IPlayedGameDataBridge playedGameDataBridge
         )
         {
-            _adminView = adminView;
+            _adminScaffoldView = adminScaffoldView;
+            _adminGroupView = adminGroupView;
             _userIdentificationView = userIdentificationView;
             _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
@@ -34,6 +38,7 @@ namespace GameSelector.Controllers
 
             SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
+                { "CardInserted", OnCardInserted },
                 { "RequestSaveGroup", OnRequestSaveGroup },
                 { "RequestNewGroup", OnRequestNewGroup },
                 { "RequestDeleteGroup", OnRequestDeleteGroup },
@@ -43,12 +48,25 @@ namespace GameSelector.Controllers
         private void OnGroupUpdated(object sender, GroupUpdatedEventArgs e)
         {
             var gdv = GroupDataView.FromGroup(e.Group);
-            _adminView.UpdateGroup(gdv);
+            _adminGroupView.UpdateGroup(gdv);
         }
 
         public override void Start(Action stop)
         {
             UpdateGroupsList(_groupDataBridge.GetAllGroups());
+        }
+
+        private void OnCardInserted(Message message)
+        {
+            Debug.Assert(message.Value is string);
+
+            var cardId = (string)message.Value;
+            var group = _groupDataBridge.GetGroup(cardId);
+
+            var groupView = GroupDataView.FromGroup(group);
+
+            _adminGroupView.SetGroupSelected(groupView);
+            _adminGroupView.ShowLastScannedCardId(cardId);
         }
 
         private void OnRequestSaveGroup(Message message)
@@ -66,20 +84,20 @@ namespace GameSelector.Controllers
 
                 if (groupWithCardId != null)
                 {
-                    _adminView.ShowError("Niet opgeslagen: kaart ID is al toegekend");
+                    _adminScaffoldView.ShowError("Niet opgeslagen: kaart ID is al toegekend");
                     return;
                 }
             }
 
             if (group.Name.Length > 100)
             {
-                _adminView.ShowError("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters");
+                _adminScaffoldView.ShowError("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters");
                 return;
             }
 
             if (group.ScoutingName.Length > 100)
             {
-                _adminView.ShowError("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters");
+                _adminScaffoldView.ShowError("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters");
                 return;
             }
 
@@ -91,7 +109,7 @@ namespace GameSelector.Controllers
 
             _groupDataBridge.UpdateGroup(group);
 
-            _adminView.UpdateGroup(GroupDataView.FromGroup(group));
+            _adminGroupView.UpdateGroup(GroupDataView.FromGroup(group));
         }
 
         private void OnRequestNewGroup(Message message)
@@ -107,8 +125,8 @@ namespace GameSelector.Controllers
             _groupDataBridge.InsertGroup(newGroup);
 
             var groups = _groupDataBridge.GetAllGroups().Select(g => GroupDataView.FromGroup(g));
-            _adminView.SetGroupsList(groups);
-            _adminView.SetGroupSelected(groups.First(g => g.ScoutingName == "Nieuwe"));
+            _adminGroupView.SetGroupsList(groups);
+            _adminGroupView.SetGroupSelected(groups.First(g => g.ScoutingName == "Nieuwe"));
         }
 
         private void OnRequestDeleteGroup(Message message)
@@ -122,14 +140,14 @@ namespace GameSelector.Controllers
             // Do some sanity checks:
             if (group.CurrentlyPlaying != null)
             {
-                _adminView.ShowError("Verwijderen mislukt: groep is momenteel in een spel");
+                _adminScaffoldView.ShowError("Verwijderen mislukt: groep is momenteel in een spel");
                 return;
             }
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
             if (playedGames.Any())
             {
-                _adminView.ShowError("Verwijderen mislukt: groep heeft al spellen gespeeld");
+                _adminScaffoldView.ShowError("Verwijderen mislukt: groep heeft al spellen gespeeld");
                 return;
             }
 
@@ -141,7 +159,7 @@ namespace GameSelector.Controllers
         private void UpdateGroupsList(IEnumerable<Group> groups)
         {
             var gdv = groups.Select(g => GroupDataView.FromGroup(g));
-            _adminView.SetGroupsList(gdv);
+            _adminGroupView.SetGroupsList(gdv);
         }
     }
 }

@@ -63,9 +63,6 @@ namespace GameSelector.Controllers
                     _adminView.ShowView();
                 }
             }
-
-            _adminView.SetGroupSelected(groupView);
-            _adminView.ShowLastScannedCardId(cardId);
         }
 
         private void OnLock(Message message)

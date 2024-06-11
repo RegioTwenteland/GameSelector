@@ -39,26 +39,6 @@ namespace GameSelector.Views.AdminScaffoldView
             }
         }
 
-        public void UpdateGroup(GroupDataView group)
-        {
-            form.Invoke(new MethodInvoker(() => form.UpdateGroup(group)));
-        }
-
-        public void SetGroupSelected(GroupDataView group)
-        {
-            form.Invoke(new MethodInvoker(() => form.SetGroupSelected(group)));
-        }
-
-        public void ShowLastScannedCardId(string cardId)
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowLastScannedCardId(cardId)));
-        }
-
-        public void SetGroupsList(IEnumerable<GroupDataView> groups)
-        {
-            form.Invoke(new MethodInvoker(() => form.SetGroupsList(groups)));
-        }
-
         public void SetGamesList(IEnumerable<GameDataView> gameNames)
         {
             form.Invoke(new MethodInvoker(() => form.SetGamesList(gameNames)));
