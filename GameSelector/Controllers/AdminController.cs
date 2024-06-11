@@ -1,5 +1,6 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
+using GameSelector.Views.AdminScaffoldView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,12 +9,12 @@ namespace GameSelector.Controllers
 {
     internal class AdminController : AbstractController
     {
-        private AdminViewAdapter _adminView;
+        private AdminScaffoldViewAdapter _adminView;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
 
         public AdminController(
-            AdminViewAdapter adminView,
+            AdminScaffoldViewAdapter adminView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge
         )

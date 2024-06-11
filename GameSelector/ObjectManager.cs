@@ -3,6 +3,7 @@ using GameSelector.Model;
 using GameSelector.NfcReader;
 using GameSelector.SQLite;
 using GameSelector.Views;
+using GameSelector.Views.AdminScaffoldView;
 using GameSelector.Views.AdminSettingsView;
 using System.Collections.Concurrent;
 
@@ -24,11 +25,11 @@ namespace GameSelector
 
         private static AudioPlayer AudioPlayer { get => _audioPlayer ?? (_audioPlayer = new AudioPlayer()); }
 
-        private static AdminViewAdapter _adminView;
-        private static AdminViewAdapter AdminView { get => _adminView ?? (_adminView = new AdminViewAdapter(MessageSender)); }
+        private static AdminScaffoldViewAdapter _adminView;
+        private static AdminScaffoldViewAdapter AdminScaffoldView { get => _adminView ?? (_adminView = new AdminScaffoldViewAdapter(MessageSender)); }
 
         private static AdminSettingsViewAdapter _adminSettingsView;
-        private static AdminSettingsViewAdapter AdminSettingsView { get => _adminSettingsView ?? (_adminSettingsView = new AdminSettingsViewAdapter(MessageSender, AdminView)); }
+        private static AdminSettingsViewAdapter AdminSettingsView { get => _adminSettingsView ?? (_adminSettingsView = new AdminSettingsViewAdapter(MessageSender, AdminScaffoldView)); }
 
         private static UserIdentificationView _userIdentificationView;
         private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageSender, NfcReader)); }
@@ -63,7 +64,7 @@ namespace GameSelector
         private static AdminController CreateAdminController()
         {
             return new AdminController(
-                AdminView,
+                AdminScaffoldView,
                 Model.GroupDataBridge,
                 Model.GameDataBridge
             );
@@ -80,7 +81,7 @@ namespace GameSelector
         private static AdminGroupController CreateAdminGroupController()
         {
             return new AdminGroupController(
-                AdminView,
+                AdminScaffoldView,
                 UserIdentificationView,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,
@@ -91,7 +92,7 @@ namespace GameSelector
         private static AdminGameController CreateAdminGameController()
         {
             return new AdminGameController(
-                AdminView,
+                AdminScaffoldView,
                 Model.GameDataBridge,
                 Model.GroupDataBridge,
                 Model.PlayedGameDataBridge,

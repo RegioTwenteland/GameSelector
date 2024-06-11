@@ -1,5 +1,6 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
+using GameSelector.Views.AdminScaffoldView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ namespace GameSelector.Controllers
 {
     internal class AdminGameController : AbstractController
     {
-        private AdminViewAdapter _adminView;
+        private AdminScaffoldViewAdapter _adminView;
         private IGameDataBridge _gameDataBridge;
         private IGroupDataBridge _groupDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
@@ -19,7 +20,7 @@ namespace GameSelector.Controllers
         private readonly TimeSpan GameTimeoutCheckInterval = TimeSpan.FromMinutes(1);
 
         public AdminGameController(
-            AdminViewAdapter adminView,
+            AdminScaffoldViewAdapter adminView,
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
             IPlayedGameDataBridge playedGameDataBridge,
