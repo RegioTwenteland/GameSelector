@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NfcReader
+namespace GameSelector.NfcReader
 {
     public class NdefMessage
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NfcReader
+namespace GameSelector.NfcReader
 {
     public interface INfcReader
     {
@@ -13,5 +13,7 @@ namespace NfcReader
         bool ConnectionInitialized { get; }
 
         string GetCardUID();
+
+        void Beep();
     }
 }

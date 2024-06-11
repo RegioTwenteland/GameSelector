@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NfcReader
+namespace GameSelector.NfcReader
 {
     public partial class SimulatorView : Form
     {
@@ -23,6 +23,17 @@ namespace NfcReader
 
                 return selectedCardListbox.SelectedItem as string;
             }
+        }
+
+        public void Beep()
+        {
+            var original = BackColor;
+
+            BackColor = System.Drawing.Color.Maroon;
+            Task.Delay(TimeSpan.FromMilliseconds(500)).ContinueWith(t =>
+            {
+                BackColor = original;
+            });
         }
 
         private void insertCardButton_Click(object sender, EventArgs e)

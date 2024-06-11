@@ -1,6 +1,6 @@
 ﻿using GameSelector.Model;
+using GameSelector.NfcReader;
 using GameSelector.Views;
-using NfcReader;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -214,6 +214,7 @@ namespace GameSelector.Controllers
             _userView.ShowGame(GameDataView.FromGame(newGame), GroupDataView.FromGroup(group));
         }
 
+        private bool beep = false;
         private void OnCardInserted(Message message)
         {
             Debug.Assert(message.Value is string);
@@ -221,7 +222,11 @@ namespace GameSelector.Controllers
             _currentCard = (string)message.Value;
 
             if (_loggedInUser == string.Empty && _gameState.CurrentState != GameState.State.Paused)
+            {
                 LogUserIn();
+            }
+
+            _nfcReader.Beep();
         }
 
         private bool _readyOnEject = false;

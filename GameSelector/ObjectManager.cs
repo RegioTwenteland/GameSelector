@@ -1,8 +1,8 @@
 ﻿using GameSelector.Controllers;
 using GameSelector.Model;
+using GameSelector.NfcReader;
 using GameSelector.SQLite;
 using GameSelector.Views;
-using NfcReader;
 using System.Collections.Concurrent;
 
 namespace GameSelector

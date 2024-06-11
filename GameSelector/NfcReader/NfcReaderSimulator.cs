@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NfcReader
+namespace GameSelector.NfcReader
 {
     internal class NfcReaderSimulator : INfcReader
     {
@@ -45,6 +45,12 @@ namespace NfcReader
         public bool WriteMessage(NdefMessage message)
         {
             return true;
+        }
+
+        public void Beep()
+        {
+            if (!_simulatorView.IsDisposed)
+                _simulatorView.Invoke(new MethodInvoker(_simulatorView.Beep));
         }
     }
 }

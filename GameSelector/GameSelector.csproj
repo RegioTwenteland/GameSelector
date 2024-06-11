@@ -16,7 +16,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CustomControls\CustomControls.csproj" />
-		<ProjectReference Include="..\NfcReader\NfcReader.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="schema.sql" />
@@ -27,8 +26,14 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="PCSC" Version="6.2.0" />
 		<PackageReference Include="System.Data.SQLite.Core">
 			<Version>1.0.117</Version>
 		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="NfcReader\SimulatorView.cs">
+	    <SubType>Form</SubType>
+	  </Compile>
 	</ItemGroup>
 </Project>

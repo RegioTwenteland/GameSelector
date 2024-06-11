@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace NfcReader
+namespace GameSelector.NfcReader
 {
     public static class NfcReaderFactory
     {
         public static INfcReader CreateNfcReader(bool simulated)
         {
-            return simulated ? new NfcReaderSimulator() : new NfcReader();
+            return simulated ? new NfcReaderSimulator() : new ACR122U();
         }
     }
 }
