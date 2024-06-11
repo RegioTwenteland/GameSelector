@@ -28,6 +28,7 @@ namespace GameSelector
             {
                 ObjectManager.UserController,
                 ObjectManager.AdminController,
+                ObjectManager.AdminSettingsController,
                 ObjectManager.AdminGroupController,
                 ObjectManager.AdminGameController,
             };

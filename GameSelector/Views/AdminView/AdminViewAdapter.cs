@@ -10,9 +10,13 @@ using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    internal class AdminViewAdapter : AbstractView
+    internal class AdminViewAdapter : AbstractView, IAdminViewScaffold
     {
         private readonly AdminView form;
+
+        private readonly object _lock = new object();
+
+        private readonly List<(string, Control, Action)> _tabsToAdd = new List<(string, Control, Action)>();
 
         public AdminViewAdapter(MessageSender messageSender)
             : base(messageSender)
@@ -22,25 +26,20 @@ namespace GameSelector.Views
 
         public void Start(Action onClose)
         {
-            var task = Task.Run(() =>
+            lock (_lock)
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(form);
-                onClose?.Invoke();
-            });
+                var task = Task.Run(() =>
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(form);
+                    onClose?.Invoke();
+                });
 
-            WaitOnFormLoad(form);
-        }
+                WaitOnFormLoad(form);
 
-        public void ShowGameTimeout(int timeoutMinutes)
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowGameTimeout(timeoutMinutes)));
-        }
-
-        public void ShowAnimationLength(int lengthMs)
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowAnimationLength(lengthMs)));
+                _tabsToAdd.ForEach(InternalAddTabPage);
+            }
         }
 
         public void UpdateGroup(GroupDataView group)
@@ -78,16 +77,6 @@ namespace GameSelector.Views
             form.Invoke(new MethodInvoker(() => form.ShowError(errorText)));
         }
 
-        public void ShowGamePaused()
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowGamePaused()));
-        }
-
-        public void ShowGameRunning()
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowGameRunning()));
-        }
-
         public void UpdateGame(GameDataView game)
         {
             form.Invoke(new MethodInvoker(() => form.UpdateGame(game)));
@@ -101,6 +90,33 @@ namespace GameSelector.Views
         public void ShowView()
         {
             form.Invoke(new MethodInvoker(() => form.ShowView()));
+        }
+
+        public void HideView()
+        {
+            form.Invoke(new MethodInvoker(() => form.HideView()));
+        }
+
+        private void InternalAddTabPage((string, Control, Action) tabPage)
+        {
+            form.Invoke(new MethodInvoker(() => form.AddTabPage(tabPage.Item1, tabPage.Item2, tabPage.Item3)));
+        }
+
+        public void AddTabPage(string name, Control control, Action loadedCallback)
+        {
+            var page = (name, control, loadedCallback);
+
+            lock (_lock)
+            {
+                if (form.IsHandleCreated)
+                {
+                    InternalAddTabPage(page);
+                }
+                else
+                {
+                    _tabsToAdd.Add(page);
+                }
+            }
         }
     }
 }

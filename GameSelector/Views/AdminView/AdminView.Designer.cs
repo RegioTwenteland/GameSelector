@@ -34,7 +34,7 @@
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             scoutingNameTextbox = new System.Windows.Forms.TextBox();
-            tabControl1 = new System.Windows.Forms.TabControl();
+            tabControl = new System.Windows.Forms.TabControl();
             groupsTab = new System.Windows.Forms.TabPage();
             endGameForGroup = new System.Windows.Forms.Button();
             groupRemarksText = new System.Windows.Forms.RichTextBox();
@@ -47,10 +47,10 @@
             lastScannedCardTextbox = new System.Windows.Forms.TextBox();
             label12 = new System.Windows.Forms.Label();
             groupsListBox = new System.Windows.Forms.ListBox();
+            label8 = new System.Windows.Forms.Label();
             flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             addGroupButton = new System.Windows.Forms.Button();
             deleteGroupButton = new System.Windows.Forms.Button();
-            label8 = new System.Windows.Forms.Label();
             cardIdTextbox = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
             startTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -79,20 +79,8 @@
             gameDescriptionTextbox = new System.Windows.Forms.TextBox();
             gameExplanationTextbox = new System.Windows.Forms.RichTextBox();
             label6 = new System.Windows.Forms.Label();
-            adminTab = new System.Windows.Forms.TabPage();
-            label11 = new System.Windows.Forms.Label();
-            animationLengthTextbox = new System.Windows.Forms.TextBox();
-            testUserViewButton = new System.Windows.Forms.Button();
-            closeButton = new System.Windows.Forms.Button();
-            label14 = new System.Windows.Forms.Label();
-            gameTimeoutTextbox = new System.Windows.Forms.TextBox();
-            saveGlobalSettings = new System.Windows.Forms.Button();
-            hideButton = new System.Windows.Forms.Button();
-            gameStateLabel = new System.Windows.Forms.Label();
-            label9 = new System.Windows.Forms.Label();
-            startStopGameButton = new System.Windows.Forms.Button();
             errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            tabControl1.SuspendLayout();
+            tabControl.SuspendLayout();
             groupsTab.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             gamesTab.SuspendLayout();
@@ -100,7 +88,6 @@
             ((System.ComponentModel.ISupportInitialize)maxPlayerAmountNumber).BeginInit();
             ((System.ComponentModel.ISupportInitialize)timeoutNumber).BeginInit();
             flowLayoutPanel1.SuspendLayout();
-            adminTab.SuspendLayout();
             SuspendLayout();
             // 
             // saveGroupButton
@@ -152,18 +139,17 @@
             scoutingNameTextbox.TabIndex = 0;
             scoutingNameTextbox.TextChanged += GroupDataChanged;
             // 
-            // tabControl1
+            // tabControl
             // 
-            tabControl1.Controls.Add(groupsTab);
-            tabControl1.Controls.Add(gamesTab);
-            tabControl1.Controls.Add(adminTab);
-            tabControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            tabControl1.Location = new System.Drawing.Point(6, 6);
-            tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new System.Drawing.Size(825, 656);
-            tabControl1.TabIndex = 100;
+            tabControl.Controls.Add(groupsTab);
+            tabControl.Controls.Add(gamesTab);
+            tabControl.Dock = System.Windows.Forms.DockStyle.Left;
+            tabControl.Location = new System.Drawing.Point(6, 6);
+            tabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new System.Drawing.Size(825, 656);
+            tabControl.TabIndex = 100;
             // 
             // groupsTab
             // 
@@ -178,8 +164,8 @@
             groupsTab.Controls.Add(lastScannedCardTextbox);
             groupsTab.Controls.Add(label12);
             groupsTab.Controls.Add(groupsListBox);
-            groupsTab.Controls.Add(flowLayoutPanel2);
             groupsTab.Controls.Add(label8);
+            groupsTab.Controls.Add(flowLayoutPanel2);
             groupsTab.Controls.Add(cardIdTextbox);
             groupsTab.Controls.Add(label1);
             groupsTab.Controls.Add(label3);
@@ -315,6 +301,16 @@
             groupsListBox.TabIndex = 100;
             groupsListBox.SelectedIndexChanged += groupsListBox_SelectedIndexChanged;
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(200, 7);
+            label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(48, 15);
+            label8.TabIndex = 100;
+            label8.Text = "Kaart ID";
+            // 
             // flowLayoutPanel2
             // 
             flowLayoutPanel2.Controls.Add(addGroupButton);
@@ -348,16 +344,6 @@
             deleteGroupButton.Text = "✖";
             deleteGroupButton.UseVisualStyleBackColor = true;
             deleteGroupButton.Click += deleteGroupButton_Click;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(200, 7);
-            label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(48, 15);
-            label8.TabIndex = 100;
-            label8.Text = "Kaart ID";
             // 
             // cardIdTextbox
             // 
@@ -658,141 +644,6 @@
             label6.Text = "Uitleg";
             label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // adminTab
-            // 
-            adminTab.Controls.Add(label11);
-            adminTab.Controls.Add(animationLengthTextbox);
-            adminTab.Controls.Add(testUserViewButton);
-            adminTab.Controls.Add(closeButton);
-            adminTab.Controls.Add(label14);
-            adminTab.Controls.Add(gameTimeoutTextbox);
-            adminTab.Controls.Add(saveGlobalSettings);
-            adminTab.Controls.Add(hideButton);
-            adminTab.Controls.Add(gameStateLabel);
-            adminTab.Controls.Add(label9);
-            adminTab.Controls.Add(startStopGameButton);
-            adminTab.Location = new System.Drawing.Point(4, 24);
-            adminTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            adminTab.Name = "adminTab";
-            adminTab.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            adminTab.Size = new System.Drawing.Size(817, 628);
-            adminTab.TabIndex = 100;
-            adminTab.Text = "Admin";
-            adminTab.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(19, 219);
-            label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label11.Name = "label11";
-            label11.Size = new System.Drawing.Size(118, 15);
-            label11.TabIndex = 108;
-            label11.Text = "Animatie lengte (ms)";
-            // 
-            // animationLengthTextbox
-            // 
-            animationLengthTextbox.Location = new System.Drawing.Point(144, 216);
-            animationLengthTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            animationLengthTextbox.Name = "animationLengthTextbox";
-            animationLengthTextbox.Size = new System.Drawing.Size(107, 23);
-            animationLengthTextbox.TabIndex = 107;
-            // 
-            // testUserViewButton
-            // 
-            testUserViewButton.Location = new System.Drawing.Point(10, 593);
-            testUserViewButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            testUserViewButton.Name = "testUserViewButton";
-            testUserViewButton.Size = new System.Drawing.Size(130, 27);
-            testUserViewButton.TabIndex = 106;
-            testUserViewButton.Text = "Test user view";
-            testUserViewButton.UseVisualStyleBackColor = true;
-            testUserViewButton.Visible = false;
-            testUserViewButton.Click += testUserViewButton_Click;
-            // 
-            // closeButton
-            // 
-            closeButton.Location = new System.Drawing.Point(7, 74);
-            closeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            closeButton.Name = "closeButton";
-            closeButton.Size = new System.Drawing.Size(130, 27);
-            closeButton.TabIndex = 105;
-            closeButton.Text = "Programma sluiten";
-            closeButton.UseVisualStyleBackColor = true;
-            closeButton.Click += closeButton_Click;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new System.Drawing.Point(7, 189);
-            label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(130, 15);
-            label14.TabIndex = 104;
-            label14.Text = "Spel timeout (minuten)";
-            // 
-            // gameTimeoutTextbox
-            // 
-            gameTimeoutTextbox.Location = new System.Drawing.Point(144, 186);
-            gameTimeoutTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            gameTimeoutTextbox.Name = "gameTimeoutTextbox";
-            gameTimeoutTextbox.Size = new System.Drawing.Size(107, 23);
-            gameTimeoutTextbox.TabIndex = 103;
-            gameTimeoutTextbox.TextChanged += ForceTextboxToInt;
-            // 
-            // saveGlobalSettings
-            // 
-            saveGlobalSettings.Location = new System.Drawing.Point(7, 246);
-            saveGlobalSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            saveGlobalSettings.Name = "saveGlobalSettings";
-            saveGlobalSettings.Size = new System.Drawing.Size(244, 27);
-            saveGlobalSettings.TabIndex = 102;
-            saveGlobalSettings.Text = "Opslaan";
-            saveGlobalSettings.UseVisualStyleBackColor = true;
-            saveGlobalSettings.Click += saveGlobalSettings_Click;
-            // 
-            // hideButton
-            // 
-            hideButton.Location = new System.Drawing.Point(7, 40);
-            hideButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            hideButton.Name = "hideButton";
-            hideButton.Size = new System.Drawing.Size(130, 27);
-            hideButton.TabIndex = 101;
-            hideButton.Text = "Vergrendelen";
-            hideButton.UseVisualStyleBackColor = true;
-            hideButton.Click += hideButton_Click;
-            // 
-            // gameStateLabel
-            // 
-            gameStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            gameStateLabel.Location = new System.Drawing.Point(258, 10);
-            gameStateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            gameStateLabel.Name = "gameStateLabel";
-            gameStateLabel.Size = new System.Drawing.Size(138, 18);
-            gameStateLabel.TabIndex = 100;
-            gameStateLabel.Text = "GEPAUZEERD";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(144, 13);
-            label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(104, 15);
-            label9.TabIndex = 100;
-            label9.Text = "Spel is momenteel";
-            // 
-            // startStopGameButton
-            // 
-            startStopGameButton.Location = new System.Drawing.Point(7, 7);
-            startStopGameButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            startStopGameButton.Name = "startStopGameButton";
-            startStopGameButton.Size = new System.Drawing.Size(130, 27);
-            startStopGameButton.TabIndex = 100;
-            startStopGameButton.Text = "Start spel";
-            startStopGameButton.UseVisualStyleBackColor = true;
-            startStopGameButton.Click += startStopGameButton_Click;
-            // 
             // errorFlowLayout
             // 
             errorFlowLayout.AutoScroll = true;
@@ -810,16 +661,15 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1068, 668);
-            ControlBox = false;
             Controls.Add(errorFlowLayout);
-            Controls.Add(tabControl1);
+            Controls.Add(tabControl);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "AdminView";
             Padding = new System.Windows.Forms.Padding(6);
             Text = "Admin";
             Load += Form1_Load;
-            tabControl1.ResumeLayout(false);
+            tabControl.ResumeLayout(false);
             groupsTab.ResumeLayout(false);
             groupsTab.PerformLayout();
             flowLayoutPanel2.ResumeLayout(false);
@@ -829,8 +679,6 @@
             ((System.ComponentModel.ISupportInitialize)maxPlayerAmountNumber).EndInit();
             ((System.ComponentModel.ISupportInitialize)timeoutNumber).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
-            adminTab.ResumeLayout(false);
-            adminTab.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -840,7 +688,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox scoutingNameTextbox;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage groupsTab;
         private System.Windows.Forms.TabPage gamesTab;
         private System.Windows.Forms.ListBox gamesListBox;
@@ -851,10 +699,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox cardIdTextbox;
         private System.Windows.Forms.FlowLayoutPanel errorFlowLayout;
-        private System.Windows.Forms.TabPage adminTab;
-        private System.Windows.Forms.Label gameStateLabel;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button startStopGameButton;
         private System.Windows.Forms.TextBox gameCodeTextbox;
         private System.Windows.Forms.Button deleteGameButton;
         private System.Windows.Forms.Button addGameButton;
@@ -875,11 +719,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox isAdminCheckbox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button hideButton;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox gameTimeoutTextbox;
-        private System.Windows.Forms.Button saveGlobalSettings;
-        private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button showPlayedGamesButton;
         private System.Windows.Forms.RichTextBox groupRemarksText;
@@ -888,15 +727,12 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox gameActiveCheckbox;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Button testUserViewButton;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.NumericUpDown timeoutNumber;
         private System.Windows.Forms.Button endGameForGroup;
         private System.Windows.Forms.NumericUpDown maxPlayerAmountNumber;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox animationLengthTextbox;
         private System.Windows.Forms.NumericUpDown priorityNumber;
     }
 }

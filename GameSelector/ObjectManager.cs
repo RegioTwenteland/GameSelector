@@ -3,6 +3,7 @@ using GameSelector.Model;
 using GameSelector.NfcReader;
 using GameSelector.SQLite;
 using GameSelector.Views;
+using GameSelector.Views.AdminSettingsView;
 using System.Collections.Concurrent;
 
 namespace GameSelector
@@ -26,6 +27,9 @@ namespace GameSelector
         private static AdminViewAdapter _adminView;
         private static AdminViewAdapter AdminView { get => _adminView ?? (_adminView = new AdminViewAdapter(MessageSender)); }
 
+        private static AdminSettingsViewAdapter _adminSettingsView;
+        private static AdminSettingsViewAdapter AdminSettingsView { get => _adminSettingsView ?? (_adminSettingsView = new AdminSettingsViewAdapter(MessageSender, AdminView)); }
+
         private static UserIdentificationView _userIdentificationView;
         private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageSender, NfcReader)); }
 
@@ -44,6 +48,9 @@ namespace GameSelector
         private static AdminController _adminController;
         public static AdminController AdminController { get => _adminController ?? (_adminController = CreateAdminController()); }
 
+        private static AdminSettingsController _adminSettingsController;
+        public static AdminSettingsController AdminSettingsController { get => _adminSettingsController ?? (_adminSettingsController = CreateAdminSettingsController()); }
+
         private static AdminGroupController _adminGroupController;
         public static AdminGroupController AdminGroupController { get => _adminGroupController ?? (_adminGroupController = CreateAdminGroupController()); }
 
@@ -56,10 +63,17 @@ namespace GameSelector
         private static AdminController CreateAdminController()
         {
             return new AdminController(
-                GameState,
                 AdminView,
                 Model.GroupDataBridge,
                 Model.GameDataBridge
+            );
+        }
+
+        private static AdminSettingsController CreateAdminSettingsController()
+        {
+            return new AdminSettingsController(
+                AdminSettingsView,
+                GameState
             );
         }
 

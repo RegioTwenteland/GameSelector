@@ -12,7 +12,7 @@ using TextBox = System.Windows.Forms.TextBox;
 
 namespace GameSelector.Views
 {
-    internal partial class AdminView : Form
+    internal partial class AdminView : Form, IAdminViewScaffold
     {
         /////////////////////////////////////////////////////
         // GLOBAL
@@ -50,31 +50,6 @@ namespace GameSelector.Views
                 X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
                 Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
             };
-
-#if DEBUG
-            testUserViewButton.Visible = true;
-#endif
-        }
-
-        public void ShowGameTimeout(int timeoutMinutes)
-        {
-            gameTimeoutTextbox.Text = timeoutMinutes.ToString();
-        }
-
-        public void ShowAnimationLength(int lengthMs)
-        {
-            animationLengthTextbox.Text = lengthMs.ToString();
-        }
-
-        private void saveGlobalSettings_Click(object sender, EventArgs e)
-        {
-            SendMessage("SaveGameTimeout", int.Parse(gameTimeoutTextbox.Text));
-            SendMessage("SaveAnimationLength", int.Parse(animationLengthTextbox.Text));
-        }
-
-        private void testUserViewButton_Click(object sender, EventArgs e)
-        {
-            SendMessage("TestUserView", null);
         }
 
         private void ForceTextboxToInt(object sender, EventArgs e)
@@ -104,29 +79,6 @@ namespace GameSelector.Views
         public void ShowError(string errorText)
         {
             AddNewError(errorText);
-        }
-
-        /////////////////////////////////////////////////////
-        // ADMIN
-        /////////////////////////////////////////////////////
-
-        private void startStopGameButton_Click(object sender, EventArgs e)
-        {
-            SendMessage("RequestStartStopGame", null);
-        }
-
-        public void ShowGamePaused()
-        {
-            gameStateLabel.Text = "GEPAUZEERD";
-            startStopGameButton.Text = "Start";
-            gameStateLabel.ForeColor = Color.Red;
-        }
-
-        public void ShowGameRunning()
-        {
-            gameStateLabel.Text = "BEZIG";
-            startStopGameButton.Text = "Pauze";
-            gameStateLabel.ForeColor = Color.Green;
         }
 
         /////////////////////////////////////////////////////
@@ -521,14 +473,19 @@ namespace GameSelector.Views
             Show();
         }
 
-        private void hideButton_Click(object sender, EventArgs e)
+        public void HideView()
         {
             Hide();
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
+        public void AddTabPage(string name, Control control, Action loadedCallback)
         {
-            Close();
+            var newTab = new TabPage(name);
+            control.Dock = DockStyle.Fill;
+            newTab.Controls.Add(control);
+            tabControl.TabPages.Add(newTab);
+
+            control.Invoke(loadedCallback);
         }
     }
 }
