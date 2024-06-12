@@ -35,6 +35,9 @@
 	  <Compile Update="NfcReader\SimulatorView.cs">
 	    <SubType>Form</SubType>
 	  </Compile>
+	  <Compile Update="Views\AdminGameView\AdminGameView.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	  <Compile Update="Views\AdminGroupView\AdminGroupView.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>

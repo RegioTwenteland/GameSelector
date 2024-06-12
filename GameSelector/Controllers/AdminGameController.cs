@@ -1,5 +1,6 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
+using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminScaffoldView;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace GameSelector.Controllers
 {
     internal class AdminGameController : AbstractController
     {
-        private AdminScaffoldViewAdapter _adminView;
+        private AdminScaffoldViewAdapter _adminScaffoldView;
+        private AdminGameViewAdapter _adminGameView;
         private IGameDataBridge _gameDataBridge;
         private IGroupDataBridge _groupDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
@@ -20,14 +22,16 @@ namespace GameSelector.Controllers
         private readonly TimeSpan GameTimeoutCheckInterval = TimeSpan.FromMinutes(1);
 
         public AdminGameController(
-            AdminScaffoldViewAdapter adminView,
+            AdminScaffoldViewAdapter adminScaffoldView,
+            AdminGameViewAdapter adminGameView,
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
             IPlayedGameDataBridge playedGameDataBridge,
             MessageSender messageSender
         )
         {
-            _adminView = adminView;
+            _adminScaffoldView = adminScaffoldView;
+            _adminGameView = adminGameView;
             _gameDataBridge = gameDataBridge;
             _groupDataBridge = groupDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
@@ -49,7 +53,7 @@ namespace GameSelector.Controllers
         private void OnGameUpdated(object sender, GameUpdatedEventArgs e)
         {
             var gdv = GameDataView.FromGame(e.Game);
-            _adminView.UpdateGame(gdv);
+            _adminGameView.UpdateGame(gdv);
         }
 
         public override void Start(Action stop)
@@ -62,7 +66,7 @@ namespace GameSelector.Controllers
         private void UpdateGamesList(IEnumerable<Game> games)
         {
             var gdv = games.Select(g => GameDataView.FromGame(g));
-            _adminView.SetGamesList(gdv);
+            _adminGameView.SetGamesList(gdv);
         }
 
         private void OnRequestSaveGame(Message message)
@@ -84,7 +88,7 @@ namespace GameSelector.Controllers
 
             _gameDataBridge.UpdateGame(game);
 
-            _adminView.UpdateGame(gameDataView);
+            _adminGameView.UpdateGame(gameDataView);
         }
 
         private void OnRequestNewGame(Message message)
@@ -105,8 +109,8 @@ namespace GameSelector.Controllers
             _gameDataBridge.InsertGame(newGame);
 
             var games = _gameDataBridge.GetAllGames().Select(g => GameDataView.FromGame(g));
-            _adminView.SetGamesList(games);
-            _adminView.SetGameSelected(games.First(g => g.Code == "Nieuw"));
+            _adminGameView.SetGamesList(games);
+            _adminGameView.SetGameSelected(games.First(g => g.Code == "Nieuw"));
         }
 
         private void OnRequestDeleteGame(Message message)
@@ -120,14 +124,14 @@ namespace GameSelector.Controllers
             // Do some sanity checks:
             if (_groupDataBridge.GetAllGroupsPlaying(game).Any())
             {
-                _adminView.ShowError("Verwijderen mislukt: Spel wordt momenteel gespeeld");
+                _adminScaffoldView.ShowError("Verwijderen mislukt: Spel wordt momenteel gespeeld");
                 return;
             }
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByGame(game);
             if (playedGames.Any())
             {
-                _adminView.ShowError("Verwijderen mislukt: Spel is al gespeeld");
+                _adminScaffoldView.ShowError("Verwijderen mislukt: Spel is al gespeeld");
                 return;
             }
 
@@ -178,7 +182,7 @@ namespace GameSelector.Controllers
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
 
-            _adminView.ShowPlayedGames(playedGames);
+            _adminGameView.ShowPlayedGames(playedGames);
         }
 
         private void OnRequestTimeoutCheck(Message message)

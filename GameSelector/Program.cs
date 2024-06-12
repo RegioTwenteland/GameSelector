@@ -28,9 +28,9 @@ namespace GameSelector
             {
                 ObjectManager.UserController,
                 ObjectManager.AdminController,
+                ObjectManager.AdminGameController,
                 ObjectManager.AdminGroupController,
                 ObjectManager.AdminSettingsController,
-                ObjectManager.AdminGameController,
             };
 
             foreach (var controller in controllers)

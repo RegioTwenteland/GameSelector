@@ -39,29 +39,9 @@ namespace GameSelector.Views.AdminScaffoldView
             }
         }
 
-        public void SetGamesList(IEnumerable<GameDataView> gameNames)
-        {
-            form.Invoke(new MethodInvoker(() => form.SetGamesList(gameNames)));
-        }
-
-        public void ShowPlayedGames(IEnumerable<PlayedGame> playedGames)
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowPlayedGames(playedGames)));
-        }
-
         public void ShowError(string errorText)
         {
             form.Invoke(new MethodInvoker(() => form.ShowError(errorText)));
-        }
-
-        public void UpdateGame(GameDataView game)
-        {
-            form.Invoke(new MethodInvoker(() => form.UpdateGame(game)));
-        }
-
-        public void SetGameSelected(GameDataView game)
-        {
-            form.Invoke(new MethodInvoker(() => form.SetGameSelected(game)));
         }
 
         public void ShowView()

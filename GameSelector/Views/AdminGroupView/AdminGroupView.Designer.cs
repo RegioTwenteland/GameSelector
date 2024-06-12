@@ -58,7 +58,7 @@
             // 
             // endGameForGroup
             // 
-            endGameForGroup.Location = new System.Drawing.Point(617, 87);
+            endGameForGroup.Location = new System.Drawing.Point(620, 91);
             endGameForGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             endGameForGroup.Name = "endGameForGroup";
             endGameForGroup.Size = new System.Drawing.Size(36, 27);
@@ -69,7 +69,7 @@
             // 
             // groupRemarksText
             // 
-            groupRemarksText.Location = new System.Drawing.Point(300, 151);
+            groupRemarksText.Location = new System.Drawing.Point(303, 155);
             groupRemarksText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupRemarksText.Name = "groupRemarksText";
             groupRemarksText.Size = new System.Drawing.Size(352, 138);
@@ -80,7 +80,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new System.Drawing.Point(197, 211);
+            label16.Location = new System.Drawing.Point(200, 215);
             label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label16.Name = "label16";
             label16.Size = new System.Drawing.Size(80, 15);
@@ -89,7 +89,7 @@
             // 
             // showPlayedGamesButton
             // 
-            showPlayedGamesButton.Location = new System.Drawing.Point(200, 583);
+            showPlayedGamesButton.Location = new System.Drawing.Point(203, 587);
             showPlayedGamesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             showPlayedGamesButton.Name = "showPlayedGamesButton";
             showPlayedGamesButton.Size = new System.Drawing.Size(172, 27);
@@ -101,7 +101,7 @@
             // isAdminCheckbox
             // 
             isAdminCheckbox.AutoSize = true;
-            isAdminCheckbox.Location = new System.Drawing.Point(300, 296);
+            isAdminCheckbox.Location = new System.Drawing.Point(303, 300);
             isAdminCheckbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             isAdminCheckbox.Name = "isAdminCheckbox";
             isAdminCheckbox.Size = new System.Drawing.Size(29, 19);
@@ -113,7 +113,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new System.Drawing.Point(197, 301);
+            label13.Location = new System.Drawing.Point(200, 305);
             label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(43, 15);
@@ -122,7 +122,7 @@
             // 
             // removeCardFromGroupButton
             // 
-            removeCardFromGroupButton.Location = new System.Drawing.Point(617, -3);
+            removeCardFromGroupButton.Location = new System.Drawing.Point(620, 1);
             removeCardFromGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             removeCardFromGroupButton.Name = "removeCardFromGroupButton";
             removeCardFromGroupButton.Size = new System.Drawing.Size(36, 27);
@@ -133,7 +133,7 @@
             // 
             // addCardToGroupButton
             // 
-            addCardToGroupButton.Location = new System.Drawing.Point(443, 557);
+            addCardToGroupButton.Location = new System.Drawing.Point(446, 561);
             addCardToGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             addCardToGroupButton.Name = "addCardToGroupButton";
             addCardToGroupButton.Size = new System.Drawing.Size(169, 27);
@@ -145,7 +145,7 @@
             // lastScannedCardTextbox
             // 
             lastScannedCardTextbox.Enabled = false;
-            lastScannedCardTextbox.Location = new System.Drawing.Point(341, 559);
+            lastScannedCardTextbox.Location = new System.Drawing.Point(344, 563);
             lastScannedCardTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             lastScannedCardTextbox.Name = "lastScannedCardTextbox";
             lastScannedCardTextbox.Size = new System.Drawing.Size(94, 23);
@@ -154,7 +154,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(202, 563);
+            label12.Location = new System.Drawing.Point(205, 567);
             label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(120, 15);
@@ -165,7 +165,7 @@
             // 
             groupsListBox.FormattingEnabled = true;
             groupsListBox.ItemHeight = 15;
-            groupsListBox.Location = new System.Drawing.Point(4, 3);
+            groupsListBox.Location = new System.Drawing.Point(7, 7);
             groupsListBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupsListBox.Name = "groupsListBox";
             groupsListBox.Size = new System.Drawing.Size(185, 574);
@@ -175,7 +175,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(197, 3);
+            label8.Location = new System.Drawing.Point(200, 7);
             label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(48, 15);
@@ -186,7 +186,7 @@
             // 
             flowLayoutPanel2.Controls.Add(addGroupButton);
             flowLayoutPanel2.Controls.Add(deleteGroupButton);
-            flowLayoutPanel2.Location = new System.Drawing.Point(4, 580);
+            flowLayoutPanel2.Location = new System.Drawing.Point(7, 584);
             flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Size = new System.Drawing.Size(186, 36);
@@ -219,7 +219,7 @@
             // cardIdTextbox
             // 
             cardIdTextbox.Enabled = false;
-            cardIdTextbox.Location = new System.Drawing.Point(300, -1);
+            cardIdTextbox.Location = new System.Drawing.Point(303, 3);
             cardIdTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             cardIdTextbox.Name = "cardIdTextbox";
             cardIdTextbox.Size = new System.Drawing.Size(305, 23);
@@ -229,7 +229,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(197, 63);
+            label1.Location = new System.Drawing.Point(200, 67);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(72, 15);
@@ -239,7 +239,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(197, 93);
+            label3.Location = new System.Drawing.Point(200, 97);
             label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(67, 15);
@@ -248,7 +248,7 @@
             // 
             // startTimePicker
             // 
-            startTimePicker.Location = new System.Drawing.Point(300, 121);
+            startTimePicker.Location = new System.Drawing.Point(303, 125);
             startTimePicker.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             startTimePicker.Name = "startTimePicker";
             startTimePicker.Size = new System.Drawing.Size(352, 23);
@@ -256,7 +256,7 @@
             // 
             // scoutingNameTextbox
             // 
-            scoutingNameTextbox.Location = new System.Drawing.Point(300, 29);
+            scoutingNameTextbox.Location = new System.Drawing.Point(303, 33);
             scoutingNameTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             scoutingNameTextbox.Name = "scoutingNameTextbox";
             scoutingNameTextbox.Size = new System.Drawing.Size(352, 23);
@@ -265,7 +265,7 @@
             // 
             // saveGroupButton
             // 
-            saveGroupButton.Location = new System.Drawing.Point(197, 323);
+            saveGroupButton.Location = new System.Drawing.Point(200, 327);
             saveGroupButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             saveGroupButton.Name = "saveGroupButton";
             saveGroupButton.Size = new System.Drawing.Size(456, 27);
@@ -276,7 +276,7 @@
             // 
             // groupNameTextbox
             // 
-            groupNameTextbox.Location = new System.Drawing.Point(300, 59);
+            groupNameTextbox.Location = new System.Drawing.Point(303, 63);
             groupNameTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupNameTextbox.Name = "groupNameTextbox";
             groupNameTextbox.Size = new System.Drawing.Size(352, 23);
@@ -286,7 +286,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(197, 33);
+            label2.Location = new System.Drawing.Point(200, 37);
             label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(87, 15);
@@ -296,7 +296,7 @@
             // currentGameText
             // 
             currentGameText.Enabled = false;
-            currentGameText.Location = new System.Drawing.Point(300, 89);
+            currentGameText.Location = new System.Drawing.Point(303, 93);
             currentGameText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             currentGameText.Name = "currentGameText";
             currentGameText.Size = new System.Drawing.Size(305, 23);
@@ -306,7 +306,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(197, 128);
+            label4.Location = new System.Drawing.Point(200, 132);
             label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(54, 15);
@@ -342,7 +342,7 @@
             Controls.Add(currentGameText);
             Controls.Add(label4);
             Name = "AdminGroupView";
-            Size = new System.Drawing.Size(664, 621);
+            Size = new System.Drawing.Size(664, 628);
             flowLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();

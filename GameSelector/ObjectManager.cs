@@ -7,6 +7,7 @@ using GameSelector.Views.AdminScaffoldView;
 using GameSelector.Views.AdminGroupView;
 using System.Collections.Concurrent;
 using GameSelector.Views.AdminSettingsView;
+using GameSelector.Views.AdminGameView;
 
 namespace GameSelector
 {
@@ -34,6 +35,9 @@ namespace GameSelector
 
         private static AdminGroupViewAdapter _adminGroupView;
         private static AdminGroupViewAdapter AdminGroupView { get => _adminGroupView ?? (_adminGroupView = new AdminGroupViewAdapter(MessageSender, AdminScaffoldView)); }
+
+        private static AdminGameViewAdapter _adminGameView;
+        private static AdminGameViewAdapter AdminGameView { get => _adminGameView ?? (_adminGameView = new AdminGameViewAdapter(MessageSender, AdminScaffoldView)); }
 
         private static UserIdentificationView _userIdentificationView;
         private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageSender, NfcReader)); }
@@ -98,6 +102,7 @@ namespace GameSelector
         {
             return new AdminGameController(
                 AdminScaffoldView,
+                AdminGameView,
                 Model.GameDataBridge,
                 Model.GroupDataBridge,
                 Model.PlayedGameDataBridge,
