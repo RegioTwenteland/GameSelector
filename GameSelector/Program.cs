@@ -8,8 +8,6 @@ namespace GameSelector
 {
     public static class Program
     {
-        public static event EventHandler ProgramTerminate;
-
         private static BlockingCollection<Message> _messages;
         private static CancellationTokenSource _messageCancellationTokenSource = new CancellationTokenSource();
         private static CancellationToken _messageCancellationToken;

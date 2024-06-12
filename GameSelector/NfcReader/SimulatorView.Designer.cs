@@ -90,6 +90,7 @@
             Margin = new System.Windows.Forms.Padding(2);
             Name = "SimulatorView";
             Text = "SimulatorView";
+            FormClosed += SimulatorView_FormClosed;
             ResumeLayout(false);
         }
 

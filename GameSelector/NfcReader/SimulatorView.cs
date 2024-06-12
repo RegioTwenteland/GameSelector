@@ -62,5 +62,10 @@ namespace GameSelector.NfcReader
                 CardRemoved?.Invoke(this, EventArgs.Empty);
             })));
         }
+
+        private void SimulatorView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DeviceDisconnected?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

@@ -212,7 +212,6 @@ namespace GameSelector.Controllers
             _userView.ShowGame(GameDataView.FromGame(newGame), GroupDataView.FromGroup(group));
         }
 
-        private bool beep = false;
         private void OnCardInserted(Message message)
         {
             Debug.Assert(message.Value is string);

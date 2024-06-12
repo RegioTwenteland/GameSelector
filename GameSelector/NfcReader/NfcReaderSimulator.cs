@@ -14,7 +14,6 @@ namespace GameSelector.NfcReader
         public event EventHandler DeviceDisconnected;
 
         private SimulatorView _simulatorView;
-        private Thread _simulatorThreadView;
 
         public NfcReaderSimulator()
         {
