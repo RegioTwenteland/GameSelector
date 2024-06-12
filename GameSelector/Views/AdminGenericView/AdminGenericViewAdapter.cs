@@ -1,24 +1,23 @@
-﻿using GameSelector.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using System.Windows.Forms;
 
-namespace GameSelector.Views.AdminScaffoldView
+namespace GameSelector.Views.AdminGenericView
 {
-    internal class AdminScaffoldViewAdapter : AbstractView, IAdminViewScaffold
+    internal class AdminGenericViewAdapter : AbstractView, IAdminViewScaffold
     {
-        private readonly AdminScaffoldView form;
+        private readonly AdminGenericView form;
 
         private readonly object _lock = new object();
 
         private readonly List<(string, Control, Action)> _tabsToAdd = new List<(string, Control, Action)>();
 
-        public AdminScaffoldViewAdapter(MessageSender messageSender)
+        public AdminGenericViewAdapter(MessageSender messageSender)
             : base(messageSender)
         {
-            form = new AdminScaffoldView(SendMessage);
+            form = new AdminGenericView(SendMessage);
         }
 
         public void Start(Action onClose)

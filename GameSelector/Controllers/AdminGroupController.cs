@@ -1,7 +1,7 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
 using GameSelector.Views.AdminGroupView;
-using GameSelector.Views.AdminScaffoldView;
+using GameSelector.Views.AdminGenericView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ namespace GameSelector.Controllers
 {
     internal class AdminGroupController : AbstractController
     {
-        private AdminScaffoldViewAdapter _adminScaffoldView;
+        private AdminGenericViewAdapter _adminGenericView;
         private AdminGroupViewAdapter _adminGroupView;
         private UserIdentificationView _userIdentificationView;
         private IGroupDataBridge _groupDataBridge;
@@ -19,7 +19,7 @@ namespace GameSelector.Controllers
         private IPlayedGameDataBridge _playedGameDataBridge;
 
         public AdminGroupController(
-            AdminScaffoldViewAdapter adminScaffoldView,
+            AdminGenericViewAdapter adminGenericView,
             AdminGroupViewAdapter adminGroupView,
             UserIdentificationView userIdentificationView,
             IGroupDataBridge groupDataBridge,
@@ -27,7 +27,7 @@ namespace GameSelector.Controllers
             IPlayedGameDataBridge playedGameDataBridge
         )
         {
-            _adminScaffoldView = adminScaffoldView;
+            _adminGenericView = adminGenericView;
             _adminGroupView = adminGroupView;
             _userIdentificationView = userIdentificationView;
             _groupDataBridge = groupDataBridge;
@@ -84,20 +84,20 @@ namespace GameSelector.Controllers
 
                 if (groupWithCardId != null)
                 {
-                    _adminScaffoldView.ShowError("Niet opgeslagen: kaart ID is al toegekend");
+                    _adminGenericView.ShowError("Niet opgeslagen: kaart ID is al toegekend");
                     return;
                 }
             }
 
             if (group.Name.Length > 100)
             {
-                _adminScaffoldView.ShowError("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters");
+                _adminGenericView.ShowError("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters");
                 return;
             }
 
             if (group.ScoutingName.Length > 100)
             {
-                _adminScaffoldView.ShowError("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters");
+                _adminGenericView.ShowError("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters");
                 return;
             }
 
@@ -140,14 +140,14 @@ namespace GameSelector.Controllers
             // Do some sanity checks:
             if (group.CurrentlyPlaying != null)
             {
-                _adminScaffoldView.ShowError("Verwijderen mislukt: groep is momenteel in een spel");
+                _adminGenericView.ShowError("Verwijderen mislukt: groep is momenteel in een spel");
                 return;
             }
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
             if (playedGames.Any())
             {
-                _adminScaffoldView.ShowError("Verwijderen mislukt: groep heeft al spellen gespeeld");
+                _adminGenericView.ShowError("Verwijderen mislukt: groep heeft al spellen gespeeld");
                 return;
             }
 

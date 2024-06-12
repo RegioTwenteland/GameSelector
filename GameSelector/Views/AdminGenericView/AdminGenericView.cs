@@ -1,17 +1,12 @@
 ﻿using CustomControls;
-using GameSelector.Model;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using TextBox = System.Windows.Forms.TextBox;
 
-namespace GameSelector.Views.AdminScaffoldView
+namespace GameSelector.Views.AdminGenericView
 {
-    internal partial class AdminScaffoldView : Form, IAdminViewScaffold
+    internal partial class AdminGenericView : Form
     {
         private const string SaveText = "Opslaan";
         private const string UnsavedModifier = "*";
@@ -21,7 +16,7 @@ namespace GameSelector.Views.AdminScaffoldView
         /////////////////////////////////////////////////////
         private Action<string, object> SendMessage;
 
-        public AdminScaffoldView(Action<string, object> sendMessage)
+        public AdminGenericView(Action<string, object> sendMessage)
         {
             InitializeComponent();
             SendMessage = sendMessage;

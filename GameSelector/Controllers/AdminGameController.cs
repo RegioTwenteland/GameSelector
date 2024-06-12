@@ -1,7 +1,7 @@
 ﻿using GameSelector.Model;
 using GameSelector.Views;
 using GameSelector.Views.AdminGameView;
-using GameSelector.Views.AdminScaffoldView;
+using GameSelector.Views.AdminGenericView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +12,7 @@ namespace GameSelector.Controllers
 {
     internal class AdminGameController : AbstractController
     {
-        private AdminScaffoldViewAdapter _adminScaffoldView;
+        private AdminGenericViewAdapter _adminGenericView;
         private AdminGameViewAdapter _adminGameView;
         private IGameDataBridge _gameDataBridge;
         private IGroupDataBridge _groupDataBridge;
@@ -22,7 +22,7 @@ namespace GameSelector.Controllers
         private readonly TimeSpan GameTimeoutCheckInterval = TimeSpan.FromMinutes(1);
 
         public AdminGameController(
-            AdminScaffoldViewAdapter adminScaffoldView,
+            AdminGenericViewAdapter adminGenericView,
             AdminGameViewAdapter adminGameView,
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
@@ -30,7 +30,7 @@ namespace GameSelector.Controllers
             MessageSender messageSender
         )
         {
-            _adminScaffoldView = adminScaffoldView;
+            _adminGenericView = adminGenericView;
             _adminGameView = adminGameView;
             _gameDataBridge = gameDataBridge;
             _groupDataBridge = groupDataBridge;
@@ -124,14 +124,14 @@ namespace GameSelector.Controllers
             // Do some sanity checks:
             if (_groupDataBridge.GetAllGroupsPlaying(game).Any())
             {
-                _adminScaffoldView.ShowError("Verwijderen mislukt: Spel wordt momenteel gespeeld");
+                _adminGenericView.ShowError("Verwijderen mislukt: Spel wordt momenteel gespeeld");
                 return;
             }
 
             var playedGames = _playedGameDataBridge.GetPlayedGamesByGame(game);
             if (playedGames.Any())
             {
-                _adminScaffoldView.ShowError("Verwijderen mislukt: Spel is al gespeeld");
+                _adminGenericView.ShowError("Verwijderen mislukt: Spel is al gespeeld");
                 return;
             }
 

@@ -3,7 +3,7 @@ using GameSelector.Model;
 using GameSelector.NfcReader;
 using GameSelector.SQLite;
 using GameSelector.Views;
-using GameSelector.Views.AdminScaffoldView;
+using GameSelector.Views.AdminGenericView;
 using GameSelector.Views.AdminGroupView;
 using System.Collections.Concurrent;
 using GameSelector.Views.AdminSettingsView;
@@ -27,17 +27,17 @@ namespace GameSelector
 
         private static AudioPlayer AudioPlayer { get => _audioPlayer ?? (_audioPlayer = new AudioPlayer()); }
 
-        private static AdminScaffoldViewAdapter _adminView;
-        private static AdminScaffoldViewAdapter AdminScaffoldView { get => _adminView ?? (_adminView = new AdminScaffoldViewAdapter(MessageSender)); }
+        private static AdminGenericViewAdapter _adminGenericView;
+        private static AdminGenericViewAdapter AdminGenericView { get => _adminGenericView ?? (_adminGenericView = new AdminGenericViewAdapter(MessageSender)); }
 
         private static AdminSettingsViewAdapter _adminSettingsView;
-        private static AdminSettingsViewAdapter AdminSettingsView { get => _adminSettingsView ?? (_adminSettingsView = new AdminSettingsViewAdapter(MessageSender, AdminScaffoldView)); }
+        private static AdminSettingsViewAdapter AdminSettingsView { get => _adminSettingsView ?? (_adminSettingsView = new AdminSettingsViewAdapter(MessageSender, AdminGenericView)); }
 
         private static AdminGroupViewAdapter _adminGroupView;
-        private static AdminGroupViewAdapter AdminGroupView { get => _adminGroupView ?? (_adminGroupView = new AdminGroupViewAdapter(MessageSender, AdminScaffoldView)); }
+        private static AdminGroupViewAdapter AdminGroupView { get => _adminGroupView ?? (_adminGroupView = new AdminGroupViewAdapter(MessageSender, AdminGenericView)); }
 
         private static AdminGameViewAdapter _adminGameView;
-        private static AdminGameViewAdapter AdminGameView { get => _adminGameView ?? (_adminGameView = new AdminGameViewAdapter(MessageSender, AdminScaffoldView)); }
+        private static AdminGameViewAdapter AdminGameView { get => _adminGameView ?? (_adminGameView = new AdminGameViewAdapter(MessageSender, AdminGenericView)); }
 
         private static UserIdentificationView _userIdentificationView;
         private static UserIdentificationView UserIdentificationView { get => _userIdentificationView ?? (_userIdentificationView = new UserIdentificationView(MessageSender, NfcReader)); }
@@ -72,7 +72,7 @@ namespace GameSelector
         private static AdminController CreateAdminController()
         {
             return new AdminController(
-                AdminScaffoldView,
+                AdminGenericView,
                 Model.GroupDataBridge,
                 Model.GameDataBridge
             );
@@ -89,7 +89,7 @@ namespace GameSelector
         private static AdminGroupController CreateAdminGroupController()
         {
             return new AdminGroupController(
-                AdminScaffoldView,
+                AdminGenericView,
                 AdminGroupView,
                 UserIdentificationView,
                 Model.GroupDataBridge,
@@ -101,7 +101,7 @@ namespace GameSelector
         private static AdminGameController CreateAdminGameController()
         {
             return new AdminGameController(
-                AdminScaffoldView,
+                AdminGenericView,
                 AdminGameView,
                 Model.GameDataBridge,
                 Model.GroupDataBridge,

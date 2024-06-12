@@ -1,6 +1,6 @@
-﻿namespace GameSelector.Views.AdminScaffoldView
+﻿namespace GameSelector.Views.AdminGenericView
 {
-    partial class AdminScaffoldView
+    partial class AdminGenericView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminScaffoldView));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminGenericView));
             tabControl = new System.Windows.Forms.TabControl();
             errorFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             SuspendLayout();
