@@ -12,7 +12,7 @@ namespace GameSelector.Controllers
     internal class AdminGroupController : AbstractController
     {
         private AdminGenericViewAdapter _adminGenericView;
-        private AdminGroupViewAdapter _adminGroupView;
+        private AdminGroupViewGridAdapter _adminGroupView;
         private UserIdentificationView _userIdentificationView;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
@@ -20,7 +20,7 @@ namespace GameSelector.Controllers
 
         public AdminGroupController(
             AdminGenericViewAdapter adminGenericView,
-            AdminGroupViewAdapter adminGroupView,
+            AdminGroupViewGridAdapter adminGroupView,
             UserIdentificationView userIdentificationView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
@@ -65,8 +65,13 @@ namespace GameSelector.Controllers
 
             var groupView = GroupDataView.FromGroup(group);
 
-            _adminGroupView.SetGroupSelected(groupView);
-            _adminGroupView.ShowLastScannedCardId(cardId);
+            _adminGroupView.NewCardScanned(cardId);
+        }
+
+        private void SaveFailed(string message, Group group)
+        {
+            _adminGenericView.ShowError(message);
+            _adminGroupView.UpdateGroup(GroupDataView.FromGroup(group));
         }
 
         private void OnRequestSaveGroup(Message message)
@@ -84,20 +89,20 @@ namespace GameSelector.Controllers
 
                 if (groupWithCardId != null)
                 {
-                    _adminGenericView.ShowError("Niet opgeslagen: kaart ID is al toegekend");
+                    SaveFailed("Niet opgeslagen: kaart ID is al toegekend", group);
                     return;
                 }
             }
 
             if (group.Name.Length > 100)
             {
-                _adminGenericView.ShowError("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters");
+                SaveFailed("Niet opgeslagen: groep naam mag niet groter zijn dan 100 karakters", group);
                 return;
             }
 
             if (group.ScoutingName.Length > 100)
             {
-                _adminGenericView.ShowError("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters");
+                SaveFailed("Niet opgeslagen: scouting naam mag niet groter zijn dan 100 karakters", group);
                 return;
             }
 
@@ -114,19 +119,21 @@ namespace GameSelector.Controllers
 
         private void OnRequestNewGroup(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Value is GroupDataView);
+
+            var gdv = message.Value as GroupDataView;
 
             var newGroup = new Group
             {
-                ScoutingName = "Nieuwe",
-                Name = "Groep",
+                CardId = gdv.CardId,
+                Name = gdv.GroupName ?? string.Empty,
+                ScoutingName = gdv.ScoutingName ?? string.Empty,
+                IsAdmin = gdv.IsAdmin,
+                Remarks = gdv.Remarks ?? string.Empty,
             };
 
-            _groupDataBridge.InsertGroup(newGroup);
-
-            var groups = _groupDataBridge.GetAllGroups().Select(g => GroupDataView.FromGroup(g));
-            _adminGroupView.SetGroupsList(groups);
-            _adminGroupView.SetGroupSelected(groups.First(g => g.ScoutingName == "Nieuwe"));
+            _groupDataBridge.InsertGroup(newGroup); // populates the Id field
+            _adminGroupView.NewGroup(GroupDataView.FromGroup(newGroup));
         }
 
         private void OnRequestDeleteGroup(Message message)
@@ -153,7 +160,7 @@ namespace GameSelector.Controllers
 
             _groupDataBridge.DeleteGroup(group);
 
-            UpdateGroupsList(_groupDataBridge.GetAllGroups());
+            _adminGroupView.GroupDeleted(groupDataView);
         }
 
         private void UpdateGroupsList(IEnumerable<Group> groups)

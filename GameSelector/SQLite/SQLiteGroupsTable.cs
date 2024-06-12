@@ -79,6 +79,19 @@ namespace GameSelector.SQLite
             Debug.Assert(rowsUpdated == 1);
         }
 
+        public SQLiteGroup GetNewestGroup()
+        {
+            return new SQLQuery(_connection)
+                .Select<SQLiteGroup>().Select<SQLiteGame>()
+                .From<SQLiteGroup>().LeftJoin<SQLiteGame>()
+                .On<SQLiteGroup, SQLiteGame>(nameof(SQLiteGroup.CurrentlyPlayingId), nameof(SQLiteGame.Id))
+                .OrderByDesc<SQLiteGroup>(nameof(SQLiteGroup.Id))
+                .Limit(1)
+                .Execute()
+                .Get<SQLiteGroup>()
+                .SingleOrDefault();
+        }
+
         public void DeleteGroup(SQLiteGroup group)
         {
             var rowsUpdated = new SQLQuery(_connection)

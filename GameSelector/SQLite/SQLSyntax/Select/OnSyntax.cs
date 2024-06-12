@@ -37,6 +37,16 @@ namespace GameSelector.SQLite.SQLSyntax.Select
             return new GroupBySyntax(Metadata, this, typeof(Table), col);
         }
 
+        public OrderBySyntax OrderBy<Table>(string col)
+        {
+            return new OrderBySyntax(Metadata, this, typeof(Table), col);
+        }
+
+        public OrderByDescSyntax OrderByDesc<Table>(string col)
+        {
+            return new OrderByDescSyntax(Metadata, this, typeof(Table), col);
+        }
+
         public override string Generate() =>
             $"{_leftJoinSyntax.Generate()} ON " +
             $"`{SQLiteHelper.GetTableName(_table1)}`.`{_col1}` = `{SQLiteHelper.GetTableName(_table2)}`.`{_col2}`";

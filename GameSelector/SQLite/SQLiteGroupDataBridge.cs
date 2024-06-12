@@ -54,6 +54,9 @@ namespace GameSelector.SQLite
         {
             Debug.Assert(group.Id == 0);
             _groupsTable.InsertGroup(_objectTranslator.ToSQLiteGroup(group));
+
+            var addedGroup = _groupsTable.GetNewestGroup();
+            group.Id = addedGroup.Id;
         }
 
         public void DeleteGroup(Group group)

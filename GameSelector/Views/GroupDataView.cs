@@ -1,26 +1,127 @@
 ﻿using GameSelector.Model;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GameSelector.Views
 {
-    internal class GroupDataView
+    internal class GroupDataView : INotifyPropertyChanged
     {
-        public long Id { get; set; }
 
-        public string CardId { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string GroupName { get; set; }
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        public string ScoutingName { get; set; }
+        private long id;
+        private string cardId;
+        private string groupName;
+        private string scoutingName;
+        private DateTime? startTime;
+        private string currentGame;
+        private bool isAdmin;
+        private string remarks;
 
-        public DateTime? StartTime { get; set; }
+        [Browsable(false)]
+        public long Id
+        {
+            get => id;
 
-        public string CurrentGame { get; set; }
+            set
+            {
+                id = value;
+            }
+        }
 
-        public bool IsAdmin { get; set; }
+        [DisplayName("Kaart ID")]
+        public string CardId
+        {
+            get => cardId;
 
-        public string Remarks { get; set; }
+            set
+            {
+                cardId = value;
+                NotifyPropertyChanged();
+            }
+        }
 
+        [DisplayName("Groep naam")]
+        public string GroupName
+        {
+            get => groupName;
+
+            set
+            {
+                groupName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DisplayName("Scouting naam")]
+        public string ScoutingName
+        {
+            get => scoutingName;
+
+            set
+            {
+                scoutingName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [ReadOnly(true)]
+        [DisplayName("Starttijd")]
+        public DateTime? StartTime
+        {
+            get => startTime;
+
+            set
+            {
+                startTime = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [ReadOnly(true)]
+        [DisplayName("Huidig spel")]
+        public string CurrentGame
+        {
+            get => currentGame;
+
+            set
+            {
+                currentGame = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DisplayName("Admin")]
+        public bool IsAdmin
+        {
+            get => isAdmin;
+
+            set
+            {
+                isAdmin = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DisplayName("Opmerkingen")]
+        public string Remarks
+        {
+            get => remarks;
+
+            set
+            {
+                remarks = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [Browsable(false)]
         public bool UnsavedChanges { get; set; } = false;
 
         public static GroupDataView FromGroup(Group group)

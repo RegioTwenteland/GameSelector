@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 using System.Windows.Forms;
@@ -24,13 +25,16 @@ namespace GameSelector.Views.AdminGenericView
         {
             lock (_lock)
             {
-                var task = Task.Run(() =>
+                var thread = new Thread(() =>
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(form);
                     onClose?.Invoke();
                 });
+
+                thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA
+                thread.Start();
 
                 WaitOnFormLoad(form);
 

@@ -38,6 +38,9 @@
 	  <Compile Update="Views\AdminGameView\AdminGameView.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
+	  <Compile Update="Views\AdminGroupViewGrid\AdminGroupViewGrid.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	  <Compile Update="Views\AdminGroupView\AdminGroupView.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
