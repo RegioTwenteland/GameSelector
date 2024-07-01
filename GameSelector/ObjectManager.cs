@@ -28,8 +28,8 @@ namespace GameSelector
         private static AdminSettingsViewAdapter _adminSettingsView;
         private static AdminSettingsViewAdapter AdminSettingsView => _adminSettingsView ??= new AdminSettingsViewAdapter(MessageSender, AdminGenericView);
 
-        private static AdminGroupViewGridAdapter _adminGroupView;
-        private static AdminGroupViewGridAdapter AdminGroupView => _adminGroupView ??= new AdminGroupViewGridAdapter(MessageSender, AdminGenericView);
+        private static AdminGroupViewAdapter _adminGroupView;
+        private static AdminGroupViewAdapter AdminGroupView => _adminGroupView ??= new AdminGroupViewAdapter(MessageSender, AdminGenericView);
 
         private static AdminGameViewAdapter _adminGameView;
         private static AdminGameViewAdapter AdminGameView => _adminGameView ??= new AdminGameViewAdapter(MessageSender, AdminGenericView);

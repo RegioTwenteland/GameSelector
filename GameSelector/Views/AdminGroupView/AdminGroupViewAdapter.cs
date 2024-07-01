@@ -18,19 +18,24 @@ namespace GameSelector.Views.AdminGroupView
             form.Invoke(new MethodInvoker(() => form.UpdateGroup(group)));
         }
 
-        public void SetGroupSelected(GroupDataView group)
+        public void NewCardScanned(string cardId)
         {
-            form.Invoke(new MethodInvoker(() => form.SetGroupSelected(group)));
-        }
-
-        public void ShowLastScannedCardId(string cardId)
-        {
-            form.Invoke(new MethodInvoker(() => form.ShowLastScannedCardId(cardId)));
+            form.Invoke(new MethodInvoker(() => form.NewCardScanned(cardId)));
         }
 
         public void SetGroupsList(IEnumerable<GroupDataView> groups)
         {
             form.Invoke(new MethodInvoker(() => form.SetGroupsList(groups)));
+        }
+
+        public void NewGroup(GroupDataView group)
+        {
+            form.Invoke(new MethodInvoker(() => form.NewGroup(group)));
+        }
+
+        public void GroupDeleted(GroupDataView group)
+        {
+            form.Invoke(new MethodInvoker(() => form.GroupDeleted(group)));
         }
     }
 }

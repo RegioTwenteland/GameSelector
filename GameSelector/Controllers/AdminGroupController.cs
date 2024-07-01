@@ -12,7 +12,7 @@ namespace GameSelector.Controllers
     internal class AdminGroupController : AbstractController
     {
         private AdminGenericViewAdapter _adminGenericView;
-        private AdminGroupViewGridAdapter _adminGroupView;
+        private AdminGroupViewAdapter _adminGroupView;
         private UserIdentificationView _userIdentificationView;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
@@ -20,7 +20,7 @@ namespace GameSelector.Controllers
 
         public AdminGroupController(
             AdminGenericViewAdapter adminGenericView,
-            AdminGroupViewGridAdapter adminGroupView,
+            AdminGroupViewAdapter adminGroupView,
             UserIdentificationView userIdentificationView,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,

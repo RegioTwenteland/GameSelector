@@ -1,232 +1,246 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminGroupView
 {
     internal partial class AdminGroupView : UserControl
     {
-        private const string SaveText = "Opslaan";
-        private const string UnsavedModifier = "*";
-
         private readonly Action<string, object> SendMessage;
+
+        private readonly BindingSource _bindingSource = new();
+        private readonly BindingList<GroupDataView> _groups = [];
+
+        private const string DeleteColumnName = "delete";
+        private const string NewCardColumnName = "new_card";
+
+        private WaitingForCardForm _waitingForCard;
 
         public AdminGroupView(Action<string, object> sendMessage, IAdminViewScaffold adminScaffold)
         {
             InitializeComponent();
 
             SendMessage = sendMessage;
+            _waitingForCard = new WaitingForCardForm(CancelWaitingForCard);
 
             adminScaffold.AddTabPage("Groepen", this, null);
 
-            startTimePicker.Format = DateTimePickerFormat.Custom;
-            startTimePicker.CustomFormat = "dd/MM/yyyy hh:mm:ss";
-            startTimePicker.Enabled = false;
-        }
+            typeof(Control).GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.SetProperty | BindingFlags.Instance).SetValue(grid, true);
 
-        private bool _groupDataUserControl = true;
-
-        private GroupDataView GetCurrentGroupDataView()
-        {
-            if (groupsListBox.SelectedIndex < 0) return null;
-            return (GroupDataView)groupsListBox.Items[groupsListBox.SelectedIndex];
-        }
-
-        private void SortGroupListBox()
-        {
-            object[] itemsCopy = new object[groupsListBox.Items.Count];
-            groupsListBox.Items.CopyTo(itemsCopy, 0);
-            groupsListBox.Items.Clear();
-
-            var newList = itemsCopy
-                .Select(o => (GroupDataView)o)
-                .OrderBy(gdv => gdv.ToString());
-
-            foreach (var newItem in newList)
+            grid.AutoGenerateColumns = false;
+            grid.DataSource = _bindingSource = new BindingSource
             {
-                groupsListBox.Items.Add(newItem);
-            }
+                DataSource = _groups,
+            };
+
+            SetupColumns();
         }
 
-        private int GetGroupListBoxIndex(GroupDataView group)
+        private void SetupColumns()
         {
-            var idx = -1;
-
-            for (var i = 0; i < groupsListBox.Items.Count; ++i)
+            var cardId = new DataGridViewTextBoxColumn
             {
-                var groupItem = (GroupDataView)groupsListBox.Items[i];
+                Name = nameof(GroupDataView.CardId),
+                HeaderText = "Kaart ID",
+                DataPropertyName = nameof(GroupDataView.CardId),
+                ReadOnly = true,
+            };
 
-                if (groupItem.Id == group.Id)
+            var selectNewCardButton = new DataGridViewButtonColumn
+            {
+                Name = NewCardColumnName,
+                HeaderText = string.Empty,
+                Text = "🃏",
+                UseColumnTextForButtonValue = true,
+            };
+
+            var scoutingName = new DataGridViewTextBoxColumn
+            {
+                Name = nameof(GroupDataView.ScoutingName),
+                HeaderText = "Scouting",
+                DataPropertyName = nameof(GroupDataView.ScoutingName)
+            };
+
+            var groupName = new DataGridViewTextBoxColumn
+            {
+                Name = nameof(GroupDataView.GroupName),
+                HeaderText = "Groep",
+                DataPropertyName = nameof(GroupDataView.GroupName)
+            };
+
+            var startTime = new DataGridViewTextBoxColumn
+            {
+                Name = nameof(GroupDataView.StartTime),
+                HeaderText = "Starttijd",
+                DataPropertyName = nameof(GroupDataView.StartTime),
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
                 {
-                    idx = i;
-                    break;
+                    Format = "HH:mm:ss"
                 }
-            }
+            };
 
-            return idx;
+            var currentGame = new DataGridViewTextBoxColumn
+            {
+                Name = nameof(GroupDataView.CurrentGame),
+                HeaderText = "Huidig spel",
+                DataPropertyName = nameof(GroupDataView.CurrentGame),
+                ReadOnly = true
+            };
+
+            var isAdmin = new DataGridViewCheckBoxColumn
+            {
+                Name = nameof(GroupDataView.IsAdmin),
+                HeaderText = "Admin",
+                DataPropertyName = nameof(GroupDataView.IsAdmin),
+            };
+
+            var remarks = new DataGridViewTextBoxColumn
+            {
+                Name = nameof(GroupDataView.Remarks),
+                HeaderText = "Opmerkingen",
+                DataPropertyName = nameof(GroupDataView.Remarks),
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+            };
+
+            var delete = new DataGridViewButtonColumn
+            {
+                Name = DeleteColumnName,
+                HeaderText = string.Empty,
+                Text = "❌",
+                UseColumnTextForButtonValue = true,
+            };
+
+            grid.Columns.Add(cardId);
+            grid.Columns.Add(selectNewCardButton);
+            grid.Columns.Add(scoutingName);
+            grid.Columns.Add(groupName);
+            grid.Columns.Add(startTime);
+            grid.Columns.Add(currentGame);
+            grid.Columns.Add(isAdmin);
+            grid.Columns.Add(remarks);
+            grid.Columns.Add(delete);
         }
 
         public void SetGroupsList(IEnumerable<GroupDataView> groups)
         {
-            groupsListBox.Items.Clear();
+            _bindingSource.Clear();
+
             foreach (var group in groups)
             {
-                groupsListBox.Items.Add(group);
+                _bindingSource.Add(group);
             }
 
-            SortGroupListBox();
-            ShowGroup(null);
-        }
-
-        private void saveGroupButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGroupDataView();
-
-            if (gdv == null) return;
-
-            gdv.UnsavedChanges = false;
-            saveGroupButton.Text = SaveText;
-            SendMessage("RequestSaveGroup", gdv);
-        }
-
-        private void addGroupButton_Click(object sender, EventArgs e)
-        {
-            SendMessage("RequestNewGroup", null);
-        }
-
-        private void deleteGroupButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGroupDataView();
-
-            if (gdv != null)
-                SendMessage("RequestDeleteGroup", gdv);
-        }
-
-        private void addCardToGroupButton_Click(object sender, EventArgs e)
-        {
-            var lastScannedId = lastScannedCardTextbox.Text;
-
-            if (lastScannedId == null || lastScannedId == string.Empty) return;
-
-            cardIdTextbox.Text = lastScannedId;
-        }
-
-        private void removeCardFromGroupButton_Click(object sender, EventArgs e)
-        {
-            cardIdTextbox.Text = "";
-        }
-
-        private void endGameForGroup_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGroupDataView();
-
-            if (gdv != null && gdv.CurrentGame != null)
-            {
-                var confirm = MessageBox.Show("Weet je zeker dat je dit spel geforceerd wil beëindigen?", "", MessageBoxButtons.YesNo);
-
-                if (confirm == DialogResult.Yes)
-                {
-                    SendMessage("RequestForceEndGameForGroup", gdv);
-                }
-            }
-        }
-
-        private void showPlayedGamesButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGroupDataView();
-
-            if (gdv != null)
-                SendMessage("RequestPlayedGames", gdv.Id);
-        }
-
-        private void GroupDataChanged(object sender, EventArgs e)
-        {
-            if (!_groupDataUserControl) return;
-
-            var gdv = GetCurrentGroupDataView();
-
-            if (gdv == null) return;
-
-            gdv.CardId = cardIdTextbox.Text;
-            gdv.GroupName = groupNameTextbox.Text;
-            gdv.ScoutingName = scoutingNameTextbox.Text;
-            gdv.IsAdmin = isAdminCheckbox.Checked;
-            gdv.Remarks = groupRemarksText.Text;
-            gdv.UnsavedChanges = true;
-
-            saveGroupButton.Text = SaveText + UnsavedModifier;
-        }
-
-        private void groupsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _groupDataUserControl = false;
-            ShowGroup(GetCurrentGroupDataView());
-            _groupDataUserControl = true;
-        }
-
-        private void ShowGroup(GroupDataView group)
-        {
-            cardIdTextbox.Text = string.Empty;
-            groupNameTextbox.Text = string.Empty;
-            scoutingNameTextbox.Text = string.Empty;
-            currentGameText.Text = string.Empty;
-            saveGroupButton.Text = SaveText;
-            groupRemarksText.Text = string.Empty;
-            isAdminCheckbox.Checked = false;
-
-            if (group == null) return;
-
-            cardIdTextbox.Text = group.CardId;
-            groupNameTextbox.Text = group.GroupName.ToString();
-            scoutingNameTextbox.Text = group.ScoutingName;
-            currentGameText.Text = group.CurrentGame;
-            isAdminCheckbox.Checked = group.IsAdmin;
-            startTimePicker.Text =
-                group.StartTime.HasValue ?
-                    (group.StartTime < startTimePicker.MinDate ? startTimePicker.MinDate :
-                    group.StartTime > startTimePicker.MaxDate ? startTimePicker.MaxDate :
-                    group.StartTime).ToString()
-                : null;
-            groupRemarksText.Text = group.Remarks;
-
-            saveGroupButton.Text = SaveText + (group.UnsavedChanges ? UnsavedModifier : string.Empty);
+            grid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         public void UpdateGroup(GroupDataView group)
         {
-            if (group == null) return;
+            var idx = _groups.IndexOf(_groups.Where(g => g.Id == group.Id).FirstOrDefault());
 
-            var idx = GetGroupListBoxIndex(group);
+            if (idx == -1) return;
 
-            if (idx < 0)
+            _groups[idx] = group;
+        }
+
+        public void NewCardScanned(string cardId)
+        {
+            if (_waitingForCard.Visible)
             {
-                groupsListBox.Items.Add(group);
+                _waitingForCard.GroupDataView.CardId = cardId;
+                SendMessage("RequestSaveGroup", _waitingForCard.GroupDataView);
+                _waitingForCard.Hide();
+            }
+        }
+
+        public void NewGroup(GroupDataView group)
+        {
+            var idx = -1;
+
+            foreach (var row in _bindingSource)
+            {
+                idx++;
+                var gdv = row as GroupDataView;
+
+                if (gdv.Id == 0)
+                {
+                    _bindingSource[idx] = group;
+                    return;
+                }
+            }
+
+            _bindingSource.Add(group);
+        }
+
+        public void GroupDeleted(GroupDataView group)
+        {
+            _bindingSource.Remove(group);
+        }
+
+        private void grid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var row = grid.Rows[e.RowIndex];
+
+            if (row.DataBoundItem is not GroupDataView gdv) return;
+
+            if (gdv.Id == 0)
+            {
+                SendMessage("RequestNewGroup", gdv);
             }
             else
             {
-                groupsListBox.Items[idx] = group;
+                SendMessage("RequestSaveGroup", gdv);
+            }
+        }
+
+        private void CancelWaitingForCard()
+        {
+            _waitingForCard.Hide();
+        }
+
+        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+
+            var col = grid.Columns[e.ColumnIndex];
+            var row = grid.Rows[e.RowIndex];
+
+            if (col.Name == DeleteColumnName)
+            {
+
+                if (row.DataBoundItem is not GroupDataView gdv)
+                    return;
+
+                var confirmResult = MessageBox.Show("Weet je zeker dat je deze groep wilt verwijderen?", "", MessageBoxButtons.YesNo);
+
+                if (confirmResult != DialogResult.Yes)
+                    return;
+
+                SendMessage("RequestDeleteGroup", gdv);
+
+                return;
             }
 
-            SortGroupListBox();
-            idx = GetGroupListBoxIndex(group);
+            if (col.Name == NewCardColumnName)
+            {
+                if (row.DataBoundItem is not GroupDataView gdv)
+                    return;
 
-            groupsListBox.SelectedIndex = idx;
+                _waitingForCard.GroupDataView = gdv;
+                _waitingForCard.Show();
+            }
         }
 
-        public void SetGroupSelected(GroupDataView group)
+        private void grid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            if (group == null) return;
-
-            var idx = GetGroupListBoxIndex(group);
-
-            groupsListBox.SelectedIndex = idx;
-        }
-
-        public void ShowLastScannedCardId(string cardId)
-        {
-            lastScannedCardTextbox.Text = cardId;
+            if (grid.SelectedCells.Cast<DataGridViewCell>().Any(c => c.OwningColumn is DataGridViewCheckBoxColumn))
+            {
+                // Checkboxes don't auto-commit the change.
+                grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
         }
     }
 }
