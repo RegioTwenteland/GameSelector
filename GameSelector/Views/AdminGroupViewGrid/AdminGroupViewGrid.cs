@@ -195,7 +195,7 @@ namespace GameSelector.Views.AdminGroupView
 
         private void CancelWaitingForCard()
         {
-
+            _waitingForCard.Hide();
         }
 
         private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
