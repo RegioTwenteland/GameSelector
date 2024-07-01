@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminGroupView
@@ -27,8 +26,6 @@ namespace GameSelector.Views.AdminGroupView
             _waitingForCard = new WaitingForCardForm(CancelWaitingForCard);
 
             adminScaffold.AddTabPage("Groepen", this, null);
-
-            typeof(Control).GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.SetProperty | BindingFlags.Instance).SetValue(grid, true);
 
             grid.AutoGenerateColumns = false;
             grid.DataSource = _bindingSource = new BindingSource
@@ -231,15 +228,6 @@ namespace GameSelector.Views.AdminGroupView
 
                 _waitingForCard.GroupDataView = gdv;
                 _waitingForCard.Show();
-            }
-        }
-
-        private void grid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (grid.SelectedCells.Cast<DataGridViewCell>().Any(c => c.OwningColumn is DataGridViewCheckBoxColumn))
-            {
-                // Checkboxes don't auto-commit the change.
-                grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace GameSelector.Views.AdminGroupView
+﻿using CustomControls;
+
+namespace GameSelector.Views.AdminGroupView
 {
     partial class AdminGroupView
     {
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            grid = new System.Windows.Forms.DataGridView();
+            grid = new GameSelectorDataGridView();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             SuspendLayout();
@@ -60,15 +62,14 @@
             grid.TabIndex = 0;
             grid.CellClick += grid_CellClick;
             grid.CellValueChanged += grid_CellValueChanged;
-            grid.CurrentCellDirtyStateChanged += grid_CurrentCellDirtyStateChanged;
             // 
-            // AdminGroupViewGrid
+            // AdminGroupView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.SystemColors.ControlLightLight;
             Controls.Add(tableLayoutPanel1);
-            Name = "AdminGroupViewGrid";
+            Name = "AdminGroupView";
             Size = new System.Drawing.Size(990, 628);
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)grid).EndInit();
@@ -78,6 +79,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.DataGridView grid;
+        private GameSelectorDataGridView grid;
     }
 }
