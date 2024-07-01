@@ -38,7 +38,7 @@ namespace GameSelector.Views
         [DisplayName("Kaart ID")]
         public string CardId
         {
-            get => cardId;
+            get => cardId ?? string.Empty;
 
             set
             {
@@ -50,7 +50,7 @@ namespace GameSelector.Views
         [DisplayName("Groep naam")]
         public string GroupName
         {
-            get => groupName;
+            get => groupName ?? string.Empty;
 
             set
             {
@@ -62,7 +62,7 @@ namespace GameSelector.Views
         [DisplayName("Scouting naam")]
         public string ScoutingName
         {
-            get => scoutingName;
+            get => scoutingName ?? string.Empty;
 
             set
             {
@@ -88,7 +88,7 @@ namespace GameSelector.Views
         [DisplayName("Huidig spel")]
         public string CurrentGame
         {
-            get => currentGame;
+            get => currentGame ?? string.Empty;
 
             set
             {
@@ -112,7 +112,7 @@ namespace GameSelector.Views
         [DisplayName("Opmerkingen")]
         public string Remarks
         {
-            get => remarks;
+            get => remarks ?? string.Empty;
 
             set
             {

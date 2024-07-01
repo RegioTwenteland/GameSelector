@@ -233,7 +233,11 @@ namespace GameSelector.Views.AdminGroupView
 
         private void grid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            if (grid.SelectedCells.Cast<DataGridViewCell>().Any(c => c.OwningColumn is DataGridViewCheckBoxColumn))
+            {
+                // Checkboxes don't auto-commit the change.
+                grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
         }
     }
 }
