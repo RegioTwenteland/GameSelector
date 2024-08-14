@@ -6,32 +6,32 @@ namespace GameSelector.Views.AdminGameView
 {
     internal class AdminGameViewAdapter : AbstractView
     {
-        private readonly AdminGameView form;
+        public AdminGameView Control { get; init; }
 
-        public AdminGameViewAdapter(MessageSender messageSender, IAdminViewScaffold adminScaffold)
+        public AdminGameViewAdapter(MessageSender messageSender)
             : base(messageSender)
         {
-            form = new AdminGameView(SendMessage, adminScaffold);
+            Control = new AdminGameView(SendMessage);
         }
 
         public void SetGamesList(IEnumerable<GameDataView> gameNames)
         {
-            form.Invoke(new MethodInvoker(() => form.SetGamesList(gameNames)));
+            Control.Invoke(new MethodInvoker(() => Control.SetGamesList(gameNames)));
         }
 
         public void ShowPlayedGames(IEnumerable<PlayedGame> playedGames)
         {
-            form.Invoke(new MethodInvoker(() => form.ShowPlayedGames(playedGames)));
+            Control.Invoke(new MethodInvoker(() => Control.ShowPlayedGames(playedGames)));
         }
 
         public void UpdateGame(GameDataView game)
         {
-            form.Invoke(new MethodInvoker(() => form.UpdateGame(game)));
+            Control.Invoke(new MethodInvoker(() => Control.UpdateGame(game)));
         }
 
         public void SetGameSelected(GameDataView game)
         {
-            form.Invoke(new MethodInvoker(() => form.SetGameSelected(game)));
+            Control.Invoke(new MethodInvoker(() => Control.SetGameSelected(game)));
         }
     }
 }

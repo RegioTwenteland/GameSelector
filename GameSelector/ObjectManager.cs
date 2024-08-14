@@ -23,16 +23,20 @@ namespace GameSelector
         private static AudioPlayer AudioPlayer => _audioPlayer ??= new AudioPlayer();
 
         private static AdminGenericViewAdapter _adminGenericView;
-        private static AdminGenericViewAdapter AdminGenericView => _adminGenericView ??= new AdminGenericViewAdapter(MessageSender);
+        private static AdminGenericViewAdapter AdminGenericView => _adminGenericView ??= new AdminGenericViewAdapter(
+            MessageSender,
+            AdminSettingsView,
+            AdminGroupView,
+            AdminGameView);
 
         private static AdminSettingsViewAdapter _adminSettingsView;
-        private static AdminSettingsViewAdapter AdminSettingsView => _adminSettingsView ??= new AdminSettingsViewAdapter(MessageSender, AdminGenericView);
+        private static AdminSettingsViewAdapter AdminSettingsView => _adminSettingsView ??= new AdminSettingsViewAdapter(MessageSender);
 
         private static AdminGroupViewAdapter _adminGroupView;
-        private static AdminGroupViewAdapter AdminGroupView => _adminGroupView ??= new AdminGroupViewAdapter(MessageSender, AdminGenericView);
+        private static AdminGroupViewAdapter AdminGroupView => _adminGroupView ??= new AdminGroupViewAdapter(MessageSender);
 
         private static AdminGameViewAdapter _adminGameView;
-        private static AdminGameViewAdapter AdminGameView => _adminGameView ??= new AdminGameViewAdapter(MessageSender, AdminGenericView);
+        private static AdminGameViewAdapter AdminGameView => _adminGameView ??= new AdminGameViewAdapter(MessageSender);
 
         private static UserIdentificationView _userIdentificationView;
         private static UserIdentificationView UserIdentificationView => _userIdentificationView ??= new UserIdentificationView(MessageSender, NfcReader);
@@ -50,72 +54,42 @@ namespace GameSelector
         public static MessageSender MessageSender => _messageSender ??= new MessageSender(MessageCollection);
 
         private static AdminController _adminController;
-        public static AdminController AdminController => _adminController ??= CreateAdminController();
+        public static AdminController AdminController => _adminController ??= new AdminController(
+            AdminGenericView,
+            Model.GroupDataBridge,
+            Model.GameDataBridge);
 
         private static AdminSettingsController _adminSettingsController;
-        public static AdminSettingsController AdminSettingsController => _adminSettingsController ??= CreateAdminSettingsController();
+        public static AdminSettingsController AdminSettingsController => _adminSettingsController ??= new AdminSettingsController(
+            AdminSettingsView,
+            GameState);
 
         private static AdminGroupController _adminGroupController;
-        public static AdminGroupController AdminGroupController => _adminGroupController ??= CreateAdminGroupController();
+        public static AdminGroupController AdminGroupController => _adminGroupController ??= new AdminGroupController(
+            AdminGenericView,
+            AdminGroupView,
+            UserIdentificationView,
+            Model.GroupDataBridge,
+            Model.GameDataBridge,
+            Model.PlayedGameDataBridge);
 
         private static AdminGameController _adminGameController;
-        public static AdminGameController AdminGameController => _adminGameController ??= CreateAdminGameController();
+        public static AdminGameController AdminGameController => _adminGameController ??= new AdminGameController(
+            AdminGenericView,
+            AdminGameView,
+            Model.GameDataBridge,
+            Model.GroupDataBridge,
+            Model.PlayedGameDataBridge,
+            MessageSender);
 
         private static UserController _userController;
-        public static UserController UserController => _userController ??= CreateUserController();
-
-        private static AdminController CreateAdminController()
-        {
-            return new AdminController(
-                AdminGenericView,
-                Model.GroupDataBridge,
-                Model.GameDataBridge
-            );
-        }
-
-        private static AdminSettingsController CreateAdminSettingsController()
-        {
-            return new AdminSettingsController(
-                AdminSettingsView,
-                GameState
-            );
-        }
-
-        private static AdminGroupController CreateAdminGroupController()
-        {
-            return new AdminGroupController(
-                AdminGenericView,
-                AdminGroupView,
-                UserIdentificationView,
-                Model.GroupDataBridge,
-                Model.GameDataBridge,
-                Model.PlayedGameDataBridge
-            );
-        }
-
-        private static AdminGameController CreateAdminGameController()
-        {
-            return new AdminGameController(
-                AdminGenericView,
-                AdminGameView,
-                Model.GameDataBridge,
-                Model.GroupDataBridge,
-                Model.PlayedGameDataBridge,
-                MessageSender
-            );
-        }
-
-        private static UserController CreateUserController()
-        {
-            return new UserController(
-                GameState,
-                UserIdentificationView,
-                UserView,
-                NfcReader,
-                Model.GroupDataBridge,
-                Model.GameDataBridge,
-                Model.PlayedGameDataBridge
-            );
-        }
+        public static UserController UserController => _userController ??= new UserController(
+            GameState,
+            UserIdentificationView,
+            UserView,
+            NfcReader,
+            Model.GroupDataBridge,
+            Model.GameDataBridge,
+            Model.PlayedGameDataBridge);
     }
 }

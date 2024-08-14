@@ -14,13 +14,11 @@ namespace GameSelector.Views.AdminSettingsView
     {
         private readonly Action<string, object> SendMessage;
 
-        public AdminSettingsView(Action<string, object> sendMessage, IAdminViewScaffold adminScaffold)
+        public AdminSettingsView(Action<string, object> sendMessage)
         {
             InitializeComponent();
 
             SendMessage = sendMessage;
-
-            adminScaffold.AddTabPage("Admin", this, OnLoad);
         }
 
         private void OnLoad()

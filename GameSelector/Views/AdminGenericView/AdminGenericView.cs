@@ -73,17 +73,12 @@ namespace GameSelector.Views.AdminGenericView
             Hide();
         }
 
-        public void AddTabPage(string name, Control control, Action loadedCallback)
+        public void AddTabPage(string name, Control control)
         {
             var newTab = new TabPage(name);
             control.Dock = DockStyle.Fill;
             newTab.Controls.Add(control);
             tabControl.TabPages.Add(newTab);
-
-            if (loadedCallback is not null)
-            {
-                control.Invoke(loadedCallback);
-            }
         }
     }
 }

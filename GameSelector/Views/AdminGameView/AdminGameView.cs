@@ -15,13 +15,11 @@ namespace GameSelector.Views.AdminGameView
 
         private readonly Action<string, object> SendMessage;
 
-        public AdminGameView(Action<string, object> sendMessage, IAdminViewScaffold adminScaffold)
+        public AdminGameView(Action<string, object> sendMessage)
         {
             InitializeComponent();
 
             SendMessage = sendMessage;
-
-            adminScaffold.AddTabPage("Spellen", this, null);
         }
 
         private bool _gameDataUserControl = true;

@@ -5,37 +5,37 @@ namespace GameSelector.Views.AdminGroupView
 {
     internal class AdminGroupViewAdapter : AbstractView
     {
-        private readonly AdminGroupView form;
+        public AdminGroupView Control { get; init; }
 
-        public AdminGroupViewAdapter(MessageSender messageSender, IAdminViewScaffold adminScaffold)
+        public AdminGroupViewAdapter(MessageSender messageSender)
             : base(messageSender)
         {
-            form = new AdminGroupView(SendMessage, adminScaffold);
+            Control = new AdminGroupView(SendMessage);
         }
 
         public void UpdateGroup(GroupDataView group)
         {
-            form.Invoke(new MethodInvoker(() => form.UpdateGroup(group)));
+            Control.Invoke(new MethodInvoker(() => Control.UpdateGroup(group)));
         }
 
         public void NewCardScanned(string cardId)
         {
-            form.Invoke(new MethodInvoker(() => form.NewCardScanned(cardId)));
+            Control.Invoke(new MethodInvoker(() => Control.NewCardScanned(cardId)));
         }
 
         public void SetGroupsList(IEnumerable<GroupDataView> groups)
         {
-            form.Invoke(new MethodInvoker(() => form.SetGroupsList(groups)));
+            Control.Invoke(new MethodInvoker(() => Control.SetGroupsList(groups)));
         }
 
         public void NewGroup(GroupDataView group)
         {
-            form.Invoke(new MethodInvoker(() => form.NewGroup(group)));
+            Control.Invoke(new MethodInvoker(() => Control.NewGroup(group)));
         }
 
         public void GroupDeleted(GroupDataView group)
         {
-            form.Invoke(new MethodInvoker(() => form.GroupDeleted(group)));
+            Control.Invoke(new MethodInvoker(() => Control.GroupDeleted(group)));
         }
     }
 }

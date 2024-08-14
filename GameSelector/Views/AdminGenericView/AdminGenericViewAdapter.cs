@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GameSelector.Views.AdminGameView;
+using GameSelector.Views.AdminGroupView;
+using GameSelector.Views.AdminSettingsView;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,18 +10,32 @@ using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminGenericView
 {
-    internal class AdminGenericViewAdapter : AbstractView, IAdminViewScaffold
+    internal class AdminGenericViewAdapter : AbstractView
     {
         private readonly AdminGenericView form;
 
         private readonly object _lock = new object();
-
         private readonly List<(string, Control, Action)> _tabsToAdd = new List<(string, Control, Action)>();
 
-        public AdminGenericViewAdapter(MessageSender messageSender)
+        private AdminSettingsViewAdapter _adminSettingsView;
+
+        private AdminGroupViewAdapter _adminGroupView;
+
+        private AdminGameViewAdapter _adminGameView;
+
+        public AdminGenericViewAdapter(
+            MessageSender messageSender,
+            AdminSettingsViewAdapter adminSettingsView,
+            AdminGroupViewAdapter adminGroupView,
+            AdminGameViewAdapter adminGameView
+            )
             : base(messageSender)
         {
             form = new AdminGenericView(SendMessage);
+
+            _adminSettingsView = adminSettingsView;
+            _adminGroupView = adminGroupView;
+            _adminGameView = adminGameView;
         }
 
         public void Start(Action onClose)
@@ -33,12 +50,17 @@ namespace GameSelector.Views.AdminGenericView
                     onClose?.Invoke();
                 });
 
-                thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA
+                thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
 
                 WaitOnFormLoad(form);
 
-                _tabsToAdd.ForEach(InternalAddTabPage);
+                form.Invoke(new MethodInvoker(() =>
+                {
+                    form.AddTabPage("Spellen", _adminGameView.Control);
+                    form.AddTabPage("Groepen", _adminGroupView.Control);
+                    form.AddTabPage("Admin", _adminSettingsView.Control);
+                }));
             }
         }
 
@@ -55,28 +77,6 @@ namespace GameSelector.Views.AdminGenericView
         public void HideView()
         {
             form.Invoke(new MethodInvoker(() => form.HideView()));
-        }
-
-        private void InternalAddTabPage((string, Control, Action) tabPage)
-        {
-            form.Invoke(new MethodInvoker(() => form.AddTabPage(tabPage.Item1, tabPage.Item2, tabPage.Item3)));
-        }
-
-        public void AddTabPage(string name, Control control, Action loadedCallback)
-        {
-            var page = (name, control, loadedCallback);
-
-            lock (_lock)
-            {
-                if (form.IsHandleCreated)
-                {
-                    InternalAddTabPage(page);
-                }
-                else
-                {
-                    _tabsToAdd.Add(page);
-                }
-            }
         }
     }
 }

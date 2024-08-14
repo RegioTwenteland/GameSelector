@@ -1,7 +1,6 @@
 ﻿using CustomControls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -18,14 +17,12 @@ namespace GameSelector.Views.AdminGroupView
 
         private WaitingForCardForm _waitingForCard;
 
-        public AdminGroupView(Action<string, object> sendMessage, IAdminViewScaffold adminScaffold)
+        public AdminGroupView(Action<string, object> sendMessage)
         {
             InitializeComponent();
 
             SendMessage = sendMessage;
             _waitingForCard = new WaitingForCardForm(CancelWaitingForCard);
-
-            adminScaffold.AddTabPage("Groepen", this, null);
 
             grid.AutoGenerateColumns = false;
             grid.DataSource = new BindingSource
