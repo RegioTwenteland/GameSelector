@@ -60,7 +60,6 @@ namespace GameSelector.Views.AdminGroupView
             grid.Name = "grid";
             grid.Size = new System.Drawing.Size(984, 572);
             grid.TabIndex = 0;
-            grid.CellClick += grid_CellClick;
             grid.CellValueChanged += grid_CellValueChanged;
             // 
             // AdminGroupView

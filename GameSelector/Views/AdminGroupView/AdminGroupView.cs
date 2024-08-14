@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomControls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -32,93 +33,124 @@ namespace GameSelector.Views.AdminGroupView
                 DataSource = _groups,
             };
 
-            SetupColumns();
+            grid.SetupColums(
+            [
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GroupDataView.CardId),
+                        HeaderText = "Kaart ID",
+                        DataPropertyName = nameof(GroupDataView.CardId),
+                        ReadOnly = true,
+                    },
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewButtonColumn
+                    {
+                        Name = NewCardColumnName,
+                        HeaderText = string.Empty,
+                        Text = "🃏",
+                        UseColumnTextForButtonValue = true,
+                    },
+                    OnClick = OnSelectNewCardClicked,
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GroupDataView.ScoutingName),
+                        HeaderText = "Scouting",
+                        DataPropertyName = nameof(GroupDataView.ScoutingName)
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GroupDataView.GroupName),
+                        HeaderText = "Groep",
+                        DataPropertyName = nameof(GroupDataView.GroupName)
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GroupDataView.StartTime),
+                        HeaderText = "Starttijd",
+                        DataPropertyName = nameof(GroupDataView.StartTime),
+                        ReadOnly = true,
+                        DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = "HH:mm:ss"
+                        }
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GroupDataView.CurrentGame),
+                        HeaderText = "Huidig spel",
+                        DataPropertyName = nameof(GroupDataView.CurrentGame),
+                        ReadOnly = true
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewCheckBoxColumn
+                    {
+                        Name = nameof(GroupDataView.IsAdmin),
+                        HeaderText = "Admin",
+                        DataPropertyName = nameof(GroupDataView.IsAdmin),
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GroupDataView.Remarks),
+                        HeaderText = "Opmerkingen",
+                        DataPropertyName = nameof(GroupDataView.Remarks),
+                        AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewButtonColumn
+                    {
+                        Name = DeleteColumnName,
+                        HeaderText = string.Empty,
+                        Text = "❌",
+                        UseColumnTextForButtonValue = true,
+                    },
+                    OnClick = OnDeleteClicked,
+                },
+            ]);
         }
 
-        private void SetupColumns()
+        private void OnSelectNewCardClicked(DataGridViewColumn column, DataGridViewRow row)
         {
-            var cardId = new DataGridViewTextBoxColumn
-            {
-                Name = nameof(GroupDataView.CardId),
-                HeaderText = "Kaart ID",
-                DataPropertyName = nameof(GroupDataView.CardId),
-                ReadOnly = true,
-            };
+            if (row.DataBoundItem is not GroupDataView gdv)
+                return;
 
-            var selectNewCardButton = new DataGridViewButtonColumn
-            {
-                Name = NewCardColumnName,
-                HeaderText = string.Empty,
-                Text = "🃏",
-                UseColumnTextForButtonValue = true,
-            };
+            _waitingForCard.GroupDataView = gdv;
+            _waitingForCard.Show();
+        }
 
-            var scoutingName = new DataGridViewTextBoxColumn
-            {
-                Name = nameof(GroupDataView.ScoutingName),
-                HeaderText = "Scouting",
-                DataPropertyName = nameof(GroupDataView.ScoutingName)
-            };
+        private void OnDeleteClicked(DataGridViewColumn column, DataGridViewRow row)
+        {
+            if (row.DataBoundItem is not GroupDataView gdv)
+                return;
 
-            var groupName = new DataGridViewTextBoxColumn
-            {
-                Name = nameof(GroupDataView.GroupName),
-                HeaderText = "Groep",
-                DataPropertyName = nameof(GroupDataView.GroupName)
-            };
+            var confirmResult = MessageBox.Show("Weet je zeker dat je deze groep wilt verwijderen?", "", MessageBoxButtons.YesNo);
 
-            var startTime = new DataGridViewTextBoxColumn
-            {
-                Name = nameof(GroupDataView.StartTime),
-                HeaderText = "Starttijd",
-                DataPropertyName = nameof(GroupDataView.StartTime),
-                ReadOnly = true,
-                DefaultCellStyle = new DataGridViewCellStyle
-                {
-                    Format = "HH:mm:ss"
-                }
-            };
+            if (confirmResult != DialogResult.Yes)
+                return;
 
-            var currentGame = new DataGridViewTextBoxColumn
-            {
-                Name = nameof(GroupDataView.CurrentGame),
-                HeaderText = "Huidig spel",
-                DataPropertyName = nameof(GroupDataView.CurrentGame),
-                ReadOnly = true
-            };
-
-            var isAdmin = new DataGridViewCheckBoxColumn
-            {
-                Name = nameof(GroupDataView.IsAdmin),
-                HeaderText = "Admin",
-                DataPropertyName = nameof(GroupDataView.IsAdmin),
-            };
-
-            var remarks = new DataGridViewTextBoxColumn
-            {
-                Name = nameof(GroupDataView.Remarks),
-                HeaderText = "Opmerkingen",
-                DataPropertyName = nameof(GroupDataView.Remarks),
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-            };
-
-            var delete = new DataGridViewButtonColumn
-            {
-                Name = DeleteColumnName,
-                HeaderText = string.Empty,
-                Text = "❌",
-                UseColumnTextForButtonValue = true,
-            };
-
-            grid.Columns.Add(cardId);
-            grid.Columns.Add(selectNewCardButton);
-            grid.Columns.Add(scoutingName);
-            grid.Columns.Add(groupName);
-            grid.Columns.Add(startTime);
-            grid.Columns.Add(currentGame);
-            grid.Columns.Add(isAdmin);
-            grid.Columns.Add(remarks);
-            grid.Columns.Add(delete);
+            SendMessage("RequestDeleteGroup", gdv);
         }
 
         public void SetGroupsList(IEnumerable<GroupDataView> groups)
@@ -156,10 +188,9 @@ namespace GameSelector.Views.AdminGroupView
         {
             var idx = -1;
 
-            foreach (var row in _groups)
+            foreach (var gdv in _groups)
             {
                 idx++;
-                var gdv = row as GroupDataView;
 
                 if (gdv.Id == 0)
                 {
@@ -195,39 +226,6 @@ namespace GameSelector.Views.AdminGroupView
         private void CancelWaitingForCard()
         {
             _waitingForCard.Hide();
-        }
-
-        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
-
-            var col = grid.Columns[e.ColumnIndex];
-            var row = grid.Rows[e.RowIndex];
-
-            if (col.Name == DeleteColumnName)
-            {
-
-                if (row.DataBoundItem is not GroupDataView gdv)
-                    return;
-
-                var confirmResult = MessageBox.Show("Weet je zeker dat je deze groep wilt verwijderen?", "", MessageBoxButtons.YesNo);
-
-                if (confirmResult != DialogResult.Yes)
-                    return;
-
-                SendMessage("RequestDeleteGroup", gdv);
-
-                return;
-            }
-
-            if (col.Name == NewCardColumnName)
-            {
-                if (row.DataBoundItem is not GroupDataView gdv)
-                    return;
-
-                _waitingForCard.GroupDataView = gdv;
-                _waitingForCard.Show();
-            }
         }
     }
 }
