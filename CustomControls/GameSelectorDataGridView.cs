@@ -21,6 +21,8 @@ namespace CustomControls
 
         private void OnCellClicked(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex <= 0 || e.RowIndex <= 0) return;
+
             var col = Columns[e.ColumnIndex];
             var row = Rows[e.RowIndex];
 

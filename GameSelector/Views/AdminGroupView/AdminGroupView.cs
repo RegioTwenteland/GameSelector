@@ -11,7 +11,7 @@ namespace GameSelector.Views.AdminGroupView
     {
         private readonly Action<string, object> SendMessage;
 
-        private readonly BindingList<GroupDataView> _groups = [];
+        private readonly SortableBindingList<GroupDataView> _groups = [];
 
         private const string DeleteColumnName = "delete";
         private const string NewCardColumnName = "new_card";
