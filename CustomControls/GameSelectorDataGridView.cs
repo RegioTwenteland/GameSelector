@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Windows.ApplicationModel.Appointments;
 
 namespace CustomControls
 {
@@ -54,6 +55,29 @@ namespace CustomControls
             {
                 Columns.Add(columnOptions.Column);
                 _columnOptions.Add(columnOptions.Column.Name, columnOptions);
+            }
+        }
+
+        /// <summary>
+        /// Returns the sum of all selected numbers
+        /// </summary>
+        public double Sum
+        {
+            get
+            {
+                var result = 0d;
+
+                for (var i = 0; i < SelectedCells.Count; i++)
+                {
+                    var cell = SelectedCells[i];
+
+                    if (double.TryParse(cell.Value?.ToString(), out var parseResult))
+                    {
+                        result += parseResult;
+                    }
+                }
+
+                return result;
             }
         }
 

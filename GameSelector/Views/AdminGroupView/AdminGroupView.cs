@@ -233,7 +233,7 @@ namespace GameSelector.Views.AdminGroupView
             var selectedRows = grid.SelectedRows;
 
             var confirmResult = MessageBox.Show($"Weet je zeker dat je {selectedRows.Count} groepen wilt verwijderen?", "", MessageBoxButtons.YesNo);
-            
+
             if (confirmResult != DialogResult.Yes)
                 return;
 
@@ -248,6 +248,12 @@ namespace GameSelector.Views.AdminGroupView
 
                 grid.Rows.Remove(row);
             }
+        }
+
+        private void grid_SelectionChanged(object sender, EventArgs e)
+        {
+            sumDisplayLabel.Text = ((int)grid.Sum).ToString();
+            selectedRowsLabel.Text = grid.SelectedRows.Count.ToString();
         }
     }
 }
