@@ -32,6 +32,7 @@ namespace GameSelector.Views.AdminGroupView
         {
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             grid = new GameSelectorDataGridView();
+            bulkRemoveButton = new System.Windows.Forms.Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             SuspendLayout();
@@ -41,6 +42,7 @@ namespace GameSelector.Views.AdminGroupView
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel1.Controls.Add(grid, 0, 0);
+            tableLayoutPanel1.Controls.Add(bulkRemoveButton, 0, 1);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -62,6 +64,17 @@ namespace GameSelector.Views.AdminGroupView
             grid.TabIndex = 0;
             grid.CellValueChanged += grid_CellValueChanged;
             // 
+            // bulkRemoveButton
+            // 
+            bulkRemoveButton.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            bulkRemoveButton.Location = new System.Drawing.Point(3, 581);
+            bulkRemoveButton.Name = "bulkRemoveButton";
+            bulkRemoveButton.Size = new System.Drawing.Size(47, 44);
+            bulkRemoveButton.TabIndex = 1;
+            bulkRemoveButton.Text = "🗑";
+            bulkRemoveButton.UseVisualStyleBackColor = true;
+            bulkRemoveButton.Click += bulkRemoveButton_Click;
+            // 
             // AdminGroupView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -79,5 +92,6 @@ namespace GameSelector.Views.AdminGroupView
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private GameSelectorDataGridView grid;
+        private System.Windows.Forms.Button bulkRemoveButton;
     }
 }

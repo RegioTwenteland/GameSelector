@@ -227,5 +227,27 @@ namespace GameSelector.Views.AdminGroupView
         {
             _waitingForCard.Hide();
         }
+
+        private void bulkRemoveButton_Click(object sender, EventArgs e)
+        {
+            var selectedRows = grid.SelectedRows;
+
+            var confirmResult = MessageBox.Show($"Weet je zeker dat je {selectedRows.Count} groepen wilt verwijderen?", "", MessageBoxButtons.YesNo);
+            
+            if (confirmResult != DialogResult.Yes)
+                return;
+
+            for (var i = selectedRows.Count - 1; i >= 0; i--)
+            {
+                var row = selectedRows[i];
+
+                if (row.DataBoundItem is GroupDataView gdv)
+                {
+                    SendMessage("RequestDeleteGroup", gdv);
+                }
+
+                grid.Rows.Remove(row);
+            }
+        }
     }
 }
