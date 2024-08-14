@@ -10,7 +10,6 @@ namespace GameSelector.Views.AdminGroupView
     {
         private readonly Action<string, object> SendMessage;
 
-        private readonly BindingSource _bindingSource = new();
         private readonly BindingList<GroupDataView> _groups = [];
 
         private const string DeleteColumnName = "delete";
@@ -28,7 +27,7 @@ namespace GameSelector.Views.AdminGroupView
             adminScaffold.AddTabPage("Groepen", this, null);
 
             grid.AutoGenerateColumns = false;
-            grid.DataSource = _bindingSource = new BindingSource
+            grid.DataSource = new BindingSource
             {
                 DataSource = _groups,
             };
@@ -124,11 +123,11 @@ namespace GameSelector.Views.AdminGroupView
 
         public void SetGroupsList(IEnumerable<GroupDataView> groups)
         {
-            _bindingSource.Clear();
+            _groups.Clear();
 
             foreach (var group in groups)
             {
-                _bindingSource.Add(group);
+                _groups.Add(group);
             }
 
             grid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -157,24 +156,24 @@ namespace GameSelector.Views.AdminGroupView
         {
             var idx = -1;
 
-            foreach (var row in _bindingSource)
+            foreach (var row in _groups)
             {
                 idx++;
                 var gdv = row as GroupDataView;
 
                 if (gdv.Id == 0)
                 {
-                    _bindingSource[idx] = group;
+                    _groups[idx] = group;
                     return;
                 }
             }
 
-            _bindingSource.Add(group);
+            _groups.Add(group);
         }
 
         public void GroupDeleted(GroupDataView group)
         {
-            _bindingSource.Remove(group);
+            _groups.Remove(group);
         }
 
         private void grid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
