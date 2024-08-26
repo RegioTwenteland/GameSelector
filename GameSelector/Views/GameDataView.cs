@@ -25,8 +25,6 @@ namespace GameSelector.Views
 
         public long MaxPlayerAmount { get; set; }
 
-        public bool UnsavedChanges { get; set; } = false;
-
         public override string ToString()
         {
             return $"{Code} [{(Active ? "Actief" : "Inactief")}] ({Priority})";

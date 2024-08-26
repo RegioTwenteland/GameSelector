@@ -1,4 +1,5 @@
 ﻿using GameSelector.SQLite.SQLSyntax;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -90,6 +91,19 @@ namespace GameSelector.SQLite
                 .ExecuteNonQuery();
 
             Debug.Assert(rowsUpdated == 1);
+        }
+
+        internal SQLiteGame GetNewestGame()
+        {
+            return new SQLQuery(_connection)
+                .Select<SQLiteGame>().Select<SQLiteGroup>()
+                .From<SQLiteGame>().LeftJoin<SQLiteGroup>()
+                .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.Id), nameof(SQLiteGroup.CurrentlyPlayingId))
+                .OrderByDesc<SQLiteGame>(nameof(SQLiteGame.Id))
+                .Limit(1)
+                .Execute()
+                .Get<SQLiteGame>()
+                .SingleOrDefault();
         }
     }
 }

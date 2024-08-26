@@ -1,5 +1,4 @@
-﻿using GameSelector.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminGameView
@@ -14,14 +13,9 @@ namespace GameSelector.Views.AdminGameView
             Control = new AdminGameView(SendMessage);
         }
 
-        public void SetGamesList(IEnumerable<GameDataView> gameNames)
+        public void SetGamesList(IEnumerable<GameDataView> games)
         {
-            Control.Invoke(new MethodInvoker(() => Control.SetGamesList(gameNames)));
-        }
-
-        public void ShowPlayedGames(IEnumerable<PlayedGame> playedGames)
-        {
-            Control.Invoke(new MethodInvoker(() => Control.ShowPlayedGames(playedGames)));
+            Control.Invoke(new MethodInvoker(() => Control.SetGamesList(games)));
         }
 
         public void UpdateGame(GameDataView game)
@@ -29,9 +23,19 @@ namespace GameSelector.Views.AdminGameView
             Control.Invoke(new MethodInvoker(() => Control.UpdateGame(game)));
         }
 
-        public void SetGameSelected(GameDataView game)
+        public void NewGame(GameDataView game)
         {
-            Control.Invoke(new MethodInvoker(() => Control.SetGameSelected(game)));
+            Control.Invoke(new MethodInvoker(() => Control.NewGame(game)));
+        }
+
+        public void GameDeleted(GameDataView game)
+        {
+            Control.Invoke(new MethodInvoker(() => Control.GameDeleted(game)));
+        }
+
+        public void SetGameSelected(GameDataView group)
+        {
+            // TODO
         }
     }
 }

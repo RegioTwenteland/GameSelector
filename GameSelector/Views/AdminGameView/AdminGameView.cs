@@ -1,201 +1,252 @@
-﻿using GameSelector.Model;
+﻿using CustomControls;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminGameView
 {
     internal partial class AdminGameView : UserControl
     {
-        private const string SaveText = "Opslaan";
-        private const string UnsavedModifier = "*";
-
         private readonly Action<string, object> SendMessage;
+
+        private readonly SortableBindingList<GameDataView> _games = [];
+
+        private const string DeleteColumnName = "delete";
 
         public AdminGameView(Action<string, object> sendMessage)
         {
             InitializeComponent();
 
             SendMessage = sendMessage;
-        }
 
-        private bool _gameDataUserControl = true;
-
-        private GameDataView GetCurrentGameDataView()
-        {
-            if (gamesListBox.SelectedIndex < 0) return null;
-            return (GameDataView)gamesListBox.Items[gamesListBox.SelectedIndex];
-        }
-
-        private void SortGameListBox()
-        {
-            object[] itemsCopy = new object[gamesListBox.Items.Count];
-            gamesListBox.Items.CopyTo(itemsCopy, 0);
-            gamesListBox.Items.Clear();
-
-            var newList = itemsCopy
-                .Select(o => (GameDataView)o)
-                .OrderBy(gdv => gdv.ToString());
-
-            foreach (var newItem in newList)
+            grid.AutoGenerateColumns = false;
+            grid.DataSource = new BindingSource
             {
-                gamesListBox.Items.Add(newItem);
-            }
-        }
+                DataSource = _games,
+            };
 
-        private int GetGameListBoxIndex(GameDataView game)
-        {
-            var idx = -1;
-
-            for (var i = 0; i < gamesListBox.Items.Count; ++i)
-            {
-                var gameItem = (GameDataView)gamesListBox.Items[i];
-
-                if (gameItem.Id == game.Id)
+            grid.SetupColums(
+            [
+                new GameSelectorDataGridView.ColumnOptions()
                 {
-                    idx = i;
-                    break;
-                }
-            }
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.Code),
+                        HeaderText = "Code",
+                        DataPropertyName = nameof(GameDataView.Code),
+                    },
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.Description),
+                        HeaderText = "Omschrijving",
+                        DataPropertyName = nameof(GameDataView.Description)
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.Explanation),
+                        HeaderText = "Uitleg",
+                        DataPropertyName = nameof(GameDataView.Explanation)
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewCheckBoxColumn
+                    {
+                        Name = nameof(GameDataView.Active),
+                        HeaderText = "Actief",
+                        DataPropertyName = nameof(GameDataView.Active),
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.Priority),
+                        HeaderText = "Prioriteit",
+                        DataPropertyName = nameof(GameDataView.Priority),
+                        DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = "N2"
+                        }
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.StartTime),
+                        HeaderText = "Starttijd",
+                        DataPropertyName = nameof(GameDataView.StartTime),
+                        ReadOnly = true,
+                        DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = "HH:mm:ss"
+                        }
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.TimeoutMinutes),
+                        HeaderText = "Timeout [m]",
+                        DataPropertyName = nameof(GameDataView.TimeoutMinutes),
+                        DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = "N2"
+                        }
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.MaxPlayerAmount),
+                        HeaderText = "Max spelers",
+                        DataPropertyName = nameof(GameDataView.MaxPlayerAmount),
+                        DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = "N0"
+                        }
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
+                        Name = nameof(GameDataView.Remarks),
+                        HeaderText = "Opmerkingen",
+                        DataPropertyName = nameof(GameDataView.Remarks),
+                        AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewButtonColumn
+                    {
+                        Name = DeleteColumnName,
+                        HeaderText = string.Empty,
+                        Text = "❌",
+                        UseColumnTextForButtonValue = true,
+                    },
+                    OnClick = OnDeleteClicked,
+                },
+            ]);
 
-            return idx;
+            grid.DataError += OnDataError;
         }
 
-        private void gamesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            _gameDataUserControl = false;
-            ShowGame(GetCurrentGameDataView());
-            _gameDataUserControl = true;
+            // TODO
         }
 
-        private void saveGameButton_Click(object sender, EventArgs e)
+        private void OnDeleteClicked(DataGridViewColumn column, DataGridViewRow row)
         {
-            var gdv = GetCurrentGameDataView();
+            if (row.DataBoundItem is not GameDataView gdv)
+                return;
 
-            if (gdv == null) return;
+            var confirmResult = MessageBox.Show("Weet je zeker dat je dit spel wilt verwijderen?", "", MessageBoxButtons.YesNo);
 
-            gdv.UnsavedChanges = false;
-            saveGameButton.Text = SaveText;
-            SendMessage("RequestSaveGame", gdv);
-        }
+            if (confirmResult != DialogResult.Yes)
+                return;
 
-        private void addGameButton_Click(object sender, EventArgs e)
-        {
-            SendMessage("RequestNewGame", null);
-        }
-
-        private void deleteGameButton_Click(object sender, EventArgs e)
-        {
-            var gdv = GetCurrentGameDataView();
-
-            if (gdv != null)
-                SendMessage("RequestDeleteGame", gdv);
-        }
-
-        private void GameDataChanged(object sender, EventArgs e)
-        {
-            if (!_gameDataUserControl) return;
-
-            var gdv = GetCurrentGameDataView();
-
-            if (gdv == null) return;
-
-            gdv.Code = gameCodeTextbox.Text;
-            gdv.Description = gameDescriptionTextbox.Text;
-            gdv.Explanation = gameExplanationTextbox.Text;
-            gdv.Active = gameActiveCheckbox.Checked;
-            gdv.Priority = (long)priorityNumber.Value;
-            gdv.Remarks = gameRemarksText.Text;
-            gdv.TimeoutMinutes = (long)timeoutNumber.Value;
-            gdv.MaxPlayerAmount = (long)maxPlayerAmountNumber.Value;
-            gdv.UnsavedChanges = true;
-            saveGameButton.Text = SaveText + UnsavedModifier;
+            SendMessage("RequestDeleteGame", gdv);
         }
 
         public void SetGamesList(IEnumerable<GameDataView> games)
         {
-            gamesListBox.Items.Clear();
+            _games.Clear();
+
             foreach (var game in games)
             {
-                gamesListBox.Items.Add(game);
+                _games.Add(game);
             }
 
-            SortGameListBox();
-
-            ShowGame(null);
-        }
-
-        private void ShowGame(GameDataView game)
-        {
-            gameCodeTextbox.Text = string.Empty;
-            gameDescriptionTextbox.Text = string.Empty;
-            gameExplanationTextbox.Text = string.Empty;
-            gameActiveCheckbox.Checked = false;
-            priorityNumber.Value = 0;
-            gameRemarksText.Text = string.Empty;
-            saveGameButton.Text = SaveText;
-            timeoutNumber.Value = 0;
-            maxPlayerAmountNumber.Value = 0;
-
-            if (game == null) return;
-
-            gameCodeTextbox.Text = game.Code;
-            gameDescriptionTextbox.Text = game.Description;
-            gameExplanationTextbox.Text = game.Explanation;
-            gameActiveCheckbox.Checked = game.Active;
-            priorityNumber.Value = game.Priority;
-            gameRemarksText.Text = game.Remarks;
-            timeoutNumber.Value = game.TimeoutMinutes;
-            maxPlayerAmountNumber.Value = game.MaxPlayerAmount;
-
-            saveGameButton.Text += (game.UnsavedChanges ? UnsavedModifier : string.Empty);
+            grid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         public void UpdateGame(GameDataView game)
         {
-            var idx = GetGameListBoxIndex(game);
+            var idx = _games.IndexOf(_games.Where(g => g.Id == game.Id).FirstOrDefault());
 
-            if (idx < 0)
+            if (idx == -1) return;
+
+            _games[idx] = game;
+        }
+
+        public void NewGame(GameDataView game)
+        {
+            var idx = -1;
+
+            foreach (var gdv in _games)
             {
-                gamesListBox.Items.Add(game);
-                idx = GetGameListBoxIndex(game);
+                idx++;
+
+                if (gdv.Id == 0)
+                {
+                    _games[idx] = game;
+                    return;
+                }
+            }
+
+            _games.Add(game);
+        }
+
+        public void GameDeleted(GameDataView game)
+        {
+            _games.Remove(game);
+        }
+
+        private void grid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var row = grid.Rows[e.RowIndex];
+
+            if (row.DataBoundItem is not GameDataView gdv) return;
+
+            if (gdv.Id == 0)
+            {
+                SendMessage("RequestNewGame", gdv);
             }
             else
             {
-                gamesListBox.Items[idx] = game;
+                SendMessage("RequestSaveGame", gdv);
             }
-
-            SortGameListBox();
-            gamesListBox.SelectedIndex = idx;
         }
 
-        public void SetGameSelected(GameDataView game)
+        private void bulkRemoveButton_Click(object sender, EventArgs e)
         {
-            if (game == null) return;
+            var selectedRows = grid.SelectedRows;
 
-            var idx = GetGameListBoxIndex(game);
+            var confirmResult = MessageBox.Show($"Weet je zeker dat je {selectedRows.Count} spellen wilt verwijderen?", "", MessageBoxButtons.YesNo);
 
-            gamesListBox.SelectedIndex = idx;
-        }
+            if (confirmResult != DialogResult.Yes)
+                return;
 
-        public void ShowPlayedGames(IEnumerable<PlayedGame> playedGames)
-        {
-            var sb = new StringBuilder();
-
-            foreach (var playedGame in playedGames)
+            for (var i = selectedRows.Count - 1; i >= 0; i--)
             {
-                sb.Append(playedGame.StartTime.ToString("HH:mm:ss"))
-                    .Append(" - ")
-                    .Append(playedGame.EndTime.ToString("HH:mm:ss"))
-                    .Append(": ")
-                    .Append(playedGame.Game.Description)
-                    .AppendLine();
-            }
+                var row = selectedRows[i];
 
-            MessageBox.Show(sb.ToString());
+                if (row.DataBoundItem is GameDataView gdv)
+                {
+                    SendMessage("RequestDeleteGame", gdv);
+                }
+
+                grid.Rows.Remove(row);
+            }
+        }
+
+        private void grid_SelectionChanged(object sender, EventArgs e)
+        {
+            sumDisplayLabel.Text = ((int)grid.Sum).ToString();
+            selectedRowsLabel.Text = grid.SelectedRows.Count.ToString();
         }
     }
 }

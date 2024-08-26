@@ -2,11 +2,13 @@
 using GameSelector.Views;
 using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminGenericView;
+using GameSelector.Views.AdminGroupView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Media.Core;
 
 namespace GameSelector.Controllers
 {
@@ -45,7 +47,6 @@ namespace GameSelector.Controllers
                 { "RequestNewGame", OnRequestNewGame },
                 { "RequestDeleteGame", OnRequestDeleteGame },
                 { "RequestForceEndGameForGroup", OnRequestForceEndGameForGroup },
-                { "RequestPlayedGames", OnRequestPlayedGames },
                 { "RequestGameTimeoutCheck", OnRequestTimeoutCheck },
             });
         }
@@ -93,24 +94,25 @@ namespace GameSelector.Controllers
 
         private void OnRequestNewGame(Message message)
         {
-            Debug.Assert(message.Value is null);
+            Debug.Assert(message.Value is GameDataView);
+
+            var gdv = message.Value as GameDataView;
 
             var newGame = new Game
             {
-                Code = "Nieuw",
-                Description = "Spel",
-                Explanation = string.Empty,
-                Active = true,
-                Priority = 10,
-                Timeout = TimeSpan.FromMinutes(15),
-                MaxPlayerAmount = 1
+                Code = gdv.Code ?? string.Empty,
+                Description = gdv.Description ?? string.Empty,
+                Explanation = gdv.Explanation ?? string.Empty,
+                Active = gdv.Active,
+                Priority = gdv.Priority,
+                Remarks = gdv.Remarks ?? string.Empty,
+                Timeout = gdv.TimeoutMinutes <= 0 ? TimeSpan.FromMinutes(15) : new TimeSpan(gdv.TimeoutMinutes),
+                MaxPlayerAmount = Math.Max(1, gdv.MaxPlayerAmount),
             };
 
-            _gameDataBridge.InsertGame(newGame);
+            _gameDataBridge.InsertGame(newGame); // populates ID field
 
-            var games = _gameDataBridge.GetAllGames().Select(g => GameDataView.FromGame(g));
-            _adminGameView.SetGamesList(games);
-            _adminGameView.SetGameSelected(games.First(g => g.Code == "Nieuw"));
+            _adminGameView.NewGame(GameDataView.FromGame(newGame));
         }
 
         private void OnRequestDeleteGame(Message message)
@@ -168,21 +170,6 @@ namespace GameSelector.Controllers
             var group = _groupDataBridge.GetGroup(gdv.Id);
 
             ForceEndGame(group);
-        }
-
-        private void OnRequestPlayedGames(Message message)
-        {
-            Debug.Assert(message.Value is long);
-            var id = (long)message.Value;
-
-            var group = new Group
-            {
-                Id = id,
-            };
-
-            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
-
-            _adminGameView.ShowPlayedGames(playedGames);
         }
 
         private void OnRequestTimeoutCheck(Message message)

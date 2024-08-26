@@ -1,6 +1,7 @@
 ﻿using GameSelector.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace GameSelector.SQLite
@@ -53,7 +54,11 @@ namespace GameSelector.SQLite
 
         public void InsertGame(Game game)
         {
+            Debug.Assert(game.Id == 0);
             _gamesTable.InsertGame(_objectTranslator.ToSQLiteGame(game));
+
+            var addedGame = _gamesTable.GetNewestGame();
+            game.Id = addedGame.Id;
         }
 
         public void DeleteGame(Game game)
