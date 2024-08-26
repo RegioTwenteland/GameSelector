@@ -35,27 +35,27 @@
             // 
             // tabControl
             // 
-            tabControl.Dock = System.Windows.Forms.DockStyle.Left;
+            tabControl.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             tabControl.Location = new System.Drawing.Point(6, 6);
             tabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new System.Drawing.Size(825, 656);
+            tabControl.Size = new System.Drawing.Size(845, 656);
             tabControl.TabIndex = 100;
             // 
             // errorFlowLayout
             // 
+            errorFlowLayout.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             errorFlowLayout.AutoScroll = true;
-            errorFlowLayout.Dock = System.Windows.Forms.DockStyle.Right;
             errorFlowLayout.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            errorFlowLayout.Location = new System.Drawing.Point(829, 6);
+            errorFlowLayout.Location = new System.Drawing.Point(859, 9);
             errorFlowLayout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             errorFlowLayout.Name = "errorFlowLayout";
             errorFlowLayout.Padding = new System.Windows.Forms.Padding(6);
-            errorFlowLayout.Size = new System.Drawing.Size(233, 656);
+            errorFlowLayout.Size = new System.Drawing.Size(203, 653);
             errorFlowLayout.TabIndex = 100;
             // 
-            // AdminScaffoldView
+            // AdminGenericView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -64,7 +64,7 @@
             Controls.Add(tabControl);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            Name = "AdminScaffoldView";
+            Name = "AdminGenericView";
             Padding = new System.Windows.Forms.Padding(6);
             Text = "Admin";
             Load += Form1_Load;
