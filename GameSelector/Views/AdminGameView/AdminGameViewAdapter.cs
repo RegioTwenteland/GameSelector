@@ -32,10 +32,5 @@ namespace GameSelector.Views.AdminGameView
         {
             Control.Invoke(new MethodInvoker(() => Control.GameDeleted(game)));
         }
-
-        public void SetGameSelected(GameDataView group)
-        {
-            // TODO
-        }
     }
 }

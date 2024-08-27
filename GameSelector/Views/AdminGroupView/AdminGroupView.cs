@@ -1,6 +1,7 @@
 ﻿using CustomControls;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -11,6 +12,8 @@ namespace GameSelector.Views.AdminGroupView
         private readonly Action<string, object> SendMessage;
 
         private readonly SortableBindingList<GroupDataView> _groups = [];
+
+        private new readonly Color DefaultBackColor = Color.FromArgb(255, 255, 255, 255);
 
         private const string DeleteColumnName = "delete";
         private const string NewCardColumnName = "new_card";
@@ -179,6 +182,20 @@ namespace GameSelector.Views.AdminGroupView
                 SendMessage("RequestSaveGroup", _waitingForCard.GroupDataView);
                 _waitingForCard.Hide();
             }
+
+            // Resets all backgrounds.
+            for (var i = 0; i < grid.RowCount; i++)
+            {
+                ////var original = grid.Rows[i].DefaultCellStyle.BackColor;
+                grid.Rows[i].DefaultCellStyle.BackColor = DefaultBackColor;
+            }
+
+            // Set the background of the corresponding group.
+            var idx = _groups.IndexOf(_groups.Where(g => g.CardId == cardId).FirstOrDefault());
+
+            if (idx == -1) return;
+
+            grid.Rows[idx].DefaultCellStyle.BackColor = System.Drawing.Color.LightBlue;
         }
 
         public void NewGroup(GroupDataView group)
