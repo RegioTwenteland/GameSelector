@@ -237,9 +237,9 @@ namespace GameSelector.Views.AdminGameView
                 if (row.DataBoundItem is GameDataView gdv)
                 {
                     SendMessage("RequestDeleteGame", gdv);
-                }
 
-                grid.Rows.Remove(row);
+                    grid.Rows.Remove(row);
+                }
             }
         }
 

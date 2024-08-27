@@ -258,9 +258,9 @@ namespace GameSelector.Views.AdminGroupView
                 if (row.DataBoundItem is GroupDataView gdv)
                 {
                     SendMessage("RequestDeleteGroup", gdv);
-                }
 
-                grid.Rows.Remove(row);
+                    grid.Rows.Remove(row);
+                }
             }
         }
 
