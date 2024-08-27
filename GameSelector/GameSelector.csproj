@@ -41,5 +41,8 @@
 	  <Compile Update="Views\AdminGroupView\AdminGroupView.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
+	  <Compile Update="Views\AdminPlayedGameView\AdminPlayedGameView.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	</ItemGroup>
 </Project>

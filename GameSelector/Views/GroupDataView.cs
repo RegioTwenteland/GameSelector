@@ -1,11 +1,12 @@
 ﻿using GameSelector.Model;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace GameSelector.Views
 {
-    internal class GroupDataView : INotifyPropertyChanged
+    internal class GroupDataView : INotifyPropertyChanged, IComparable<GroupDataView>, IComparable
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -146,9 +147,17 @@ namespace GameSelector.Views
             };
         }
 
-        public override string ToString()
+        public override string ToString() => $"{ScoutingName}: {GroupName}";
+
+        public int CompareTo(object obj) => CompareTo(obj as GroupDataView);
+
+        /// <summary>
+        /// For sorting in grid.
+        /// </summary>
+        public int CompareTo(GroupDataView other)
         {
-            return $"{ScoutingName}: {GroupName}";
+            Debug.Assert(other is not null);
+            return ToString().CompareTo(other.ToString());
         }
     }
 }

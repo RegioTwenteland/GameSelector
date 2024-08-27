@@ -49,6 +49,22 @@ namespace GameSelector.SQLite
                 .ToList();
         }
 
+        public IEnumerable<SQLitePlayedGame> GetAllPlayedGames()
+        {
+            return new SQLQuery(_connection)
+                .Select<SQLitePlayedGame>()
+                .Select<SQLiteGame>()
+                .Select<SQLiteGroup>()
+                .From<SQLitePlayedGame>()
+                .LeftJoin<SQLiteGame>()
+                .On<SQLiteGame, SQLitePlayedGame>(nameof(SQLiteGame.Id), nameof(SQLitePlayedGame.GameId))
+                .LeftJoin<SQLiteGroup>()
+                .On<SQLiteGroup, SQLitePlayedGame>(nameof(SQLiteGroup.Id), nameof(SQLitePlayedGame.PlayerId))
+                .Execute()
+                .Get<SQLitePlayedGame>()
+                .ToList();
+        }
+
         public void InsertPlayedGame(SQLitePlayedGame game)
         {
             var rowsUpdated = new SQLQuery(_connection)

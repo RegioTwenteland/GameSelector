@@ -20,14 +20,21 @@ namespace GameSelector.SQLite
         {
             return
                 _playedGamesTable.GetPlayedGamesByPlayerId(group.Id)
-                .Select(dbG => _objectTranslator.ToPlayedGame(dbG));
+                .Select(_objectTranslator.ToPlayedGame);
         }
 
         public IEnumerable<PlayedGame> GetPlayedGamesByGame(Game game)
         {
             return
                 _playedGamesTable.GetPlayedGamesByGameId(game.Id)
-                .Select(dbG => _objectTranslator.ToPlayedGame(dbG));
+                .Select(_objectTranslator.ToPlayedGame);
+        }
+
+        public IEnumerable<PlayedGame> GetAllPlayedGames()
+        {
+            return
+                _playedGamesTable.GetAllPlayedGames()
+                .Select(_objectTranslator.ToPlayedGame);
         }
 
         public void InsertPlayedGame(PlayedGame playedGame)

@@ -1,5 +1,7 @@
-﻿using GameSelector.Views.AdminGameView;
+﻿using GameSelector.Controllers;
+using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminGroupView;
+using GameSelector.Views.AdminPlayedGameView;
 using GameSelector.Views.AdminSettingsView;
 using System;
 using System.Collections.Generic;
@@ -22,12 +24,14 @@ namespace GameSelector.Views.AdminGenericView
         private AdminGroupViewAdapter _adminGroupView;
 
         private AdminGameViewAdapter _adminGameView;
+        private readonly AdminPlayedGameViewAdapter _adminPlayedGameView;
 
         public AdminGenericViewAdapter(
             MessageSender messageSender,
             AdminSettingsViewAdapter adminSettingsView,
             AdminGroupViewAdapter adminGroupView,
-            AdminGameViewAdapter adminGameView
+            AdminGameViewAdapter adminGameView,
+            AdminPlayedGameViewAdapter adminPlayedGameView
             )
             : base(messageSender)
         {
@@ -36,6 +40,7 @@ namespace GameSelector.Views.AdminGenericView
             _adminSettingsView = adminSettingsView;
             _adminGroupView = adminGroupView;
             _adminGameView = adminGameView;
+            _adminPlayedGameView = adminPlayedGameView;
         }
 
         public void Start(Action onClose)
@@ -59,6 +64,7 @@ namespace GameSelector.Views.AdminGenericView
                 {
                     form.AddTabPage("Spellen", _adminGameView.Control);
                     form.AddTabPage("Groepen", _adminGroupView.Control);
+                    form.AddTabPage("Gespeeld", _adminPlayedGameView.Control);
                     form.AddTabPage("Admin", _adminSettingsView.Control);
                 }));
             }

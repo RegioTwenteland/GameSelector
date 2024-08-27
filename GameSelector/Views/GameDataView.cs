@@ -1,9 +1,10 @@
 ﻿using GameSelector.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 namespace GameSelector.Views
 {
-    internal class GameDataView
+    internal class GameDataView : IComparable<GameDataView>, IComparable
     {
         public long Id { get; set; }
 
@@ -25,10 +26,7 @@ namespace GameSelector.Views
 
         public long MaxPlayerAmount { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Code} [{(Active ? "Actief" : "Inactief")}] ({Priority})";
-        }
+        public override string ToString() => Code;
 
         public static GameDataView FromGame(Game game)
         {
@@ -50,5 +48,16 @@ namespace GameSelector.Views
                 MaxPlayerAmount = game.MaxPlayerAmount,
             };
         }
+
+        /// <summary>
+        /// For sorting in grid.
+        /// </summary>
+        public int CompareTo(GameDataView other)
+        {
+            Debug.Assert(other is not null);
+            return ToString().CompareTo(other.ToString());
+        }
+
+        public int CompareTo(object obj) => CompareTo(obj as GameDataView);
     }
 }

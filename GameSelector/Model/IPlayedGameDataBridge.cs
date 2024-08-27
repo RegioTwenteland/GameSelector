@@ -8,6 +8,8 @@ namespace GameSelector.Model
 
         IEnumerable<PlayedGame> GetPlayedGamesByGame(Game game);
 
+        IEnumerable<PlayedGame> GetAllPlayedGames();
+
         void InsertPlayedGame(PlayedGame playedGame);
     }
 }
