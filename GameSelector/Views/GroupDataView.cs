@@ -1,129 +1,26 @@
 ﻿using GameSelector.Model;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace GameSelector.Views
 {
-    internal class GroupDataView : INotifyPropertyChanged, IComparable<GroupDataView>, IComparable
+    internal class GroupDataView : IComparable<GroupDataView>, IComparable
     {
+        public long Id { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string CardId { get; set; }
 
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string GroupName { get; set; }
 
-        private long id;
-        private string cardId;
-        private string groupName;
-        private string scoutingName;
-        private DateTime? startTime;
-        private string currentGame;
-        private bool isAdmin;
-        private string remarks;
+        public string ScoutingName { get; set; }
 
-        [Browsable(false)]
-        public long Id
-        {
-            get => id;
+        public DateTime? StartTime { get; set; }
 
-            set
-            {
-                id = value;
-            }
-        }
+        public GameDataView CurrentGame { get; set; }
 
-        [DisplayName("Kaart ID")]
-        public string CardId
-        {
-            get => cardId ?? string.Empty;
+        public bool IsAdmin { get; set; }
 
-            set
-            {
-                cardId = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [DisplayName("Groep naam")]
-        public string GroupName
-        {
-            get => groupName ?? string.Empty;
-
-            set
-            {
-                groupName = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [DisplayName("Scouting naam")]
-        public string ScoutingName
-        {
-            get => scoutingName ?? string.Empty;
-
-            set
-            {
-                scoutingName = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [ReadOnly(true)]
-        [DisplayName("Starttijd")]
-        public DateTime? StartTime
-        {
-            get => startTime;
-
-            set
-            {
-                startTime = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [ReadOnly(true)]
-        [DisplayName("Huidig spel")]
-        public string CurrentGame
-        {
-            get => currentGame ?? string.Empty;
-
-            set
-            {
-                currentGame = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [DisplayName("Admin")]
-        public bool IsAdmin
-        {
-            get => isAdmin;
-
-            set
-            {
-                isAdmin = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [DisplayName("Opmerkingen")]
-        public string Remarks
-        {
-            get => remarks ?? string.Empty;
-
-            set
-            {
-                remarks = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [Browsable(false)]
-        public bool UnsavedChanges { get; set; } = false;
+        public string Remarks { get; set; }
 
         public static GroupDataView FromGroup(Group group)
         {
@@ -141,7 +38,7 @@ namespace GameSelector.Views
                 GroupName = group.Name,
                 ScoutingName = group.ScoutingName,
                 StartTime = startTime,
-                CurrentGame = group.CurrentlyPlaying?.Description,
+                CurrentGame = GameDataView.FromGame(group.CurrentlyPlaying),
                 IsAdmin = group.IsAdmin,
                 Remarks = group.Remarks
             };
@@ -156,7 +53,8 @@ namespace GameSelector.Views
         /// </summary>
         public int CompareTo(GroupDataView other)
         {
-            Debug.Assert(other is not null);
+            if (other is null) return 1;
+
             return ToString().CompareTo(other.ToString());
         }
     }

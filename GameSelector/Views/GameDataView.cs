@@ -31,7 +31,7 @@ namespace GameSelector.Views
         public static GameDataView FromGame(Game game)
         {
             if (game == null) return null;
-            
+
             var startTime = DateTime.MinValue;
 
             return new GameDataView
@@ -54,7 +54,8 @@ namespace GameSelector.Views
         /// </summary>
         public int CompareTo(GameDataView other)
         {
-            Debug.Assert(other is not null);
+            if (other is null) return 1;
+
             return ToString().CompareTo(other.ToString());
         }
 
