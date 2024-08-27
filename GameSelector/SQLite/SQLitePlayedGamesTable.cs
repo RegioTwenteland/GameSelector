@@ -73,5 +73,23 @@ namespace GameSelector.SQLite
 
             Debug.Assert(rowsUpdated == 1);
         }
+
+        public SQLitePlayedGame GetNewestPlayedGame()
+        {
+            return new SQLQuery(_connection)
+                .Select<SQLitePlayedGame>()
+                .Select<SQLiteGame>()
+                .Select<SQLiteGroup>()
+                .From<SQLitePlayedGame>()
+                .LeftJoin<SQLiteGame>()
+                .On<SQLiteGame, SQLitePlayedGame>(nameof(SQLiteGame.Id), nameof(SQLitePlayedGame.GameId))
+                .LeftJoin<SQLiteGroup>()
+                .On<SQLiteGroup, SQLitePlayedGame>(nameof(SQLiteGroup.Id), nameof(SQLitePlayedGame.PlayerId))
+                .OrderByDesc<SQLitePlayedGame>(nameof(SQLitePlayedGame.Id))
+                .Limit(1)
+                .Execute()
+                .Get<SQLitePlayedGame>()
+                .SingleOrDefault();
+        }
     }
 }

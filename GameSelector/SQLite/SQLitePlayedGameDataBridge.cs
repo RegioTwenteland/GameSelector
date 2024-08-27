@@ -1,4 +1,5 @@
 ﻿using GameSelector.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace GameSelector.SQLite
     {
         private readonly SQLitePlayedGamesTable _playedGamesTable;
         private readonly SQLiteDatabaseObjectTranslator _objectTranslator;
+
+        public event EventHandler<PlayedGameAddedEventArgs> PlayedGameAdded;
 
         public SQLitePlayedGameDataBridge(SQLiteDatabase database)
         {
@@ -41,6 +44,9 @@ namespace GameSelector.SQLite
         {
             Debug.Assert(playedGame.Id == 0);
             _playedGamesTable.InsertPlayedGame(_objectTranslator.ToSQLitePlayedGame(playedGame));
+
+            var addedPlayedGame = _objectTranslator.ToPlayedGame(_playedGamesTable.GetNewestPlayedGame());
+            PlayedGameAdded?.Invoke(this, new PlayedGameAddedEventArgs { PlayedGame = addedPlayedGame });
         }
     }
 }

@@ -2,10 +2,7 @@
 using GameSelector.Views;
 using GameSelector.Views.AdminPlayedGameView;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameSelector.Controllers
 {
@@ -18,16 +15,20 @@ namespace GameSelector.Controllers
         {
             _view = view;
             _playedGameDataBridge = playedGameDataBridge;
+
+            _playedGameDataBridge.PlayedGameAdded += OnPlayedGameAdded;
+        }
+
+        private void OnPlayedGameAdded(object sender, PlayedGameAddedEventArgs e)
+        {
+            _view.NewPlayedGame(PlayedGameDataView.FromPlayedGame(e.PlayedGame));
         }
 
         public override void Start(Action stop)
         {
-            UpdatePlayedGamesList(_playedGameDataBridge.GetAllPlayedGames());
-        }
-
-        private void UpdatePlayedGamesList(IEnumerable<PlayedGame> playedGames)
-        {
-            _view.SetPlayedGamesList(playedGames.Select(PlayedGameDataView.FromPlayedGame));
+            _view.SetPlayedGamesList(
+                _playedGameDataBridge.GetAllPlayedGames()
+                .Select(PlayedGameDataView.FromPlayedGame));
         }
     }
 }
