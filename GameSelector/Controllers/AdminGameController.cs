@@ -57,7 +57,7 @@ namespace GameSelector.Controllers
             _adminGameView.UpdateGame(gdv);
         }
 
-        public override void Start(Action stop)
+        public override void Start(Action<object> stop)
         {
             UpdateGamesList(_gameDataBridge.GetAllGames());
 

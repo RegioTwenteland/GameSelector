@@ -3,48 +3,72 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using GameSelector.Controllers;
+using System.Windows.Forms;
 
 namespace GameSelector
 {
     public static class Program
     {
-        private static BlockingCollection<Message> _messages;
-        private static CancellationTokenSource _messageCancellationTokenSource = new CancellationTokenSource();
-        private static CancellationToken _messageCancellationToken;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main(string[] args)
         {
-            if(args.Length > 0)
+            BlockingCollection<Message> messageCollection;
+
+            string dataSource;
+            if (args.Length > 0)
             {
-                ObjectManager.Model.SetDataSource(args[0]);
+                dataSource = args[0];
+            }
+            else
+            {
+                messageCollection = new BlockingCollection<Message>();
+                var appStartManager = new ApplicationStartupManager(messageCollection);
+
+                var returnValue = StartControllers(appStartManager.Controllers, messageCollection);
+
+                dataSource = (string)returnValue;
             }
 
-            var controllers = new List<AbstractController>
+            if (dataSource is not null)
             {
-                ObjectManager.UserController,
-                ObjectManager.AdminController,
-                ObjectManager.AdminGameController,
-                ObjectManager.AdminGroupController,
-                ObjectManager.AdminPlayedGameController,
-                ObjectManager.AdminSettingsController,
+                messageCollection = new BlockingCollection<Message>();
+                var appManager = new ApplicationManager(messageCollection);
+                appManager.Model.SetDataSource(dataSource);
+
+                StartControllers(appManager.Controllers, messageCollection);
+            }
+        }
+
+        private static object _returnedParam = null;
+
+        private static object StartControllers(IEnumerable<AbstractController> controllers, BlockingCollection<Message> messages)
+        {
+            CancellationTokenSource messageCancellationTokenSource = new CancellationTokenSource();
+            CancellationToken messageCancellationToken = messageCancellationTokenSource.Token;
+
+            Action<object> stopFunction = (object param) =>
+            {
+                if (param is not null)
+                {
+                    _returnedParam = param;
+                }
+
+                messages.CompleteAdding();
+                messageCancellationTokenSource.Cancel();
             };
 
             foreach (var controller in controllers)
             {
-                controller.Start(Stop);
+                controller.Start(stopFunction);
             }
 
-            _messages = ObjectManager.MessageCollection;
-            _messageCancellationToken = _messageCancellationTokenSource.Token;
-
-            while (!_messages.IsCompleted)
+            while (!messages.IsCompleted)
             {
                 try
                 {
-                    var message = _messages.Take(_messageCancellationToken);
+                    var message = messages.Take(messageCancellationToken);
 
                     foreach (var controller in controllers)
                     {
@@ -58,12 +82,8 @@ namespace GameSelector
                     // ignore
                 }
             }
-        }
 
-        static void Stop()
-        {
-            _messages.CompleteAdding();
-            _messageCancellationTokenSource.Cancel();
+            return _returnedParam;
         }
     }
 }

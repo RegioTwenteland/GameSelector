@@ -43,7 +43,7 @@ namespace GameSelector.Views.AdminGenericView
             _adminPlayedGameView = adminPlayedGameView;
         }
 
-        public void Start(Action onClose)
+        public void Start(Action<object> onClose)
         {
             lock (_lock)
             {
@@ -52,10 +52,11 @@ namespace GameSelector.Views.AdminGenericView
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(form);
-                    onClose?.Invoke();
+                    onClose?.Invoke(null);
                 });
 
                 thread.SetApartmentState(ApartmentState.STA);
+                thread.IsBackground = true;
                 thread.Start();
 
                 WaitOnFormLoad(form);

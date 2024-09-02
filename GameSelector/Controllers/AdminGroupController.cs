@@ -51,7 +51,7 @@ namespace GameSelector.Controllers
             _adminGroupView.UpdateGroup(gdv);
         }
 
-        public override void Start(Action stop)
+        public override void Start(Action<object> stop)
         {
             UpdateGroupsList(_groupDataBridge.GetAllGroups());
         }

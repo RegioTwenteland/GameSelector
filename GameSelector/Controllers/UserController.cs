@@ -86,7 +86,7 @@ namespace GameSelector.Controllers
             UpdateGameCodes();
         }
 
-        public override void Start(Action stop)
+        public override void Start(Action<object> stop)
         {
             _userView.Start(stop);
 

@@ -34,7 +34,7 @@ namespace GameSelector.Controllers
             });
         }
 
-        public override void Start(Action stop)
+        public override void Start(Action<object> stop)
         {
             _adminView.Start(stop);
         }

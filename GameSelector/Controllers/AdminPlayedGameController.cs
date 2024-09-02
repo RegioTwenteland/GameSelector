@@ -24,7 +24,7 @@ namespace GameSelector.Controllers
             _view.NewPlayedGame(PlayedGameDataView.FromPlayedGame(e.PlayedGame));
         }
 
-        public override void Start(Action stop)
+        public override void Start(Action<object> stop)
         {
             _view.SetPlayedGamesList(
                 _playedGameDataBridge.GetAllPlayedGames()

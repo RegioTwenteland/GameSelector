@@ -25,7 +25,7 @@ namespace GameSelector.Controllers
             });
         }
 
-        public override void Start(Action stop)
+        public override void Start(Action<object> stop)
         {
             _adminSettingsView.ShowGameTimeout(GlobalSettings.GameTimeoutMinutes);
             _adminSettingsView.ShowAnimationLength(GlobalSettings.AnimationLengthMilliseconds);

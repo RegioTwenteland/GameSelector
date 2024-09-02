@@ -1,21 +1,20 @@
 ﻿using GameSelector.Model;
+using System.Diagnostics;
 using System.IO;
 
 namespace GameSelector.SQLite
 {
     internal class SQLiteModel : IModel
     {
-        private string _dataSourceParam = string.Empty;
-
-        private const string SQLITE_DB_DEFAULT_FILE_NAME = "data.sqlite";
+        private string _dataSourceParam;
 
         private static SQLiteDatabase CreateSQLiteDatabase(string param)
         {
-            var filename = string.IsNullOrEmpty(param) ? SQLITE_DB_DEFAULT_FILE_NAME : param;
+            Debug.Assert(param is not null);
 
-            var freshDbFile = !File.Exists(filename);
+            var freshDbFile = !File.Exists(param) || new FileInfo(param).Length == 0;
 
-            var output = new SQLiteDatabase($"Data Source={filename}");
+            var output = new SQLiteDatabase($"Data Source={param}");
 
             if (freshDbFile)
             {

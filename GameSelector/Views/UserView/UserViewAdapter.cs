@@ -18,13 +18,13 @@ namespace GameSelector.Views
             form = new UserView(SendMessage, audioPlayer);
         }
 
-        public void Start(Action onClose)
+        public void Start(Action<object> onClose)
         {
             Task.Run(() =>
             {
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(form);
-                onClose?.Invoke();
+                onClose?.Invoke(null);
             });
 
             form.Load += (s, e) => Ready?.Invoke(this, EventArgs.Empty);

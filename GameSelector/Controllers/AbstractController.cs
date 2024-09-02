@@ -7,7 +7,7 @@ namespace GameSelector.Controllers
     {
         private Dictionary<string, Action<Message>> _messageHandlers;
 
-        public abstract void Start(Action stop);
+        public abstract void Start(Action<object> stop);
 
         protected void SetMessageHandlers(Dictionary<string, Action<Message>> messageHandlers)
         {
