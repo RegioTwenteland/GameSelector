@@ -73,7 +73,7 @@ namespace GameSelector.Views.AdminGameView
                         DataPropertyName = nameof(GameDataView.Priority),
                         DefaultCellStyle = new DataGridViewCellStyle
                         {
-                            Format = "N2"
+                            Format = "N0"
                         }
                     }
                 },
@@ -100,7 +100,7 @@ namespace GameSelector.Views.AdminGameView
                         DataPropertyName = nameof(GameDataView.TimeoutMinutes),
                         DefaultCellStyle = new DataGridViewCellStyle
                         {
-                            Format = "N2"
+                            Format = "N0"
                         }
                     }
                 },
