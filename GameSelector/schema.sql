@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "games" (
 	"id"	INTEGER,
 	"code"	TEXT NOT NULL,
 	"description"	TEXT,
-	"explanation"	TEXT,
+	"category"	TEXT,
 	"active"	INTEGER NOT NULL DEFAULT 1,
 	"priority"	INTEGER NOT NULL DEFAULT 0,
 	"remarks"	TEXT NOT NULL,

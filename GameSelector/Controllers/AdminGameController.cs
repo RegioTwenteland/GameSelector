@@ -80,7 +80,7 @@ namespace GameSelector.Controllers
 
             game.Code = gameDataView.Code;
             game.Description = gameDataView.Description;
-            game.Explanation = gameDataView.Explanation;
+            game.Category = gameDataView.Category;
             game.Active = gameDataView.Active;
             game.Priority = gameDataView.Priority;
             game.Remarks = gameDataView.Remarks;
@@ -102,7 +102,7 @@ namespace GameSelector.Controllers
             {
                 Code = gdv.Code ?? string.Empty,
                 Description = gdv.Description ?? string.Empty,
-                Explanation = gdv.Explanation ?? string.Empty,
+                Category = gdv.Category ?? string.Empty,
                 Active = gdv.Active,
                 Priority = gdv.Priority,
                 Remarks = gdv.Remarks ?? string.Empty,

@@ -12,7 +12,7 @@ namespace GameSelector.Views
 
         public string Description { get; set; }
 
-        public string Explanation { get; set; }
+        public string Category { get; set; }
 
         public bool Active { get; set; }
 
@@ -39,7 +39,7 @@ namespace GameSelector.Views
                 Id = game.Id,
                 Code = game.Code,
                 Description = game.Description,
-                Explanation = game.Explanation,
+                Category = game.Category,
                 Active = game.Active,
                 Priority = game.Priority,
                 StartTime = startTime,

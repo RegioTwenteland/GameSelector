@@ -32,7 +32,6 @@
             gameAnnouncerLabel = new System.Windows.Forms.Label();
             gameCodeLabel = new System.Windows.Forms.Label();
             gameDescriptionLabel = new System.Windows.Forms.Label();
-            gameExplanationLabel = new System.Windows.Forms.Label();
             searchingProgressBar = new System.Windows.Forms.ProgressBar();
             searchingLabel = new System.Windows.Forms.Label();
             searchingGameNameLabel = new System.Windows.Forms.Label();
@@ -82,19 +81,6 @@
             gameDescriptionLabel.Size = new System.Drawing.Size(247, 28);
             gameDescriptionLabel.TabIndex = 2;
             gameDescriptionLabel.Text = "(Omschrijving)";
-            // 
-            // gameExplanationLabel
-            // 
-            gameExplanationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            gameExplanationLabel.BackColor = System.Drawing.Color.Transparent;
-            gameExplanationLabel.Font = new System.Drawing.Font("Squares Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            gameExplanationLabel.ForeColor = System.Drawing.Color.FromArgb(4, 230, 254);
-            gameExplanationLabel.Location = new System.Drawing.Point(14, 495);
-            gameExplanationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            gameExplanationLabel.Name = "gameExplanationLabel";
-            gameExplanationLabel.Size = new System.Drawing.Size(1175, 167);
-            gameExplanationLabel.TabIndex = 3;
-            gameExplanationLabel.Text = "(Uitleg)";
             // 
             // searchingProgressBar
             // 
@@ -178,7 +164,6 @@
             Controls.Add(searchingGameNameLabel);
             Controls.Add(searchingLabel);
             Controls.Add(searchingProgressBar);
-            Controls.Add(gameExplanationLabel);
             Controls.Add(gameDescriptionLabel);
             Controls.Add(gameCodeLabel);
             Controls.Add(gameAnnouncerLabel);
@@ -202,7 +187,6 @@
         private System.Windows.Forms.Label gameAnnouncerLabel;
         private System.Windows.Forms.Label gameCodeLabel;
         private System.Windows.Forms.Label gameDescriptionLabel;
-        private System.Windows.Forms.Label gameExplanationLabel;
         private System.Windows.Forms.ProgressBar searchingProgressBar;
         private System.Windows.Forms.Label searchingLabel;
         private System.Windows.Forms.Label searchingGameNameLabel;

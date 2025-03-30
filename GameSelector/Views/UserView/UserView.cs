@@ -34,7 +34,6 @@ namespace GameSelector.Views
         {
             InitializeComponent();
 
-            gameExplanationLabel.Parent = pictureBox1;
             FormBorderStyle = FormBorderStyle.None;
 
             _sendMessage = sendMessage;
@@ -69,7 +68,6 @@ namespace GameSelector.Views
             searchingGameNameLabel.Text = "---";
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
-            gameExplanationLabel.Text = string.Empty;
         }
 
         public void SetGameCodes(string[] gameCodes)
@@ -88,7 +86,6 @@ namespace GameSelector.Views
             gameAnnouncerLabel.Text = "Er zijn geen spellen meer beschikbaar";
             gameCodeLabel.Text = "";
             gameDescriptionLabel.Text = "";
-            gameExplanationLabel.Text = "";
 
             Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _sendMessage("AnimationComplete", null))));
         }
@@ -99,7 +96,6 @@ namespace GameSelector.Views
             gameCodeLabel.Text = game.Code;
             searchingGameNameLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;
-            gameExplanationLabel.Text = game.Explanation;
         }
 
         private int _frameCounter = 0;
@@ -113,7 +109,6 @@ namespace GameSelector.Views
                 gameAnnouncerLabel.Text = "Er is geen spel gevonden";
                 gameCodeLabel.Text = "";
                 gameDescriptionLabel.Text = "";
-                gameExplanationLabel.Text = "";
 
                 Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _sendMessage("AnimationComplete", null))));
 
@@ -163,7 +158,6 @@ namespace GameSelector.Views
             gameCodeLabel.Text = _selectedGame.Code;
             searchingGameNameLabel.Text = _selectedGame.Code;
             gameDescriptionLabel.Text = _selectedGame.Description;
-            gameExplanationLabel.Text = _selectedGame.Explanation;
 
             searchingProgressBar.Value = searchingProgressBar.Maximum;
 
@@ -181,7 +175,6 @@ namespace GameSelector.Views
                 gameAnnouncerLabel.Text = "Je bent al een spel aan het spelen";
                 gameCodeLabel.Text = "";
                 gameDescriptionLabel.Text = "";
-                gameExplanationLabel.Text = "";
 
                 _sendMessage("AnimationComplete", null);
 
@@ -191,7 +184,6 @@ namespace GameSelector.Views
             gameAnnouncerLabel.Text = "Momenteel aan het spelen:";
             gameCodeLabel.Text = game.Code;
             gameDescriptionLabel.Text = game.Description;
-            gameExplanationLabel.Text = game.Explanation;
             Task.Delay(2000).ContinueWith(t => Invoke(new Action(() => _sendMessage("AnimationComplete", null))));
         }
 
@@ -202,7 +194,6 @@ namespace GameSelector.Views
             gameAnnouncerLabel.Text = PAUSED_MESSAGE;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
-            gameExplanationLabel.Text = string.Empty;
         }
 
         public void ShowReady()
@@ -218,7 +209,6 @@ namespace GameSelector.Views
             gameAnnouncerLabel.Text = string.Empty;
             gameCodeLabel.Text = string.Empty;
             gameDescriptionLabel.Text = string.Empty;
-            gameExplanationLabel.Text = string.Empty;
 
             _sendMessage("UserViewReady", null);
         }

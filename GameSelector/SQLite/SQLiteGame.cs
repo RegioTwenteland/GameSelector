@@ -21,11 +21,11 @@ namespace GameSelector.SQLite
         [SQLiteColumn(Name = "code")]
         public string Code { get; set; }
 
+        [SQLiteColumn(Name = "category")]
+        public string Category { get; set; }
+
         [SQLiteColumn(Name = "description")]
         public string Description { get; set; }
-
-        [SQLiteColumn(Name = "explanation")]
-        public string Explanation { get; set; }
 
         [SQLiteColumn(Name = "active")]
         public long Active { get; set; }

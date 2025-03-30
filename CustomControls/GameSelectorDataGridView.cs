@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Windows.ApplicationModel.Appointments;
@@ -10,14 +11,56 @@ namespace CustomControls
     {
         private Dictionary<string, ColumnOptions> _columnOptions;
 
+        public delegate IEnumerable<string> AutoCompleteSuggestions();
+
         public GameSelectorDataGridView()
         {
             DoubleBuffered = true;
 
             _columnOptions = [];
             CurrentCellDirtyStateChanged += OnCurrentCellDirtyStateChanged;
+            EditingControlShowing += MyOnEditingControlShowing;
 
             CellClick += OnCellClicked;
+        }
+
+        private void MyOnEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            var columnIndex = CurrentCell.ColumnIndex;
+
+            if (columnIndex < 0) return;
+
+            var col = Columns[columnIndex];
+
+            if (!_columnOptions.TryGetValue(col.Name, out var options))
+            {
+                return;
+            }
+
+            if (options.AutoCompleteSuggestions is null)
+            {
+                return;
+            }
+
+
+            if (e.Control is not TextBox tb)
+            {
+                return;
+            }
+
+            var customSource = new AutoCompleteStringCollection();
+
+            foreach (var option in options.AutoCompleteSuggestions())
+            {
+                if (option is not null)
+                {
+                    customSource.Add(option);
+                }
+            }
+
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb.AutoCompleteCustomSource = customSource;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         private void OnCellClicked(object sender, DataGridViewCellEventArgs e)
@@ -53,6 +96,8 @@ namespace CustomControls
         {
             foreach (var columnOptions in columnsOptions)
             {
+                Debug.Assert(columnOptions.AutoCompleteSuggestions is null || columnOptions.Column.GetType() == typeof(DataGridViewTextBoxColumn));
+
                 Columns.Add(columnOptions.Column);
                 _columnOptions.Add(columnOptions.Column.Name, columnOptions);
             }
@@ -86,6 +131,8 @@ namespace CustomControls
             public DataGridViewColumn Column { get; init; }
 
             public Action<DataGridViewColumn, DataGridViewRow> OnClick { get; init; }
+
+            public AutoCompleteSuggestions AutoCompleteSuggestions { get; init; }
         }
     }
 }

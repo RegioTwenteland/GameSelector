@@ -50,10 +50,11 @@ namespace GameSelector.Views.AdminGameView
                 {
                     Column = new DataGridViewTextBoxColumn
                     {
-                        Name = nameof(GameDataView.Explanation),
-                        HeaderText = "Uitleg",
-                        DataPropertyName = nameof(GameDataView.Explanation)
-                    }
+                        Name = nameof(GameDataView.Category),
+                        HeaderText = "Categorie",
+                        DataPropertyName = nameof(GameDataView.Category)
+                    },
+                    AutoCompleteSuggestions = () => _games.Select(game => game.Category)
                 },
                 new GameSelectorDataGridView.ColumnOptions()
                 {
