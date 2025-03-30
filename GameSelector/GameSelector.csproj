@@ -6,9 +6,10 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<Platforms>x64</Platforms>
 	</PropertyGroup>
 	<PropertyGroup>
-		<PlatformTarget>x86</PlatformTarget>
+		<PlatformTarget>x64</PlatformTarget>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
