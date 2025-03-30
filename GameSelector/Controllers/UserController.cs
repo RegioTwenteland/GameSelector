@@ -99,7 +99,7 @@ namespace GameSelector.Controllers
             _userView.SetGameCodes(codes.ToArray());
         }
 
-        private IEnumerable<Game> GetPossibleGames(IEnumerable<Game> gamesAvailable, IEnumerable<PlayedGame> playedGames)
+        private IEnumerable<Game> GetGamesNotPlayed(IEnumerable<Game> gamesAvailable, IEnumerable<PlayedGame> playedGames)
         {
             var playedGameIds = playedGames.Select(pg => pg.Game.Id).ToHashSet();
             return gamesAvailable.Where(game => (!playedGameIds.Contains(game.Id)) && game.Active);
@@ -107,57 +107,77 @@ namespace GameSelector.Controllers
 
         private static readonly Random rng = new Random();
 
-        private bool SelectNewGameFor(Group group, out Game newGame)
+        private bool FindNewGameFor(Group group, out Game newGame)
         {
             newGame = null;
 
             var gamesAvailable = _gameDataBridge.GetAllGamesAvailable();
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
 
-            var possibleGames = GetPossibleGames(gamesAvailable, playedGames).ToList();
-
-            Game selectedGame = null;
-
-            NdefMessage newNdefData = null;
-
-            if (possibleGames.Count > 0)
+            // First game is always completely random
+            if (!playedGames.Any())
             {
-                if (playedGames.Any())
-                {
-                    var highestPrioGames = possibleGames
-                        .GroupBy(game => game.Priority)
-                        .OrderByDescending(grouping => grouping.Key)
-                        .First()
-                        .ToList();
+                newGame = gamesAvailable.ToArray()[rng.Next(gamesAvailable.Count())];
+                return true;
+            }
 
-                    selectedGame = highestPrioGames[rng.Next(highestPrioGames.Count)];
-                }
-                else
-                {
-                    // The first game a group plays is completely random.
-                    selectedGame = possibleGames[rng.Next(possibleGames.Count)];
-                }
+            // Make sure no game is played twice by the same group
+            var remainingGames = GetGamesNotPlayed(gamesAvailable, playedGames);
 
-                group.StartTime = DateTime.Now;
-                group.CurrentlyPlaying = selectedGame;
+            // If this leaves no games to be played, the group has played all games.
+            if (!remainingGames.Any())
+            {
+                return false;
+            }
 
-                newNdefData = new NdefMessage(
+            var lastPlayedCategory = playedGames.OrderByDescending(g => g.EndTime)
+                .First()
+                .Game
+                .Category;
+
+            // Remove all games which are in the same category as the last played game, but only if that leaves games to be played
+            // Otherwise we just accept that the group might play a similar game to the last one
+            if (remainingGames.Where(g => g.Category != lastPlayedCategory).Any())
+            {
+                remainingGames = remainingGames.Where(g => g.Category != lastPlayedCategory);
+            }
+
+            // Remove all games which do not have the highest priority.
+            remainingGames = remainingGames
+                .GroupBy(game => game.Priority)
+                .OrderByDescending(grouping => grouping.Key)
+                .First();
+
+            // These are all of the possible games to select from.
+            var selectFrom = remainingGames.ToArray();
+
+            newGame = selectFrom[rng.Next(selectFrom.Length)];
+            return true;
+        }
+
+        private bool SetNewGameFor(Group group, Game newGame)
+        {
+            Debug.Assert(group is not null);
+
+            group.CurrentlyPlaying = newGame;
+            group.StartTime = DateTime.Now;
+
+            var newNdefData = newGame is null ?
+                new NdefMessage(group.ScoutingName, group.Name) :
+                new NdefMessage(
                     group.ScoutingName,
                     group.Name,
-                    selectedGame.Code,
+                    newGame.Code,
                     group.StartTime.Value.ToString("HH:mm:ss")
                 );
-            }
 
-            var success = _nfcReader.WriteMessage(newNdefData ?? new NdefMessage(group.ScoutingName, group.Name));
-
-            if (success && selectedGame != null)
+            if (_nfcReader.WriteMessage(newNdefData))
             {
                 _groupDataBridge.UpdateGroup(group);
-                newGame = selectedGame;
+                return true;
             }
 
-            return success;
+            return false;
         }
 
         private void EndGameFor(Game currentGame, Group group)
@@ -198,7 +218,8 @@ namespace GameSelector.Controllers
             }
 
             EndGameFor(currentGame, group);
-            var success = SelectNewGameFor(group, out var newGame);
+            var success = FindNewGameFor(group, out var newGame);
+            success = SetNewGameFor(group, newGame);
             if (!success) return;
 
             _loggedInUser = _currentCard;
