@@ -16,10 +16,12 @@ namespace GameSelector.Views.AdminGenericView
         /////////////////////////////////////////////////////
         private Action<string, object> SendMessage;
 
-        public AdminGenericView(Action<string, object> sendMessage)
+        public AdminGenericView(Action<string, object> sendMessage, string title)
         {
             InitializeComponent();
             SendMessage = sendMessage;
+
+            Text = title;
         }
 
         private void Form1_Load(object sender, EventArgs e)

@@ -16,10 +16,12 @@ namespace GameSelector
     internal class ApplicationManager
     {
         private readonly BlockingCollection<Message> _messageCollection;
+        private readonly string _title;
 
-        public ApplicationManager(BlockingCollection<Message> messageCollection)
+        public ApplicationManager(BlockingCollection<Message> messageCollection, string title)
         {
             _messageCollection = messageCollection;
+            _title = title;
         }
 
         private GameState _gameState;
@@ -37,7 +39,8 @@ namespace GameSelector
             AdminSettingsView,
             AdminGroupView,
             AdminGameView,
-            AdminPlayedGameView);
+            AdminPlayedGameView,
+            _title);
 
         private AdminSettingsViewAdapter _adminSettingsView;
         private AdminSettingsViewAdapter AdminSettingsView => _adminSettingsView ??= new AdminSettingsViewAdapter(MessageSender);

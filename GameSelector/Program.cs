@@ -4,6 +4,7 @@ using System.Threading;
 using System.Collections.Generic;
 using GameSelector.Controllers;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GameSelector
 {
@@ -34,7 +35,9 @@ namespace GameSelector
             if (dataSource is not null)
             {
                 messageCollection = new BlockingCollection<Message>();
-                var appManager = new ApplicationManager(messageCollection);
+                var appManager = new ApplicationManager(
+                    messageCollection,
+                    title: Path.GetFileNameWithoutExtension(dataSource));
                 appManager.Model.SetDataSource(dataSource);
 
                 StartControllers(appManager.Controllers, messageCollection);

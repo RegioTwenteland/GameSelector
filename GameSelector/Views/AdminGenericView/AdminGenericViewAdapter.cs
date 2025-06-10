@@ -31,11 +31,12 @@ namespace GameSelector.Views.AdminGenericView
             AdminSettingsViewAdapter adminSettingsView,
             AdminGroupViewAdapter adminGroupView,
             AdminGameViewAdapter adminGameView,
-            AdminPlayedGameViewAdapter adminPlayedGameView
+            AdminPlayedGameViewAdapter adminPlayedGameView,
+            string title
             )
             : base(messageSender)
         {
-            form = new AdminGenericView(SendMessage);
+            form = new AdminGenericView(SendMessage, title);
 
             _adminSettingsView = adminSettingsView;
             _adminGroupView = adminGroupView;
