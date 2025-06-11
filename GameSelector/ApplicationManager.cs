@@ -91,6 +91,7 @@ namespace GameSelector
                 Model.GameDataBridge,
                 Model.GroupDataBridge,
                 Model.PlayedGameDataBridge,
+                GameState,
                 MessageSender),
 
             new AdminPlayedGameController(

@@ -19,6 +19,7 @@ namespace GameSelector.Controllers
         private IGameDataBridge _gameDataBridge;
         private IGroupDataBridge _groupDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
+        private readonly GameState _gameState;
         private MessageSender _messageSender;
 
         private readonly TimeSpan GameTimeoutCheckInterval = TimeSpan.FromMinutes(1);
@@ -29,6 +30,7 @@ namespace GameSelector.Controllers
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
             IPlayedGameDataBridge playedGameDataBridge,
+            GameState gameState,
             MessageSender messageSender
         )
         {
@@ -37,6 +39,7 @@ namespace GameSelector.Controllers
             _gameDataBridge = gameDataBridge;
             _groupDataBridge = groupDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
+            _gameState = gameState;
             _messageSender = messageSender;
 
             _gameDataBridge.GameUpdated += OnGameUpdated;
@@ -103,7 +106,7 @@ namespace GameSelector.Controllers
                 Code = gdv.Code ?? string.Empty,
                 Description = gdv.Description ?? string.Empty,
                 Category = gdv.Category ?? string.Empty,
-                Active = gdv.Active,
+                Active = _gameState.CurrentState == GameState.State.Paused ? true : false,
                 Priority = gdv.Priority,
                 Remarks = gdv.Remarks ?? string.Empty,
                 Timeout = gdv.TimeoutMinutes <= 0 ? TimeSpan.FromMinutes(15) : new TimeSpan(gdv.TimeoutMinutes),
