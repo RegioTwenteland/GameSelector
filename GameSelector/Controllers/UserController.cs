@@ -171,13 +171,10 @@ namespace GameSelector.Controllers
                     group.StartTime.Value.ToString("HH:mm:ss")
                 );
 
-            if (_nfcReader.WriteMessage(newNdefData))
-            {
-                _groupDataBridge.UpdateGroup(group);
-                return true;
-            }
-
-            return false;
+            // TODO: Do something when the write fails
+            _ = _nfcReader.WriteMessage(newNdefData);
+            _groupDataBridge.UpdateGroup(group);
+            return true;
         }
 
         private void EndGameFor(Game currentGame, Group group)
