@@ -66,6 +66,15 @@ namespace GameSelector
         public MessageSender _messageSender;
         public MessageSender MessageSender => _messageSender ??= new MessageSender(_messageCollection);
 
+        private RandomNumberGenerator _randomNumberGenerator;
+        public RandomNumberGenerator RandomNumberGenerator => _randomNumberGenerator ??= new RandomNumberGenerator();
+
+        private GameSelectAlgorithm _gameSelectAlgorithm;
+        public GameSelectAlgorithm GameSelectAlgorithm => _gameSelectAlgorithm ??= new GameSelectAlgorithm(
+            Model.GameDataBridge,
+            Model.PlayedGameDataBridge,
+            RandomNumberGenerator);
+
         public IEnumerable<AbstractController> Controllers =>
         [
             new AdminController(
@@ -105,7 +114,8 @@ namespace GameSelector
                 NfcReader,
                 Model.GroupDataBridge,
                 Model.GameDataBridge,
-                Model.PlayedGameDataBridge)
+                Model.PlayedGameDataBridge,
+                GameSelectAlgorithm)
         ];
     }
 }

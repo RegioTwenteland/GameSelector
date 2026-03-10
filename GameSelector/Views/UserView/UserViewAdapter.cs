@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace GameSelector.Views
 {
-    internal class UserViewAdapter : AbstractView
+    internal class UserViewAdapter : AbstractView, IUserViewAdapter
     {
         private readonly UserView form;
 

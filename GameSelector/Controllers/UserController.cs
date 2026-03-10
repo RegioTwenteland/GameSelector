@@ -12,24 +12,25 @@ namespace GameSelector.Controllers
     internal class UserController : AbstractController
     {
         private GameState _gameState;
-        private UserViewAdapter _userView;
+        private IUserViewAdapter _userView;
         private UserIdentificationView _userIdentificationView;
         private INfcReader _nfcReader;
         private IGroupDataBridge _groupDataBridge;
         private IGameDataBridge _gameDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
-
+        private readonly GameSelectAlgorithm _gameSelector;
         private string _currentCard = string.Empty;
         private string _loggedInUser = string.Empty;
 
         public UserController(
             GameState gameState,
             UserIdentificationView userIdentificationView,
-            UserViewAdapter userView,
+            IUserViewAdapter userView,
             INfcReader nfcReader,
             IGroupDataBridge groupDataBridge,
             IGameDataBridge gameDataBridge,
-            IPlayedGameDataBridge playedGameDataBridge
+            IPlayedGameDataBridge playedGameDataBridge,
+            GameSelectAlgorithm gameSelector
         )
         {
             _gameState = gameState;
@@ -39,6 +40,7 @@ namespace GameSelector.Controllers
             _groupDataBridge = groupDataBridge;
             _gameDataBridge = gameDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
+            _gameSelector = gameSelector;
 
             userView.Ready += (s, e) => _gameState.StateChanged += OnStateChanged;
             _gameDataBridge.GameUpdated += OnGameUpdated;
@@ -97,62 +99,6 @@ namespace GameSelector.Controllers
         {
             var codes = _gameDataBridge.GetAllGames().Select(g => g.Code);
             _userView.SetGameCodes(codes.ToArray());
-        }
-
-        private IEnumerable<Game> GetGamesNotPlayed(IEnumerable<Game> gamesAvailable, IEnumerable<PlayedGame> playedGames)
-        {
-            var playedGameIds = playedGames.Select(pg => pg.Game.Id).ToHashSet();
-            return gamesAvailable.Where(game => (!playedGameIds.Contains(game.Id)) && game.Active);
-        }
-
-        private static readonly Random rng = new Random();
-
-        private bool FindNewGameFor(Group group, out Game newGame)
-        {
-            newGame = null;
-
-            var gamesAvailable = _gameDataBridge.GetAllGamesAvailable();
-            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
-
-            // First game is always completely random
-            if (!playedGames.Any())
-            {
-                newGame = gamesAvailable.ToArray()[rng.Next(gamesAvailable.Count())];
-                return true;
-            }
-
-            // Make sure no game is played twice by the same group
-            var remainingGames = GetGamesNotPlayed(gamesAvailable, playedGames);
-
-            // If this leaves no games to be played, the group has played all games.
-            if (!remainingGames.Any())
-            {
-                return false;
-            }
-
-            var lastPlayedCategory = playedGames.OrderByDescending(g => g.EndTime)
-                .First()
-                .Game
-                .Category;
-
-            // Remove all games which are in the same category as the last played game, but only if that leaves games to be played
-            // Otherwise we just accept that the group might play a similar game to the last one
-            if (remainingGames.Where(g => g.Category != lastPlayedCategory).Any())
-            {
-                remainingGames = remainingGames.Where(g => g.Category != lastPlayedCategory);
-            }
-
-            // Remove all games which do not have the highest priority.
-            remainingGames = remainingGames
-                .GroupBy(game => game.Priority)
-                .OrderByDescending(grouping => grouping.Key)
-                .First();
-
-            // These are all of the possible games to select from.
-            var selectFrom = remainingGames.ToArray();
-
-            newGame = selectFrom[rng.Next(selectFrom.Length)];
-            return true;
         }
 
         private bool SetNewGameFor(Group group, Game newGame)
@@ -215,7 +161,7 @@ namespace GameSelector.Controllers
             }
 
             EndGameFor(currentGame, group);
-            var success = FindNewGameFor(group, out var newGame);
+            var success = _gameSelector.FindNewGameFor(group, out var newGame);
             success = SetNewGameFor(group, newGame);
             if (!success) return;
 
