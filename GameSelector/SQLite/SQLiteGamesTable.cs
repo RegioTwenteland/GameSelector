@@ -31,6 +31,7 @@ namespace GameSelector.SQLite
                 .Select<SQLiteGame>().From<SQLiteGame>()
                 .LeftJoin<SQLiteGroup>()
                 .On<SQLiteGame, SQLiteGroup>(nameof(SQLiteGame.Id), nameof(SQLiteGroup.CurrentlyPlayingId))
+                .Where<SQLiteGame>(nameof(SQLiteGame.Active)).Equals(true)
                 .GroupBy<SQLiteGame>(nameof(SQLiteGame.Id))
                 .Having()
                 .Count<SQLiteGame>(nameof(SQLiteGame.Id))
