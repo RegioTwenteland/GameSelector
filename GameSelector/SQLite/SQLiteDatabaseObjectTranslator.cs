@@ -19,6 +19,7 @@ namespace GameSelector.SQLite
                 Priority = game.Priority,
                 Remarks = game.Remarks ?? "",
                 Timeout = game.Timeout.Ticks,
+                MinPlayerAmount = game.MinPlayerAmount,
                 MaxPlayerAmount = game.MaxPlayerAmount,
             };
         }
@@ -69,6 +70,7 @@ namespace GameSelector.SQLite
                 Priority = dbGame.Priority,
                 Remarks = dbGame.Remarks,
                 Timeout = new TimeSpan(dbGame.Timeout),
+                MinPlayerAmount = dbGame.MinPlayerAmount,
                 MaxPlayerAmount = dbGame.MaxPlayerAmount,
             };
 

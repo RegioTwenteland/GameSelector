@@ -24,6 +24,8 @@ namespace GameSelector.Views
 
         public long TimeoutMinutes { get; set; }
 
+        public long MinPlayerAmount { get; set; }
+
         public long MaxPlayerAmount { get; set; }
 
         public override string ToString() => Code;
@@ -45,6 +47,7 @@ namespace GameSelector.Views
                 StartTime = startTime,
                 Remarks = game.Remarks,
                 TimeoutMinutes = game.Timeout.Minutes,
+                MinPlayerAmount = game.MinPlayerAmount,
                 MaxPlayerAmount = game.MaxPlayerAmount,
             };
         }

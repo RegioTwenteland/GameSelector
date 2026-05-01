@@ -72,6 +72,7 @@ namespace GameSelector
         private GameSelectAlgorithm _gameSelectAlgorithm;
         public GameSelectAlgorithm GameSelectAlgorithm => _gameSelectAlgorithm ??= new GameSelectAlgorithm(
             Model.GameDataBridge,
+            Model.GroupDataBridge,
             Model.PlayedGameDataBridge,
             RandomNumberGenerator);
 

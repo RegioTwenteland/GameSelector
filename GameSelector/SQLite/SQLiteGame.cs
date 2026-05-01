@@ -39,6 +39,9 @@ namespace GameSelector.SQLite
         [SQLiteColumn(Name = "timeout")]
         public long Timeout { get; set; }
 
+        [SQLiteColumn(Name = "min_player_amount")]
+        public long MinPlayerAmount { get; set; }
+
         [SQLiteColumn(Name = "max_player_amount")]
         public long MaxPlayerAmount { get; set; }
     }

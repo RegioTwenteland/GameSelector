@@ -8,16 +8,19 @@ namespace GameSelector.Controllers
     internal class GameSelectAlgorithm
     {
         private IGameDataBridge _gameDataBridge;
+        private IGroupDataBridge _groupDataBridge;
         private IPlayedGameDataBridge _playedGameDataBridge;
         private readonly IRandomNumberGenerator _randomNumberGenerator;
 
         public GameSelectAlgorithm(
             IGameDataBridge gameDataBridge,
+            IGroupDataBridge groupDataBridge,
             IPlayedGameDataBridge playedGameDataBridge,
             IRandomNumberGenerator randomNumberGenerator
         )
         {
             _gameDataBridge = gameDataBridge;
+            _groupDataBridge = groupDataBridge;
             _playedGameDataBridge = playedGameDataBridge;
             _randomNumberGenerator = randomNumberGenerator;
         }
@@ -35,13 +38,6 @@ namespace GameSelector.Controllers
             var gamesAvailable = _gameDataBridge.GetAllGamesAvailable();
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
 
-            // First game is always completely random
-            if (!playedGames.Any())
-            {
-                newGame = gamesAvailable.ToArray()[_randomNumberGenerator.Next(gamesAvailable.Count())];
-                return true;
-            }
-
             // Make sure no game is played twice by the same group
             var remainingGames = GetGamesNotPlayed(gamesAvailable, playedGames);
 
@@ -49,6 +45,25 @@ namespace GameSelector.Controllers
             if (!remainingGames.Any())
             {
                 return false;
+            }
+
+            // If a game has a minimum amount of players which is not yet fulfilled, AND it already has at least one player we will select that game.
+            var gamesWithMinimumPlayerCountNotFulfilled = remainingGames
+                .Where(g => g.MinPlayerAmount > 0)
+                .Where(g => _groupDataBridge.GetAllGroupsPlaying(g).Any())
+                .Where(g => _groupDataBridge.GetAllGroupsPlaying(g).Count() < g.MinPlayerAmount);
+
+            if (gamesWithMinimumPlayerCountNotFulfilled.Any())
+            {
+                newGame = gamesWithMinimumPlayerCountNotFulfilled.ToArray()[_randomNumberGenerator.Next(gamesWithMinimumPlayerCountNotFulfilled.Count())];
+                return true;
+            }
+
+            // First game is completely random
+            if (!playedGames.Any())
+            {
+                newGame = gamesAvailable.ToArray()[_randomNumberGenerator.Next(gamesAvailable.Count())];
+                return true;
             }
 
             var lastPlayedCategory = playedGames.OrderByDescending(g => g.EndTime)

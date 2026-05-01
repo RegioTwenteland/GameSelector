@@ -109,6 +109,19 @@ namespace GameSelector.Views.AdminGameView
                 {
                     Column = new DataGridViewTextBoxColumn
                     {
+                        Name = nameof(GameDataView.MinPlayerAmount),
+                        HeaderText = "Min spelers",
+                        DataPropertyName = nameof(GameDataView.MinPlayerAmount),
+                        DefaultCellStyle = new DataGridViewCellStyle
+                        {
+                            Format = "N0"
+                        }
+                    }
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
+                    Column = new DataGridViewTextBoxColumn
+                    {
                         Name = nameof(GameDataView.MaxPlayerAmount),
                         HeaderText = "Max spelers",
                         DataPropertyName = nameof(GameDataView.MaxPlayerAmount),
