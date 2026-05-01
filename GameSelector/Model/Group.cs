@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 
 namespace GameSelector.Model
 {
@@ -25,5 +26,8 @@ namespace GameSelector.Model
         public DateTime? StartTime { get; set; }
 
         public string Remarks { get; set; }
+
+        public override bool Equals(object obj) =>
+            obj is Group other && other.Id == Id;
     }
 }
