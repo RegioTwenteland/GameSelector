@@ -1,4 +1,6 @@
-﻿using GameSelector.Views.AdminSettingsView;
+﻿using GameSelector.Model;
+using GameSelector.Views.AdminSettingsView;
+using GameSelector.Web;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,12 +11,16 @@ namespace GameSelector.Controllers
     {
         private GameState _gameState;
         private AdminSettingsViewAdapter _adminSettingsView;
+        private readonly WebEventDataBridge _webEventDataBridge;
 
         public AdminSettingsController(
             AdminSettingsViewAdapter adminSettingsView,
+            WebEventDataBridge webEventDataBridge,
+            IGameDataBridge gameDataBridge,
             GameState gameState)
         {
             _adminSettingsView = adminSettingsView;
+            _webEventDataBridge = webEventDataBridge;
             _gameState = gameState;
 
             _gameState.StateChanged += OnGameStateChanged;
@@ -22,6 +28,7 @@ namespace GameSelector.Controllers
             SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
                 { "RequestStartStopGame", OnRequestStartStopGame },
+                { "RequestImportGames", OnRequestImportGames },
             });
         }
 
@@ -57,6 +64,15 @@ namespace GameSelector.Controllers
             {
                 _gameState.CurrentState = GameState.State.Paused;
             }
+        }
+
+        public void OnRequestImportGames(Message message)
+        {
+            Debug.Assert(message.Value is null);
+
+            var possibleEvents = _webEventDataBridge.GetEvents();
+
+            _adminSettingsView.SelectEventFromList(possibleEvents);
         }
     }
 }

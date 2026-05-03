@@ -1,13 +1,10 @@
-﻿using GameSelector.Controllers;
-using GameSelector.Views.AdminGameView;
+﻿using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminGroupView;
 using GameSelector.Views.AdminPlayedGameView;
 using GameSelector.Views.AdminSettingsView;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-
 using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminGenericView
@@ -85,6 +82,11 @@ namespace GameSelector.Views.AdminGenericView
         public void HideView()
         {
             form.Invoke(new MethodInvoker(() => form.HideView()));
+        }
+
+        public void ShowGamesTab()
+        {
+            form.Invoke(new MethodInvoker(() => form.ShowTab("Spellen")));
         }
     }
 }

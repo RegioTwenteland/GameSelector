@@ -1,5 +1,6 @@
 ﻿using CustomControls;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,6 +11,9 @@ namespace GameSelector.Views.AdminGenericView
     {
         private const string SaveText = "Opslaan";
         private const string UnsavedModifier = "*";
+
+        private Dictionary<string, int> _tabNameToId;
+        private int _tabIdCounter;
 
         /////////////////////////////////////////////////////
         // GLOBAL
@@ -22,6 +26,9 @@ namespace GameSelector.Views.AdminGenericView
             SendMessage = sendMessage;
 
             Text = title;
+
+            _tabNameToId = [];
+            _tabIdCounter = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,6 +47,11 @@ namespace GameSelector.Views.AdminGenericView
                 X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
                 Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
             };
+        }
+
+        public void ShowTab(string name)
+        {
+            tabControl.SelectedIndex = _tabNameToId[name];
         }
 
         /////////////////////////////////////////////////////
@@ -81,6 +93,8 @@ namespace GameSelector.Views.AdminGenericView
             control.Dock = DockStyle.Fill;
             newTab.Controls.Add(control);
             tabControl.TabPages.Add(newTab);
+
+            _tabNameToId.Add(name, _tabIdCounter++);
         }
     }
 }

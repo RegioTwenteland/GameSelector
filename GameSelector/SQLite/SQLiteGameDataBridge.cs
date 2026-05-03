@@ -12,6 +12,7 @@ namespace GameSelector.SQLite
         private readonly SQLiteDatabaseObjectTranslator _objectTranslator;
 
         public event EventHandler<GameUpdatedEventArgs> GameUpdated;
+        public event EventHandler<GameUpdatedEventArgs> GameInserted;
 
         public SQLiteGameDataBridge(SQLiteDatabase database)
         {
@@ -59,6 +60,8 @@ namespace GameSelector.SQLite
 
             var addedGame = _gamesTable.GetNewestGame();
             game.Id = addedGame.Id;
+
+            GameInserted?.Invoke(this, new GameUpdatedEventArgs { Game = game });
         }
 
         public void DeleteGame(Game game)

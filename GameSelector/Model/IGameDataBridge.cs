@@ -7,6 +7,8 @@ namespace GameSelector.Model
     {
         event EventHandler<GameUpdatedEventArgs> GameUpdated;
 
+        event EventHandler<GameUpdatedEventArgs> GameInserted;
+
         IEnumerable<Game> GetAllGames();
 
         IEnumerable<Game> GetAllGamesAvailable();

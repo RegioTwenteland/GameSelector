@@ -10,6 +10,7 @@ using GameSelector.Views.AdminSettingsView;
 using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminPlayedGameView;
 using System.Collections.Generic;
+using GameSelector.Web;
 
 namespace GameSelector
 {
@@ -63,6 +64,10 @@ namespace GameSelector
         private IModel _model;
         public IModel Model => _model ??= new SQLiteModel();
 
+        private WebEventDataBridge _webEventDataBridge;
+
+        public WebEventDataBridge WebEventDataBridge => _webEventDataBridge ??= new WebEventDataBridge();
+
         public MessageSender _messageSender;
         public MessageSender MessageSender => _messageSender ??= new MessageSender(_messageCollection);
 
@@ -81,10 +86,13 @@ namespace GameSelector
             new AdminController(
                 AdminGenericView,
                 Model.GroupDataBridge,
-                Model.GameDataBridge),
+                Model.GameDataBridge,
+                WebEventDataBridge),
 
             new AdminSettingsController(
                 AdminSettingsView,
+                WebEventDataBridge,
+                Model.GameDataBridge,
                 GameState),
 
             new AdminGroupController(
@@ -116,7 +124,7 @@ namespace GameSelector
                 Model.GroupDataBridge,
                 Model.GameDataBridge,
                 Model.PlayedGameDataBridge,
-                GameSelectAlgorithm)
+                GameSelectAlgorithm),
         ];
     }
 }

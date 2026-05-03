@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace GameSelector.Model
 {
@@ -31,10 +32,15 @@ namespace GameSelector.Model
 
         public string Remarks { get; set; }
 
-        public TimeSpan Timeout { get; set; }
+        public TimeSpan Timeout { get; set; } = DefaultTimeout;
 
         public long MinPlayerAmount { get; set; }
 
-        public long MaxPlayerAmount { get; set; }
+        public long MaxPlayerAmount { get; set; } = DefaultMaxPlayerAmount;
+
+
+        public static TimeSpan DefaultTimeout = TimeSpan.FromMinutes(15);
+
+        public static long DefaultMaxPlayerAmount = 1;
     }
 }

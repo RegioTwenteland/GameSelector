@@ -1,6 +1,7 @@
 ﻿using CustomControls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -196,7 +197,7 @@ namespace GameSelector.Views.AdminGameView
             _games[idx] = game;
         }
 
-        public void NewGame(GameDataView game)
+        public void NewGame(GameDataView newGame)
         {
             var idx = -1;
 
@@ -204,14 +205,14 @@ namespace GameSelector.Views.AdminGameView
             {
                 idx++;
 
-                if (gdv.Id == 0)
+                if (gdv.Code == newGame.Code)
                 {
-                    _games[idx] = game;
+                    _games[idx] = newGame;
                     return;
                 }
             }
 
-            _games.Add(game);
+            _games.Add(newGame);
         }
 
         public void GameDeleted(GameDataView game)

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminSettingsView
 {
@@ -30,6 +31,11 @@ namespace GameSelector.Views.AdminSettingsView
         public void ShowAnimationLength(int lengthMs)
         {
             Control.Invoke(new MethodInvoker(() => Control.ShowAnimationLength(lengthMs)));
+        }
+
+        public void SelectEventFromList(IEnumerable<string> eventNames)
+        {
+            Control.Invoke(new MethodInvoker(() => Control.SelectEventFromList(eventNames)));
         }
     }
 }

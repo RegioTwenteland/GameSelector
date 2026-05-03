@@ -3,6 +3,7 @@ using GameSelector.Views;
 using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminGenericView;
 using GameSelector.Views.AdminGroupView;
+using GameSelector.Web;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,6 +44,7 @@ namespace GameSelector.Controllers
             _messageSender = messageSender;
 
             _gameDataBridge.GameUpdated += OnGameUpdated;
+            _gameDataBridge.GameInserted += OnGameInserted;
 
             SetMessageHandlers(new Dictionary<string, Action<Message>>
             {
@@ -58,6 +60,11 @@ namespace GameSelector.Controllers
         {
             var gdv = GameDataView.FromGame(e.Game);
             _adminGameView.UpdateGame(gdv);
+        }
+
+        private void OnGameInserted(object sender, GameUpdatedEventArgs e)
+        {
+            _adminGameView.NewGame(GameDataView.FromGame(e.Game));
         }
 
         public override void Start(Action<object> stop)
@@ -110,14 +117,12 @@ namespace GameSelector.Controllers
                 Active = _gameState.CurrentState == GameState.State.Paused ? true : false,
                 Priority = gdv.Priority,
                 Remarks = gdv.Remarks ?? string.Empty,
-                Timeout = gdv.TimeoutMinutes <= 0 ? TimeSpan.FromMinutes(15) : new TimeSpan(gdv.TimeoutMinutes),
+                Timeout = gdv.TimeoutMinutes <= 0 ? Game.DefaultTimeout : new TimeSpan(gdv.TimeoutMinutes),
                 MinPlayerAmount = gdv.MinPlayerAmount,
-                MaxPlayerAmount = Math.Max(1, gdv.MaxPlayerAmount),
+                MaxPlayerAmount = gdv.MaxPlayerAmount <= 0 ? Game.DefaultMaxPlayerAmount : gdv.MaxPlayerAmount,
             };
 
             _gameDataBridge.InsertGame(newGame); // populates ID field
-
-            _adminGameView.NewGame(GameDataView.FromGame(newGame));
         }
 
         private void OnRequestDeleteGame(Message message)

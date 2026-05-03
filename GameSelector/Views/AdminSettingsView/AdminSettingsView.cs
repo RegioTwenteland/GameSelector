@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameSelector.Views.AdminSettingsView
@@ -62,6 +57,29 @@ namespace GameSelector.Views.AdminSettingsView
             animationLengthTextbox.Text = lengthMs.ToString();
         }
 
+        private void EventSelected(object sender, string eventName)
+        {
+            var selectEventView = (SelectEventView)sender;
+
+            selectEventView.EventSelected -= EventSelected;
+            
+            if (!string.IsNullOrEmpty(eventName))
+            {
+                SendMessage("ImportGames", eventName);
+            }
+
+            selectEventView.Close();
+
+            importGamesButton.Enabled = true;
+        }
+
+        public void SelectEventFromList(IEnumerable<string> eventNames)
+        {
+            var selectEventView = new SelectEventView(eventNames);
+            selectEventView.EventSelected += EventSelected;
+            selectEventView.Show();
+        }
+
         private void saveGlobalSettings_Click(object sender, EventArgs e)
         {
             SendMessage("SaveGameTimeout", int.Parse(gameTimeoutTextbox.Text));
@@ -71,6 +89,13 @@ namespace GameSelector.Views.AdminSettingsView
         private void testUserViewButton_Click(object sender, EventArgs e)
         {
             SendMessage("TestUserView", null);
+        }
+
+        private void importGamesButton_Click(object sender, EventArgs e)
+        {
+            importGamesButton.Enabled = false;
+
+            SendMessage("RequestImportGames", null);
         }
     }
 }

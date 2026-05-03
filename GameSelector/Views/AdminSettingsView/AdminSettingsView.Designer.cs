@@ -38,12 +38,13 @@
             gameStateLabel = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             startStopGameButton = new System.Windows.Forms.Button();
+            importGamesButton = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(16, 137);
+            label11.Location = new System.Drawing.Point(16, 113);
             label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(118, 15);
@@ -52,7 +53,7 @@
             // 
             // animationLengthTextbox
             // 
-            animationLengthTextbox.Location = new System.Drawing.Point(141, 134);
+            animationLengthTextbox.Location = new System.Drawing.Point(141, 110);
             animationLengthTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             animationLengthTextbox.Name = "animationLengthTextbox";
             animationLengthTextbox.Size = new System.Drawing.Size(107, 23);
@@ -60,7 +61,7 @@
             // 
             // testUserViewButton
             // 
-            testUserViewButton.Location = new System.Drawing.Point(3, 589);
+            testUserViewButton.Location = new System.Drawing.Point(154, 583);
             testUserViewButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             testUserViewButton.Name = "testUserViewButton";
             testUserViewButton.Size = new System.Drawing.Size(130, 27);
@@ -72,7 +73,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new System.Drawing.Point(4, 107);
+            label14.Location = new System.Drawing.Point(4, 83);
             label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(130, 15);
@@ -81,7 +82,7 @@
             // 
             // gameTimeoutTextbox
             // 
-            gameTimeoutTextbox.Location = new System.Drawing.Point(141, 104);
+            gameTimeoutTextbox.Location = new System.Drawing.Point(141, 80);
             gameTimeoutTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             gameTimeoutTextbox.Name = "gameTimeoutTextbox";
             gameTimeoutTextbox.Size = new System.Drawing.Size(107, 23);
@@ -89,7 +90,7 @@
             // 
             // saveGlobalSettings
             // 
-            saveGlobalSettings.Location = new System.Drawing.Point(4, 164);
+            saveGlobalSettings.Location = new System.Drawing.Point(4, 140);
             saveGlobalSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             saveGlobalSettings.Name = "saveGlobalSettings";
             saveGlobalSettings.Size = new System.Drawing.Size(244, 27);
@@ -140,11 +141,23 @@
             startStopGameButton.UseVisualStyleBackColor = true;
             startStopGameButton.Click += startStopGameButton_Click;
             // 
-            // GeneralAdminView
+            // importGamesButton
+            // 
+            importGamesButton.Location = new System.Drawing.Point(16, 583);
+            importGamesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            importGamesButton.Name = "importGamesButton";
+            importGamesButton.Size = new System.Drawing.Size(130, 27);
+            importGamesButton.TabIndex = 120;
+            importGamesButton.Text = "Importeer spellen";
+            importGamesButton.UseVisualStyleBackColor = true;
+            importGamesButton.Click += importGamesButton_Click;
+            // 
+            // AdminSettingsView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.SystemColors.ControlLightLight;
+            Controls.Add(importGamesButton);
             Controls.Add(label11);
             Controls.Add(animationLengthTextbox);
             Controls.Add(testUserViewButton);
@@ -155,7 +168,7 @@
             Controls.Add(gameStateLabel);
             Controls.Add(label9);
             Controls.Add(startStopGameButton);
-            Name = "GeneralAdminView";
+            Name = "AdminSettingsView";
             Size = new System.Drawing.Size(916, 624);
             ResumeLayout(false);
             PerformLayout();
@@ -173,5 +186,6 @@
         private System.Windows.Forms.Label gameStateLabel;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button startStopGameButton;
+        private System.Windows.Forms.Button importGamesButton;
     }
 }
