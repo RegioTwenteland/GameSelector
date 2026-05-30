@@ -1,4 +1,4 @@
-﻿using GameSelector.Model;
+using GameSelector.Model;
 using GameSelector.NfcReader;
 using GameSelector.Views;
 using System;
@@ -51,7 +51,8 @@ namespace GameSelector.Controllers
                 { "CardEjected", OnCardEjected},
                 { "AnimationComplete", OnAnimationComplete },
                 { "UserViewReady", OnUserViewReady },
-                { "TestUserView", OnTestUserView }
+                { "TestUserView", OnTestUserView },
+                { "EndGameForGroup", OnEndGameForGroup }
             });
         }
 
@@ -123,24 +124,41 @@ namespace GameSelector.Controllers
             return true;
         }
 
-        private void EndGameFor(Game currentGame, Group group)
+        private void EndGameForSingleGroup(Game game, Group group)
         {
-            if (currentGame == null) return;
-            if (!group.StartTime.HasValue) return;
-
             var playedGame = new PlayedGame
             {
                 Player = group,
-                Game = currentGame,
+                Game = game,
                 StartTime = group.StartTime ?? DateTime.MinValue,
                 EndTime = DateTime.Now,
             };
 
             _playedGameDataBridge.InsertPlayedGame(playedGame);
-
             group.StartTime = null;
+            group.CurrentlyPlaying = null;
 
             _groupDataBridge.UpdateGroup(group);
+        }
+
+        private void EndGameFor(Game currentGame, Group group)
+        {
+            if (currentGame == null) return;
+
+            if (currentGame.MultiplePlayersRequired)
+            {
+                // For multiplayer games, end for all players
+                var allGroupsPlaying = _groupDataBridge.GetAllGroupsPlaying(currentGame);
+                foreach (var g in allGroupsPlaying)
+                {
+                    EndGameForSingleGroup(currentGame, g);
+                }
+            }
+            else
+            {
+                // For single-player games, end only for this group
+                EndGameForSingleGroup(currentGame, group);
+            }
         }
 
         private void LogUserIn()
@@ -224,6 +242,16 @@ namespace GameSelector.Controllers
             Debug.Assert(message.Value is null);
 
             _loggedInUser = string.Empty;
+        }
+
+        private void OnEndGameForGroup(Message message)
+        {
+            Debug.Assert(message.Value is Group);
+
+            var group = (Group)message.Value;
+            var currentGame = _gameDataBridge.GetGameBeingPlayedBy(group);
+
+            EndGameFor(currentGame, group);
         }
     }
 }

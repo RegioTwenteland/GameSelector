@@ -1,4 +1,4 @@
-﻿using GameSelector.Model;
+using GameSelector.Model;
 using GameSelector.Views;
 using GameSelector.Views.AdminGameView;
 using GameSelector.Views.AdminGenericView;
@@ -152,25 +152,6 @@ namespace GameSelector.Controllers
             UpdateGamesList(_gameDataBridge.GetAllGames());
         }
 
-        private void ForceEndGame(Group group)
-        {
-            var game = _gameDataBridge.GetGameBeingPlayedBy(group);
-
-            var playedGame = new PlayedGame
-            {
-                Player = group,
-                Game = game,
-                StartTime = group.StartTime ?? DateTime.MinValue,
-                EndTime = DateTime.MinValue,
-            };
-
-            _playedGameDataBridge.InsertPlayedGame(playedGame);
-            group.CurrentlyPlaying = null;
-            group.StartTime = null;
-
-            _groupDataBridge.UpdateGroup(group);
-        }
-
         private void OnRequestForceEndGameForGroup(Message message)
         {
             Debug.Assert(message.Value is GroupDataView);
@@ -179,7 +160,7 @@ namespace GameSelector.Controllers
 
             var group = _groupDataBridge.GetGroup(gdv.Id);
 
-            ForceEndGame(group);
+            _messageSender.Send(new Message("EndGameForGroup", group));
         }
 
         private void OnRequestTimeoutCheck(Message message)
@@ -208,7 +189,7 @@ namespace GameSelector.Controllers
 
                 if (now >= deadline)
                 {
-                    ForceEndGame(group);
+                    _messageSender.Send(new Message("EndGameForGroup", group));
                 }
             }
 
