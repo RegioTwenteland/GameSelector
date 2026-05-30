@@ -12,6 +12,26 @@ namespace GameSelector.Controllers
         private IPlayedGameDataBridge _playedGameDataBridge;
         private readonly IRandomNumberGenerator _randomNumberGenerator;
 
+        private delegate RuleResult RuleHandler(Group group, IReadOnlyList<Game> remainingGames);
+
+        private sealed class RuleResult
+        {
+            private RuleResult(Game selectedGame, IEnumerable<Game> filteredGames)
+            {
+                SelectedGame = selectedGame;
+                FilteredGames = filteredGames;
+            }
+
+            public Game SelectedGame { get; }
+            public IEnumerable<Game> FilteredGames { get; }
+            public bool HasSelectedGame => SelectedGame != null;
+            public bool HasFilteredGames => FilteredGames != null;
+
+            public static RuleResult NoChange() => new RuleResult(null, null);
+            public static RuleResult Select(Game game) => new RuleResult(game, null);
+            public static RuleResult Filter(IEnumerable<Game> filteredGames) => new RuleResult(null, filteredGames);
+        }
+
         public GameSelectAlgorithm(
             IGameDataBridge gameDataBridge,
             IGroupDataBridge groupDataBridge,
@@ -41,66 +61,118 @@ namespace GameSelector.Controllers
         {
             newGame = null;
 
-            var gamesAvailable = _gameDataBridge.GetAllGamesAvailable();
             var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
+            var remainingGames = GetGamesNotPlayed(_gameDataBridge.GetAllGamesAvailable(), playedGames).ToArray();
 
-            // Make sure no game is played twice by the same group
-            var remainingGames = GetGamesNotPlayed(gamesAvailable, playedGames);
-
-            // If this leaves no games to be played, the group has played all games.
             if (!remainingGames.Any())
             {
                 return false;
             }
 
-            // Check for games that require multiple players and have space available
-            // These games take priority over all other selection criteria
+            var rules = new RuleHandler[]
+            {
+                SelectMultiplayerGameWithOpenSlot,
+                SelectRandomFirstGame,
+                ExcludeSameCategoryAsLastPlayedGame,
+                FilterToHighestPriorityGames,
+                SelectRandomRemainingGame
+            };
+
+            foreach (var rule in rules)
+            {
+                var result = rule(group, remainingGames);
+
+                if (result.HasSelectedGame)
+                {
+                    newGame = result.SelectedGame;
+                    return true;
+                }
+
+                if (result.HasFilteredGames)
+                {
+                    remainingGames = result.FilteredGames.ToArray();
+                }
+            }
+
+            return false;
+        }
+
+        private RuleResult SelectMultiplayerGameWithOpenSlot(Group group, IReadOnlyList<Game> remainingGames)
+        {
             var multiplayerGamesMissingPlayers = remainingGames
                 .Where(g => g.MultiplePlayersRequired && GetCurrentPlayerCountForGame(g) < g.MaxPlayerAmount && GetCurrentPlayerCountForGame(g) > 0)
                 .ToArray();
 
-            if (multiplayerGamesMissingPlayers.Any())
+            if (!multiplayerGamesMissingPlayers.Any())
             {
-                // Prioritize games with fewer players (closer to filling up)
-                var selectFrom = multiplayerGamesMissingPlayers
-                    .OrderBy(g => GetCurrentPlayerCountForGame(g))
-                    .ThenByDescending(g => g.Priority)
-                    .ToArray();
-                
-                newGame = selectFrom[_randomNumberGenerator.Next(selectFrom.Length)];
-                return true;
+                return RuleResult.NoChange();
             }
 
-            // First game is completely random
+            var selectFrom = multiplayerGamesMissingPlayers
+                .OrderBy(g => GetCurrentPlayerCountForGame(g))
+                .ThenByDescending(g => g.Priority)
+                .ToArray();
+
+            return RuleResult.Select(selectFrom[_randomNumberGenerator.Next(selectFrom.Length)]);
+        }
+
+        private RuleResult SelectRandomFirstGame(Group group, IReadOnlyList<Game> remainingGames)
+        {
+            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
+            if (playedGames.Any())
+            {
+                return RuleResult.NoChange();
+            }
+
+            return RuleResult.Select(remainingGames[_randomNumberGenerator.Next(remainingGames.Count)]);
+        }
+
+        private RuleResult ExcludeSameCategoryAsLastPlayedGame(Group group, IReadOnlyList<Game> remainingGames)
+        {
+            var playedGames = _playedGameDataBridge.GetPlayedGamesByPlayer(group);
             if (!playedGames.Any())
             {
-                newGame = gamesAvailable.ToArray()[_randomNumberGenerator.Next(gamesAvailable.Count())];
-                return true;
+                return RuleResult.NoChange();
             }
 
-            var lastPlayedCategory = playedGames.OrderByDescending(g => g.EndTime)
+            var lastPlayedCategory = playedGames
+                .OrderByDescending(pg => pg.EndTime)
                 .First()
                 .Game
                 .Category;
 
-            // Remove all games which are in the same category as the last played game, but only if that leaves games to be played
-            // Otherwise we just accept that the group might play a similar game to the last one
-            if (remainingGames.Where(g => g.Category != lastPlayedCategory).Any())
+            var filteredGames = remainingGames
+                .Where(g => g.Category != lastPlayedCategory)
+                .ToArray();
+
+            if (!filteredGames.Any())
             {
-                remainingGames = remainingGames.Where(g => g.Category != lastPlayedCategory);
+                // There are no games available in a different category. Accept that the user plays a similar game.
+                return RuleResult.NoChange();
             }
 
-            // Remove all games which do not have the highest priority.
-            remainingGames = remainingGames
+            return RuleResult.Filter(filteredGames);
+        }
+
+        private RuleResult FilterToHighestPriorityGames(Group group, IReadOnlyList<Game> remainingGames)
+        {
+            var highestPriorityGames = remainingGames
                 .GroupBy(game => game.Priority)
                 .OrderByDescending(grouping => grouping.Key)
-                .First();
+                .First()
+                .ToArray();
 
-            // These are all of the possible games to select from.
-            var availableGames = remainingGames.ToArray();
+            return RuleResult.Filter(highestPriorityGames);
+        }
 
-            newGame = availableGames[_randomNumberGenerator.Next(availableGames.Length)];
-            return true;
+        private RuleResult SelectRandomRemainingGame(Group group, IReadOnlyList<Game> remainingGames)
+        {
+            if (!remainingGames.Any())
+            {
+                return RuleResult.NoChange();
+            }
+
+            return RuleResult.Select(remainingGames[_randomNumberGenerator.Next(remainingGames.Count)]);
         }
     }
 }

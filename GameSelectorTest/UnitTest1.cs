@@ -46,57 +46,45 @@ namespace GameSelectorTest
                 IsAdmin = false,
                 Remarks = "Testing"
             };
-        
-        private static long HighestActivePriority(IEnumerable<Game> gameSet) =>
-            gameSet
-                .Where(g => g.Active)
-                .Select(g => g.Priority)
-                .Max();
+
+        private static Game NewGame(
+            long id,
+            string category,
+            int priority,
+            bool active = true,
+            bool multiplePlayersRequired = false,
+            int maxPlayerAmount = 1,
+            string? code = null
+        ) =>
+            new()
+            {
+                Id = id,
+                Code = code ?? $"Game {id}",
+                Category = category,
+                Description = "Test game",
+                Active = active,
+                Priority = priority,
+                Remarks = "Test",
+                Timeout = TimeSpan.FromSeconds(10),
+                MultiplePlayersRequired = multiplePlayersRequired,
+                MaxPlayerAmount = maxPlayerAmount,
+            };
+
+        private static PlayedGame PlayedGameFor(Game game, DateTime endTime) =>
+            new()
+            {
+                Game = game,
+                EndTime = endTime,
+            };
 
         [Test]
         public void FirstGameIgnoresPriority()
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
@@ -119,56 +107,16 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // Player has played one game.
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[2],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                }
+                PlayedGameFor(gameSet[2], new DateTime(2026, 1, 4, 10, 10, 10))
             ]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
@@ -183,56 +131,16 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = false,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5, active: false),
+                NewGame(9, category: "AbcD", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // Player has played one game.
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[0],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                }
+                PlayedGameFor(gameSet[0], new DateTime(2026, 1, 4, 10, 10, 10))
             ]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
@@ -248,56 +156,16 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Running",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "Running",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Running", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "Running", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // Player has played one game.
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[1],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                }
+                PlayedGameFor(gameSet[1], new DateTime(2026, 1, 4, 10, 10, 10))
             ]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
@@ -309,60 +177,39 @@ namespace GameSelectorTest
         }
 
         [Test]
+        public void ReturnsFalseWhenNoEligibleGamesRemain()
+        {
+            List<Game> gameSet =
+            [
+                NewGame(1, category: "Abc", priority: 3)
+            ];
+
+            _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
+            _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
+                PlayedGameFor(gameSet[0], new DateTime(2026, 1, 4, 10, 10, 10))
+            ]);
+
+            var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
+
+            Assert.That(success, Is.False);
+            Assert.That(game, Is.Null);
+        }
+
+        [Test]
         public void SameCategoryIsAvoided()
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // Player has played one game.
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[0],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                }
+                PlayedGameFor(gameSet[0], new DateTime(2026, 1, 4, 10, 10, 10))
             ]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
@@ -378,61 +225,17 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // Player has played one game.
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[0],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                },
-                new PlayedGame()
-                {
-                    Game = gameSet[2],
-                    EndTime = new DateTime(2026, 1, 4, 10, 5, 10)
-                }
+                PlayedGameFor(gameSet[0], new DateTime(2026, 1, 4, 10, 10, 10)),
+                PlayedGameFor(gameSet[2], new DateTime(2026, 1, 4, 10, 5, 10))
             ]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
@@ -448,45 +251,9 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = true,
-                    MaxPlayerAmount = 10,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2, multiplePlayersRequired: true, maxPlayerAmount: 10),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
@@ -512,45 +279,9 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = true,
-                    MaxPlayerAmount = 10,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2, multiplePlayersRequired: true, maxPlayerAmount: 10),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
@@ -578,45 +309,9 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = true,
-                    MaxPlayerAmount = 10,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2, multiplePlayersRequired: true, maxPlayerAmount: 10),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
@@ -643,56 +338,16 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 1,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = true,
-                    MaxPlayerAmount = 10,
-                },
+                NewGame(1, category: "Abc", priority: 2),
+                NewGame(4, category: "Abc", priority: 1),
+                NewGame(9, category: "AbcD", priority: 3, multiplePlayersRequired: true, maxPlayerAmount: 10),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // The player has already played the multiplayer game
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[2],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                }
+                PlayedGameFor(gameSet[2], new DateTime(2026, 1, 4, 10, 10, 10))
             ]);
             
             // The multiplayer game has space available, but should not be prioritized because player already played it
@@ -710,56 +365,16 @@ namespace GameSelectorTest
         {
             List<Game> gameSet =
             [
-                new Game
-                {
-                    Id = 1,
-                    Code = "Game 1",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 3,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 4,
-                    Code = "Game 2",
-                    Category = "Abc",
-                    Description = "Do something",
-                    Active = true,
-                    Priority = 5,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
-                new Game
-                {
-                    Id = 9,
-                    Code = "Game 5",
-                    Category = "AbcD",
-                    Description = "Do something else",
-                    Active = true,
-                    Priority = 2,
-                    Remarks = "asdfasd",
-                    Timeout = TimeSpan.FromSeconds(10),
-                    MultiplePlayersRequired = false,
-                    MaxPlayerAmount = 1,
-                },
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5),
+                NewGame(9, category: "AbcD", priority: 2),
             ];
 
             _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
 
             // Player has already played one game, so normal priority rules apply
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
-                new PlayedGame()
-                {
-                    Game = gameSet[2],
-                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
-                }
+                PlayedGameFor(gameSet[2], new DateTime(2026, 1, 4, 10, 10, 10))
             ]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
