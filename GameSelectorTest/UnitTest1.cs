@@ -383,5 +383,30 @@ namespace GameSelectorTest
             // No multiplayer games exist, so normal priority rules apply. Game with highest priority is selected.
             Assert.That(game.Id, Is.EqualTo(gameSet[1].Id));
         }
+
+        [Test]
+        public void GameWithZeroMaxPlayersIsNotSelected()
+        {
+            List<Game> gameSet =
+            [
+                NewGame(1, category: "Abc", priority: 3),
+                NewGame(4, category: "Abc", priority: 5, maxPlayerAmount: 0),
+                NewGame(9, category: "AbcD", priority: 2),
+            ];
+
+            _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
+
+            // Player has played one game
+            _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
+                PlayedGameFor(gameSet[0], new DateTime(2026, 1, 4, 10, 10, 10))
+            ]);
+
+            var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
+
+            Assert.That(success, Is.True);
+            // Even though game at index 1 has higher priority, it must not be selected because
+            // it has MaxPlayerAmount = 0. Game at index 2 is the next highest priority and is valid.
+            Assert.That(game.Id, Is.EqualTo(gameSet[2].Id));
+        }
     }
 }
