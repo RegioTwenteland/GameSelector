@@ -31,6 +31,12 @@ namespace GameSelector.Controllers
             return gamesAvailable.Where(game => (!playedGameIds.Contains(game.Id)) && game.Active);
         }
 
+        private long GetCurrentPlayerCountForGame(Game game)
+        {
+            var groupsPlaying = _groupDataBridge.GetAllGroupsPlaying(game);
+            return groupsPlaying.Count();
+        }
+
         public bool FindNewGameFor(Group group, out Game newGame)
         {
             newGame = null;
@@ -47,15 +53,21 @@ namespace GameSelector.Controllers
                 return false;
             }
 
-            // If a game has a minimum amount of players which is not yet fulfilled, AND it already has at least one player we will select that game.
-            var gamesWithMinimumPlayerCountNotFulfilled = remainingGames
-                .Where(g => g.MinPlayerAmount > 0)
-                .Where(g => _groupDataBridge.GetAllGroupsPlaying(g).Any())
-                .Where(g => _groupDataBridge.GetAllGroupsPlaying(g).Count() < g.MinPlayerAmount);
+            // Check for games that require multiple players and have space available
+            // These games take priority over all other selection criteria
+            var multiplayerGamesMissingPlayers = remainingGames
+                .Where(g => g.MultiplePlayersRequired && GetCurrentPlayerCountForGame(g) < g.MaxPlayerAmount && GetCurrentPlayerCountForGame(g) > 0)
+                .ToArray();
 
-            if (gamesWithMinimumPlayerCountNotFulfilled.Any())
+            if (multiplayerGamesMissingPlayers.Any())
             {
-                newGame = gamesWithMinimumPlayerCountNotFulfilled.ToArray()[_randomNumberGenerator.Next(gamesWithMinimumPlayerCountNotFulfilled.Count())];
+                // Prioritize games with fewer players (closer to filling up)
+                var selectFrom = multiplayerGamesMissingPlayers
+                    .OrderBy(g => GetCurrentPlayerCountForGame(g))
+                    .ThenByDescending(g => g.Priority)
+                    .ToArray();
+                
+                newGame = selectFrom[_randomNumberGenerator.Next(selectFrom.Length)];
                 return true;
             }
 
@@ -85,9 +97,9 @@ namespace GameSelector.Controllers
                 .First();
 
             // These are all of the possible games to select from.
-            var selectFrom = remainingGames.ToArray();
+            var availableGames = remainingGames.ToArray();
 
-            newGame = selectFrom[_randomNumberGenerator.Next(selectFrom.Length)];
+            newGame = availableGames[_randomNumberGenerator.Next(availableGames.Length)];
             return true;
         }
     }

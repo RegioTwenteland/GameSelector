@@ -34,7 +34,7 @@ namespace GameSelector.Model
 
         public TimeSpan Timeout { get; set; } = DefaultTimeout;
 
-        public long MinPlayerAmount { get; set; }
+        public bool MultiplePlayersRequired { get; set; }
 
         public long MaxPlayerAmount { get; set; } = DefaultMaxPlayerAmount;
 

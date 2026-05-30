@@ -105,14 +105,9 @@ namespace GameSelector.Controllers
         {
             localGame.Description = webGame.Description;
             localGame.Active = webGame.Active;
-            localGame.MaxPlayerAmount =
-                webGame.MaxPlayerAmount < localGame.MinPlayerAmount
-                    ? localGame.MinPlayerAmount
-                    : webGame.MaxPlayerAmount;
+            localGame.MaxPlayerAmount = webGame.MaxPlayerAmount;
             return localGame;
         }
-
-        System.Timers.Timer test;
 
         public void OnImportGames(Message message)
         {

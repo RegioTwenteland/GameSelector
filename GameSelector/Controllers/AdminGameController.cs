@@ -95,7 +95,7 @@ namespace GameSelector.Controllers
             game.Priority = gameDataView.Priority;
             game.Remarks = gameDataView.Remarks;
             game.Timeout = TimeSpan.FromMinutes(gameDataView.TimeoutMinutes);
-            game.MinPlayerAmount = gameDataView.MinPlayerAmount;
+            game.MultiplePlayersRequired = gameDataView.MultiplePlayersRequired;
             game.MaxPlayerAmount = gameDataView.MaxPlayerAmount;
 
             _gameDataBridge.UpdateGame(game);
@@ -118,7 +118,7 @@ namespace GameSelector.Controllers
                 Priority = gdv.Priority,
                 Remarks = gdv.Remarks ?? string.Empty,
                 Timeout = gdv.TimeoutMinutes <= 0 ? Game.DefaultTimeout : new TimeSpan(gdv.TimeoutMinutes),
-                MinPlayerAmount = gdv.MinPlayerAmount,
+                MultiplePlayersRequired = gdv.MultiplePlayersRequired,
                 MaxPlayerAmount = gdv.MaxPlayerAmount <= 0 ? Game.DefaultMaxPlayerAmount : gdv.MaxPlayerAmount,
             };
 

@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS "games" (
 	"priority"	INTEGER NOT NULL DEFAULT 0,
 	"remarks"	TEXT NOT NULL,
 	"timeout"	INTEGER NOT NULL DEFAULT 0,
-	"min_player_amount"	INTEGER NOT NULL DEFAULT 0,
+	"multiple_players_required"	INTEGER NOT NULL DEFAULT 0,
 	"max_player_amount"	INTEGER NOT NULL DEFAULT 1,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );

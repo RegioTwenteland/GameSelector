@@ -108,15 +108,11 @@ namespace GameSelector.Views.AdminGameView
                 },
                 new GameSelectorDataGridView.ColumnOptions()
                 {
-                    Column = new DataGridViewTextBoxColumn
+                    Column = new DataGridViewCheckBoxColumn
                     {
-                        Name = nameof(GameDataView.MinPlayerAmount),
-                        HeaderText = "Min spelers",
-                        DataPropertyName = nameof(GameDataView.MinPlayerAmount),
-                        DefaultCellStyle = new DataGridViewCellStyle
-                        {
-                            Format = "N0"
-                        }
+                        Name = nameof(GameDataView.MultiplePlayersRequired),
+                        HeaderText = "Samenspelen",
+                        DataPropertyName = nameof(GameDataView.MultiplePlayersRequired),
                     }
                 },
                 new GameSelectorDataGridView.ColumnOptions()

@@ -42,7 +42,7 @@ namespace GameSelector.Web
                     Active = wg.IsFeasible,
                     Priority = 0,
                     Remarks = string.Empty,
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = wg.TimesChosen,
                 });
         }

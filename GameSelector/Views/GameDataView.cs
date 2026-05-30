@@ -24,7 +24,7 @@ namespace GameSelector.Views
 
         public long TimeoutMinutes { get; set; }
 
-        public long MinPlayerAmount { get; set; }
+        public bool MultiplePlayersRequired { get; set; }
 
         public long MaxPlayerAmount { get; set; }
 
@@ -47,7 +47,7 @@ namespace GameSelector.Views
                 StartTime = startTime,
                 Remarks = game.Remarks,
                 TimeoutMinutes = game.Timeout.Minutes,
-                MinPlayerAmount = game.MinPlayerAmount,
+                MultiplePlayersRequired = game.MultiplePlayersRequired,
                 MaxPlayerAmount = game.MaxPlayerAmount,
             };
         }

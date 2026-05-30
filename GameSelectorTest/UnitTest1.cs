@@ -68,7 +68,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -81,7 +81,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -94,7 +94,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
             ];
@@ -129,7 +129,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -142,7 +142,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -155,7 +155,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
             ];
@@ -193,7 +193,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -206,7 +206,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -219,7 +219,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
             ];
@@ -258,7 +258,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -271,7 +271,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -284,7 +284,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
             ];
@@ -323,7 +323,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -336,7 +336,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -349,7 +349,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
             ];
@@ -388,7 +388,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -401,7 +401,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -414,7 +414,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
             ];
@@ -444,7 +444,7 @@ namespace GameSelectorTest
         }
 
         [Test]
-        public void GameWithMinPlayerAmountNotFulfilledAndAtLeastOnePlayerHasPriority()
+        public void MultiplayerGameWithFewerPlayersThanMaxHasPriority()
         {
             List<Game> gameSet =
             [
@@ -458,7 +458,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -471,7 +471,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -484,7 +484,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 5,
+                    MultiplePlayersRequired = true,
                     MaxPlayerAmount = 10,
                 },
             ];
@@ -497,18 +497,18 @@ namespace GameSelectorTest
             // No-one has played anything, so all games are available. Also ensures this rule takes precedence over the
             // "first played game is always random" rule:
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([]);
-            // Game with the lowest priority has two players right now, which means it is missing three players to reach minimum:
+            // Game with MultiplePlayersRequired has 2 players, max is 10, so it has room for more:
             _groupDataBridge.GetAllGroupsPlaying(gameSet[2]).Returns([NewDummyGroup, NewDummyGroup]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
 
             Assert.That(success, Is.True);
-            // Game 2 must be selected because the minimum player count is not fulfilled.
+            // Game 2 must be selected because it has MultiplePlayersRequired=true and has fewer players than max.
             Assert.That(game.Id, Is.EqualTo(gameSet[2].Id));
         }
 
         [Test]
-        public void GameWithMinPlayerAmountNotFulfilledAndNoPlayersHasNoPriority()
+        public void MultiplayerGameAtMaxCapacityHasNoPriority()
         {
             List<Game> gameSet =
             [
@@ -522,7 +522,7 @@ namespace GameSelectorTest
                     Priority = 3,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -535,7 +535,7 @@ namespace GameSelectorTest
                     Priority = 5,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 0,
+                    MultiplePlayersRequired = false,
                     MaxPlayerAmount = 1,
                 },
                 new Game
@@ -548,7 +548,7 @@ namespace GameSelectorTest
                     Priority = 2,
                     Remarks = "asdfasd",
                     Timeout = TimeSpan.FromSeconds(10),
-                    MinPlayerAmount = 5,
+                    MultiplePlayersRequired = true,
                     MaxPlayerAmount = 10,
                 },
             ];
@@ -560,15 +560,213 @@ namespace GameSelectorTest
 
             // No-one has played anything, so all games are available.
             _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([]);
-            // No-one is playing the game with a minimum amount of players
+            // Game with MultiplePlayersRequired is at max capacity (10 players, max is 10)
+            _groupDataBridge.GetAllGroupsPlaying(gameSet[2]).Returns(
+                [NewDummyGroup, NewDummyGroup, NewDummyGroup, NewDummyGroup, NewDummyGroup,
+                 NewDummyGroup, NewDummyGroup, NewDummyGroup, NewDummyGroup, NewDummyGroup]);
+
+            var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
+
+            Assert.That(success, Is.True);
+            // The multiplayer game does not take precedence because it is at max capacity.
+            // We instead expect the "randomly" generated game to be selected.
+            Assert.That(game.Id, Is.EqualTo(gameSet[0].Id));
+        }
+
+        [Test]
+        public void MultiplayerGameWithNoPlayersButSpaceAvailableHasNoPriority()
+        {
+            List<Game> gameSet =
+            [
+                new Game
+                {
+                    Id = 1,
+                    Code = "Game 1",
+                    Category = "Abc",
+                    Description = "Do something",
+                    Active = true,
+                    Priority = 3,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+                new Game
+                {
+                    Id = 4,
+                    Code = "Game 2",
+                    Category = "Abc",
+                    Description = "Do something",
+                    Active = true,
+                    Priority = 5,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+                new Game
+                {
+                    Id = 9,
+                    Code = "Game 5",
+                    Category = "AbcD",
+                    Description = "Do something else",
+                    Active = true,
+                    Priority = 2,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = true,
+                    MaxPlayerAmount = 10,
+                },
+            ];
+
+            _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
+
+            // The "randomly" selected game rule must not be used. If game index 0 is chosen the test must fail
+            SetNumberToGenerate(0);
+
+            // No-one has played anything, so all games are available.
+            _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([]);
+            // No one is currently playing the multiplayer game, but there is space for multiple players
             _groupDataBridge.GetAllGroupsPlaying(gameSet[2]).Returns([]);
 
             var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
 
             Assert.That(success, Is.True);
-            // The game with a minimum player amount does not take precedence because it has no players, so no one is waiting.
+
+            // The multiplayer game does not take precedence because it has 0 players and must be treated as any other game
             // We instead expect the "randomly" generated game to be selected.
             Assert.That(game.Id, Is.EqualTo(gameSet[0].Id));
+        }
+
+        [Test]
+        public void AlreadyPlayedMultiplayerGameIsNotPrioritized()
+        {
+            List<Game> gameSet =
+            [
+                new Game
+                {
+                    Id = 1,
+                    Code = "Game 1",
+                    Category = "Abc",
+                    Description = "Do something",
+                    Active = true,
+                    Priority = 2,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+                new Game
+                {
+                    Id = 4,
+                    Code = "Game 2",
+                    Category = "Abc",
+                    Description = "Do something",
+                    Active = true,
+                    Priority = 1,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+                new Game
+                {
+                    Id = 9,
+                    Code = "Game 5",
+                    Category = "AbcD",
+                    Description = "Do something else",
+                    Active = true,
+                    Priority = 3,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = true,
+                    MaxPlayerAmount = 10,
+                },
+            ];
+
+            _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
+
+            // The player has already played the multiplayer game
+            _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
+                new PlayedGame()
+                {
+                    Game = gameSet[2],
+                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
+                }
+            ]);
+            
+            // The multiplayer game has space available, but should not be prioritized because player already played it
+            _groupDataBridge.GetAllGroupsPlaying(gameSet[2]).Returns([NewDummyGroup]);
+
+            var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
+
+            Assert.That(success, Is.True);
+            // Game 0 (highest priority among available games) must be selected, not the multiplayer game
+            Assert.That(game.Id, Is.EqualTo(gameSet[0].Id));
+        }
+
+        [Test]
+        public void SinglePlayerGameIsNotPrioritizedByMultiplayerRule()
+        {
+            List<Game> gameSet =
+            [
+                new Game
+                {
+                    Id = 1,
+                    Code = "Game 1",
+                    Category = "Abc",
+                    Description = "Do something",
+                    Active = true,
+                    Priority = 3,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+                new Game
+                {
+                    Id = 4,
+                    Code = "Game 2",
+                    Category = "Abc",
+                    Description = "Do something",
+                    Active = true,
+                    Priority = 5,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+                new Game
+                {
+                    Id = 9,
+                    Code = "Game 5",
+                    Category = "AbcD",
+                    Description = "Do something else",
+                    Active = true,
+                    Priority = 2,
+                    Remarks = "asdfasd",
+                    Timeout = TimeSpan.FromSeconds(10),
+                    MultiplePlayersRequired = false,
+                    MaxPlayerAmount = 1,
+                },
+            ];
+
+            _gameDataBridge.GetAllGamesAvailable().Returns(gameSet);
+
+            // Player has already played one game, so normal priority rules apply
+            _playedGameDataBridge.GetPlayedGamesByPlayer(Arg.Any<Group>()).Returns([
+                new PlayedGame()
+                {
+                    Game = gameSet[2],
+                    EndTime = new DateTime(2026, 1, 4, 10, 10, 10)
+                }
+            ]);
+
+            var success = _subject.FindNewGameFor(NewDummyGroup, out var game);
+
+            Assert.That(success, Is.True);
+            // No multiplayer games exist, so normal priority rules apply. Game with highest priority is selected.
+            Assert.That(game.Id, Is.EqualTo(gameSet[1].Id));
         }
     }
 }
