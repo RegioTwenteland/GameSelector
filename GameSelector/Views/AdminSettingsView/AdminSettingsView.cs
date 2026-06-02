@@ -16,13 +16,6 @@ namespace GameSelector.Views.AdminSettingsView
             SendMessage = sendMessage;
         }
 
-        private void OnLoad()
-        {
-#if DEBUG
-            testUserViewButton.Visible = true;
-#endif
-        }
-
         private void startStopGameButton_Click(object sender, EventArgs e)
         {
             SendMessage("RequestStartStopGame", null);
@@ -62,7 +55,7 @@ namespace GameSelector.Views.AdminSettingsView
             var selectEventView = (SelectEventView)sender;
 
             selectEventView.EventSelected -= EventSelected;
-            
+
             if (!string.IsNullOrEmpty(eventName))
             {
                 SendMessage("ImportGames", eventName);
@@ -96,6 +89,13 @@ namespace GameSelector.Views.AdminSettingsView
             importGamesButton.Enabled = false;
 
             SendMessage("RequestImportGames", null);
+        }
+
+        private void AdminSettingsView_Load(object sender, EventArgs e)
+        {
+#if DEBUG
+            testUserViewButton.Visible = true;
+#endif
         }
     }
 }

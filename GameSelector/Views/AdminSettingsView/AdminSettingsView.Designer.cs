@@ -61,7 +61,8 @@
             // 
             // testUserViewButton
             // 
-            testUserViewButton.Location = new System.Drawing.Point(154, 583);
+            testUserViewButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            testUserViewButton.Location = new System.Drawing.Point(4, 594);
             testUserViewButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             testUserViewButton.Name = "testUserViewButton";
             testUserViewButton.Size = new System.Drawing.Size(130, 27);
@@ -69,6 +70,7 @@
             testUserViewButton.Text = "Test user view";
             testUserViewButton.UseVisualStyleBackColor = true;
             testUserViewButton.Visible = false;
+            testUserViewButton.Click += testUserViewButton_Click;
             // 
             // label14
             // 
@@ -143,10 +145,10 @@
             // 
             // importGamesButton
             // 
-            importGamesButton.Location = new System.Drawing.Point(16, 583);
+            importGamesButton.Location = new System.Drawing.Point(4, 195);
             importGamesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             importGamesButton.Name = "importGamesButton";
-            importGamesButton.Size = new System.Drawing.Size(130, 27);
+            importGamesButton.Size = new System.Drawing.Size(241, 27);
             importGamesButton.TabIndex = 120;
             importGamesButton.Text = "Importeer spellen";
             importGamesButton.UseVisualStyleBackColor = true;
@@ -170,6 +172,7 @@
             Controls.Add(startStopGameButton);
             Name = "AdminSettingsView";
             Size = new System.Drawing.Size(916, 624);
+            Load += AdminSettingsView_Load;
             ResumeLayout(false);
             PerformLayout();
         }
