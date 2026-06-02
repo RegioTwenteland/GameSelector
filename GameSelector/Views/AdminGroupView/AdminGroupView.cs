@@ -17,6 +17,7 @@ namespace GameSelector.Views.AdminGroupView
 
         private const string DeleteColumnName = "delete";
         private const string NewCardColumnName = "new_card";
+        private const string StopGameColumnName = "stop_game";
 
         private WaitingForCardForm _waitingForCard;
 
@@ -100,6 +101,17 @@ namespace GameSelector.Views.AdminGroupView
                 },
                 new GameSelectorDataGridView.ColumnOptions()
                 {
+                    Column = new DataGridViewButtonColumn
+                    {
+                        Name = StopGameColumnName,
+                        HeaderText = string.Empty,
+                        Text = "🚫",
+                        UseColumnTextForButtonValue = true,
+                    },
+                    OnClick = OnStopGameClicked,
+                },
+                new GameSelectorDataGridView.ColumnOptions()
+                {
                     Column = new DataGridViewCheckBoxColumn
                     {
                         Name = nameof(GroupDataView.IsAdmin),
@@ -129,6 +141,19 @@ namespace GameSelector.Views.AdminGroupView
                     OnClick = OnDeleteClicked,
                 },
             ]);
+        }
+
+        private void OnStopGameClicked(DataGridViewColumn column, DataGridViewRow row)
+        {
+            if (row.DataBoundItem is not GroupDataView gdv)
+                return;
+
+            var confirmResult = MessageBox.Show("Weet je zeker dat je dit spel wil stoppen?", "", MessageBoxButtons.YesNo);
+
+            if (confirmResult != DialogResult.Yes)
+                return;
+
+            SendMessage("RequestForceEndGameForGroup", gdv);
         }
 
         private void OnSelectNewCardClicked(DataGridViewColumn column, DataGridViewRow row)
