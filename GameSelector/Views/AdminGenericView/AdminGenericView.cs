@@ -47,6 +47,8 @@ namespace GameSelector.Views.AdminGenericView
                 X = (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 - Width / 2,
                 Y = (screen.WorkingArea.Bottom + screen.WorkingArea.Top) / 2 - Height / 2
             };
+
+            Activate();
         }
 
         public void ShowTab(string name)

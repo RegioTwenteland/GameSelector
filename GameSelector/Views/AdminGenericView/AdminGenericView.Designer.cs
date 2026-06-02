@@ -66,7 +66,9 @@
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "AdminGenericView";
             Padding = new System.Windows.Forms.Padding(6);
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Admin";
+            WindowState = System.Windows.Forms.FormWindowState.Maximized;
             Load += Form1_Load;
             ResumeLayout(false);
         }

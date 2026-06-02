@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartupView));
             newFileButton = new System.Windows.Forms.Button();
             openFileButton = new System.Windows.Forms.Button();
             SuspendLayout();
@@ -59,7 +60,9 @@
             ClientSize = new System.Drawing.Size(348, 73);
             Controls.Add(openFileButton);
             Controls.Add(newFileButton);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "StartupView";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Admin";
             ResumeLayout(false);
         }
